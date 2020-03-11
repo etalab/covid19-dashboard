@@ -1,0 +1,16 @@
+{
+  "presets": [
+    "next/babel"
+  ],
+  "plugins": [
+    "lodash",
+    [
+      "inline-import",
+      {
+        "extensions": [
+          ".css"
+        ]
+      }
+    ]
+  ]
+}

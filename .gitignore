@@ -1,0 +1,33 @@
+# Environment config
+.env*
+!.env.sample
+
+# Runtime
+pids
+*.pid
+*.seed
+*.pid.lock
+
+# Logs
+logs
+*.log
+npm-debug.log*
+CHANGELOG.md
+
+# Mac
+*.DS_Store
+.AppleDouble
+.LSOverride
+
+# Build
+.next
+bundle-stats
+
+# Cache
+.yarn-cache
+.npm
+.eslintcache
+.changelog
+
+# Node
+node_modules
