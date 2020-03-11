@@ -15,17 +15,23 @@
   "devDependencies": {
     "babel-eslint": "^10.1.0",
     "babel-plugin-inline-import": "^3.0.0",
+    "babel-plugin-lodash": "^3.3.4",
     "eslint-config-xo-nextjs": "^1.5.0",
     "eslint-plugin-react": "^7.19.0",
     "eslint-plugin-react-hooks": "^2.5.0",
     "xo": "^0.28.0"
   },
   "dependencies": {
+    "@turf/center": "^6.0.1",
     "compression": "^1.7.4",
     "express": "^4.17.1",
+    "isomorphic-unfetch": "^3.0.0",
+    "lodash": "^4.17.15",
     "next": "^9.3.0",
     "react": "^16.13.0",
-    "react-dom": "^16.13.0"
+    "react-dom": "^16.13.0",
+    "react-map-gl": "^5.2.3",
+    "yamljs": "^0.3.0"
   },
   "xo": {
     "extends": "xo-nextjs",
