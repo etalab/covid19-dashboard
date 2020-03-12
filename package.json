@@ -10,19 +10,23 @@
     "export": "next export",
     "start": "NODE_ENV=production node server",
     "lint": "xo",
-    "heroku-postbuild": "next build"
+    "heroku-postbuild": "next build",
+    "centers:build": "node build-centers"
   },
   "devDependencies": {
+    "@turf/center": "^6.0.1",
     "babel-eslint": "^10.1.0",
     "babel-plugin-inline-import": "^3.0.0",
     "babel-plugin-lodash": "^3.3.4",
     "eslint-config-xo-nextjs": "^1.5.0",
     "eslint-plugin-react": "^7.19.0",
     "eslint-plugin-react-hooks": "^2.5.0",
+    "fs-extra": "^8.1.0",
+    "get-stream": "^5.1.0",
+    "got": "^10.6.0",
     "xo": "^0.28.0"
   },
   "dependencies": {
-    "@turf/center": "^6.0.1",
     "compression": "^1.7.4",
     "express": "^4.17.1",
     "isomorphic-unfetch": "^3.0.0",
