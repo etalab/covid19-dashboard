@@ -152,7 +152,7 @@ MainPage.getInitialProps = async () => {
 
   return {
     data,
-    dates: uniq(data.map(r => r.date)).sort()
+    dates: uniq(data.filter(r => r.code === 'FRA').map(r => r.date)).sort()
   }
 }
 
