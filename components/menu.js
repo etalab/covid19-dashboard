@@ -56,7 +56,7 @@ const Menu = ({date, report, previousReport, nextReport}) => {
       </div>
 
       <div className='menu-footer'>
-        <div>Suivi de l’épidémie de nouveau coronavirus</div>
+        <div>[<a href='https://github.com/opencovid19-fr/dashboard'>GitHub</a>]</div>
       </div>
       <style jsx>{`
         .menu-container {
