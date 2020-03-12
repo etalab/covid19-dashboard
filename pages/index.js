@@ -1,4 +1,4 @@
-import React, {useState} from 'react'
+import React, { useState, useEffect} from 'react'
 import PropTypes from 'prop-types'
 
 import {getData} from '../lib/api'
@@ -8,7 +8,9 @@ import Page from '../layouts/main'
 import Menu from '../components/menu'
 import ReactMapGl from '../components/react-map-gl'
 
+import theme from '../styles/theme'
 import colors from '../styles/colors'
+
 import {getRegionCenter} from '../lib/regions'
 
 const defaultViewport = {
@@ -16,8 +18,21 @@ const defaultViewport = {
   longitude: 1.7,
   zoom: 5
 }
+
 const MainPage = ({data, regionsData}) => {
   const [viewport, setViewport] = useState(defaultViewport)
+
+  useEffect(() => {
+    const mobileWidth = theme.mobileDisplay.split('px')[0]
+    if (window.innerWidth < mobileWidth) {
+      const {latitude, longitude} = viewport
+      setViewport({
+        latitude,
+        longitude,
+        zoom: 4.3
+      })
+    }
+  }, []) // eslint-disable-line react-hooks/exhaustive-deps
 
   return (
     <Page>
@@ -53,13 +68,14 @@ const MainPage = ({data, regionsData}) => {
           height: 100%;
         }
 
-        @media (max-width: 720px) {
+        @media (max-width: ${theme.mobileDisplay}) {
           .main-page-container {
             flex-direction: column-reverse;
           }
 
           .menu {
-            flex: 0.5;
+            flex: 0;
+            height: 40%;
             max-width: none;
           }
         }
