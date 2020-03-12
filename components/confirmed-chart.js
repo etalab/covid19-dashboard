@@ -5,6 +5,9 @@ import {Bar} from 'react-chartjs-2'
 import colors from '../styles/colors'
 
 const options = {
+  tooltips: {
+    mode: 'index'
+  },
   scales: {
     xAxes: [{
       stacked: true
