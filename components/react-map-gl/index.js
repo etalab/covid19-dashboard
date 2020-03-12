@@ -45,7 +45,6 @@ const Map = ({viewport, regions, onViewportChange}) => {
         {...viewport}
         width='100%'
         height='100%'
-        mapOptions={{hash: true}}
         mapStyle='https://openmaptiles.geo.data.gouv.fr/styles/osm-bright/style.json'
         {...settings}
         interactiveLayerIds={[regionLayer.id]}
