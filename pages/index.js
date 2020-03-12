@@ -98,7 +98,7 @@ const MainPage = ({data, dates}) => {
   }, []) // eslint-disable-line react-hooks/exhaustive-deps
 
   return (
-    <Page>
+    <Page title='Tableau de bord de suivi de l’épidémie de nouveau coronavirus'>
       <div className='main-page-container'>
         <div className='menu'>
           <Menu

@@ -2,7 +2,7 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import Head from 'next/head'
 
-const SITE_NAME = 'covid19'
+const SITE_NAME = 'Suivi de l’épidémie de nouveau coronavirus'
 
 const Meta = ({title, description}) => {
   return (

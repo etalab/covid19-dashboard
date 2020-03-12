@@ -31,7 +31,16 @@ const Menu = ({date, report, previousReport, nextReport}) => {
 
       <div className='content'>
         <p>
-          Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec vehicula, nunc luctus pellentesque tempor, ante purus tincidunt mauris, ut ultricies metus mauris eget neque. Integer posuere tempor ullamcorper. Maecenas maximus velit sed magna rutrum, in posuere nisi sodales. Mauris laoreet dignissim odio, eget lacinia libero iaculis quis.
+          L‘information officielle sur la progression de l’épidémie en France est très fragmentée.
+        </p>
+        <p>
+          <a href='https://www.santepubliquefrance.fr'>Santé publique France</a> propose un point épidémiologique quotidien, qui comprend les chiffres-clés nationaux, et le nombre de cas confirmés par région.
+        </p>
+        <p>
+          Les agences régionales de santé et les préfectures publient de leur côté des informations au niveau départemental, ainsi que le nombre de personnes décédées ou en réanimation.
+        </p>
+        <p>
+          Cet outil contributif tente de proposer une <a href='https://www.data.gouv.fr/fr/datasets/chiffres-cles-concernant-lepidemie-de-covid19-en-france/'>vision consolidée</a> des données officielles disponibles.
         </p>
 
         <div className='stats'>
@@ -47,7 +56,7 @@ const Menu = ({date, report, previousReport, nextReport}) => {
       </div>
 
       <div className='menu-footer'>
-        <div>Tableau de bord COVID19-FR</div>
+        <div>Suivi de l’épidémie de nouveau coronavirus</div>
       </div>
       <style jsx>{`
         .menu-container {
@@ -86,6 +95,10 @@ const Menu = ({date, report, previousReport, nextReport}) => {
         .menu-container .content {
           flex: 1;
           overflow-y: scroll;
+        }
+
+        .menu-container .content p {
+          font-size: 0.85em;
         }
 
         .menu-container .stats {
