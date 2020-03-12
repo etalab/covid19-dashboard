@@ -40,7 +40,7 @@ const Menu = ({date, report, previousReport, nextReport}) => {
       </div>
 
       <div className='menu-footer'>
-        <div>CORVID19</div>
+        <div>Tableau de bord COVID19-FR</div>
       </div>
       <style jsx>{`
         .menu-container {
