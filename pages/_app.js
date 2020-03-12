@@ -1,5 +1,4 @@
 import React from 'react'
-import PropTypes from 'prop-types'
 
 export default function MyApp({Component, pageProps}) {
   return (
@@ -55,9 +54,4 @@ export default function MyApp({Component, pageProps}) {
         `}</style>
     </>
   )
-}
-
-MyApp.propTypes = {
-  Component: PropTypes.node.isRequired,
-  pageProps: PropTypes.object.isRequired
 }

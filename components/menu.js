@@ -5,8 +5,11 @@ import {ChevronLeft, ChevronRight} from 'react-feather'
 import colors from '../styles/colors'
 
 import Counter from './counter'
+import ConfirmedChart from './confirmed-chart'
 
 import theme from '../styles/theme'
+
+import {previousDates} from '../lib/dates'
 
 const formatDate = isoString => {
   const date = new Date(isoString)
@@ -16,7 +19,7 @@ const formatDate = isoString => {
 
 const Menu = ({date, report, previousReport, nextReport}) => {
   const formatedDate = formatDate(date)
-  const {casConfirmes, deces} = report || {}
+  const {casConfirmes, deces, history} = report || {}
 
   return (
     <div className='menu-container'>
@@ -37,6 +40,10 @@ const Menu = ({date, report, previousReport, nextReport}) => {
             <Counter value={deces || '?'} label='décès' color='red' />
           </div>
         </div>
+
+        {history && (
+          <ConfirmedChart data={history.filter(r => previousDates(date, r.date))} />
+        )}
       </div>
 
       <div className='menu-footer'>
@@ -114,17 +121,14 @@ const Menu = ({date, report, previousReport, nextReport}) => {
 }
 
 Menu.defaultProps = {
-  report: null,
+  report: {},
   previousReport: null,
   nextReport: null
 }
 
 Menu.propTypes = {
   date: PropTypes.string.isRequired,
-  report: PropTypes.shape({
-    casConfirmes: PropTypes.number,
-    deces: PropTypes.number
-  }),
+  report: PropTypes.object,
   previousReport: PropTypes.func,
   nextReport: PropTypes.func
 }

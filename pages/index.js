@@ -1,6 +1,6 @@
 import React, {useState, useCallback, useEffect} from 'react'
 import PropTypes from 'prop-types'
-import {uniq, indexOf} from 'lodash'
+import {groupBy, uniq, indexOf} from 'lodash'
 
 import {getData} from '../lib/api'
 
@@ -13,6 +13,8 @@ import ReactMapGl from '../components/react-map-gl'
 
 import theme from '../styles/theme'
 import colors from '../styles/colors'
+
+import {previousDates} from '../lib/dates'
 
 const defaultViewport = {
   latitude: 46.9,
@@ -46,22 +48,30 @@ const MainPage = ({data, dates}) => {
   }, [dates, date])
 
   const getFranceReport = useCallback(() => {
-    return data.find((item => item.nom === 'France' && item.date === date))
+    const reports = data.filter((item => item.nom === 'France'))
+    return {
+      ...reports.find(r => r.date === date),
+      history: reports
+    }
   }, [date, data])
 
   const getRegionsReport = useCallback(() => {
-    const regions = data.filter((item => item.code.includes('REG') && item.date === date))
+    const regions = data.filter((item => item.code.includes('REG')))
+    const byCode = groupBy(regions, 'code')
 
     return {
       type: 'FeatureCollection',
-      features: regions.map(region => {
+      features: Object.keys(byCode).map(code => {
         return {
           type: 'Feature',
           geometry: {
             type: 'Point',
-            coordinates: centers[region.code]
+            coordinates: centers[code]
           },
-          properties: {...region}
+          properties: {
+            ...byCode[code].find(r => r.date === date),
+            history: byCode[code].filter(r => previousDates(date, r.date))
+          }
         }
       }).filter(i => Boolean(i))
     }
@@ -100,8 +110,9 @@ const MainPage = ({data, dates}) => {
         </div>
         <div className='map'>
           <ReactMapGl
-            regions={regionsReport}
             viewport={viewport}
+            date={date}
+            regions={regionsReport}
             onViewportChange={setViewport}
           />
         </div>

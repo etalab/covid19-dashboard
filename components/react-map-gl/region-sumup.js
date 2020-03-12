@@ -1,10 +1,15 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 
-const RegionSumup = ({nom, casConfirmes}) => (
+import ConfirmedChart from '../confirmed-chart'
+
+const RegionSumup = ({nom, casConfirmes, history}) => (
   <div className='sumup-container'>
     <div className='title'>{nom}</div>
     <div>{casConfirmes} cas confirmés</div>
+
+    <ConfirmedChart data={JSON.parse(history)} />
+
     <style jsx>{`
         .sumup-container {
           font-size: larger;
@@ -19,7 +24,8 @@ const RegionSumup = ({nom, casConfirmes}) => (
 
 RegionSumup.propTypes = {
   nom: PropTypes.string.isRequired,
-  casConfirmes: PropTypes.number.isRequired
+  casConfirmes: PropTypes.number.isRequired,
+  history: PropTypes.array.isRequired
 }
 
 export default RegionSumup

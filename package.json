@@ -28,10 +28,12 @@
     "xo": "^0.28.0"
   },
   "dependencies": {
+    "chart.js": "^2.9.3",
     "isomorphic-unfetch": "^3.0.0",
     "lodash": "^4.17.15",
     "next": "^9.3.0",
     "react": "^16.13.0",
+    "react-chartjs-2": "^2.9.0",
     "react-dom": "^16.13.0",
     "react-feather": "^2.0.3",
     "react-map-gl": "^5.2.3",

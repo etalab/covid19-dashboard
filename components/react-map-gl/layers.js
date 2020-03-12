@@ -27,6 +27,6 @@ export const regionCountLayer = {
   filter: ['>', 'casConfirmes', 0],
   layout: {
     'text-field': '{casConfirmes}',
-    'text-size': 12
+    'text-size': 16
   }
 }

@@ -85,6 +85,7 @@ const Map = ({viewport, regions, onViewportChange}) => {
 
 Map.propTypes = {
   viewport: PropTypes.object.isRequired,
+  date: PropTypes.string.isRequired,
   regions: PropTypes.object.isRequired,
   onViewportChange: PropTypes.func.isRequired
 }
