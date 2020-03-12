@@ -4,6 +4,8 @@ import {uniq, indexOf} from 'lodash'
 
 import {getData} from '../lib/api'
 
+import centers from '../centers.json'
+
 import Page from '../layouts/main'
 
 import Menu from '../components/menu'
@@ -11,8 +13,6 @@ import ReactMapGl from '../components/react-map-gl'
 
 import theme from '../styles/theme'
 import colors from '../styles/colors'
-
-import {getRegionCenter} from '../lib/regions'
 
 const defaultViewport = {
   latitude: 46.9,
@@ -55,14 +55,14 @@ const MainPage = ({data, dates}) => {
     return {
       type: 'FeatureCollection',
       features: regions.map(region => {
-        const {code} = region
-        const feature = getRegionCenter(code.split('-')[1])
-
-        if (feature) {
-          feature.properties = {...region}
+        return {
+          type: 'Feature',
+          geometry: {
+            type: 'Point',
+            coordinates: centers[region.code]
+          },
+          properties: {...region}
         }
-
-        return feature
       }).filter(i => Boolean(i))
     }
   }, [date, data])
