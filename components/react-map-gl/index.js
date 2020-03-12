@@ -10,7 +10,7 @@ const settings = {
   maxZoom: 16
 }
 
-const Map = ({viewport, data, onViewportChange}) => {
+const Map = ({viewport, regions, onViewportChange}) => {
   const [map, setMap] = useState()
   const [hovered, setHovered] = useState(null)
 
@@ -53,7 +53,7 @@ const Map = ({viewport, data, onViewportChange}) => {
         onHover={onHover}
       >
 
-        <Source type='geojson' id='regions' data={data}>
+        <Source type='geojson' id='regions' data={regions}>
           <Layer {...regionLayer} />
           <Layer {...regionCountLayer} />
         </Source>
@@ -85,7 +85,7 @@ const Map = ({viewport, data, onViewportChange}) => {
 
 Map.propTypes = {
   viewport: PropTypes.object.isRequired,
-  data: PropTypes.object.isRequired,
+  regions: PropTypes.object.isRequired,
   onViewportChange: PropTypes.func.isRequired
 }
 

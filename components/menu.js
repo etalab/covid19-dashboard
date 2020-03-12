@@ -1,5 +1,6 @@
 import React from 'react'
 import PropTypes from 'prop-types'
+import {ChevronLeft, ChevronRight} from 'react-feather'
 
 import colors from '../styles/colors'
 
@@ -13,14 +14,16 @@ const formatDate = isoString => {
   return date.toLocaleDateString()
 }
 
-const Menu = ({date, donneesNationales}) => {
-  const {casConfirmes, deces} = donneesNationales
+const Menu = ({date, report, previousReport, nextReport}) => {
   const formatedDate = formatDate(date)
+  const {casConfirmes, deces} = report || {}
 
   return (
     <div className='menu-container'>
       <div className='menu-header'>
-        <h2>COVID19</h2>
+        <div className={`report-nav ${previousReport ? '' : 'disabled'}`} onClick={previousReport}><ChevronLeft /></div>
+        <h2>Données du {formatedDate}</h2>
+        <div className={`report-nav ${nextReport ? '' : 'disabled'}`} onClick={nextReport}><ChevronRight /></div>
       </div>
 
       <div className='content'>
@@ -30,14 +33,14 @@ const Menu = ({date, donneesNationales}) => {
 
         <div className='stats'>
           <div className='counters'>
-            <Counter value={casConfirmes} label='cas confirmés' color='orange' />
-            <Counter value={deces} label='décès' color='red' />
+            <Counter value={casConfirmes || '?'} label='cas confirmés' color='orange' />
+            <Counter value={deces || '?'} label='décès' color='red' />
           </div>
         </div>
       </div>
 
       <div className='menu-footer'>
-        <div>Mise à jour le {formatedDate}</div>
+        <div>CORVID19</div>
       </div>
       <style jsx>{`
         .menu-container {
@@ -52,8 +55,25 @@ const Menu = ({date, donneesNationales}) => {
         }
 
         .menu-container .menu-header {
+          display: flex;
+          flex-flow: nowrap;
+          justify-content: space-between;
+          align-items: center;
           text-align: center;
           box-shadow: 0 1px 4px ${colors.lightGrey};
+        }
+
+        .report-nav.disabled {
+          color: ${colors.lighterGrey};
+        }
+
+        .report-nav.disabled:hover {
+          cursor: initial;
+        }
+
+        .report-nav:hover {
+          cursor: pointer;
+          backgroundColor: ${colors.grey};
         }
 
         .menu-container .content {
@@ -93,12 +113,20 @@ const Menu = ({date, donneesNationales}) => {
   )
 }
 
+Menu.defaultProps = {
+  report: null,
+  previousReport: null,
+  nextReport: null
+}
+
 Menu.propTypes = {
   date: PropTypes.string.isRequired,
-  donneesNationales: PropTypes.shape({
-    casConfirmes: PropTypes.number.isRequired,
-    deces: PropTypes.number.isRequired
-  }).isRequired
+  report: PropTypes.shape({
+    casConfirmes: PropTypes.number,
+    deces: PropTypes.number
+  }),
+  previousReport: PropTypes.func,
+  nextReport: PropTypes.func
 }
 
 export default Menu

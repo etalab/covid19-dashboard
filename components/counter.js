@@ -34,7 +34,10 @@ Counter.defaultProps = {
 }
 
 Counter.propTypes = {
-  value: PropTypes.number.isRequired,
+  value: PropTypes.oneOfType([
+    PropTypes.string,
+    PropTypes.number
+  ]).isRequired,
   label: PropTypes.string,
   color: PropTypes.string
 }
