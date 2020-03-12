@@ -35,8 +35,7 @@
     "react": "^16.13.0",
     "react-dom": "^16.13.0",
     "react-feather": "^2.0.3",
-    "react-map-gl": "^5.2.3",
-    "yamljs": "^0.3.0"
+    "react-map-gl": "^5.2.3"
   },
   "xo": {
     "extends": "xo-nextjs",
