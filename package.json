@@ -9,6 +9,7 @@
     "build": "next build",
     "export": "next export",
     "start": "serve out",
+    "publish:gh-pages": "gh-pages -d out --dotfiles",
     "lint": "xo",
     "centers:build": "node build-centers"
   },
@@ -21,6 +22,7 @@
     "eslint-plugin-react-hooks": "^2.5.0",
     "fs-extra": "^8.1.0",
     "get-stream": "^5.1.0",
+    "gh-pages": "^2.2.0",
     "got": "^10.6.0",
     "xo": "^0.28.0"
   },
