@@ -5,12 +5,11 @@
   "repository": "git@github.com:livingdata-co/covid19-dashboard.git",
   "private": true,
   "scripts": {
-    "dev": "node server",
+    "dev": "next",
     "build": "next build",
     "export": "next export",
-    "start": "NODE_ENV=production node server",
+    "start": "serve out",
     "lint": "xo",
-    "heroku-postbuild": "next build",
     "centers:build": "node build-centers"
   },
   "devDependencies": {
@@ -27,15 +26,14 @@
     "xo": "^0.28.0"
   },
   "dependencies": {
-    "compression": "^1.7.4",
-    "express": "^4.17.1",
     "isomorphic-unfetch": "^3.0.0",
     "lodash": "^4.17.15",
     "next": "^9.3.0",
     "react": "^16.13.0",
     "react-dom": "^16.13.0",
     "react-feather": "^2.0.3",
-    "react-map-gl": "^5.2.3"
+    "react-map-gl": "^5.2.3",
+    "serve": "^11.3.0"
   },
   "xo": {
     "extends": "xo-nextjs",
