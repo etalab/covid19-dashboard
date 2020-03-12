@@ -9,17 +9,13 @@ export const regionLayer = {
     'circle-opacity': 0.6,
     'circle-color': colors.red,
     'circle-radius': [
-      'step',
-      ['get', 'casConfirmes'],
+      'interpolate',
+      ['linear'],
+      ['number', ['get', 'casConfirmes']],
+      0,
       10,
-      10,
-      20,
-      20,
-      30,
-      30,
-      40,
-      40,
-      50
+      1000,
+      100
     ]
   }
 }
