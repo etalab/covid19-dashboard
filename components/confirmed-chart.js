@@ -19,20 +19,27 @@ const options = {
 }
 
 const formatData = data => {
+  const datasets = []
+
+  if (data.some(h => h.casConfirmes)) {
+    datasets.push({
+      label: 'Cas confirmés',
+      data: data.map(h => h.casConfirmes),
+      backgroundColor: colors.orange
+    })
+  }
+
+  if (data.some(h => h.deces)) {
+    datasets.push({
+      label: 'Décès',
+      data: data.map(h => h.deces),
+      backgroundColor: colors.red
+    })
+  }
+
   return {
     labels: data.map(h => h.date),
-    datasets: [
-      {
-        label: 'Cas confirmés',
-        data: data.map(h => h.casConfirmes),
-        backgroundColor: colors.orange
-      },
-      {
-        label: 'Décès',
-        data: data.map(h => h.deces),
-        backgroundColor: colors.red
-      }
-    ]
+    datasets
   }
 }
 
