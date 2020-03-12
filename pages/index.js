@@ -95,7 +95,7 @@ MainPage.getInitialProps = async () => {
     type: 'FeatureCollection',
     features: data.donneesRegionales.map(region => {
       const {code} = region
-      const feature = getRegionCenter(code)
+      const feature = getRegionCenter(code.split('REG-')[1])
       feature.properties = {...region}
 
       return feature

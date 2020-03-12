@@ -17,12 +17,12 @@ app.prepare().then(async () => {
     server.use(compression())
   }
 
-  server.get('*', (request, response) => {
-    return handle(request, response)
-  })
-
   server.get('/data', (request, response) => {
     response.send(datasets)
+  })
+
+  server.get('*', (request, response) => {
+    return handle(request, response)
   })
 
   server.listen(port, err => {
