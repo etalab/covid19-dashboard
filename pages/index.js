@@ -40,7 +40,7 @@ const MainPage = ({data, dates}) => {
   const nextReport = useCallback(() => {
     const idx = indexOf(dates, date)
     const nextIdx = idx + 1
-    if (nextIdx + 1 <= dates.length - 1) {
+    if (nextIdx <= dates.length - 1) {
       setDate(dates[nextIdx])
     }
   }, [dates, date])
