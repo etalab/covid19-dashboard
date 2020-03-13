@@ -15,6 +15,7 @@ const Statistics = ({report}) => {
       <style jsx>{`
         .stats {
           flex: 1;
+          padding: 1em;
         }
 
         .counters {

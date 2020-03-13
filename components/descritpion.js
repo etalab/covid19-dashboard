@@ -19,6 +19,7 @@ const Description = React.memo(() => (
       .description {
         padding: 1em;
       }
+
       .description p {
         font-size: 0.85em;
       }

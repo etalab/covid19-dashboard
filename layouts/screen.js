@@ -1,11 +1,12 @@
 import React from 'react'
 
 import DateNav from '../components/date-nav'
-import Menu from '../components/menu'
+import Scrollable from '../components/scrollable'
 import ReactMapGl from '../components/react-map-gl'
 import Statistics from '../components/statistics'
 import ConfirmedChart from '../components/confirmed-chart'
 import Description from '../components/descritpion'
+import Footer from '../components/footer'
 
 import colors from '../styles/colors'
 
@@ -14,7 +15,7 @@ const ScreenPage = ({date, franceReport, regionsReport, prev, next, viewport, se
     <>
       <div className='menu'>
         <DateNav date={date} prev={prev} next={next} />
-        <Menu date={date}>
+        <Scrollable date={date}>
           <>
             <Description />
 
@@ -24,7 +25,8 @@ const ScreenPage = ({date, franceReport, regionsReport, prev, next, viewport, se
               <ConfirmedChart data={franceReport.history.filter(r => date >= r.date)} height={300} />
             )}
           </>
-        </Menu>
+        </Scrollable>
+        <Footer />
       </div>
 
       <div className='map'>
@@ -39,16 +41,14 @@ const ScreenPage = ({date, franceReport, regionsReport, prev, next, viewport, se
       <style jsx>{`
           .menu {
             z-index: 1;
-            position: relative;
             display: flex;
             flex-direction: column;
             max-width: 400px;
-            height: 100%;
             box-shadow: 0 1px 4px ${colors.lightGrey};
           }
 
           .map {
-            flex:1;
+            flex: 1;
             height: 100%;
           }
       `}</style>
