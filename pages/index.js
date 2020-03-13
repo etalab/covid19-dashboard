@@ -6,19 +6,11 @@ import {getData} from '../lib/api'
 
 import centers from '../centers.json'
 
+import theme from '../styles/theme'
+
 import Page from '../layouts/main'
 
-import Menu from '../components/menu'
-import ReactMapGl from '../components/react-map-gl'
-import ConfirmedChart from '../components/confirmed-chart'
-import Statistics from '../components/statistics'
-import Description from '../components/descritpion'
-
-import DateNav from '../components/date-nav'
-
-import theme from '../styles/theme'
-import colors from '../styles/colors'
-
+import ScreenPage from '../layouts/screen'
 import MobilePage from '../layouts/mobile'
 
 const defaultViewport = {
@@ -132,50 +124,18 @@ const MainPage = ({data, dates}) => {
             viewport={viewport}
           />
         ) : (
-          <>
-            <div className='menu'>
-              <Menu
-                date={date}
-                previousReport={dateIdx > 0 ? previousReport : null}
-                nextReport={dateIdx < dates.length - 1 ? nextReport : null}
-              >
-                <DateNav date={date} prev={previousReport} next={nextReport} />
-                <>
-                  <Description />
-
-                  <Statistics report={franceReport} />
-
-                  {franceReport && franceReport.history && (
-                    <ConfirmedChart data={franceReport.history.filter(r => date >= r.date)} height={300} />
-                  )}
-                </>
-              </Menu>
-            </div>
-
-            <div className='map'>
-              <ReactMapGl
-                viewport={viewport}
-                date={date}
-                regions={regionsReport}
-                onViewportChange={setViewport}
-              />
-            </div>
-          </>
+          <ScreenPage
+            date={date}
+            franceReport={franceReport}
+            regionsReport={regionsReport}
+            prev={dateIdx > 0 ? previousReport : null}
+            next={dateIdx < dates.length - 1 ? nextReport : null}
+            setViewport={setViewport}
+            viewport={viewport}
+          />
         )}
 
         <style jsx>{`
-          .menu {
-            flex: 1;
-            z-index: 1;
-            max-width: 400px;
-            box-shadow: 0 1px 4px ${colors.lightGrey};
-          }
-
-          .map {
-            flex: 1;
-            height: 100%;
-          }
-
           .main-page-container {
             display: flex;
             position: absolute;

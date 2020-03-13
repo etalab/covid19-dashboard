@@ -1,0 +1,59 @@
+import React from 'react'
+
+import DateNav from '../components/date-nav'
+import Menu from '../components/menu'
+import ReactMapGl from '../components/react-map-gl'
+import Statistics from '../components/statistics'
+import ConfirmedChart from '../components/confirmed-chart'
+import Description from '../components/descritpion'
+
+import colors from '../styles/colors'
+
+const ScreenPage = ({date, franceReport, regionsReport, prev, next, viewport, setViewport}) => {
+  return (
+    <>
+      <div className='menu'>
+        <DateNav date={date} prev={prev} next={next} />
+        <Menu date={date}>
+          <>
+            <Description />
+
+            <Statistics report={franceReport} />
+
+            {franceReport && franceReport.history && (
+              <ConfirmedChart data={franceReport.history.filter(r => date >= r.date)} height={300} />
+            )}
+          </>
+        </Menu>
+      </div>
+
+      <div className='map'>
+        <ReactMapGl
+          viewport={viewport}
+          date={date}
+          regions={regionsReport}
+          onViewportChange={setViewport}
+        />
+      </div>
+
+      <style jsx>{`
+          .menu {
+            z-index: 1;
+            position: relative;
+            display: flex;
+            flex-direction: column;
+            max-width: 400px;
+            height: 100%;
+            box-shadow: 0 1px 4px ${colors.lightGrey};
+          }
+
+          .map {
+            flex:1;
+            height: 100%;
+          }
+      `}</style>
+    </>
+  )
+}
+
+export default ScreenPage
