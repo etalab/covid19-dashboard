@@ -26,15 +26,14 @@ class Layout extends React.Component {
           {children}
         </main>
         <style jsx>{`
-          main {
-            flex: 1;
-          }
-
           div {
             display: flex;
             flex-direction: column;
-            min-height: 100vh;
             background-color: #fff;
+          }
+
+          main {
+            flex: 1;
           }
         `}</style>
       </div>

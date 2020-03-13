@@ -142,10 +142,15 @@ const MainPage = ({data, dates}) => {
             flex-direction: column-reverse;
           }
 
+          .map {
+            height: 60%;
+          }
+
           .menu {
             flex: 0;
             height: 40%;
             max-width: none;
+            box-shadow: 0 -1px 4px ${colors.lightGrey};
           }
         }
         `}</style>
