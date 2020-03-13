@@ -30,11 +30,12 @@ const DateNav = ({date, prev, next}) => {
           text-align: center;
           box-shadow: 0 1px 4px ${colors.lightGrey};
           padding: 1em;
-          background-color: #fff;
+          background-color: ${colors.darkerGrey};
+          color: #fff;
         }
 
         .report-nav.disabled {
-          color: ${colors.lighterGrey};
+          color: #ffffff55;
         }
 
         .report-nav.disabled:hover {
