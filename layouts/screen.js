@@ -5,7 +5,7 @@ import Scrollable from '../components/scrollable'
 import ReactMapGl from '../components/react-map-gl'
 import Statistics from '../components/statistics'
 import ConfirmedChart from '../components/confirmed-chart'
-import Description from '../components/descritpion'
+import Description from '../components/description'
 import Footer from '../components/footer'
 
 import colors from '../styles/colors'
