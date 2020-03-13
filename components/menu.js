@@ -46,7 +46,7 @@ const Menu = ({selectedView, selectView, children}) => {
         }
 
         .view-selector > div {
-          padding: 1em;
+          padding: 0.5em;
           margin: auto;
         }
 
@@ -70,6 +70,7 @@ const Menu = ({selectedView, selectView, children}) => {
             grid-template-columns: 1fr 1fr 1fr;
             justify-content: center;
             align-items: center;
+            background-color: #fff;
           }
         }
     `}</style>

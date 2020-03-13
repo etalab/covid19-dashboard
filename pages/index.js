@@ -164,43 +164,23 @@ const MainPage = ({data, dates}) => {
         )}
 
         <style jsx>{`
-                        .menu {
-                flex: 1;
-                z-index: 1;
-                max-width: 400px;
-                box-shadow: 0 1px 4px ${colors.lightGrey};
-              }
-
-              .map {
-                flex:1;
-                height: 100%;
-              }
-
-              @media (max-width: ${theme.mobileDisplay}) {
-                .map {
-                  height: 60%;
-                }
-
-                .menu {
-                  flex: 0;
-                  height: 40%;
-                  max-width: none;
-                  box-shadow: 0 -1px 4px ${colors.lightGrey};
-                }
-              }
-
-
-          .main-page-container {
-            position: absolute;
-            display: flex;
-            height: 100%;
-            width: 100%;
+          .menu {
+            flex: 1;
+            z-index: 1;
+            max-width: 400px;
+            box-shadow: 0 1px 4px ${colors.lightGrey};
           }
 
-          @media (max-width: ${theme.mobileDisplay}) {
-            .main-page-container {
-              flex-direction: column-reverse;
-            }
+          .map {
+            flex: 1;
+            height: 100%;
+          }
+
+          .main-page-container {
+            display: flex;
+            position: absolute;
+            width: 100%;
+            height: 100%;
           }
         `}</style>
       </div>

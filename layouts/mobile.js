@@ -39,7 +39,9 @@ const MobilePage = props => {
 
       <style jsx>{`
         .mobile-page-container {
-          height: 100%;
+          display: flex;
+          flex-direction: column;
+          flex: 1;
         }
       `}</style>
     </div>
