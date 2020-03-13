@@ -49,7 +49,7 @@ Meta.propTypes = {
 
 Meta.defaultProps = {
   title: 'veille-coronavirus.fr',
-  description: 'L‘information sur la progression de l’épidémie de coronavirus en France'
+  description: 'Chiffres-clés sur la progression de l’épidémie de coronavirus en France'
 }
 
 export default Meta

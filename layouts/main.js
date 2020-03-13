@@ -13,7 +13,7 @@ class Layout extends React.Component {
   static defaultProps = {
     children: null,
     title: 'veille-coronavirus.fr',
-    description: 'L‘information sur la progression de l’épidémie de coronavirus en France'
+    description: 'Chiffres-clés sur la progression de l’épidémie de coronavirus en France'
   }
 
   render() {
