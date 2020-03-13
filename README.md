@@ -6,7 +6,7 @@ Pour contribuer, créez une Issue, ou déposez une Pull-request :)
 
 ## Outils utilisés
 
-* [Node.js](https://nodejs.org]
+* [Node.js](https://nodejs.org)
 * [React](https://reactjs.org)
 * [Next.js](https://nextjs.org)
 * [Mapbox GL JS](https://docs.mapbox.com/mapbox-gl-js/)
