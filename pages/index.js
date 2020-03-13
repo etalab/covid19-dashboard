@@ -111,7 +111,7 @@ const MainPage = ({data, dates}) => {
   }, [])
 
   return (
-    <Page title='Tableau de bord de suivi de l’épidémie de nouveau coronavirus'>
+    <Page title='Tableau de bord de suivi de l’épidémie de coronavirus en France'>
       <div className='main-page-container'>
         {isMobileDevice ? (
           <MobilePage
