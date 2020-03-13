@@ -43,12 +43,17 @@ const formatData = data => {
   }
 }
 
-const ConfirmedChart = ({data}) => (
-  <Bar data={formatData(data)} options={options} height={250} />
+const ConfirmedChart = ({data, height}) => (
+  <Bar data={formatData(data)} options={options} height={height} />
 )
 
+ConfirmedChart.defaultProps = {
+  height: null
+}
+
 ConfirmedChart.propTypes = {
-  data: PropTypes.array.isRequired
+  data: PropTypes.array.isRequired,
+  height: PropTypes.number
 }
 
 export default ConfirmedChart

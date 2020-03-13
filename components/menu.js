@@ -51,7 +51,7 @@ const Menu = ({date, report, previousReport, nextReport}) => {
         </div>
 
         {history && (
-          <ConfirmedChart data={history.filter(r => previousDates(date, r.date))} />
+          <ConfirmedChart data={history.filter(r => previousDates(date, r.date))} height={300} />
         )}
       </div>
 
@@ -64,6 +64,7 @@ const Menu = ({date, report, previousReport, nextReport}) => {
           flex-direction: column;
           height: 100%;
           width: 100%;
+          background-color: #fff;
         }
 
         .menu-container > div {
@@ -89,7 +90,7 @@ const Menu = ({date, report, previousReport, nextReport}) => {
 
         .report-nav:hover {
           cursor: pointer;
-          backgroundColor: ${colors.grey};
+          background-color: ${colors.grey};
         }
 
         .menu-container .content {
