@@ -10,11 +10,17 @@ import Page from '../layouts/main'
 
 import Menu from '../components/menu'
 import ReactMapGl from '../components/react-map-gl'
+import ConfirmedChart from '../components/confirmed-chart'
+import Statistics from '../components/statistics'
+import Description from '../components/descritpion'
+
+import DateNav from '../components/date-nav'
 
 import theme from '../styles/theme'
 import colors from '../styles/colors'
 
 import {previousDates} from '../lib/dates'
+import MobilePage from '../layouts/mobile'
 
 const defaultViewport = {
   latitude: 46.9,
@@ -23,6 +29,7 @@ const defaultViewport = {
 }
 
 const MainPage = ({data, dates}) => {
+  const [isMobileDevice, setIsMobileDevice] = useState(false)
   const [date, setDate] = useState(dates[dates.length - 1])
   const [franceReport, setFranceReport] = useState({})
   const [regionsReport, setRegionsReport] = useState({})
@@ -77,6 +84,20 @@ const MainPage = ({data, dates}) => {
     }
   }, [date, data])
 
+  const handleResize = () => {
+    const mobileWidth = theme.mobileDisplay.split('px')[0]
+    setIsMobileDevice(window.innerWidth < mobileWidth)
+  }
+
+  useEffect(() => {
+    const {latitude, longitude} = viewport
+    setViewport({
+      latitude,
+      longitude,
+      zoom: isMobileDevice ? 4.3 : 5
+    })
+  }, [isMobileDevice]) // eslint-disable-line react-hooks/exhaustive-deps
+
   useEffect(() => {
     const franceReport = getFranceReport()
     setFranceReport(franceReport)
@@ -88,72 +109,102 @@ const MainPage = ({data, dates}) => {
   useEffect(() => {
     const mobileWidth = theme.mobileDisplay.split('px')[0]
     if (window.innerWidth < mobileWidth) {
-      const {latitude, longitude} = viewport
-      setViewport({
-        latitude,
-        longitude,
-        zoom: 4.3
-      })
+      setIsMobileDevice(true)
     }
-  }, []) // eslint-disable-line react-hooks/exhaustive-deps
+
+    window.addEventListener('resize', handleResize)
+
+    return () => {
+      window.removeEventListener('resize', handleResize)
+    }
+  }, [])
 
   return (
     <Page title='Tableau de bord de suivi de l’épidémie de nouveau coronavirus'>
       <div className='main-page-container'>
-        <div className='menu'>
-          <Menu
+        {isMobileDevice ? (
+          <MobilePage
             date={date}
-            report={franceReport}
-            previousReport={dateIdx > 0 ? previousReport : null}
-            nextReport={dateIdx < dates.length - 1 ? nextReport : null}
-          />
-        </div>
-        <div className='map'>
-          <ReactMapGl
+            franceReport={franceReport}
+            regionsReport={regionsReport}
+            prev={previousReport}
+            next={nextReport}
+            setViewport={setViewport}
             viewport={viewport}
-            date={date}
-            regions={regionsReport}
-            onViewportChange={setViewport}
           />
-        </div>
-      </div>
-      <style jsx>{`
-        .main-page-container {
-          position: absolute;
-          display: flex;
-          height: 100%;
-          width: 100%;
-        }
+        ) : (
+          <>
+            <div className='menu'>
+              <Menu
+                date={date}
+                previousReport={dateIdx > 0 ? previousReport : null}
+                nextReport={dateIdx < dates.length - 1 ? nextReport : null}
+              >
+                <DateNav date={date} prev={previousReport} next={nextReport} />
+                <>
+                  <Description />
 
-        .menu {
-          flex: 1;
-          z-index: 1;
-          max-width: 400px;
-          box-shadow: 0 1px 4px ${colors.lightGrey};
-        }
+                  <Statistics report={franceReport} />
 
-        .map {
-          flex:1;
-          height: 100%;
-        }
+                  {franceReport && franceReport.history && (
+                    <ConfirmedChart data={franceReport.history.filter(r => previousDates(date, r.date))} height={300} />
+                  )}
+                </>
+              </Menu>
+            </div>
 
-        @media (max-width: ${theme.mobileDisplay}) {
+            <div className='map'>
+              <ReactMapGl
+                viewport={viewport}
+                date={date}
+                regions={regionsReport}
+                onViewportChange={setViewport}
+              />
+            </div>
+          </>
+        )}
+
+        <style jsx>{`
+                        .menu {
+                flex: 1;
+                z-index: 1;
+                max-width: 400px;
+                box-shadow: 0 1px 4px ${colors.lightGrey};
+              }
+
+              .map {
+                flex:1;
+                height: 100%;
+              }
+
+              @media (max-width: ${theme.mobileDisplay}) {
+                .map {
+                  height: 60%;
+                }
+
+                .menu {
+                  flex: 0;
+                  height: 40%;
+                  max-width: none;
+                  box-shadow: 0 -1px 4px ${colors.lightGrey};
+                }
+              }
+
+
           .main-page-container {
-            flex-direction: column-reverse;
+            position: absolute;
+            display: flex;
+            height: 100%;
+            width: 100%;
           }
 
-          .map {
-            height: 60%;
+          @media (max-width: ${theme.mobileDisplay}) {
+            .main-page-container {
+              flex-direction: column-reverse;
+            }
           }
-
-          .menu {
-            flex: 0;
-            height: 40%;
-            max-width: none;
-            box-shadow: 0 -1px 4px ${colors.lightGrey};
-          }
-        }
         `}</style>
+      </div>
     </Page>
   )
 }
