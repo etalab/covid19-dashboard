@@ -5,6 +5,8 @@ import {FileText, Map, BarChart} from 'react-feather'
 import colors from '../styles/colors'
 import theme from '../styles/theme'
 
+import Footer from './footer'
+
 const Menu = ({selectedView, selectView, children}) => {
   return (
     <div className='menu-container'>
@@ -24,9 +26,7 @@ const Menu = ({selectedView, selectView, children}) => {
         </div>
       </div>
 
-      <div className='menu-footer'>
-        <div>[<a href='https://github.com/opencovid19-fr/dashboard'>GitHub</a>]</div>
-      </div>
+      <Footer />
       <style jsx>{`
         .menu-container {
           display: flex;
@@ -54,17 +54,7 @@ const Menu = ({selectedView, selectView, children}) => {
           border-top: 2px solid ${colors.blue};
         }
 
-        .menu-container .menu-footer {
-          text-align: center;
-          background: ${colors.lightGrey};
-          padding: 1em;
-        }
-
         @media (max-width: ${theme.mobileDisplay}) {
-          .menu-footer {
-            padding: 0.5em 1em;
-          }
-
           .view-selector {
             display: grid;
             grid-template-columns: 1fr 1fr 1fr;
