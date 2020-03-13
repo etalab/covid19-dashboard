@@ -19,7 +19,6 @@ import DateNav from '../components/date-nav'
 import theme from '../styles/theme'
 import colors from '../styles/colors'
 
-import {previousDates} from '../lib/dates'
 import MobilePage from '../layouts/mobile'
 
 const defaultViewport = {
@@ -77,7 +76,7 @@ const MainPage = ({data, dates}) => {
           },
           properties: {
             ...byCode[code].find(r => r.date === date),
-            history: byCode[code].filter(r => previousDates(date, r.date))
+            history: byCode[code].filter(r => date >= r.date)
           }
         }
       }).filter(i => Boolean(i))
@@ -127,8 +126,8 @@ const MainPage = ({data, dates}) => {
             date={date}
             franceReport={franceReport}
             regionsReport={regionsReport}
-            prev={previousReport}
-            next={nextReport}
+            prev={dateIdx > 0 ? previousReport : null}
+            next={dateIdx < dates.length - 1 ? nextReport : null}
             setViewport={setViewport}
             viewport={viewport}
           />
@@ -147,7 +146,7 @@ const MainPage = ({data, dates}) => {
                   <Statistics report={franceReport} />
 
                   {franceReport && franceReport.history && (
-                    <ConfirmedChart data={franceReport.history.filter(r => previousDates(date, r.date))} height={300} />
+                    <ConfirmedChart data={franceReport.history.filter(r => date >= r.date)} height={300} />
                   )}
                 </>
               </Menu>

@@ -1,7 +1,5 @@
 import React, {useState} from 'react'
 
-import {previousDates} from '../lib/dates'
-
 import DateNav from '../components/date-nav'
 import Menu from '../components/menu'
 import ReactMapGl from '../components/react-map-gl'
@@ -22,7 +20,7 @@ const VIEWS = {
       <Statistics report={franceReport} />
 
       {franceReport && franceReport.history && (
-        <ConfirmedChart data={franceReport.history.filter(r => previousDates(date, r.date))} height={300} />
+        <ConfirmedChart data={franceReport.history.filter(r => date >= r.date)} height={300} />
       )}
     </>
   ),
