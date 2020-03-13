@@ -2,7 +2,7 @@ import React, {useState, useCallback} from 'react'
 import PropTypes from 'prop-types'
 import ReactMapGL, {Source, Layer, Popup} from 'react-map-gl'
 
-import RegionSumup from './region-sumup'
+import SumUp from './sumup'
 
 import {regionLayer, regionCountLayer} from './layers'
 
@@ -67,7 +67,7 @@ const Map = ({viewport, regions, onViewportChange}) => {
             anchor='top'
             offsetTop={20}
           >
-            <RegionSumup {...hovered.feature.properties} />
+            <SumUp {...hovered.feature.properties} />
           </Popup>
         )}
       </ReactMapGL>
