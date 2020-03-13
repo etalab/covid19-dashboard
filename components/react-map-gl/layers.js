@@ -7,7 +7,7 @@ export const regionLayer = {
   filter: ['>', 'casConfirmes', 0],
   paint: {
     'circle-opacity': 0.6,
-    'circle-color': colors.red,
+    'circle-color': colors.orange,
     'circle-radius': [
       'interpolate',
       ['linear'],
