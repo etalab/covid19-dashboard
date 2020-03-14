@@ -8,7 +8,7 @@ const RegionSumup = ({nom, casConfirmes, history}) => (
     <div className='title'>{nom}</div>
     <div>{casConfirmes} cas confirmés</div>
 
-    <ConfirmedChart data={JSON.parse(history)} />
+    <ConfirmedChart data={JSON.parse(history)} height={240} />
 
     <style jsx>{`
         .sumup-container {
