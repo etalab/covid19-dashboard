@@ -23,6 +23,13 @@ Pour contribuer, créez une Issue, ou déposez une Pull-request :)
 yarn
 ```
 
+## Refresh centers
+
+```
+yarn centers:build
+```
+
+
 ## Lancer (en mode développement)
 
 ```
