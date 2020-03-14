@@ -43,3 +43,9 @@ La production est actuellement sur GitHub Pages. Vous devez disposer des droits 
 ```
 yarn deploy
 ```
+
+## Mettre à jour les centres géographiques
+
+```
+yarn centers:build
+```
