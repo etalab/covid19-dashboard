@@ -23,13 +23,6 @@ Pour contribuer, créez une Issue, ou déposez une Pull-request :)
 yarn
 ```
 
-## Refresh centers
-
-```
-yarn centers:build
-```
-
-
 ## Lancer (en mode développement)
 
 ```
@@ -49,4 +42,10 @@ La production est actuellement sur GitHub Pages. Vous devez disposer des droits 
 
 ```
 yarn deploy
+```
+
+## Mettre à jour les centres géographiques
+
+```
+yarn centers:build
 ```
