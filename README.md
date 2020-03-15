@@ -4,6 +4,8 @@ Cet outil contributif tente de proposer une vision [consolidée](https://github.
 
 Pour contribuer, créez une Issue, ou déposez une Pull-request :)
 
+Vous pouvez aussi consulter [le guide de contribution pour l'ensemble des projets de collecte de données](https://github.com/opencovid19-fr/comment-contribuer).
+
 ## Outils utilisés
 
 * [Node.js](https://nodejs.org)
