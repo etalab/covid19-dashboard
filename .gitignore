@@ -33,3 +33,5 @@ bundle-stats
 node_modules
 
 /out
+
+.now
