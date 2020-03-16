@@ -14,7 +14,7 @@ export const regionLayer = {
       ['number', ['get', 'casConfirmes']],
       0,
       10,
-      1800,
+      2500,
       80
     ]
   }
