@@ -17,19 +17,19 @@ export default function MyApp({Component, pageProps}) {
 
         @font-face {
           font-family: "Source Sans Pro";
-          src: url("../public/fonts/Source Sans Pro/SourceSansPro-Regular.otf");
+          src: url("/fonts/Source Sans Pro/SourceSansPro-Regular.otf");
           font-weight: 400;
         }
 
         @font-face {
           font-family: "Source Sans Pro";
-          src: url("../public/fonts/Source Sans Pro/SourceSansPro-Bold.otf");
+          src: url("/fonts/Source Sans Pro/SourceSansPro-Bold.otf");
           font-weight: 800;
         }
 
         @font-face {
           font-family: "Source Sans Pro";
-          src: url("../public/fonts/Source Sans Pro/SourceSansPro-It.otf");
+          src: url("/fonts/Source Sans Pro/SourceSansPro-It.otf");
           font-style: italic;
         }
 
