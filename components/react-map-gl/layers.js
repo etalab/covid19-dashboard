@@ -11,10 +11,10 @@ export const regionLayer = {
     'circle-radius': [
       'interpolate',
       ['linear'],
-      ['number', ['get', 'casConfirmes']],
+      ['sqrt', ['number', ['get', 'casConfirmes']]],
       0,
       10,
-      2500,
+      50,
       80
     ]
   }
