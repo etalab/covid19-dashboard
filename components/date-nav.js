@@ -17,7 +17,7 @@ const DateNav = ({date, prev, next}) => {
   return (
     <div className='menu-header'>
       <div className={`report-nav ${prev ? '' : 'disabled'}`} onClick={prev}><ChevronLeft /></div>
-      <h2>Données du {formatedDate}</h2>
+      <h2>Données au {formatedDate}</h2>
       <div className={`report-nav ${next ? '' : 'disabled'}`} onClick={next}><ChevronRight /></div>
 
       <style jsx>{`
