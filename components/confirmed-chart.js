@@ -10,7 +10,18 @@ const options = {
   },
   scales: {
     xAxes: [{
-      stacked: true
+      stacked: true,
+      type: 'time',
+      time: {
+        unit: 'day',
+        displayFormats: {
+          day: 'YYYY-MM-DD'
+        }
+      },
+      gridLines: {
+        offsetGridLines: true
+      },
+      offset: true
     }],
     yAxes: [{
       stacked: true
@@ -38,7 +49,7 @@ const formatData = data => {
   }
 
   return {
-    labels: data.map(h => h.date),
+    labels: data.map(h => new Date(h.date)),
     datasets
   }
 }
