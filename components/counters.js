@@ -3,7 +3,7 @@ import PropTypes from 'prop-types'
 
 import Counter from './counter'
 
-const Statistics = ({report}) => {
+const Counters = ({report}) => {
   const {casConfirmes, deces} = report || {}
 
   return (
@@ -27,12 +27,12 @@ const Statistics = ({report}) => {
   )
 }
 
-Statistics.defaultProps = {
+Counters.defaultProps = {
   report: {}
 }
 
-Statistics.propTypes = {
+Counters.propTypes = {
   report: PropTypes.object
 }
 
-export default Statistics
+export default Counters

@@ -7,7 +7,7 @@ import theme from '../styles/theme'
 import DateNav from '../components/date-nav'
 import Scrollable from '../components/scrollable'
 import ReactMapGl from '../components/react-map-gl'
-import Statistics from '../components/statistics'
+import Counters from '../components/counters'
 import ConfirmedChart from '../components/confirmed-chart'
 import Description from '../components/description'
 import Footer from '../components/footer'
@@ -22,7 +22,7 @@ const VIEWS = {
   ),
   stats: ({date, franceReport}) => (
     <>
-      <Statistics report={franceReport} />
+      <Counters report={franceReport} />
 
       {franceReport && franceReport.history && (
         <ConfirmedChart data={franceReport.history.filter(r => date >= r.date)} height={300} />

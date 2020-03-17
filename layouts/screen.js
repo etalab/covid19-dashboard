@@ -3,7 +3,7 @@ import React from 'react'
 import DateNav from '../components/date-nav'
 import Scrollable from '../components/scrollable'
 import ReactMapGl from '../components/react-map-gl'
-import Statistics from '../components/statistics'
+import Counters from '../components/counters'
 import ConfirmedChart from '../components/confirmed-chart'
 import Description from '../components/description'
 import Footer from '../components/footer'
@@ -17,7 +17,7 @@ const ScreenPage = ({date, franceReport, regionsReport, prev, next, viewport, se
         <DateNav date={date} prev={prev} next={next} />
         <Scrollable date={date}>
           <>
-            <Statistics report={franceReport} />
+            <Counters report={franceReport} />
 
             {franceReport && franceReport.history && (
               <ConfirmedChart data={franceReport.history.filter(r => date >= r.date)} height={200} />
