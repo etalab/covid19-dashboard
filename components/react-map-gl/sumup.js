@@ -11,21 +11,21 @@ const RegionSumup = ({nom, casConfirmes, history}) => (
     <ConfirmedChart data={JSON.parse(history)} height={240} />
 
     <style jsx>{`
-        .sumup-container {
-          font-size: larger;
-        }
+      .sumup-container {
+        font-size: larger;
+      }
 
-        .title {
-          font-weight: bold;
-        }
-      `}</style>
+      .title {
+        font-weight: bold;
+      }
+    `}</style>
   </div>
 )
 
 RegionSumup.propTypes = {
   nom: PropTypes.string.isRequired,
   casConfirmes: PropTypes.number.isRequired,
-  history: PropTypes.array.isRequired
+  history: PropTypes.string.isRequired
 }
 
 export default RegionSumup
