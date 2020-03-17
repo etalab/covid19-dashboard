@@ -15,8 +15,9 @@ const options = {
       time: {
         unit: 'day',
         displayFormats: {
-          day: 'YYYY-MM-DD'
-        }
+          day: 'DD/MM'
+        },
+        tooltipFormat: 'DD/MM'
       },
       gridLines: {
         offsetGridLines: true
