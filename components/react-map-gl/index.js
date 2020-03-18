@@ -5,7 +5,7 @@ import {AppContext} from '../../pages'
 
 import SumUp from './sumup'
 
-import {regionLayer, regionCountLayer} from './layers'
+import {casConfirmesLayer, casConfirmesCountLayer} from './layers'
 
 const settings = {
   maxZoom: 16
@@ -55,9 +55,12 @@ const Map = () => {
         onHover={onHover}
       >
 
-        <Source type='geojson' id='regions' data={regionsReport}>
-          <Layer {...regionLayer} />
-          <Layer {...regionCountLayer} />
+        <Source
+          type='geojson'
+          id='cas-confirmes'
+        >
+          <Layer {...casConfirmesLayer} />
+          <Layer {...casConfirmesCountLayer} />
         </Source>
 
         {hovered && (
