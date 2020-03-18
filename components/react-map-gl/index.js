@@ -12,7 +12,7 @@ const settings = {
 }
 
 const Map = () => {
-  const {viewport, regionsReport, onViewportChange} = useContext(AppContext)
+  const {viewport, regionsReport, setViewport} = useContext(AppContext)
 
   const [map, setMap] = useState()
   const [hovered, setHovered] = useState(null)
@@ -51,7 +51,7 @@ const Map = () => {
         mapStyle='https://openmaptiles.geo.data.gouv.fr/styles/osm-bright/style.json'
         {...settings}
         interactiveLayerIds={[regionLayer.id]}
-        onViewportChange={onViewportChange}
+        onViewportChange={setViewport}
         onHover={onHover}
       >
 
