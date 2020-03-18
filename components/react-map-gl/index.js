@@ -1,6 +1,7 @@
-import React, {useState, useCallback} from 'react'
-import PropTypes from 'prop-types'
+import React, {useState, useCallback, useContext} from 'react'
 import ReactMapGL, {Source, Layer, Popup} from 'react-map-gl'
+
+import {AppContext} from '../../pages'
 
 import SumUp from './sumup'
 
@@ -10,7 +11,9 @@ const settings = {
   maxZoom: 16
 }
 
-const Map = ({viewport, regions, onViewportChange}) => {
+const Map = () => {
+  const {viewport, regionsReport, setViewport} = useContext(AppContext)
+
   const [map, setMap] = useState()
   const [hovered, setHovered] = useState(null)
 
@@ -48,11 +51,11 @@ const Map = ({viewport, regions, onViewportChange}) => {
         mapStyle='https://openmaptiles.geo.data.gouv.fr/styles/osm-bright/style.json'
         {...settings}
         interactiveLayerIds={[regionLayer.id]}
-        onViewportChange={onViewportChange}
+        onViewportChange={setViewport}
         onHover={onHover}
       >
 
-        <Source type='geojson' id='regions' data={regions}>
+        <Source type='geojson' id='regions' data={regionsReport}>
           <Layer {...regionLayer} />
           <Layer {...regionCountLayer} />
         </Source>
@@ -80,13 +83,6 @@ const Map = ({viewport, regions, onViewportChange}) => {
       `}</style>
     </div>
   )
-}
-
-Map.propTypes = {
-  viewport: PropTypes.object.isRequired,
-  date: PropTypes.string.isRequired,
-  regions: PropTypes.object.isRequired,
-  onViewportChange: PropTypes.func.isRequired
 }
 
 export default Map

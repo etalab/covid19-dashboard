@@ -13,6 +13,8 @@ import Page from '../layouts/main'
 import ScreenPage from '../layouts/screen'
 import MobilePage from '../layouts/mobile'
 
+export const AppContext = React.createContext()
+
 const defaultViewport = {
   latitude: 46.9,
   longitude: 1.7,
@@ -112,28 +114,25 @@ const MainPage = ({data, dates}) => {
 
   return (
     <Page title='Tableau de bord de suivi de l’épidémie de coronavirus en France'>
+
       <div className='main-page-container'>
-        {isMobileDevice ? (
-          <MobilePage
-            date={date}
-            franceReport={franceReport}
-            regionsReport={regionsReport}
-            prev={dateIdx > 0 ? previousReport : null}
-            next={dateIdx < dates.length - 1 ? nextReport : null}
-            setViewport={setViewport}
-            viewport={viewport}
-          />
-        ) : (
-          <ScreenPage
-            date={date}
-            franceReport={franceReport}
-            regionsReport={regionsReport}
-            prev={dateIdx > 0 ? previousReport : null}
-            next={dateIdx < dates.length - 1 ? nextReport : null}
-            setViewport={setViewport}
-            viewport={viewport}
-          />
-        )}
+        <AppContext.Provider value={{
+          date,
+          franceReport,
+          regionsReport,
+          prev: dateIdx > 0 ? previousReport : null,
+          next: dateIdx < dates.length - 1 ? nextReport : null,
+          setViewport,
+          viewport,
+          isMobileDevice
+        }}
+        >
+          {isMobileDevice ? (
+            <MobilePage />
+          ) : (
+            <ScreenPage />
+          )}
+        </AppContext.Provider>
 
         <style jsx>{`
           .main-page-container {

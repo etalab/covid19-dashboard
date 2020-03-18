@@ -1,45 +1,34 @@
-import React, {useState} from 'react'
+import React, {useState, useContext} from 'react'
 import {FileText, Map, BarChart} from 'react-feather'
 
 import colors from '../styles/colors'
 import theme from '../styles/theme'
 
+import {AppContext} from '../pages'
+
 import DateNav from '../components/date-nav'
 import Scrollable from '../components/scrollable'
 import ReactMapGl from '../components/react-map-gl'
-import Statistics from '../components/statistics'
-import ConfirmedChart from '../components/confirmed-chart'
+import NationalStatistics from '../components/national-statistics'
 import Description from '../components/description'
 import Footer from '../components/footer'
 
 const VIEWS = {
-  map: ({viewport, date, regionsReport, setViewport}) => (
-    <ReactMapGl
-      viewport={viewport}
-      date={date}
-      regions={regionsReport}
-      onViewportChange={setViewport} />
-  ),
-  stats: ({date, franceReport}) => (
-    <>
-      <Statistics report={franceReport} />
-
-      {franceReport && franceReport.history && (
-        <ConfirmedChart data={franceReport.history.filter(r => date >= r.date)} height={300} />
-      )}
-    </>
-  ),
+  map: () => <ReactMapGl />,
+  stats: () => <NationalStatistics />,
   description: () => <Description />
 }
 
-const MobilePage = props => {
+const MobilePage = () => {
   const [selectedView, setSelectedView] = useState('map')
+
+  const app = useContext(AppContext)
 
   return (
     <div className='mobile-page-container'>
-      <DateNav {...props} />
+      <DateNav />
       <Scrollable>
-        {VIEWS[selectedView](props)}
+        {VIEWS[selectedView](app)}
       </Scrollable>
 
       <div className='view-selector'>

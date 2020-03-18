@@ -3,14 +3,17 @@ import PropTypes from 'prop-types'
 
 import ConfirmedChart from '../confirmed-chart'
 
-const RegionSumup = ({nom, casConfirmes, history}) => (
-  <div className='sumup-container'>
-    <div className='title'>{nom}</div>
-    <div>{casConfirmes} cas confirmés</div>
+const RegionSumup = ({nom, casConfirmes, history}) => {
+  const data = JSON.parse(history).filter(r => r.source.nom === 'Santé publique France')
 
-    <ConfirmedChart data={JSON.parse(history)} height={240} />
+  return (
+    <div className='sumup-container'>
+      <div className='title'>{nom}</div>
+      <div>{casConfirmes} cas confirmés</div>
 
-    <style jsx>{`
+      <ConfirmedChart data={data} height={240} />
+
+      <style jsx>{`
       .sumup-container {
         font-size: larger;
       }
@@ -19,8 +22,9 @@ const RegionSumup = ({nom, casConfirmes, history}) => (
         font-weight: bold;
       }
     `}</style>
-  </div>
-)
+    </div>
+  )
+}
 
 RegionSumup.propTypes = {
   nom: PropTypes.string.isRequired,

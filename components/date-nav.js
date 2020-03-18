@@ -1,6 +1,7 @@
-import React from 'react'
-import PropTypes from 'prop-types'
+import React, {useContext} from 'react'
 import {ChevronLeft, ChevronRight} from 'react-feather'
+
+import {AppContext} from '../pages'
 
 import theme from '../styles/theme'
 import colors from '../styles/colors'
@@ -11,7 +12,8 @@ const formatDate = isoString => {
   return date.toLocaleDateString()
 }
 
-const DateNav = ({date, prev, next}) => {
+const DateNav = () => {
+  const {date, prev, next} = useContext(AppContext)
   const formatedDate = formatDate(date)
 
   return (
@@ -59,17 +61,6 @@ const DateNav = ({date, prev, next}) => {
       `}</style>
     </div>
   )
-}
-
-DateNav.defaultProps = {
-  prev: null,
-  next: null
-}
-
-DateNav.propTypes = {
-  date: PropTypes.string.isRequired,
-  prev: PropTypes.func,
-  next: PropTypes.func
 }
 
 export default DateNav
