@@ -50,7 +50,7 @@ const Map = () => {
         height='100%'
         mapStyle='https://openmaptiles.geo.data.gouv.fr/styles/osm-bright/style.json'
         {...settings}
-        interactiveLayerIds={[regionLayer.id]}
+        interactiveLayerIds={[casConfirmesLayer.id]}
         onViewportChange={setViewport}
         onHover={onHover}
       >
