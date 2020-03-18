@@ -10,6 +10,8 @@ import theme from '../styles/theme'
 
 import Page from '../layouts/main'
 
+import {casConfirmesLayer, casConfirmesCountLayer, decesLayer, decesCountLayer} from '../components/react-map-gl/layers'
+
 import ScreenPage from '../layouts/screen'
 import MobilePage from '../layouts/mobile'
 
@@ -127,6 +129,37 @@ const MainPage = ({data, dates}) => {
     }
   }, [])
 
+  const maps = [
+    {
+      name: 'Carte des cas confirmés',
+      category: 'régionale',
+      data: regionsReport,
+      properties: 'casConfirmes',
+      layers: [casConfirmesLayer, casConfirmesCountLayer]
+    },
+    {
+      name: 'Carte des décès',
+      category: 'régionale',
+      data: regionsReport,
+      properties: 'deces',
+      layers: [decesLayer, decesCountLayer]
+    },
+    {
+      name: 'Carte des cas confirmés',
+      category: 'départemental',
+      data: departementsReport,
+      properties: 'deces',
+      layers: [casConfirmesLayer, casConfirmesCountLayer]
+    },
+    {
+      name: 'Carte des décès',
+      category: 'départemental',
+      data: departementsReport,
+      properties: 'deces',
+      layers: [decesLayer, decesCountLayer]
+    }
+  ]
+
   return (
     <Page title='Tableau de bord de suivi de l’épidémie de coronavirus en France'>
 
@@ -139,6 +172,7 @@ const MainPage = ({data, dates}) => {
           prev: dateIdx > 0 ? previousReport : null,
           next: dateIdx < dates.length - 1 ? nextReport : null,
           setViewport,
+          maps,
           viewport,
           isMobileDevice
         }}

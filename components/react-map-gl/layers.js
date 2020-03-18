@@ -30,3 +30,34 @@ export const casConfirmesCountLayer = {
     'text-size': 16
   }
 }
+
+export const decesLayer = {
+  id: 'deces',
+  type: 'circle',
+  source: 'deces',
+  filter: ['>', 'deces', 0],
+  paint: {
+    'circle-opacity': 0.6,
+    'circle-color': colors.red,
+    'circle-radius': [
+      'interpolate',
+      ['linear'],
+      ['sqrt', ['number', ['get', 'casConfirmes']]],
+      0,
+      10,
+      60,
+      80
+    ]
+  }
+}
+
+export const decesCountLayer = {
+  id: 'deces-count',
+  type: 'symbol',
+  source: 'deces',
+  filter: ['>', 'deces', 0],
+  layout: {
+    'text-field': '{deces}',
+    'text-size': 16
+  }
+}

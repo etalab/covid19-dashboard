@@ -5,14 +5,16 @@ import {AppContext} from '../../pages'
 
 import SumUp from './sumup'
 
-import {casConfirmesLayer, casConfirmesCountLayer} from './layers'
+import MapSelector from '../map-selector'
 
 const settings = {
   maxZoom: 16
 }
 
 const Map = () => {
-  const {viewport, regionsReport, setViewport} = useContext(AppContext)
+  const [selectedMapIdx, setSelectedMapIdx] = useState(0)
+
+  const app = useContext(AppContext)
 
   const [map, setMap] = useState()
   const [hovered, setHovered] = useState(null)
@@ -40,27 +42,39 @@ const Map = () => {
     setHovered(hoverInfo)
   }
 
+  const cumputeHoveredData = useCallback(() => {
+    const {history} = hovered.feature.properties
+    const json = JSON.parse(history)
+
+    return app.maps[selectedMapIdx].category === 'régionale' ? json.filter(r => r.source.nom === 'Santé publique France') : json
+  }, [app, hovered, selectedMapIdx])
+
   return (
     <div className='map-container'>
       <ReactMapGL
         ReuseMaps
         ref={mapRef}
-        {...viewport}
+        {...app.viewport}
         width='100%'
         height='100%'
         mapStyle='https://openmaptiles.geo.data.gouv.fr/styles/osm-bright/style.json'
         {...settings}
-        interactiveLayerIds={[casConfirmesLayer.id]}
-        onViewportChange={setViewport}
+        interactiveLayerIds={app.maps[selectedMapIdx].layers.map(layer => layer.id)}
+        onViewportChange={app.setViewport}
         onHover={onHover}
       >
+        <div className='map-switch'>
+          <MapSelector mapIdx={selectedMapIdx} selectMap={setSelectedMapIdx} />
+        </div>
 
         <Source
           type='geojson'
           id='cas-confirmes'
+          data={app.maps[selectedMapIdx].data}
         >
-          <Layer {...casConfirmesLayer} />
-          <Layer {...casConfirmesCountLayer} />
+          {app.maps[selectedMapIdx].layers.map(layer => (
+            <Layer key={layer.id} {...layer} />
+          ))}
         </Source>
 
         {hovered && (
@@ -73,7 +87,7 @@ const Map = () => {
             anchor='top'
             offsetTop={20}
           >
-            <SumUp {...hovered.feature.properties} />
+            <SumUp data={cumputeHoveredData()} {...hovered.feature.properties} />
           </Popup>
         )}
       </ReactMapGL>
@@ -82,6 +96,12 @@ const Map = () => {
           position: relative;
           width: 100%;
           height: 100%;
+        }
+
+        .map-switch {
+          position: absolute;
+          margin: 0.5em;
+          width: ${app.isMobileDevice ? 'calc(100% - 1em)' : 'none'};
         }
       `}</style>
     </div>

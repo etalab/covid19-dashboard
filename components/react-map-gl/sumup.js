@@ -3,9 +3,7 @@ import PropTypes from 'prop-types'
 
 import ConfirmedChart from '../confirmed-chart'
 
-const RegionSumup = ({nom, casConfirmes, deces, history}) => {
-  const data = JSON.parse(history).filter(r => r.source.nom === 'Santé publique France')
-
+const RegionSumup = ({nom, casConfirmes, deces, data}) => {
   return (
     <div className='sumup-container'>
       <div className='title'>{nom}</div>
@@ -33,7 +31,7 @@ RegionSumup.propTypes = {
   nom: PropTypes.string.isRequired,
   casConfirmes: PropTypes.number.isRequired,
   deces: PropTypes.number.isRequired,
-  history: PropTypes.string.isRequired
+  data: PropTypes.array.isRequired
 }
 
 export default RegionSumup
