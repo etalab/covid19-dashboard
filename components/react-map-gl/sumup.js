@@ -27,10 +27,14 @@ const RegionSumup = ({nom, casConfirmes, deces, data}) => {
   )
 }
 
+RegionSumup.defaultProps = {
+  deces: null
+}
+
 RegionSumup.propTypes = {
   nom: PropTypes.string.isRequired,
   casConfirmes: PropTypes.number.isRequired,
-  deces: PropTypes.number.isRequired,
+  deces: PropTypes.number,
   data: PropTypes.array.isRequired
 }
 
