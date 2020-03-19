@@ -80,7 +80,7 @@ const Map = () => {
             anchor='top'
             offsetTop={20}
           >
-            <SumUp data={JSON.parse(hovered.feature.properties.history)} />
+            <SumUp data={JSON.parse(hovered.feature.properties.history)} {...hovered.feature.properties} />
           </Popup>
         )}
       </ReactMapGL>
