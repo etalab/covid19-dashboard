@@ -42,13 +42,6 @@ const Map = () => {
     setHovered(hoverInfo)
   }
 
-  const cumputeHoveredData = useCallback(() => {
-    const {history} = hovered.feature.properties
-    const json = JSON.parse(history)
-
-    return app.maps[selectedMapIdx].category === 'régionale' ? json.filter(r => r.source.nom === 'Santé publique France') : json
-  }, [app, hovered, selectedMapIdx])
-
   return (
     <div className='map-container'>
       <ReactMapGL
@@ -87,7 +80,7 @@ const Map = () => {
             anchor='top'
             offsetTop={20}
           >
-            <SumUp data={cumputeHoveredData()} {...hovered.feature.properties} />
+            <SumUp data={JSON.parse(hovered.feature.properties.history)} />
           </Popup>
         )}
       </ReactMapGL>
