@@ -15,6 +15,25 @@ import MobilePage from '../layouts/mobile'
 
 export const AppContext = React.createContext()
 
+const reportToGeoJSON = (report, date) => {
+  return {
+    type: 'FeatureCollection',
+    features: Object.keys(report).filter(code => Boolean(centers[code])).map(code => {
+      return {
+        type: 'Feature',
+        geometry: {
+          type: 'Point',
+          coordinates: centers[code]
+        },
+        properties: {
+          ...report[code].find(r => r.date === date),
+          history: report[code].filter(r => date >= r.date)
+        }
+      }
+    }).filter(i => Boolean(i))
+  }
+}
+
 const defaultViewport = {
   latitude: 46.9,
   longitude: 1.7,
@@ -59,22 +78,7 @@ const MainPage = ({data, dates}) => {
     const regions = data.filter((item => item.code.includes('REG')))
     const byCode = groupBy(regions, 'code')
 
-    return {
-      type: 'FeatureCollection',
-      features: Object.keys(byCode).map(code => {
-        return {
-          type: 'Feature',
-          geometry: {
-            type: 'Point',
-            coordinates: centers[code]
-          },
-          properties: {
-            ...byCode[code].find(r => r.date === date),
-            history: byCode[code].filter(r => date >= r.date)
-          }
-        }
-      }).filter(i => Boolean(i))
-    }
+    return reportToGeoJSON(byCode, date)
   }, [date, data])
 
   const handleResize = () => {
