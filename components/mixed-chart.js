@@ -55,19 +55,19 @@ const formatData = data => {
   }
 }
 
-const ConfirmedChart = ({data, height}) => (
+const MixedChart = ({data, height}) => (
   <div style={{padding: '1em'}}>
     <Bar data={formatData(data)} options={options} height={height} />
   </div>
 )
 
-ConfirmedChart.defaultProps = {
+MixedChart.defaultProps = {
   height: null
 }
 
-ConfirmedChart.propTypes = {
+MixedChart.propTypes = {
   data: PropTypes.array.isRequired,
   height: PropTypes.number
 }
 
-export default ConfirmedChart
+export default MixedChart

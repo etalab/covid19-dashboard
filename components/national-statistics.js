@@ -3,7 +3,7 @@ import React, {useContext} from 'react'
 import {AppContext} from '../pages'
 
 import Counters from './counters'
-import ConfirmedChart from './confirmed-chart'
+import MixedChart from './mixed-chart'
 
 const NationalStatistics = () => {
   const {date, franceReport} = useContext(AppContext)
@@ -13,7 +13,7 @@ const NationalStatistics = () => {
       <Counters report={franceReport} />
 
       {franceReport && franceReport.history && (
-        <ConfirmedChart data={franceReport.history.filter(r => date >= r.date)} height={300} />
+        <MixedChart data={franceReport.history.filter(r => date >= r.date)} height={300} />
       )}
     </>
   )

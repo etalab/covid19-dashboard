@@ -1,7 +1,7 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 
-import ConfirmedChart from '../confirmed-chart'
+import MixedChart from '../mixed-chart'
 
 const Sumup = ({nom, casConfirmes, deces, data}) => {
   return (
@@ -12,7 +12,7 @@ const Sumup = ({nom, casConfirmes, deces, data}) => {
         {deces && deces > 0 ? <span> (dont {deces} décès)</span> : null}
       </div>
 
-      <ConfirmedChart data={data} height={240} />
+      <MixedChart data={data} height={240} />
 
       <style jsx>{`
       .sumup-container {
