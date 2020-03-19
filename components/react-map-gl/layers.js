@@ -14,7 +14,7 @@ export const regionLayer = {
       ['sqrt', ['number', ['get', 'casConfirmes']]],
       0,
       10,
-      60,
+      100,
       80
     ]
   }
