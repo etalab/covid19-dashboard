@@ -77,8 +77,7 @@ const Map = () => {
             closeButton={false}
             closeOnClick={false}
             onClose={() => setHovered(null)}
-            anchor='top'
-            offsetTop={20}
+            anchor='bottom-left'
           >
             <SumUp data={JSON.parse(hovered.feature.properties.history)} {...hovered.feature.properties} />
           </Popup>
