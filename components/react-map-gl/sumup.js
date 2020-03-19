@@ -1,7 +1,7 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 
-import MixedChart from '../mixed-chart'
+import MixedChart from '../charts/mixed-chart'
 
 const Sumup = ({nom, casConfirmes, deces, data}) => {
   return (

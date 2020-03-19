@@ -13,11 +13,6 @@ const Counters = ({report}) => {
         <Counter value={deces || '?'} label='décès' color='red' />
       </div>
       <style jsx>{`
-        .stats {
-          flex: 1;
-          padding: 1em;
-        }
-
         .counters {
           display: grid;
           grid-template-columns: 1fr 1fr;
