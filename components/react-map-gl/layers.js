@@ -42,10 +42,10 @@ export const decesLayer = {
     'circle-radius': [
       'interpolate',
       ['linear'],
-      ['sqrt', ['number', ['get', 'casConfirmes']]],
+      ['sqrt', ['number', ['get', 'deces']]],
       0,
       10,
-      60,
+      30,
       80
     ]
   }
