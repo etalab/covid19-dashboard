@@ -146,14 +146,14 @@ const MainPage = ({data, dates}) => {
     },
     {
       name: 'Carte des cas confirmés',
-      category: 'départemental',
+      category: 'départementale',
       data: departementsReport,
-      properties: 'deces',
+      properties: 'casConfirmes',
       layers: [casConfirmesLayer, casConfirmesCountLayer]
     },
     {
       name: 'Carte des décès',
-      category: 'départemental',
+      category: 'départementale',
       data: departementsReport,
       properties: 'deces',
       layers: [decesLayer, decesCountLayer]
