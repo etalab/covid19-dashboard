@@ -11,7 +11,7 @@ const RegionSumup = ({nom, casConfirmes, deces, history}) => {
       <div className='title'>{nom}</div>
       <div>
         {casConfirmes} cas confirmés
-        {deces && <span> (dont {deces} décès)</span>}
+        {deces && deces > 0 ? <span> (dont {deces} décès)</span> : null}
       </div>
 
       <ConfirmedChart data={data} height={240} />
