@@ -1,7 +1,8 @@
 import React from 'react'
 
-const Description = React.memo(() => (
-  <div className='description'>
+const Informations = React.memo(() => (
+  <div className='informations'>
+    <h3>Informations</h3>
     <p>
       L‘information officielle sur la progression de l’épidémie en France est très fragmentée.
     </p>
@@ -17,15 +18,15 @@ const Description = React.memo(() => (
     <p>Pensez aussi à consulter la <a href='https://www.gouvernement.fr/info-coronavirus'>page d’information du Gouvernement</a>.</p>
 
     <style jsx>{`
-      .description {
+      .informations {
         padding: 1em;
       }
 
-      .description p {
+      .informations p {
         font-size: 0.85em;
       }
     `}</style>
   </div>
 ))
 
-export default Description
+export default Informations
