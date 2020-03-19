@@ -10,13 +10,13 @@ import DateNav from '../components/date-nav'
 import Scrollable from '../components/scrollable'
 import ReactMapGl from '../components/react-map-gl'
 import NationalStatistics from '../components/national-statistics'
-import Description from '../components/description'
+import Informations from '../components/informations'
 import Footer from '../components/footer'
 
 const VIEWS = {
   map: () => <ReactMapGl />,
   stats: () => <NationalStatistics />,
-  description: () => <Description />
+  informations: () => <Informations />
 }
 
 const MobilePage = () => {
@@ -32,7 +32,7 @@ const MobilePage = () => {
       </Scrollable>
 
       <div className='view-selector'>
-        <div className={`${selectedView === 'description' ? 'selected' : ''}`} onClick={() => setSelectedView('description')}>
+        <div className={`${selectedView === 'informations' ? 'selected' : ''}`} onClick={() => setSelectedView('informations')}>
           <FileText />
         </div>
         <div className={`${selectedView === 'map' ? 'selected' : ''}`} onClick={() => setSelectedView('map')}>

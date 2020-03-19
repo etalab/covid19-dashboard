@@ -10,6 +10,8 @@ import theme from '../styles/theme'
 
 import Page from '../layouts/main'
 
+import {casConfirmesLayer, casConfirmesCountLayer, decesLayer, decesCountLayer} from '../components/react-map-gl/layers'
+
 import ScreenPage from '../layouts/screen'
 import MobilePage from '../layouts/mobile'
 
@@ -45,6 +47,7 @@ const MainPage = ({data, dates}) => {
   const [date, setDate] = useState(dates[dates.length - 1])
   const [franceReport, setFranceReport] = useState({})
   const [regionsReport, setRegionsReport] = useState({})
+  const [departementsReport, setDepartementsReport] = useState({})
   const [viewport, setViewport] = useState(defaultViewport)
 
   const dateIdx = indexOf(dates, date)
@@ -81,6 +84,13 @@ const MainPage = ({data, dates}) => {
     return reportToGeoJSON(byCode, date)
   }, [date, data])
 
+  const getDepartementsReport = useCallback(() => {
+    const departements = data.filter((item => item.code.includes('DEP')))
+    const byCode = groupBy(departements, 'code')
+
+    return reportToGeoJSON(byCode, date)
+  }, [date, data])
+
   const handleResize = () => {
     const mobileWidth = theme.mobileDisplay.split('px')[0]
     setIsMobileDevice(window.innerWidth < mobileWidth)
@@ -101,7 +111,10 @@ const MainPage = ({data, dates}) => {
 
     const regionsReport = getRegionsReport()
     setRegionsReport(regionsReport)
-  }, [date, getFranceReport, getRegionsReport])
+
+    const departementsReport = getDepartementsReport()
+    setDepartementsReport(departementsReport)
+  }, [date, getFranceReport, getRegionsReport, getDepartementsReport])
 
   useEffect(() => {
     const mobileWidth = theme.mobileDisplay.split('px')[0]
@@ -116,6 +129,37 @@ const MainPage = ({data, dates}) => {
     }
   }, [])
 
+  const maps = [
+    {
+      name: 'Carte des cas confirmés',
+      category: 'régionale',
+      data: regionsReport,
+      properties: 'casConfirmes',
+      layers: [casConfirmesLayer, casConfirmesCountLayer]
+    },
+    {
+      name: 'Carte des décès',
+      category: 'régionale',
+      data: regionsReport,
+      properties: 'deces',
+      layers: [decesLayer, decesCountLayer]
+    },
+    {
+      name: 'Carte des cas confirmés',
+      category: 'départementale',
+      data: departementsReport,
+      properties: 'casConfirmes',
+      layers: [casConfirmesLayer, casConfirmesCountLayer]
+    },
+    {
+      name: 'Carte des décès',
+      category: 'départementale',
+      data: departementsReport,
+      properties: 'deces',
+      layers: [decesLayer, decesCountLayer]
+    }
+  ]
+
   return (
     <Page title='Tableau de bord de suivi de l’épidémie de coronavirus en France'>
 
@@ -124,9 +168,11 @@ const MainPage = ({data, dates}) => {
           date,
           franceReport,
           regionsReport,
+          departementsReport,
           prev: dateIdx > 0 ? previousReport : null,
           next: dateIdx < dates.length - 1 ? nextReport : null,
           setViewport,
+          maps,
           viewport,
           isMobileDevice
         }}

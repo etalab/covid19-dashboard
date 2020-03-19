@@ -1,11 +1,9 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 
-import ConfirmedChart from '../confirmed-chart'
+import MixedChart from '../charts/mixed-chart'
 
-const RegionSumup = ({nom, casConfirmes, deces, history}) => {
-  const data = JSON.parse(history).filter(r => r.source.nom === 'Santé publique France')
-
+const Sumup = ({nom, casConfirmes, deces, data}) => {
   return (
     <div className='sumup-container'>
       <div className='title'>{nom}</div>
@@ -14,7 +12,7 @@ const RegionSumup = ({nom, casConfirmes, deces, history}) => {
         {deces && deces > 0 ? <span> (dont {deces} décès)</span> : null}
       </div>
 
-      <ConfirmedChart data={data} height={240} />
+      <MixedChart data={data} height={240} />
 
       <style jsx>{`
       .sumup-container {
@@ -29,11 +27,15 @@ const RegionSumup = ({nom, casConfirmes, deces, history}) => {
   )
 }
 
-RegionSumup.propTypes = {
-  nom: PropTypes.string.isRequired,
-  casConfirmes: PropTypes.number.isRequired,
-  deces: PropTypes.number.isRequired,
-  history: PropTypes.string.isRequired
+Sumup.defaultProps = {
+  deces: null
 }
 
-export default RegionSumup
+Sumup.propTypes = {
+  nom: PropTypes.string.isRequired,
+  casConfirmes: PropTypes.number.isRequired,
+  deces: PropTypes.number,
+  data: PropTypes.array.isRequired
+}
+
+export default Sumup

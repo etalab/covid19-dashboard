@@ -5,14 +5,16 @@ import {AppContext} from '../../pages'
 
 import SumUp from './sumup'
 
-import {regionLayer, regionCountLayer} from './layers'
+import MapSelector from '../map-selector'
 
 const settings = {
   maxZoom: 16
 }
 
 const Map = () => {
-  const {viewport, regionsReport, setViewport} = useContext(AppContext)
+  const [selectedMapIdx, setSelectedMapIdx] = useState(0)
+
+  const app = useContext(AppContext)
 
   const [map, setMap] = useState()
   const [hovered, setHovered] = useState(null)
@@ -45,19 +47,27 @@ const Map = () => {
       <ReactMapGL
         ReuseMaps
         ref={mapRef}
-        {...viewport}
+        {...app.viewport}
         width='100%'
         height='100%'
         mapStyle='https://openmaptiles.geo.data.gouv.fr/styles/osm-bright/style.json'
         {...settings}
-        interactiveLayerIds={[regionLayer.id]}
-        onViewportChange={setViewport}
+        interactiveLayerIds={app.maps[selectedMapIdx].layers.map(layer => layer.id)}
+        onViewportChange={app.setViewport}
         onHover={onHover}
       >
+        <div className='map-switch'>
+          <MapSelector mapIdx={selectedMapIdx} selectMap={setSelectedMapIdx} />
+        </div>
 
-        <Source type='geojson' id='regions' data={regionsReport}>
-          <Layer {...regionLayer} />
-          <Layer {...regionCountLayer} />
+        <Source
+          type='geojson'
+          id='cas-confirmes'
+          data={app.maps[selectedMapIdx].data}
+        >
+          {app.maps[selectedMapIdx].layers.map(layer => (
+            <Layer key={layer.id} {...layer} />
+          ))}
         </Source>
 
         {hovered && (
@@ -67,10 +77,9 @@ const Map = () => {
             closeButton={false}
             closeOnClick={false}
             onClose={() => setHovered(null)}
-            anchor='top'
-            offsetTop={20}
+            anchor='bottom-left'
           >
-            <SumUp {...hovered.feature.properties} />
+            <SumUp data={JSON.parse(hovered.feature.properties.history)} {...hovered.feature.properties} />
           </Popup>
         )}
       </ReactMapGL>
@@ -79,6 +88,12 @@ const Map = () => {
           position: relative;
           width: 100%;
           height: 100%;
+        }
+
+        .map-switch {
+          position: absolute;
+          margin: 0.5em;
+          width: ${app.isMobileDevice ? 'calc(100% - 1em)' : 'none'};
         }
       `}</style>
     </div>

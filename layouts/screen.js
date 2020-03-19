@@ -4,7 +4,7 @@ import DateNav from '../components/date-nav'
 import Scrollable from '../components/scrollable'
 import ReactMapGl from '../components/react-map-gl'
 import NationalStatistics from '../components/national-statistics'
-import Description from '../components/description'
+import Informations from '../components/informations'
 import Footer from '../components/footer'
 
 import colors from '../styles/colors'
@@ -16,7 +16,7 @@ const ScreenPage = () => (
       <Scrollable>
         <>
           <NationalStatistics />
-          <Description />
+          <Informations />
         </>
       </Scrollable>
       <Footer />

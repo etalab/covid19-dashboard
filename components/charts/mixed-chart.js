@@ -2,7 +2,7 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import {Bar} from 'react-chartjs-2'
 
-import colors from '../styles/colors'
+import colors from '../../styles/colors'
 
 const options = {
   tooltips: {
@@ -55,19 +55,19 @@ const formatData = data => {
   }
 }
 
-const ConfirmedChart = ({data, height}) => (
+const MixedChart = ({data, height}) => (
   <div style={{padding: '1em'}}>
     <Bar data={formatData(data)} options={options} height={height} />
   </div>
 )
 
-ConfirmedChart.defaultProps = {
+MixedChart.defaultProps = {
   height: null
 }
 
-ConfirmedChart.propTypes = {
+MixedChart.propTypes = {
   data: PropTypes.array.isRequired,
   height: PropTypes.number
 }
 
-export default ConfirmedChart
+export default MixedChart
