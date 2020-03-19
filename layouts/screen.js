@@ -1,4 +1,6 @@
-import React from 'react'
+import React, {useContext} from 'react'
+
+import {AppContext} from '../pages'
 
 import DateNav from '../components/date-nav'
 import Scrollable from '../components/scrollable'
@@ -9,24 +11,26 @@ import Footer from '../components/footer'
 
 import colors from '../styles/colors'
 
-const ScreenPage = () => (
-  <>
-    <div className='menu'>
-      <DateNav />
-      <Scrollable>
-        <>
-          <NationalStatistics />
-          <Informations />
-        </>
-      </Scrollable>
-      <Footer />
-    </div>
+const ScreenPage = () => {
+  const {isIframe} = useContext(AppContext)
+  return (
+    <>
+      <div className='menu'>
+        <DateNav />
+        <Scrollable>
+          <>
+            <NationalStatistics />
+            <Informations />
+          </>
+        </Scrollable>
+        {!isIframe && <Footer />}
+      </div>
 
-    <div className='map'>
-      <ReactMapGl />
-    </div>
+      <div className='map'>
+        <ReactMapGl />
+      </div>
 
-    <style jsx>{`
+      <style jsx>{`
       .menu {
         z-index: 1;
         display: flex;
@@ -40,7 +44,8 @@ const ScreenPage = () => (
         height: 100%;
       }
     `}</style>
-  </>
-)
+    </>
+  )
+}
 
 export default ScreenPage
