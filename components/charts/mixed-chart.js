@@ -6,7 +6,13 @@ import colors from '../../styles/colors'
 
 const options = {
   tooltips: {
-    mode: 'index'
+    mode: 'index',
+    callbacks: {
+      label: (tooltipItem, data) => {
+        const datasetLabel = data.datasets[tooltipItem.datasetIndex].label
+        return tooltipItem.value === 'NaN' ? datasetLabel + ' : undefined' : datasetLabel + ' : ' + tooltipItem.value
+      }
+    }
   },
   scales: {
     xAxes: [{
@@ -73,7 +79,6 @@ const formatData = data => {
 
 const MixedChart = ({data, height}) => (
   <div style={{padding: '1em'}}>
-    {console.log(formatData(data))}
     <Bar data={formatData(data)} options={options} height={height} />
   </div>
 )
