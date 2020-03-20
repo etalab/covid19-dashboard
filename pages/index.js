@@ -1,4 +1,5 @@
 import React, {useState, useCallback, useEffect} from 'react'
+import {useRouter} from 'next/router'
 import PropTypes from 'prop-types'
 import {groupBy, uniq, indexOf} from 'lodash'
 
@@ -52,7 +53,10 @@ const defaultViewport = {
   zoom: 5
 }
 
-const MainPage = ({data, dates, isIframe, isGouv}) => {
+const MainPage = ({data, dates, isGouv}) => {
+  const router = useRouter()
+
+  const [isIframe, setIsIframe] = useState(false)
   const [isMobileDevice, setIsMobileDevice] = useState(false)
   const [isTouchScreenDevice, setIsTouchScreenDevice] = useState(false)
   const [date, setDate] = useState(dates[dates.length - 1])
@@ -139,6 +143,12 @@ const MainPage = ({data, dates, isIframe, isGouv}) => {
       zoom: isMobileDevice ? 4.3 : 5
     })
   }, [isMobileDevice]) // eslint-disable-line react-hooks/exhaustive-deps
+
+  useEffect(() => {
+    const {iframe} = router.query
+
+    setIsIframe(Boolean(iframe === '1'))
+  }, [router])
 
   useEffect(() => {
     const franceReport = getFranceReport()
@@ -271,26 +281,18 @@ const MainPage = ({data, dates, isIframe, isGouv}) => {
   )
 }
 
-MainPage.defaultProps = {
-  isIframe: false,
-  isGouv: false
-}
-
 MainPage.propTypes = {
   data: PropTypes.array.isRequired,
-  dates: PropTypes.array.isRequired,
-  isIframe: PropTypes.bool,
-  isGouv: PropTypes.bool
+  isGouv: PropTypes.bool.isRequired,
+  dates: PropTypes.array.isRequired
 }
 
-MainPage.getInitialProps = async ({query}) => {
-  const isGouv = query.gouv === '1'
-  const isIframe = query.iframe === '1'
+MainPage.getInitialProps = async () => {
+  const isGouv = process.env.gouv || false
   const data = await getData(isGouv)
 
   return {
     data,
-    isIframe,
     isGouv,
     dates: uniq(data.filter(r => r.code === 'FRA').map(r => r.date)).sort()
   }
