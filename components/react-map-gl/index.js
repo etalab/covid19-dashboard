@@ -113,7 +113,7 @@ const Map = () => {
             onClose={() => setHovered(null)}
             anchor='bottom-left'
           >
-            <SumUp {...hovered.feature.properties} />
+            <SumUp nom={hovered.feature.properties.nom} />
           </Popup>
         )}
       </ReactMapGL>
