@@ -54,6 +54,7 @@ const defaultViewport = {
 
 const MainPage = ({data, dates, isIframe, isGouv}) => {
   const [isMobileDevice, setIsMobileDevice] = useState(false)
+  const [isTouchScreenDevice, setIsTouchScreenDevice] = useState(false)
   const [date, setDate] = useState(dates[dates.length - 1])
   const [franceReport, setFranceReport] = useState({})
   const [regionsReport, setRegionsReport] = useState({})
@@ -139,6 +140,10 @@ const MainPage = ({data, dates, isIframe, isGouv}) => {
     }
   }, [])
 
+  useEffect(() => {
+    setIsTouchScreenDevice('ontouchstart' in document.documentElement)
+  }, [])
+
   const maps = [
     {
       name: 'Carte des cas confirmés',
@@ -213,7 +218,8 @@ const MainPage = ({data, dates, isIframe, isGouv}) => {
           maps,
           viewport,
           isIframe,
-          isMobileDevice
+          isMobileDevice,
+          isTouchScreenDevice
         }}
         >
           <ThemeContext.Provider value={isGouv ? theme.gouv : theme.default}>
