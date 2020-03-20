@@ -16,6 +16,7 @@ import ScreenPage from '../layouts/screen'
 import MobilePage from '../layouts/mobile'
 
 export const AppContext = React.createContext()
+export const ThemeContext = React.createContext('theme.default')
 
 const reportToGeoJSON = (report, date) => {
   return {
@@ -42,7 +43,7 @@ const defaultViewport = {
   zoom: 5
 }
 
-const MainPage = ({data, dates, isIframe}) => {
+const MainPage = ({data, dates, isIframe, isGouv}) => {
   const [isMobileDevice, setIsMobileDevice] = useState(false)
   const [date, setDate] = useState(dates[dates.length - 1])
   const [franceReport, setFranceReport] = useState({})
@@ -178,11 +179,13 @@ const MainPage = ({data, dates, isIframe}) => {
           isMobileDevice
         }}
         >
-          {isMobileDevice ? (
-            <MobilePage />
-          ) : (
-            <ScreenPage />
-          )}
+          <ThemeContext.Provider value={isGouv ? theme.gouv : theme.default}>
+            {isMobileDevice ? (
+              <MobilePage />
+            ) : (
+              <ScreenPage />
+            )}
+          </ThemeContext.Provider>
         </AppContext.Provider>
 
         <style jsx>{`
@@ -199,22 +202,26 @@ const MainPage = ({data, dates, isIframe}) => {
 }
 
 MainPage.defaultProps = {
-  isIframe: false
+  isIframe: false,
+  isGouv: false
 }
 
 MainPage.propTypes = {
   data: PropTypes.array.isRequired,
   dates: PropTypes.array.isRequired,
-  isIframe: PropTypes.bool
+  isIframe: PropTypes.bool,
+  isGouv: PropTypes.bool
 }
 
 MainPage.getInitialProps = async ({query}) => {
   const {iframe} = query
+  const {gouv} = query
   const data = await getData()
 
   return {
     data,
     isIframe: Boolean(iframe === '1'),
+    isGouv: Boolean(gouv === '1'),
     dates: uniq(data.filter(r => r.code === 'FRA').map(r => r.date)).sort()
   }
 }

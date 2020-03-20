@@ -1,8 +1,6 @@
 import React, {useContext, useState} from 'react'
 
-import colors from '../styles/colors'
-
-import {AppContext} from '../pages'
+import {AppContext, ThemeContext} from '../pages'
 
 import Counters from './counters'
 import MixedChart from './charts/mixed-chart'
@@ -26,6 +24,7 @@ const charts = {
 
 const NationalStatistics = () => {
   const {date, franceReport, isMobileDevice} = useContext(AppContext)
+  const Theme = useContext(ThemeContext)
 
   const [selectedChart, setSelectedChart] = useState('mixed')
   const Chart = charts[selectedChart].chart
@@ -59,7 +58,7 @@ const NationalStatistics = () => {
         }
 
         .chart-name {
-          background-color: ${colors.lightGrey};
+          background-color: ${Theme.alt};
           color: #fff;
           border-radius: 4px;
           padding: 0.2em 0.4em;
@@ -67,11 +66,11 @@ const NationalStatistics = () => {
 
         .chart-name:hover {
           cursor: pointer;
-          background-color: ${colors.darkerGrey};
+          background-color: ${Theme.secondary};
         }
 
         .chart-name.selected {
-          background-color: ${colors.darkGrey};
+          background-color: ${Theme.primary};
         }
         `}</style>
     </>
