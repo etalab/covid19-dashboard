@@ -7,7 +7,7 @@ import {AppContext} from '../../pages'
 import MapSelector from '../map-selector'
 
 import SumUp from './sumup'
-import NationalStatistics from '../national-statistics'
+import Statistics from '../statistics'
 
 const settings = {
   maxZoom: 16
@@ -127,7 +127,7 @@ const Map = () => {
       {isMobileDevice && (
         <div className={`mobile-sumup ${selectedLocation ? 'show' : 'hide'}`}>
           {selectedLocation && (
-            <NationalStatistics />
+            <Statistics />
           )}
         </div>
       )}

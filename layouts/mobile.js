@@ -9,13 +9,13 @@ import {AppContext} from '../pages'
 import DateNav from '../components/date-nav'
 import Scrollable from '../components/scrollable'
 import ReactMapGl from '../components/react-map-gl'
-import NationalStatistics from '../components/national-statistics'
+import Statistics from '../components/statistics'
 import Informations from '../components/informations'
 import Footer from '../components/footer'
 
 const VIEWS = {
   map: () => <ReactMapGl />,
-  stats: () => <NationalStatistics />,
+  stats: () => <Statistics />,
   informations: () => <Informations />
 }
 

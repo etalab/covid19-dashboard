@@ -35,10 +35,10 @@ const charts = {
   }
 }
 
-const NationalStatistics = () => {
+const Statistics = () => {
   const theme = useContext(ThemeContext)
-
   const {date, franceReport, selectedLocation, setSelectedLocation, isMobileDevice} = useContext(AppContext)
+
   const report = selectedLocation || franceReport
 
   const [selectedChart, setSelectedChart] = useState('mixed')
@@ -142,4 +142,4 @@ const NationalStatistics = () => {
   )
 }
 
-export default NationalStatistics
+export default Statistics
