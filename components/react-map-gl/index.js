@@ -10,7 +10,7 @@ import SumUp from './sumup'
 import Statistics from '../statistics'
 
 const settings = {
-  maxZoom: 16
+  maxZoom: 10
 }
 
 const Map = () => {
