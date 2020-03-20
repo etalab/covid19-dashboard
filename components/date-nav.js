@@ -32,7 +32,7 @@ const DateNav = () => {
           text-align: center;
           box-shadow: 0 1px 4px ${colors.lightGrey};
           padding: 1em;
-          background-color: ${colors.darkerGrey};
+          background-color: ${colors.blue};
           color: #fff;
         }
 

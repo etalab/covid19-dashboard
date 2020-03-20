@@ -15,7 +15,7 @@ const Footer = () => (
     <style jsx>{`
       .menu-footer {
         display: flex;
-        background: ${colors.darkerGrey};
+        background: ${colors.blue};
         padding: 1em;
       }
 
