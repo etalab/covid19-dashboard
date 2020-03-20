@@ -10,7 +10,16 @@ import theme from '../styles/theme'
 
 import Page from '../layouts/main'
 
-import {casConfirmesLayer, casConfirmesCountLayer, decesLayer, decesCountLayer} from '../components/react-map-gl/layers'
+import {
+  casConfirmesLayer,
+  casConfirmesCountLayer,
+  decesLayer,
+  decesCountLayer,
+  hospitalisesLayer,
+  hospitalisesCountLayer,
+  reanimationLayer,
+  reanimationCountLayer
+} from '../components/react-map-gl/layers'
 
 import ScreenPage from '../layouts/screen'
 import MobilePage from '../layouts/mobile'
@@ -146,6 +155,20 @@ const MainPage = ({data, dates, isIframe, isGouv}) => {
       layers: [decesLayer, decesCountLayer]
     },
     {
+      name: 'Carte des hospitalisations',
+      category: 'régionale',
+      properties: 'hospitalises',
+      data: regionsReport,
+      layers: [hospitalisesLayer, hospitalisesCountLayer]
+    },
+    {
+      name: 'Carte des cas en réanimation',
+      category: 'régionale',
+      properties: 'reanimation',
+      data: regionsReport,
+      layers: [reanimationLayer, reanimationCountLayer]
+    },
+    {
       name: 'Carte des cas confirmés',
       category: 'départementale',
       data: departementsReport,
@@ -158,6 +181,20 @@ const MainPage = ({data, dates, isIframe, isGouv}) => {
       data: departementsReport,
       properties: 'deces',
       layers: [decesLayer, decesCountLayer]
+    },
+    {
+      name: 'Carte des hospitalisations',
+      category: 'départementale',
+      properties: 'hospitalises',
+      data: departementsReport,
+      layers: [hospitalisesLayer, hospitalisesCountLayer]
+    },
+    {
+      name: 'Carte des cas en réanimation',
+      category: 'départementale',
+      properties: 'reanimation',
+      data: departementsReport,
+      layers: [reanimationLayer, reanimationCountLayer]
     }
   ]
 
