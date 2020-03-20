@@ -6,10 +6,12 @@ import Counters from './counters'
 import MixedChart from './charts/mixed-chart'
 import ConfirmesChart from './charts/confirmes-chart'
 import DecesChart from './charts/deces-chart'
+import ReanimationChart from './charts/reanimation-chart'
+import HospitalisesChart from './charts/hospitalises-chart'
 
 const charts = {
   mixed: {
-    name: 'Cas confirmés & décès',
+    name: 'Tout afficher',
     chart: MixedChart
   },
   confirmed: {
@@ -19,6 +21,14 @@ const charts = {
   deces: {
     name: 'Décès',
     chart: DecesChart
+  },
+  reanimation: {
+    name: 'Réanimation',
+    chart: ReanimationChart
+  },
+  hospitalises: {
+    name: 'Hospitalisés',
+    chart: HospitalisesChart
   }
 }
 
@@ -54,6 +64,7 @@ const NationalStatistics = () => {
         .charts-list {
           display: flex;
           justify-content: space-around;
+          flex-wrap: wrap;
           align-items: center;
         }
 
@@ -61,6 +72,7 @@ const NationalStatistics = () => {
           background-color: ${Theme.alt};
           color: #fff;
           border-radius: 4px;
+          margin: .2em 0;
           padding: 0.2em 0.4em;
         }
 
