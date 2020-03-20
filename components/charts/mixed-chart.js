@@ -7,11 +7,8 @@ import colors from '../../styles/colors'
 const options = {
   tooltips: {
     mode: 'index',
-    callbacks: {
-      label: (tooltipItem, data) => {
-        const datasetLabel = data.datasets[tooltipItem.datasetIndex].label
-        return tooltipItem.value === 'NaN' ? datasetLabel + ' : undefined' : datasetLabel + ' : ' + tooltipItem.value
-      }
+    filter(item) {
+      return item.value !== 'NaN'
     }
   },
   scales: {
@@ -39,35 +36,43 @@ const options = {
 const formatData = data => {
   const datasets = []
 
-  if (data.some(h => h.casConfirmes)) {
+  if (data.some(h => h.deces)) {
     datasets.push({
-      label: 'Cas confirmés',
-      data: data.map(h => h.casConfirmes - ((h.deces + h.hospitalises + h.reanimation) || 0)),
-      backgroundColor: colors.orange
-    })
-  }
-
-  if (data.some(h => h.hospitalises)) {
-    datasets.push({
-      label: 'Hospitalisés',
-      data: data.map(h => h.hospitalises),
-      backgroundColor: colors.darkGrey
+      label: 'Décès',
+      data: data.map(h => h.deces || null),
+      backgroundColor: colors.red
     })
   }
 
   if (data.some(h => h.reanimation)) {
     datasets.push({
-      label: 'Réanimation',
-      data: data.map(h => h.reanimation),
+      label: 'En réanimation',
+      data: data.map(h => h.reanimation || null),
       backgroundColor: colors.darkerGrey
     })
   }
 
-  if (data.some(h => h.deces)) {
+  if (data.some(h => h.hospitalises)) {
     datasets.push({
-      label: 'Décédés',
-      data: data.map(h => h.deces),
-      backgroundColor: colors.red
+      label: 'Autre hospitalisation',
+      data: data.map(h => {
+        if (h.hospitalises) {
+          return h.hospitalises - (h.reanimation || 0)
+        }
+
+        return null
+      }),
+      backgroundColor: colors.darkGrey
+    })
+  }
+
+  if (data.some(h => h.casConfirmes)) {
+    datasets.push({
+      label: 'Autre',
+      data: data.map(h => {
+        return h.casConfirmes - (((h.deces || 0) + (h.hospitalises || h.reanimation || 0)))
+      }),
+      backgroundColor: colors.orange
     })
   }
 
