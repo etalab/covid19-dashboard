@@ -10,9 +10,9 @@ const Counters = ({report}) => {
     <div className='stats'>
       <div className='counters'>
         <Counter value={casConfirmes || '?'} label='cas confirmés' color='orange' />
-        <Counter value={hospitalises || '?'} label='hospitalisés' color='darkGrey' />
-        <Counter value={reanimation || '?'} label='réanimation' color='darkerGrey' />
         <Counter value={deces || '?'} label='décès' color='red' />
+        <Counter value={hospitalises || '?'} label='hospitalisations' color='darkGrey' />
+        <Counter value={reanimation || '?'} label='dont en réanimation' color='darkerGrey' />
       </div>
       <style jsx>{`
         .counters {

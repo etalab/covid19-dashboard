@@ -22,11 +22,11 @@ const charts = {
     chart: ConfirmesChart
   },
   hospitalises: {
-    name: 'Hospitalisés',
+    name: 'Hospitalisations',
     chart: HospitalisesChart
   },
   reanimation: {
-    name: 'Réanimation',
+    name: 'Réanimations',
     chart: ReanimationChart
   },
   deces: {
