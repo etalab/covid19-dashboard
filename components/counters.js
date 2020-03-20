@@ -12,7 +12,7 @@ const Counters = ({report}) => {
         <Counter value={casConfirmes || '?'} label='cas confirmés' color='orange' />
         <Counter value={deces || '?'} label='décès' color='red' />
         <Counter value={hospitalises || '?'} label='hospitalisations' color='darkGrey' />
-        <Counter value={reanimation || '?'} label='dont en réanimation' color='darkerGrey' />
+        <Counter value={reanimation || '?'} label='en réanimation' color='darkerGrey' />
       </div>
       <style jsx>{`
         .counters {
