@@ -288,7 +288,7 @@ MainPage.propTypes = {
 }
 
 MainPage.getInitialProps = async () => {
-  const isGouv = process.env.gouv || false
+  const isGouv = Boolean(process.env.gouv === '1')
   const data = await getData(isGouv)
 
   return {
