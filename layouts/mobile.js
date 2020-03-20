@@ -26,7 +26,7 @@ const MobilePage = () => {
 
   return (
     <div className='mobile-page-container'>
-      <DateNav />
+      <DateNav disabled={selectedView === 'informations'} />
       <Scrollable>
         {VIEWS[selectedView](app)}
       </Scrollable>
