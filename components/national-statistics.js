@@ -62,10 +62,10 @@ const NationalStatistics = () => {
 
       <style jsx>{`
         .charts-list {
-          display: flex;
-          justify-content: space-around;
-          flex-wrap: wrap;
-          align-items: center;
+          display: grid;
+          grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
+          grid-gap: 0.2em;
+          margin: 0.5em;
         }
 
         .chart-name {
