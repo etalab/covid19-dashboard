@@ -1,5 +1,5 @@
 import React, {useState, useContext} from 'react'
-import {FileText, Map, BarChart} from 'react-feather'
+import {FileText, Map, BarChart2} from 'react-feather'
 
 import colors from '../styles/colors'
 import theme from '../styles/theme'
@@ -44,7 +44,7 @@ const MobilePage = () => {
           <Map />
         </div>
         <div className={`${selectedView === 'stats' ? 'selected' : ''}`} onClick={() => handleClick('stats')}>
-          <BarChart />
+          <BarChart2 />
         </div>
       </div>
 
