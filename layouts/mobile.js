@@ -43,7 +43,7 @@ const MobilePage = () => {
         </div>
       </div>
 
-      <Footer />
+      {!app.isIframe && <Footer />}
 
       <style jsx>{`
         .mobile-page-container {

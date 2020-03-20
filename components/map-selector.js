@@ -51,9 +51,6 @@ const MapSelector = ({mapIdx, selectMap}) => {
         .switch {
           display: flex;
           flex-direction: column;
-          background-color: #000000aa;
-          color: #fff;
-          border-radius: 4px;
         }
 
         .header {

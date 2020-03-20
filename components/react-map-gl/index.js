@@ -1,5 +1,6 @@
 import React, {useState, useCallback, useContext} from 'react'
 import ReactMapGL, {Source, Layer, Popup} from 'react-map-gl'
+import {Maximize2} from 'react-feather'
 
 import {AppContext} from '../../pages'
 
@@ -44,8 +45,16 @@ const Map = () => {
 
   return (
     <div className='map-container'>
-      <div className='control'>
-        <MapSelector mapIdx={selectedMapIdx} selectMap={setSelectedMapIdx} />
+      <div className='controls'>
+        <div className='control'>
+          <MapSelector mapIdx={selectedMapIdx} selectMap={setSelectedMapIdx} />
+        </div>
+
+        {app.isIframe && (
+          <div className='control maximize'>
+            <a href='https://veille-coronavirus.fr/'><Maximize2 style={{verticalAalign: 'middle'}} /></a>
+          </div>
+        )}
       </div>
 
       <ReactMapGL
@@ -84,6 +93,7 @@ const Map = () => {
           </Popup>
         )}
       </ReactMapGL>
+
       <style jsx>{`
         .map-container {
           position: relative;
@@ -91,11 +101,32 @@ const Map = () => {
           height: 100%;
         }
 
-        .control {
+        .controls {
           z-index: 1;
           position: absolute;
-          margin: 0.5em;
-          width: ${app.isMobileDevice ? 'calc(100% - 1em)' : 'none'};
+          display: flex;
+          justify-content: space-between;
+          align-items: end;
+          width: 100%;
+        }
+
+        .control {
+          background-color: #000000aa;
+          color: #fff;
+          border-radius: 4px;
+          margin: ${app.isMobileDevice ? '0.5em auto' : '0.5em'};
+        }
+
+        .maximize {
+          display: flex;
+          right: 0;
+          border-radius: 4px;
+          background: #53514f;
+        }
+
+        .maximize a {
+          color: #fff;
+          padding: 0.4em 0.4em 0.2em 0.4em;
         }
       `}</style>
     </div>

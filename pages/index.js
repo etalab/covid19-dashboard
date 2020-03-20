@@ -42,7 +42,7 @@ const defaultViewport = {
   zoom: 5
 }
 
-const MainPage = ({data, dates}) => {
+const MainPage = ({data, dates, isIframe}) => {
   const [isMobileDevice, setIsMobileDevice] = useState(false)
   const [date, setDate] = useState(dates[dates.length - 1])
   const [franceReport, setFranceReport] = useState({})
@@ -174,6 +174,7 @@ const MainPage = ({data, dates}) => {
           setViewport,
           maps,
           viewport,
+          isIframe,
           isMobileDevice
         }}
         >
@@ -197,16 +198,23 @@ const MainPage = ({data, dates}) => {
   )
 }
 
-MainPage.propTypes = {
-  data: PropTypes.array.isRequired,
-  dates: PropTypes.array.isRequired
+MainPage.defaultProps = {
+  isIframe: false
 }
 
-MainPage.getInitialProps = async () => {
+MainPage.propTypes = {
+  data: PropTypes.array.isRequired,
+  dates: PropTypes.array.isRequired,
+  isIframe: PropTypes.bool
+}
+
+MainPage.getInitialProps = async ({query}) => {
+  const {iframe} = query
   const data = await getData()
 
   return {
     data,
+    isIframe: Boolean(iframe === '1'),
     dates: uniq(data.filter(r => r.code === 'FRA').map(r => r.date)).sort()
   }
 }
