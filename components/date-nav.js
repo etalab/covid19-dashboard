@@ -37,7 +37,7 @@ const DateNav = ({disabled}) => {
           align-items: center;
           text-align: center;
           box-shadow: 0 1px 4px ${colors.lightGrey};
-          padding: 1em;
+          padding: 0 1em;
           background-color: ${Theme.primary};
           color: #fff;
         }
