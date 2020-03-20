@@ -1,4 +1,5 @@
 import React, {useContext} from 'react'
+import PropTypes from 'prop-types'
 import {ChevronLeft, ChevronRight} from 'react-feather'
 
 import {AppContext, ThemeContext} from '../pages'
@@ -12,16 +13,20 @@ const formatDate = isoString => {
   return date.toLocaleDateString()
 }
 
-const DateNav = () => {
+const DateNav = ({disabled}) => {
   const {date, prev, next} = useContext(AppContext)
   const Theme = useContext(ThemeContext)
   const formatedDate = formatDate(date)
 
   return (
     <div className='menu-header'>
-      <div className={`report-nav ${prev ? '' : 'disabled'}`} onClick={prev}><ChevronLeft /></div>
-      <h2>Données au {formatedDate}</h2>
-      <div className={`report-nav ${next ? '' : 'disabled'}`} onClick={next}><ChevronRight /></div>
+      {!disabled && (
+        <>
+          <div className={`report-nav ${prev ? '' : 'disabled'}`} onClick={prev}><ChevronLeft /></div>
+          <h2>Données au {formatedDate}</h2>
+          <div className={`report-nav ${next ? '' : 'disabled'}`} onClick={next}><ChevronRight /></div>
+        </>
+      )}
 
       <style jsx>{`
         .menu-header {
@@ -52,7 +57,7 @@ const DateNav = () => {
         @media (max-width: ${theme.mobileDisplay}) {
           .menu-header {
             font-size: small;
-            padding: 0.5em 1em;
+            padding: ${disabled ? '1.7em 1em' : '0.5em 1em'};
           }
 
           .menu-header h2 {
@@ -62,6 +67,14 @@ const DateNav = () => {
       `}</style>
     </div>
   )
+}
+
+DateNav.defaultProps = {
+  disabled: false
+}
+
+DateNav.propTypes = {
+  disabled: PropTypes.bool
 }
 
 export default DateNav
