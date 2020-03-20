@@ -61,3 +61,65 @@ export const decesCountLayer = {
     'text-size': 16
   }
 }
+
+export const hospitalisesLayer = {
+  id: 'hospitalises',
+  type: 'circle',
+  source: 'hospitalises',
+  filter: ['>', 'hospitalises', 0],
+  paint: {
+    'circle-opacity': 0.6,
+    'circle-color': colors.darkGrey,
+    'circle-radius': [
+      'interpolate',
+      ['linear'],
+      ['sqrt', ['number', ['get', 'hospitalises']]],
+      0,
+      10,
+      30,
+      80
+    ]
+  }
+}
+
+export const hospitalisesCountLayer = {
+  id: 'hospitalises-count',
+  type: 'symbol',
+  source: 'hospitalises',
+  filter: ['>', 'hospitalises', 0],
+  layout: {
+    'text-field': '{hospitalises}',
+    'text-size': 16
+  }
+}
+
+export const reanimationLayer = {
+  id: 'reanimation',
+  type: 'circle',
+  source: 'reanimation',
+  filter: ['>', 'reanimation', 0],
+  paint: {
+    'circle-opacity': 0.6,
+    'circle-color': colors.darkerGrey,
+    'circle-radius': [
+      'interpolate',
+      ['linear'],
+      ['sqrt', ['number', ['get', 'reanimation']]],
+      0,
+      10,
+      30,
+      80
+    ]
+  }
+}
+
+export const reanimationCountLayer = {
+  id: 'reanimation-count',
+  type: 'symbol',
+  source: 'reanimation',
+  filter: ['>', 'reanimation', 0],
+  layout: {
+    'text-field': '{reanimation}',
+    'text-size': 16
+  }
+}

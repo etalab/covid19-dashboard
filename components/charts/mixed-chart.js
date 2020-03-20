@@ -6,7 +6,13 @@ import colors from '../../styles/colors'
 
 const options = {
   tooltips: {
-    mode: 'index'
+    mode: 'index',
+    callbacks: {
+      label: (tooltipItem, data) => {
+        const datasetLabel = data.datasets[tooltipItem.datasetIndex].label
+        return tooltipItem.value === 'NaN' ? datasetLabel + ' : undefined' : datasetLabel + ' : ' + tooltipItem.value
+      }
+    }
   },
   scales: {
     xAxes: [{
@@ -35,9 +41,25 @@ const formatData = data => {
 
   if (data.some(h => h.casConfirmes)) {
     datasets.push({
-      label: 'En vie',
-      data: data.map(h => h.casConfirmes - (h.deces || 0)),
+      label: 'Cas confirmés',
+      data: data.map(h => h.casConfirmes - ((h.deces + h.hospitalises + h.reanimation) || 0)),
       backgroundColor: colors.orange
+    })
+  }
+
+  if (data.some(h => h.hospitalises)) {
+    datasets.push({
+      label: 'Hospitalisés',
+      data: data.map(h => h.hospitalises),
+      backgroundColor: colors.darkGrey
+    })
+  }
+
+  if (data.some(h => h.reanimation)) {
+    datasets.push({
+      label: 'Réanimation',
+      data: data.map(h => h.reanimation),
+      backgroundColor: colors.darkerGrey
     })
   }
 
