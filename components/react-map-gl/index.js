@@ -18,6 +18,7 @@ const Map = () => {
   const app = useContext(AppContext)
 
   const [map, setMap] = useState()
+  const [selected, setSelected] = useState(null)
   const [hovered, setHovered] = useState(null)
 
   const mapRef = useCallback(ref => {
@@ -41,6 +42,14 @@ const Map = () => {
     }
 
     setHovered(hoverInfo)
+  }
+
+  const onClick = event => {
+    event.stopPropagation()
+    const feature = event.features && event.features[0]
+
+    setSelected(feature)
+    setHovered(null)
   }
 
   return (
@@ -67,7 +76,8 @@ const Map = () => {
         {...settings}
         interactiveLayerIds={app.maps[selectedMapIdx].layers.map(layer => layer.id)}
         onViewportChange={app.setViewport}
-        onHover={onHover}
+        onHover={app.isMobileDevice ? null : onHover}
+        onClick={onClick}
       >
 
         <Source
@@ -80,7 +90,7 @@ const Map = () => {
           ))}
         </Source>
 
-        {hovered && !app.isMobileDevice && (
+        {hovered && (
           <Popup
             longitude={hovered.longitude}
             latitude={hovered.latitude}
@@ -97,17 +107,15 @@ const Map = () => {
         )}
       </ReactMapGL>
 
-      {app.isMobileDevice && (
-        <div className={`mobile-sumup ${hovered ? 'show' : 'hide'}`}>
-          {hovered && (
-            <SumUp
-              data={JSON.parse(hovered.feature.properties.history)}
-              {...hovered.feature.properties}
-              onClose={() => setHovered(null)}
-            />
-          )}
-        </div>
-      )}
+      <div className={`mobile-sumup ${selected ? 'show' : 'hide'}`}>
+        {selected && (
+          <SumUp
+            data={JSON.parse(selected.properties.history)}
+            {...selected.properties}
+            onClose={() => setSelected(null)}
+          />
+        )}
+      </div>
 
       <style jsx>{`
         .map-container {
@@ -156,11 +164,11 @@ const Map = () => {
         }
 
         .mobile-sumup.hide {
-          bottom: -400px;
+          height: 0;
         }
 
         .mobile-sumup.show {
-          bottom: 0;
+          height: inital;
         }
       `}</style>
     </div>
