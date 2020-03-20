@@ -9,13 +9,13 @@ import {AppContext} from '../pages'
 import DateNav from '../components/date-nav'
 import Scrollable from '../components/scrollable'
 import ReactMapGl from '../components/react-map-gl'
-import NationalStatistics from '../components/national-statistics'
+import Statistics from '../components/statistics'
 import Informations from '../components/informations'
 import Footer from '../components/footer'
 
 const VIEWS = {
   map: () => <ReactMapGl />,
-  stats: () => <NationalStatistics />,
+  stats: () => <Statistics />,
   informations: () => <Informations />
 }
 
@@ -23,6 +23,11 @@ const MobilePage = () => {
   const [selectedView, setSelectedView] = useState('map')
 
   const app = useContext(AppContext)
+
+  const handleClick = view => {
+    app.setSelectedLocation(null)
+    setSelectedView(view)
+  }
 
   return (
     <div className='mobile-page-container'>
@@ -32,13 +37,13 @@ const MobilePage = () => {
       </Scrollable>
 
       <div className='view-selector'>
-        <div className={`${selectedView === 'informations' ? 'selected' : ''}`} onClick={() => setSelectedView('informations')}>
+        <div className={`${selectedView === 'informations' ? 'selected' : ''}`} onClick={() => handleClick('informations')}>
           <FileText />
         </div>
-        <div className={`${selectedView === 'map' ? 'selected' : ''}`} onClick={() => setSelectedView('map')}>
+        <div className={`${selectedView === 'map' ? 'selected' : ''}`} onClick={() => handleClick('map')}>
           <Map />
         </div>
-        <div className={`${selectedView === 'stats' ? 'selected' : ''}`} onClick={() => setSelectedView('stats')}>
+        <div className={`${selectedView === 'stats' ? 'selected' : ''}`} onClick={() => handleClick('stats')}>
           <BarChart />
         </div>
       </div>

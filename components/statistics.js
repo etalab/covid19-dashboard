@@ -1,4 +1,7 @@
 import React, {useContext, useState} from 'react'
+import {X, ArrowLeftCircle} from 'react-feather'
+
+import colors from '../styles/colors'
 
 import {AppContext, ThemeContext} from '../pages'
 
@@ -32,20 +35,33 @@ const charts = {
   }
 }
 
-const NationalStatistics = () => {
-  const {date, franceReport, isMobileDevice} = useContext(AppContext)
-  const Theme = useContext(ThemeContext)
+const Statistics = () => {
+  const theme = useContext(ThemeContext)
+  const {date, franceReport, selectedLocationReport, setSelectedLocation, isMobileDevice} = useContext(AppContext)
+
+  const report = selectedLocationReport || franceReport
 
   const [selectedChart, setSelectedChart] = useState('mixed')
   const Chart = charts[selectedChart].chart
 
   return (
     <>
-      <Counters report={franceReport} />
+      <div className='header'>
+        {selectedLocationReport && (
+          isMobileDevice ? (
+            <div className='close' onClick={() => setSelectedLocation(null)}><X /></div>
+          ) : (
+            <div className='back' onClick={() => setSelectedLocation(null)}><ArrowLeftCircle /> <span>France</span></div>
+          )
+        )}
+        <h2>{selectedLocationReport ? selectedLocationReport.nom : 'France'}</h2>
+      </div>
 
-      {franceReport && franceReport.history && (
-        <div>
-          <Chart data={franceReport.history.filter(r => date >= r.date)} height={isMobileDevice ? 280 : 300} />
+      <Counters report={report} />
+
+      {report && report.history && (
+        <>
+          <Chart data={report.history.filter(r => date >= r.date)} height={isMobileDevice ? 280 : 300} />
           <div className='charts-list'>
             {Object.keys(charts).map(chart => (
               <div
@@ -57,10 +73,43 @@ const NationalStatistics = () => {
               </div>
             ))}
           </div>
-        </div>
+        </>
       )}
 
       <style jsx>{`
+        .header {
+          text-align: center;
+          position: sticky;
+          top: 0;
+          background-color: white;
+          margin: 0 -0.5em;
+          padding: 1px;
+        }
+
+        .back {
+          display: flex;
+          align-items: center;
+          width: 100%;
+          background: ${colors.lighterGrey};
+          padding: 0.5em;
+          font-size: larger;
+        }
+
+        .close {
+          position: absolute;
+          top: 0;
+          right: 0.5em;
+        }
+
+        .back span {
+          margin: 0 0.5em;
+        }
+
+        .back:hover {
+          cursor: pointer;
+          background: ${colors.lightGrey};
+        }
+
         .charts-list {
           display: grid;
           grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
@@ -69,8 +118,8 @@ const NationalStatistics = () => {
         }
 
         .chart-name {
-          background-color: ${Theme.alt};
           text-align: center;
+          background-color: ${theme.alt};
           color: #fff;
           border-radius: 4px;
           margin: .2em 0;
@@ -79,15 +128,15 @@ const NationalStatistics = () => {
 
         .chart-name:hover {
           cursor: pointer;
-          background-color: ${Theme.secondary};
+          background-color: ${theme.secondary};
         }
 
         .chart-name.selected {
-          background-color: ${Theme.primary};
+          background-color: ${theme.primary};
         }
         `}</style>
     </>
   )
 }
 
-export default NationalStatistics
+export default Statistics

@@ -1,10 +1,11 @@
-import React from 'react'
+import React, {useContext} from 'react'
 import PropTypes from 'prop-types'
 import {X} from 'react-feather'
 
-import MixedChart from '../charts/mixed-chart'
+import {ThemeContext} from '../../pages'
 
-const Sumup = ({nom, casConfirmes, deces, data, onClose}) => {
+const Sumup = ({nom, casConfirmes, deces, onClose}) => {
+  const theme = useContext(ThemeContext)
   return (
     <div className='sumup-container'>
       <div className='header'>
@@ -18,7 +19,9 @@ const Sumup = ({nom, casConfirmes, deces, data, onClose}) => {
         {deces && deces > 0 ? <span> (dont {deces} décès)</span> : null}
       </div>
 
-      <MixedChart data={data} height={240} />
+      {!onClose && (
+        <div className='footer'>Cliquer pour plus d’informations</div>
+      )}
 
       <style jsx>{`
       .sumup-container {
@@ -34,6 +37,15 @@ const Sumup = ({nom, casConfirmes, deces, data, onClose}) => {
       .title {
         font-weight: bold;
       }
+
+      .footer {
+        font-size: small;
+        font-style: italic;
+        margin: 5px -10px -15px -10px;
+        background-color: ${theme.primary};
+        color: #fff;
+        padding: 0.4em;
+      }
     `}</style>
     </div>
   )
@@ -48,7 +60,6 @@ Sumup.propTypes = {
   nom: PropTypes.string.isRequired,
   casConfirmes: PropTypes.number.isRequired,
   deces: PropTypes.number,
-  data: PropTypes.array.isRequired,
   onClose: PropTypes.func
 }
 

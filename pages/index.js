@@ -54,7 +54,10 @@ const defaultViewport = {
 
 const MainPage = ({data, dates, isIframe, isGouv}) => {
   const [isMobileDevice, setIsMobileDevice] = useState(false)
+  const [isTouchScreenDevice, setIsTouchScreenDevice] = useState(false)
   const [date, setDate] = useState(dates[dates.length - 1])
+  const [selectedLocation, setSelectedLocation] = useState(null)
+  const [selectedLocationReport, setSelectedLocationReport] = useState(null)
   const [franceReport, setFranceReport] = useState({})
   const [regionsReport, setRegionsReport] = useState({})
   const [departementsReport, setDepartementsReport] = useState({})
@@ -106,6 +109,28 @@ const MainPage = ({data, dates, isIframe, isGouv}) => {
     setIsMobileDevice(window.innerWidth < mobileWidth)
   }
 
+  const getLocationReport = useCallback(code => {
+    let report
+
+    if (code.includes('REG')) {
+      report = regionsReport
+    } else if (code.includes('DEP')) {
+      report = departementsReport
+    }
+
+    const feature = report.features.find(f => f.properties.code === code)
+    return {...feature.properties}
+  }, [regionsReport, departementsReport])
+
+  useEffect(() => {
+    if (selectedLocation) {
+      const locationReport = getLocationReport(selectedLocation)
+      setSelectedLocationReport(locationReport)
+    } else {
+      setSelectedLocationReport(null)
+    }
+  }, [regionsReport, selectedLocation, getLocationReport])
+
   useEffect(() => {
     const {latitude, longitude} = viewport
     setViewport({
@@ -137,6 +162,10 @@ const MainPage = ({data, dates, isIframe, isGouv}) => {
     return () => {
       window.removeEventListener('resize', handleResize)
     }
+  }, [])
+
+  useEffect(() => {
+    setIsTouchScreenDevice('ontouchstart' in document.documentElement)
   }, [])
 
   const maps = [
@@ -204,6 +233,8 @@ const MainPage = ({data, dates, isIframe, isGouv}) => {
       <div className='main-page-container'>
         <AppContext.Provider value={{
           date,
+          selectedLocationReport,
+          setSelectedLocation,
           franceReport,
           regionsReport,
           departementsReport,
@@ -213,7 +244,8 @@ const MainPage = ({data, dates, isIframe, isGouv}) => {
           maps,
           viewport,
           isIframe,
-          isMobileDevice
+          isMobileDevice,
+          isTouchScreenDevice
         }}
         >
           <ThemeContext.Provider value={isGouv ? theme.gouv : theme.default}>
