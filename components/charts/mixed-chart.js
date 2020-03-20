@@ -51,7 +51,7 @@ const formatData = data => {
 
   if (data.some(h => h.casConfirmes)) {
     datasets.push({
-      label: 'En vie',
+      label: 'Cas confirmés',
       data: data.map(h => h.casConfirmes - (h.deces || 0)),
       backgroundColor: colors.orange
     })
