@@ -70,6 +70,7 @@ const NationalStatistics = () => {
 
         .chart-name {
           background-color: ${Theme.alt};
+          text-align: center;
           color: #fff;
           border-radius: 4px;
           margin: .2em 0;
