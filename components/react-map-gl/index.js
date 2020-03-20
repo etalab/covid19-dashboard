@@ -17,7 +17,7 @@ const Map = () => {
   const [selectedMapIdx, setSelectedMapIdx] = useState(0)
 
   const {
-    selectedLocation,
+    selectedLocationReport,
     setSelectedLocation,
     isIframe,
     viewport,
@@ -58,10 +58,7 @@ const Map = () => {
 
     if (feature) {
       const {properties} = feature
-      setSelectedLocation({
-        ...properties,
-        history: JSON.parse(properties.history)
-      })
+      setSelectedLocation(properties.code)
     } else {
       setSelectedLocation(null)
     }
@@ -116,17 +113,14 @@ const Map = () => {
             onClose={() => setHovered(null)}
             anchor='bottom-left'
           >
-            <SumUp
-              data={JSON.parse(hovered.feature.properties.history)}
-              {...hovered.feature.properties}
-            />
+            <SumUp {...hovered.feature.properties} />
           </Popup>
         )}
       </ReactMapGL>
 
       {isMobileDevice && (
-        <div className={`mobile-sumup ${selectedLocation ? 'show' : 'hide'}`}>
-          {selectedLocation && (
+        <div className={`mobile-sumup ${selectedLocationReport ? 'show' : 'hide'}`}>
+          {selectedLocationReport && (
             <Statistics />
           )}
         </div>

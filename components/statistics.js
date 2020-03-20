@@ -37,9 +37,9 @@ const charts = {
 
 const Statistics = () => {
   const theme = useContext(ThemeContext)
-  const {date, franceReport, selectedLocation, setSelectedLocation, isMobileDevice} = useContext(AppContext)
+  const {date, franceReport, selectedLocationReport, setSelectedLocation, isMobileDevice} = useContext(AppContext)
 
-  const report = selectedLocation || franceReport
+  const report = selectedLocationReport || franceReport
 
   const [selectedChart, setSelectedChart] = useState('mixed')
   const Chart = charts[selectedChart].chart
@@ -47,14 +47,14 @@ const Statistics = () => {
   return (
     <>
       <div className='header'>
-        {selectedLocation && (
+        {selectedLocationReport && (
           isMobileDevice ? (
             <div className='close' onClick={() => setSelectedLocation(null)}><X /></div>
           ) : (
             <div className='back' onClick={() => setSelectedLocation(null)}><ArrowLeftCircle /> <span>France</span></div>
           )
         )}
-        <h2>{selectedLocation ? selectedLocation.nom : 'France'}</h2>
+        <h2>{selectedLocationReport ? selectedLocationReport.nom : 'France'}</h2>
       </div>
 
       <Counters report={report} />
