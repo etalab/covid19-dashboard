@@ -33,6 +33,14 @@ const options = {
 const formatData = data => {
   const datasets = []
 
+  if (data.some(h => h.casConfirmes)) {
+    datasets.push({
+      label: 'Cas confirmés',
+      data: data.map(h => h.casConfirmes - ((h.deces + h.hospitalises + h.reanimation) || 0)),
+      backgroundColor: colors.orange
+    })
+  }
+
   if (data.some(h => h.hospitalises)) {
     datasets.push({
       label: 'Hospitalisés',
@@ -46,14 +54,6 @@ const formatData = data => {
       label: 'Réanimation',
       data: data.map(h => h.reanimation),
       backgroundColor: colors.darkerGrey
-    })
-  }
-
-  if (data.some(h => h.casConfirmes)) {
-    datasets.push({
-      label: 'Cas confirmés',
-      data: data.map(h => h.casConfirmes - (h.deces || 0)),
-      backgroundColor: colors.orange
     })
   }
 
@@ -73,6 +73,7 @@ const formatData = data => {
 
 const MixedChart = ({data, height}) => (
   <div style={{padding: '1em'}}>
+    {console.log(formatData(data))}
     <Bar data={formatData(data)} options={options} height={height} />
   </div>
 )
