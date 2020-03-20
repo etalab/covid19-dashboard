@@ -33,19 +33,19 @@ const options = {
 const formatData = data => {
   const datasets = []
 
-  if (data.some(h => h.reanimation)) {
-    datasets.push({
-      label: 'Réanimation',
-      data: data.map(h => h.reanimation),
-      backgroundColor: colors.darkerGrey
-    })
-  }
-
   if (data.some(h => h.hospitalises)) {
     datasets.push({
       label: 'Hospitalisés',
       data: data.map(h => h.hospitalises),
       backgroundColor: colors.darkGrey
+    })
+  }
+
+  if (data.some(h => h.reanimation)) {
+    datasets.push({
+      label: 'Réanimation',
+      data: data.map(h => h.reanimation),
+      backgroundColor: colors.darkerGrey
     })
   }
 

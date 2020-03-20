@@ -14,6 +14,14 @@ const charts = {
     name: 'Tout afficher',
     chart: MixedChart
   },
+  hospitalises: {
+    name: 'Hospitalisés',
+    chart: HospitalisesChart
+  },
+  reanimation: {
+    name: 'Réanimation',
+    chart: ReanimationChart
+  },
   confirmed: {
     name: 'Cas confirmés',
     chart: ConfirmesChart
@@ -21,14 +29,6 @@ const charts = {
   deces: {
     name: 'Décès',
     chart: DecesChart
-  },
-  reanimation: {
-    name: 'Réanimation',
-    chart: ReanimationChart
-  },
-  hospitalises: {
-    name: 'Hospitalisés',
-    chart: HospitalisesChart
   }
 }
 
