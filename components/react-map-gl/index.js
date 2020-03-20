@@ -44,6 +44,10 @@ const Map = () => {
 
   return (
     <div className='map-container'>
+      <div className='control'>
+        <MapSelector mapIdx={selectedMapIdx} selectMap={setSelectedMapIdx} />
+      </div>
+
       <ReactMapGL
         ReuseMaps
         ref={mapRef}
@@ -56,9 +60,6 @@ const Map = () => {
         onViewportChange={app.setViewport}
         onHover={onHover}
       >
-        <div className='map-switch'>
-          <MapSelector mapIdx={selectedMapIdx} selectMap={setSelectedMapIdx} />
-        </div>
 
         <Source
           type='geojson'
@@ -90,7 +91,8 @@ const Map = () => {
           height: 100%;
         }
 
-        .map-switch {
+        .control {
+          z-index: 1;
           position: absolute;
           margin: 0.5em;
           width: ${app.isMobileDevice ? 'calc(100% - 1em)' : 'none'};
