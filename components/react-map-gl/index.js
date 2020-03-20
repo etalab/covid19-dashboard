@@ -142,13 +142,14 @@ const Map = () => {
           justify-content: space-between;
           align-items: end;
           width: 100%;
+          padding: 0.5em;
         }
 
         .control {
           background-color: #000000aa;
           color: #fff;
           border-radius: 4px;
-          margin: ${isMobileDevice ? '0.5em auto' : '0.5em'};
+          margin: 0;
         }
 
         .maximize {
