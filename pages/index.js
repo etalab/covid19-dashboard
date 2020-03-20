@@ -284,14 +284,14 @@ MainPage.propTypes = {
 }
 
 MainPage.getInitialProps = async ({query}) => {
-  const {iframe} = query
-  const {gouv} = query
-  const data = await getData()
+  const isGouv = query.gouv === '1'
+  const isIframe = query.iframe === '1'
+  const data = await getData(isGouv)
 
   return {
     data,
-    isIframe: Boolean(iframe === '1'),
-    isGouv: Boolean(gouv === '1'),
+    isIframe,
+    isGouv,
     dates: uniq(data.filter(r => r.code === 'FRA').map(r => r.date)).sort()
   }
 }
