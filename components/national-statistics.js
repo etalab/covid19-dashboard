@@ -61,17 +61,16 @@ const NationalStatistics = () => {
         .chart-name {
           background-color: ${colors.lightGrey};
           color: #fff;
-          border-radius: 4px;
-          padding: 0.2em 0.4em;
+          padding: 0.4em 0.6em;
         }
 
         .chart-name:hover {
           cursor: pointer;
-          background-color: ${colors.darkerGrey};
+          background-color: ${colors.darkBlue};
         }
 
         .chart-name.selected {
-          background-color: ${colors.darkGrey};
+          background-color: ${colors.blue};
         }
         `}</style>
     </>
