@@ -1,5 +1,5 @@
 import React, {useContext, useState} from 'react'
-import {X, ArrowLeftCircle} from 'react-feather'
+import {X, BarChart2} from 'react-feather'
 
 import colors from '../styles/colors'
 
@@ -51,7 +51,7 @@ const Statistics = () => {
           isMobileDevice ? (
             <div className='close' onClick={() => setSelectedLocation(null)}><X /></div>
           ) : (
-            <div className='back' onClick={() => setSelectedLocation(null)}><ArrowLeftCircle /> <span>France</span></div>
+            <div className='back' onClick={() => setSelectedLocation(null)}><BarChart2 /> <span>France</span></div>
           )
         )}
         <h2>{selectedLocationReport ? selectedLocationReport.nom : 'France'}</h2>
@@ -89,6 +89,7 @@ const Statistics = () => {
         .back {
           display: flex;
           align-items: center;
+          justify-content: center;
           width: 100%;
           background: ${colors.lighterGrey};
           padding: 0.5em;
