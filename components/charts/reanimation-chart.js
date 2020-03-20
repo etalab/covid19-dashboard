@@ -10,7 +10,6 @@ const options = {
   },
   scales: {
     xAxes: [{
-      stacked: true,
       type: 'time',
       time: {
         unit: 'day',
@@ -23,9 +22,6 @@ const options = {
         offsetGridLines: true
       },
       offset: true
-    }],
-    yAxes: [{
-      stacked: true
     }]
   }
 }
@@ -41,49 +37,25 @@ const formatData = data => {
     })
   }
 
-  if (data.some(h => h.hospitalises)) {
-    datasets.push({
-      label: 'Hospitalisés',
-      data: data.map(h => h.hospitalises),
-      backgroundColor: colors.darkGrey
-    })
-  }
-
-  if (data.some(h => h.casConfirmes)) {
-    datasets.push({
-      label: 'En vie',
-      data: data.map(h => h.casConfirmes - (h.deces || 0)),
-      backgroundColor: colors.orange
-    })
-  }
-
-  if (data.some(h => h.deces)) {
-    datasets.push({
-      label: 'Décédés',
-      data: data.map(h => h.deces),
-      backgroundColor: colors.red
-    })
-  }
-
   return {
     labels: data.map(h => new Date(h.date)),
     datasets
   }
 }
 
-const MixedChart = ({data, height}) => (
+const ReanimationChart = ({data, height}) => (
   <div style={{padding: '1em'}}>
     <Bar data={formatData(data)} options={options} height={height} />
   </div>
 )
 
-MixedChart.defaultProps = {
+ReanimationChart.defaultProps = {
   height: null
 }
 
-MixedChart.propTypes = {
+ReanimationChart.propTypes = {
   data: PropTypes.array.isRequired,
   height: PropTypes.number
 }
 
-export default MixedChart
+export default ReanimationChart
