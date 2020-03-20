@@ -56,6 +56,7 @@ const MainPage = ({data, dates, isIframe, isGouv}) => {
   const [isMobileDevice, setIsMobileDevice] = useState(false)
   const [isTouchScreenDevice, setIsTouchScreenDevice] = useState(false)
   const [date, setDate] = useState(dates[dates.length - 1])
+  const [selectedLocation, setSelectedLocation] = useState(null)
   const [franceReport, setFranceReport] = useState({})
   const [regionsReport, setRegionsReport] = useState({})
   const [departementsReport, setDepartementsReport] = useState({})
@@ -209,6 +210,8 @@ const MainPage = ({data, dates, isIframe, isGouv}) => {
       <div className='main-page-container'>
         <AppContext.Provider value={{
           date,
+          selectedLocation,
+          setSelectedLocation,
           franceReport,
           regionsReport,
           departementsReport,

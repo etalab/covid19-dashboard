@@ -24,6 +24,11 @@ const MobilePage = () => {
 
   const app = useContext(AppContext)
 
+  const handleClick = view => {
+    app.setSelectedLocation(null)
+    setSelectedView(view)
+  }
+
   return (
     <div className='mobile-page-container'>
       <DateNav disabled={selectedView === 'informations'} />
@@ -32,13 +37,13 @@ const MobilePage = () => {
       </Scrollable>
 
       <div className='view-selector'>
-        <div className={`${selectedView === 'informations' ? 'selected' : ''}`} onClick={() => setSelectedView('informations')}>
+        <div className={`${selectedView === 'informations' ? 'selected' : ''}`} onClick={() => handleClick('informations')}>
           <FileText />
         </div>
-        <div className={`${selectedView === 'map' ? 'selected' : ''}`} onClick={() => setSelectedView('map')}>
+        <div className={`${selectedView === 'map' ? 'selected' : ''}`} onClick={() => handleClick('map')}>
           <Map />
         </div>
-        <div className={`${selectedView === 'stats' ? 'selected' : ''}`} onClick={() => setSelectedView('stats')}>
+        <div className={`${selectedView === 'stats' ? 'selected' : ''}`} onClick={() => handleClick('stats')}>
           <BarChart />
         </div>
       </div>

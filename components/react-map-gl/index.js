@@ -4,9 +4,10 @@ import {Maximize2} from 'react-feather'
 
 import {AppContext} from '../../pages'
 
-import SumUp from './sumup'
-
 import MapSelector from '../map-selector'
+
+import SumUp from './sumup'
+import NationalStatistics from '../national-statistics'
 
 const settings = {
   maxZoom: 16
@@ -15,10 +16,17 @@ const settings = {
 const Map = () => {
   const [selectedMapIdx, setSelectedMapIdx] = useState(0)
 
-  const app = useContext(AppContext)
+  const {
+    selectedLocation,
+    setSelectedLocation,
+    isIframe,
+    viewport,
+    maps,
+    setViewport,
+    isMobileDevice
+  } = useContext(AppContext)
 
   const [map, setMap] = useState()
-  const [selected, setSelected] = useState(null)
   const [hovered, setHovered] = useState(null)
 
   const mapRef = useCallback(ref => {
@@ -48,7 +56,16 @@ const Map = () => {
     event.stopPropagation()
     const feature = event.features && event.features[0]
 
-    setSelected(feature)
+    if (feature) {
+      const {properties} = feature
+      setSelectedLocation({
+        ...properties,
+        history: JSON.parse(properties.history)
+      })
+    } else {
+      setSelectedLocation(null)
+    }
+
     setHovered(null)
   }
 
@@ -59,7 +76,7 @@ const Map = () => {
           <MapSelector mapIdx={selectedMapIdx} selectMap={setSelectedMapIdx} />
         </div>
 
-        {app.isIframe && (
+        {isIframe && (
           <div className='control maximize'>
             <a href='https://veille-coronavirus.fr/'><Maximize2 style={{verticalAalign: 'middle'}} /></a>
           </div>
@@ -69,23 +86,23 @@ const Map = () => {
       <ReactMapGL
         ReuseMaps
         ref={mapRef}
-        {...app.viewport}
+        {...viewport}
         width='100%'
         height='100%'
         mapStyle='https://openmaptiles.geo.data.gouv.fr/styles/osm-bright/style.json'
         {...settings}
-        interactiveLayerIds={app.maps[selectedMapIdx].layers.map(layer => layer.id)}
-        onViewportChange={app.setViewport}
-        onHover={app.isMobileDevice ? null : onHover}
+        interactiveLayerIds={maps[selectedMapIdx].layers.map(layer => layer.id)}
+        onViewportChange={setViewport}
+        onHover={isMobileDevice ? null : onHover}
         onClick={onClick}
       >
 
         <Source
           type='geojson'
           id='cas-confirmes'
-          data={app.maps[selectedMapIdx].data}
+          data={maps[selectedMapIdx].data}
         >
-          {app.maps[selectedMapIdx].layers.map(layer => (
+          {maps[selectedMapIdx].layers.map(layer => (
             <Layer key={layer.id} {...layer} />
           ))}
         </Source>
@@ -107,15 +124,13 @@ const Map = () => {
         )}
       </ReactMapGL>
 
-      <div className={`mobile-sumup ${selected ? 'show' : 'hide'}`}>
-        {selected && (
-          <SumUp
-            data={JSON.parse(selected.properties.history)}
-            {...selected.properties}
-            onClose={() => setSelected(null)}
-          />
-        )}
-      </div>
+      {isMobileDevice && (
+        <div className={`mobile-sumup ${selectedLocation ? 'show' : 'hide'}`}>
+          {selectedLocation && (
+            <NationalStatistics />
+          )}
+        </div>
+      )}
 
       <style jsx>{`
         .map-container {
@@ -137,7 +152,7 @@ const Map = () => {
           background-color: #000000aa;
           color: #fff;
           border-radius: 4px;
-          margin: ${app.isMobileDevice ? '0.5em auto' : '0.5em'};
+          margin: ${isMobileDevice ? '0.5em auto' : '0.5em'};
         }
 
         .maximize {
@@ -153,7 +168,7 @@ const Map = () => {
         }
 
         .mobile-sumup {
-          z-index: 1;
+          z-index: 2;
           position: absolute;
           bottom: 0;
           background-color: #fff;
@@ -165,10 +180,11 @@ const Map = () => {
 
         .mobile-sumup.hide {
           height: 0;
+          padding: 0;
         }
 
         .mobile-sumup.show {
-          height: inital;
+          height: 100%;
         }
       `}</style>
     </div>
