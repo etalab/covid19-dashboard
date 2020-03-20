@@ -82,7 +82,8 @@ const Statistics = () => {
           position: sticky;
           top: 0;
           background-color: white;
-          margin: -0.5em;
+          margin: 0 -0.5em;
+          padding: 1px;
         }
 
         .back {
@@ -96,8 +97,8 @@ const Statistics = () => {
 
         .close {
           position: absolute;
-          top: 1em;
-          right: 1em;
+          top: 0;
+          right: 0.5em;
         }
 
         .back span {
