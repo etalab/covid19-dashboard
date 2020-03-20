@@ -80,7 +80,7 @@ const Map = () => {
           ))}
         </Source>
 
-        {hovered && (
+        {hovered && !app.isMobileDevice && (
           <Popup
             longitude={hovered.longitude}
             latitude={hovered.latitude}
@@ -89,10 +89,25 @@ const Map = () => {
             onClose={() => setHovered(null)}
             anchor='bottom-left'
           >
-            <SumUp data={JSON.parse(hovered.feature.properties.history)} {...hovered.feature.properties} />
+            <SumUp
+              data={JSON.parse(hovered.feature.properties.history)}
+              {...hovered.feature.properties}
+            />
           </Popup>
         )}
       </ReactMapGL>
+
+      {app.isMobileDevice && (
+        <div className={`mobile-sumup ${hovered ? 'show' : 'hide'}`}>
+          {hovered && (
+            <SumUp
+              data={JSON.parse(hovered.feature.properties.history)}
+              {...hovered.feature.properties}
+              onClose={() => setHovered(null)}
+            />
+          )}
+        </div>
+      )}
 
       <style jsx>{`
         .map-container {
@@ -127,6 +142,25 @@ const Map = () => {
         .maximize a {
           color: #fff;
           padding: 0.4em 0.4em 0.2em 0.4em;
+        }
+
+        .mobile-sumup {
+          z-index: 1;
+          position: absolute;
+          bottom: 0;
+          background-color: #fff;
+          width: 100%;
+          margin: auto;
+          padding: 0.5em;
+          transition: 0.5s;
+        }
+
+        .mobile-sumup.hide {
+          bottom: -400px;
+        }
+
+        .mobile-sumup.show {
+          bottom: 0;
         }
       `}</style>
     </div>

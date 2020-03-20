@@ -1,12 +1,18 @@
 import React from 'react'
 import PropTypes from 'prop-types'
+import {X} from 'react-feather'
 
 import MixedChart from '../charts/mixed-chart'
 
-const Sumup = ({nom, casConfirmes, deces, data}) => {
+const Sumup = ({nom, casConfirmes, deces, data, onClose}) => {
   return (
     <div className='sumup-container'>
-      <div className='title'>{nom}</div>
+      <div className='header'>
+        <div className='title'>{nom}</div>
+        {onClose && (
+          <div onClick={onClose}><X style={{verticalAlign: 'middle'}} /></div>
+        )}
+      </div>
       <div>
         {casConfirmes} cas confirmés
         {deces && deces > 0 ? <span> (dont {deces} décès)</span> : null}
@@ -19,6 +25,12 @@ const Sumup = ({nom, casConfirmes, deces, data}) => {
         font-size: larger;
       }
 
+      .header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+      }
+
       .title {
         font-weight: bold;
       }
@@ -28,14 +40,16 @@ const Sumup = ({nom, casConfirmes, deces, data}) => {
 }
 
 Sumup.defaultProps = {
-  deces: null
+  deces: null,
+  onClose: null
 }
 
 Sumup.propTypes = {
   nom: PropTypes.string.isRequired,
   casConfirmes: PropTypes.number.isRequired,
   deces: PropTypes.number,
-  data: PropTypes.array.isRequired
+  data: PropTypes.array.isRequired,
+  onClose: PropTypes.func
 }
 
 export default Sumup
