@@ -75,7 +75,7 @@ const Map = () => {
 
         {isIframe && (
           <div className='control maximize'>
-            <a href='https://veille-coronavirus.fr/'><Maximize2 style={{verticalAalign: 'middle'}} /></a>
+            <a href='https://veille-coronavirus.fr/' target='_top'><Maximize2 style={{verticalAalign: 'middle'}} /></a>
           </div>
         )}
       </div>
