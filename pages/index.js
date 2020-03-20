@@ -39,7 +39,7 @@ const reportToGeoJSON = (report, date) => {
         },
         properties: {
           ...report[code].find(r => r.date === date),
-          history: report[code].filter(r => date >= r.date)
+          history: report[code]
         }
       }
     }).filter(i => Boolean(i))
