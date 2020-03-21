@@ -16,7 +16,7 @@ const Counter = ({value, label, color}) => {
           justify-content: center;
           text-align: center;
           margin: 1em 0;
-          color: ${colors ? colors[color] : colors.almostBlack};
+          color: ${colors[color]};
         }
 
         .value {
@@ -30,7 +30,7 @@ const Counter = ({value, label, color}) => {
 
 Counter.defaultProps = {
   label: null,
-  color: colors.almostBlack
+  color: 'almostBlack'
 }
 
 Counter.propTypes = {
