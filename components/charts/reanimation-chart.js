@@ -1,7 +1,6 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import {Bar} from 'react-chartjs-2'
-
+import BarChart from './bar-chart'
 import colors from '../../styles/colors'
 
 const options = {
@@ -43,11 +42,7 @@ const formatData = data => {
   }
 }
 
-const ReanimationChart = ({data, height}) => (
-  <div style={{padding: '1em'}}>
-    <Bar data={formatData(data)} options={options} height={height} />
-  </div>
-)
+const ReanimationChart = ({data, height}) => (<BarChart data={formatData(data)} options={options} height={height} />)
 
 ReanimationChart.defaultProps = {
   height: null

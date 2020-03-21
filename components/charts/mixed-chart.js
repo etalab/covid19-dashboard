@@ -1,8 +1,7 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import {Bar} from 'react-chartjs-2'
-
-import colors from '../../styles/colors'
+import BarChart from './bar-chart'
+import colors from "../../styles/colors";
 
 const options = {
   tooltips: {
@@ -77,11 +76,7 @@ const formatData = data => {
   }
 }
 
-const MixedChart = ({data, height}) => (
-  <div style={{padding: '1em'}}>
-    <Bar data={formatData(data)} options={options} height={height} />
-  </div>
-)
+const MixedChart = ({data, height}) => (<BarChart data={formatData(data)} options={options} height={height} />)
 
 MixedChart.defaultProps = {
   height: null
