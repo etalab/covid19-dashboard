@@ -11,7 +11,7 @@ const Footer = () => {
     <div className='menu-footer'>
       <div>
         <a href='https://github.com/opencovid19-fr/dashboard'>
-          <GitHub style={{verticalAalign: 'middle'}} />
+          <GitHub style={{verticalAlign: 'middle'}} />
         </a>
       </div>
 

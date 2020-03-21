@@ -76,7 +76,7 @@ const Map = () => {
 
         {isIframe && (
           <div className='control maximize'>
-            <a href='https://veille-coronavirus.fr/' target='_top'><Maximize2 style={{verticalAalign: 'middle'}} /></a>
+            <a href='https://veille-coronavirus.fr/' target='_top'><Maximize2 style={{verticalAlign: 'middle'}} /></a>
           </div>
         )}
       </div>
@@ -161,7 +161,7 @@ const Map = () => {
 
         .maximize a {
           color: #fff;
-          padding: 0.4em 0.4em 0.2em 0.4em;
+          padding: 0.4em;
         }
 
         .mobile-sumup {
