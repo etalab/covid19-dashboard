@@ -109,7 +109,7 @@ const MainPage = ({data, dates, isGouv}) => {
   }, [date, data])
 
   const handleResize = () => {
-    const mobileWidth = theme.mobileDisplay.split('px')[0]
+    const mobileWidth = parseInt(theme.mobileDisplay.split('px')[0])
     setIsMobileDevice(window.innerWidth < mobileWidth)
   }
 
@@ -162,7 +162,7 @@ const MainPage = ({data, dates, isGouv}) => {
   }, [date, getFranceReport, getRegionsReport, getDepartementsReport])
 
   useEffect(() => {
-    const mobileWidth = theme.mobileDisplay.split('px')[0]
+    const mobileWidth = parseInt(theme.mobileDisplay.split('px')[0])
     if (window.innerWidth < mobileWidth) {
       setIsMobileDevice(true)
     }
