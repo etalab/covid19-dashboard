@@ -82,7 +82,7 @@ const Map = () => {
       </div>
 
       <ReactMapGL
-        ReuseMaps
+        reuseMaps
         ref={mapRef}
         {...viewport}
         width='100%'
