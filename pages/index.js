@@ -123,7 +123,9 @@ const MainPage = ({data, dates, isGouv}) => {
     }
 
     const feature = report.features.find(f => f.properties.code === code)
-    return {...feature.properties}
+    if (feature) {
+      return {...feature.properties}
+    }
   }, [regionsReport, departementsReport])
 
   useEffect(() => {
