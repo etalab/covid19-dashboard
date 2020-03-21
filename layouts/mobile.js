@@ -33,7 +33,7 @@ const MobilePage = () => {
     <div className='mobile-page-container'>
       <DateNav disabled={selectedView === 'informations'} />
       <Scrollable>
-        {VIEWS[selectedView](app)}
+        {VIEWS[selectedView]()}
       </Scrollable>
 
       <div className='view-selector'>
