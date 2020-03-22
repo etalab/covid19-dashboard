@@ -45,7 +45,7 @@ export const decesLayer = {
       ['sqrt', ['number', ['get', 'deces']]],
       0,
       10,
-      30,
+      100,
       80
     ]
   }
@@ -76,7 +76,7 @@ export const hospitalisesLayer = {
       ['sqrt', ['number', ['get', 'hospitalises']]],
       0,
       10,
-      30,
+      100,
       80
     ]
   }
@@ -107,7 +107,7 @@ export const reanimationLayer = {
       ['sqrt', ['number', ['get', 'reanimation']]],
       0,
       10,
-      30,
+      100,
       80
     ]
   }
