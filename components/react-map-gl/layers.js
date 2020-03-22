@@ -62,6 +62,37 @@ export const decesCountLayer = {
   }
 }
 
+export const guerisLayer = {
+  id: 'gueris',
+  type: 'circle',
+  source: 'gueris',
+  filter: ['>', 'gueris', 0],
+  paint: {
+    'circle-opacity': 0.6,
+    'circle-color': colors.green,
+    'circle-radius': [
+      'interpolate',
+      ['linear'],
+      ['sqrt', ['number', ['get', 'gueris']]],
+      0,
+      10,
+      100,
+      80
+    ]
+  }
+}
+
+export const guerisCountLayer = {
+  id: 'gueris-count',
+  type: 'symbol',
+  source: 'gueris',
+  filter: ['>', 'gueris', 0],
+  layout: {
+    'text-field': '{gueris}',
+    'text-size': 16
+  }
+}
+
 export const hospitalisesLayer = {
   id: 'hospitalises',
   type: 'circle',

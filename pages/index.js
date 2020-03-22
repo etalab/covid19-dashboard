@@ -19,7 +19,9 @@ import {
   hospitalisesLayer,
   hospitalisesCountLayer,
   reanimationLayer,
-  reanimationCountLayer
+  reanimationCountLayer,
+  guerisLayer,
+  guerisCountLayer
 } from '../components/react-map-gl/layers'
 
 import ScreenPage from '../layouts/screen'
@@ -208,6 +210,13 @@ const MainPage = ({data, dates, isGouv}) => {
       layers: [reanimationLayer, reanimationCountLayer]
     },
     {
+      name: 'Carte des cas guéris',
+      category: 'régionale',
+      properties: 'gueris',
+      data: regionsReport,
+      layers: [guerisLayer, guerisCountLayer]
+    },
+    {
       name: 'Carte des cas confirmés',
       category: 'départementale',
       data: departementsReport,
@@ -234,7 +243,14 @@ const MainPage = ({data, dates, isGouv}) => {
       properties: 'reanimation',
       data: departementsReport,
       layers: [reanimationLayer, reanimationCountLayer]
-    }
+    },
+    {
+      name: 'Carte des cas guéris',
+      category: 'départementale',
+      properties: 'gueris',
+      data: departementsReport,
+      layers: [guerisLayer, guerisCountLayer]
+    },
   ]
 
   return (
