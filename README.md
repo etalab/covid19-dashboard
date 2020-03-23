@@ -46,6 +46,10 @@ La production est actuellement sur GitHub Pages. Vous devez disposer des droits 
 yarn deploy
 ```
 
+## Configurer
+
+Selon le besoin il est possible de configurer l’outil grâce à des variables d’environnement. Le plus simple est de prendre exemple sur le fichier `.env.sample`.
+
 ## Mettre à jour les centres géographiques
 
 ```

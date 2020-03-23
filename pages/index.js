@@ -304,12 +304,11 @@ MainPage.propTypes = {
 }
 
 MainPage.getInitialProps = async () => {
-  const isGouv = process.env.GOUV === '1'
-  const data = await getData(isGouv)
+  const data = await getData()
 
   return {
     data,
-    isGouv,
+    isGouv: process.env.GOUV === '1',
     dates: uniq(data.filter(r => r.code === 'FRA').map(r => r.date)).sort()
   }
 }
