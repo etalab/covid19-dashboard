@@ -269,7 +269,6 @@ const MainPage = ({data, dates, isGouv}) => {
           setViewport,
           maps,
           viewport,
-          isGouv,
           isIframe,
           isMobileDevice,
           isTouchScreenDevice

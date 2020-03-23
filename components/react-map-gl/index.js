@@ -23,7 +23,6 @@ const Map = () => {
     viewport,
     maps,
     setViewport,
-    isGouv,
     isMobileDevice
   } = useContext(AppContext)
 
@@ -71,7 +70,7 @@ const Map = () => {
     <div className='map-container'>
       <div className='controls'>
         <div className='control'>
-          {!isGouv && <MapSelector mapIdx={selectedMapIdx} selectMap={setSelectedMapIdx} />}
+          <MapSelector mapIdx={selectedMapIdx} selectMap={setSelectedMapIdx} />
         </div>
 
         {isIframe && (
