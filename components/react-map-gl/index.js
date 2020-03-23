@@ -97,7 +97,7 @@ const Map = () => {
         <Source
           type='geojson'
           id='cas-confirmes'
-          attribution='Données Ministère des Solidarités et de la Santé'
+          attribution='Données Santé publique France et ARS'
           data={maps[selectedMapIdx].data}
         >
           {maps[selectedMapIdx].layers.map(layer => (
