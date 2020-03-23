@@ -5,18 +5,37 @@ import colors from '../styles/colors'
 
 const Counter = ({value, label, color}) => {
   return (
-    <div className='counter'>
-      <div className='value'>{value}</div>
-      <div>{label}</div>
+    <div className='counter-container'>
+      <div className='counter'>
+        <div className='value'>{value}</div>
+        <div className='difference'>
+          ( + 125 )
+        </div>
+        <div>{label}</div>
+      </div>
 
       <style jsx>{`
         .counter {
           display: flex;
           flex-direction: column;
-          justify-content: center;
+          justify-content: space-around;
           text-align: center;
           margin: 1em 0;
           color: ${colors[color]};
+        }
+
+        .counter-container {
+          background-color: white;
+          border-radius: .5em;
+          display: flex;
+          flex-direction: row;
+          justify-content: space-around;
+          margin: 1em;
+        }
+
+        .difference {
+          font-size: small;
+          font-style: italic;
         }
 
         .value {
