@@ -8,8 +8,8 @@ const Counters = ({report}) => {
 
   return (
     <div className='stats'>
+      <Counter value={casConfirmes ?? '?'} label='cas confirmés' color='orange' />
       <div className='counters'>
-        <Counter value={casConfirmes ?? '?'} label='cas confirmés' color='orange' />
         <Counter value={gueris ?? '?'} label='guéris' color='green' />
         <Counter value={deces ?? '?'} label='décès' color='red' />
         <Counter value={hospitalises ?? '?'} label='hospitalisations' color='darkGrey' />
@@ -17,6 +17,7 @@ const Counters = ({report}) => {
       </div>
       <style jsx>{`
         .counters {
+          background-color: whitesmoke;
           display: grid;
           grid-template-columns: 1fr 1fr;
         }
