@@ -11,6 +11,7 @@ import ConfirmesChart from './charts/confirmes-chart'
 import DecesChart from './charts/deces-chart'
 import ReanimationChart from './charts/reanimation-chart'
 import HospitalisesChart from './charts/hospitalises-chart'
+import GuerisChart from './charts/gueris-chart'
 
 const charts = {
   mixed: {
@@ -32,6 +33,10 @@ const charts = {
   deces: {
     name: 'Décès',
     chart: DecesChart
+  },
+  gueris: {
+    name: 'Guéris',
+    chart: GuerisChart
   }
 }
 
@@ -61,7 +66,7 @@ const Statistics = () => {
 
       {report && report.history && (
         <>
-          <Chart data={report.history.filter(r => date >= r.date)} height={isMobileDevice ? 260 : 280} />
+          <Chart data={report.history.filter(r => date >= r.date)} height={isMobileDevice ? 220 : 250} />
           <div className='charts-list'>
             {Object.keys(charts).map(chart => (
               <div

@@ -32,11 +32,11 @@ const options = {
 const formatData = data => {
   const datasets = []
 
-  if (data.some(h => h.deces)) {
+  if (data.some(h => h.gueris)) {
     datasets.push({
-      label: 'Décès',
-      data: data.map(h => h.deces),
-      backgroundColor: colors.red
+      label: 'Guéris',
+      data: data.map(h => h.gueris),
+      backgroundColor: colors.green
     })
   }
 
@@ -46,19 +46,19 @@ const formatData = data => {
   }
 }
 
-const DecesChart = ({data, height}) => (
+const GuerisChart = ({data, height}) => (
   <div style={{padding: '1em'}}>
     <Bar data={formatData(data)} options={options} height={height} />
   </div>
 )
 
-DecesChart.defaultProps = {
+GuerisChart.defaultProps = {
   height: null
 }
 
-DecesChart.propTypes = {
+GuerisChart.propTypes = {
   data: PropTypes.array.isRequired,
   height: PropTypes.number
 }
 
-export default DecesChart
+export default GuerisChart

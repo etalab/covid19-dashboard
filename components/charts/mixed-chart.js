@@ -5,6 +5,9 @@ import {Bar} from 'react-chartjs-2'
 import colors from '../../styles/colors'
 
 const options = {
+  legend: {
+    display: false
+  },
   tooltips: {
     mode: 'index',
     filter(item) {
@@ -66,11 +69,19 @@ const formatData = data => {
     })
   }
 
+  if (data.some(h => h.gueris)) {
+    datasets.push({
+      label: 'Guéris',
+      data: data.map(h => h.gueris || null),
+      backgroundColor: colors.green
+    })
+  }
+
   if (data.some(h => h.casConfirmes)) {
     datasets.push({
       label: 'Autre',
       data: data.map(h => {
-        return h.casConfirmes - (((h.deces || 0) + (h.hospitalises || h.reanimation || 0)))
+        return h.casConfirmes - ((h.gueris || 0) + (h.deces || 0) + (h.hospitalises || h.reanimation || 0))
       }),
       backgroundColor: colors.orange
     })
