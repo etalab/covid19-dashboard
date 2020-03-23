@@ -66,7 +66,7 @@ const Statistics = () => {
 
       {report && report.history && (
         <>
-          <Chart data={report.history.filter(r => date >= r.date)} height={isMobileDevice ? 260 : 280} />
+          <Chart data={report.history.filter(r => date >= r.date)} height={isMobileDevice ? 220 : 250} />
           <div className='charts-list'>
             {Object.keys(charts).map(chart => (
               <div
