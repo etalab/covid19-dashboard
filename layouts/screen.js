@@ -11,6 +11,8 @@ import Footer from '../components/footer'
 
 import colors from '../styles/colors'
 
+const DISABLE_FOOTER = process.env.DISABLE_FOOTER === '1'
+
 const ScreenPage = () => {
   const {isIframe} = useContext(AppContext)
   return (
@@ -23,7 +25,7 @@ const ScreenPage = () => {
             <Informations />
           </>
         </Scrollable>
-        {!isIframe && <Footer />}
+        {!isIframe && !DISABLE_FOOTER && <Footer />}
       </div>
 
       <div className='map'>

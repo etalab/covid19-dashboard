@@ -13,6 +13,8 @@ import Statistics from '../components/statistics'
 import Informations from '../components/informations'
 import Footer from '../components/footer'
 
+const DISABLE_FOOTER = process.env.DISABLE_FOOTER === '1'
+
 const VIEWS = {
   map: () => <ReactMapGl />,
   stats: () => <Statistics />,
@@ -48,7 +50,7 @@ const MobilePage = () => {
         </div>
       </div>
 
-      {!app.isIframe && <Footer />}
+      {!app.isIframe && !DISABLE_FOOTER && <Footer />}
 
       <style jsx>{`
         .mobile-page-container {
