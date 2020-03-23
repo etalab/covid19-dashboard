@@ -9,6 +9,8 @@ import MapSelector from '../map-selector'
 import SumUp from './sumup'
 import Statistics from '../statistics'
 
+const SITE_URL = process.env.SITE_URL
+
 const settings = {
   maxZoom: 10
 }
@@ -75,7 +77,7 @@ const Map = () => {
 
         {isIframe && (
           <div className='control maximize'>
-            <a href='https://veille-coronavirus.fr/' target='_top'><Maximize2 style={{verticalAlign: 'middle'}} /></a>
+            <a href={SITE_URL} target='_top'><Maximize2 style={{verticalAlign: 'middle'}} /></a>
           </div>
         )}
       </div>
