@@ -60,7 +60,7 @@ const Statistics = () => {
             <div className='back' onClick={() => setSelectedLocation(null)}><BarChart2 /> <span>France</span></div>
           )
         )}
-        <h2>{selectedLocationReport ? selectedLocationReport.nom : 'France'}</h2>
+        <h2>COVID-19 en {selectedLocationReport ? selectedLocationReport.nom : 'France'}</h2>
       </div>
 
       <Counters report={report} previousReport={previousReport} />
