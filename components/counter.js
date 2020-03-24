@@ -4,11 +4,7 @@ import PropTypes from 'prop-types'
 import colors from '../styles/colors'
 
 const Counter = ({value, label, color, previousValue}) => {
-  let difference = null
-
-  if (Number.isInteger(value) && Number.isInteger(previousValue)) {
-    difference = value - previousValue
-  }
+  const difference = (Number.isInteger(value) && Number.isInteger(previousValue) && value - previousValue !== 0) ? value - previousValue : null
 
   return (
     <div className='counter-container'>
