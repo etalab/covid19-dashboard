@@ -287,13 +287,13 @@ const MainPage = ({data, dates, isGouv}) => {
       data: regionsReport,
       layers: [guerisLayer, guerisCountLayer]
     },
-    {
-      name: 'Carte des cas confirmés',
-      category: 'départementale',
-      data: departementsReport,
-      properties: 'casConfirmes',
-      layers: [casConfirmesLayer, casConfirmesCountLayer]
-    },
+    // {
+    //   name: 'Carte des cas confirmés',
+    //   category: 'départementale',
+    //   data: departementsReport,
+    //   properties: 'casConfirmes',
+    //   layers: [casConfirmesLayer, casConfirmesCountLayer]
+    // },
     {
       name: 'Carte des décès',
       category: 'départementale',
