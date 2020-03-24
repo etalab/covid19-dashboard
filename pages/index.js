@@ -68,6 +68,7 @@ const MainPage = ({data, dates, isGouv}) => {
   const [selectedLocation, setSelectedLocation] = useState(null)
   const [selectedLocationReport, setSelectedLocationReport] = useState(null)
   const [franceReport, setFranceReport] = useState({})
+  const [previousFranceReport, setPreviousFranceReport] = useState({})
   const [regionsReport, setRegionsReport] = useState({})
   const [departementsReport, setDepartementsReport] = useState({})
   const [viewport, setViewport] = useState(defaultViewport)
@@ -98,6 +99,17 @@ const MainPage = ({data, dates, isGouv}) => {
       history: reports
     }
   }, [date, data])
+
+  const getPreviousFranceReport = useCallback(() => {
+    const reports = data.filter((item => item.nom === 'France'))
+    const idx = indexOf(dates, date)
+    const previousIdx = idx - 1
+    const previousDate = dates[previousIdx]
+    return {
+      ...reports.find(r => r.date === previousDate),
+      history: reports
+    }
+  }, [dates, date, data])
 
   const getRegionsReport = useCallback(() => {
     const regions = data.filter((item => item.code.includes('REG')))
@@ -158,12 +170,15 @@ const MainPage = ({data, dates, isGouv}) => {
     const franceReport = getFranceReport()
     setFranceReport(franceReport)
 
+    const previousFranceReport = getPreviousFranceReport()
+    setPreviousFranceReport(previousFranceReport)
+
     const regionsReport = getRegionsReport()
     setRegionsReport(regionsReport)
 
     const departementsReport = getDepartementsReport()
     setDepartementsReport(departementsReport)
-  }, [date, getFranceReport, getRegionsReport, getDepartementsReport])
+  }, [date, getFranceReport, getPreviousFranceReport, getRegionsReport, getDepartementsReport])
 
   useEffect(() => {
     const mobileWidth = parseInt(theme.mobileDisplay.split('px')[0])
@@ -264,6 +279,7 @@ const MainPage = ({data, dates, isGouv}) => {
           selectedLocationReport,
           setSelectedLocation,
           franceReport,
+          previousFranceReport,
           regionsReport,
           departementsReport,
           prev: dateIdx > 0 ? previousReport : null,
