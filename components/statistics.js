@@ -1,4 +1,4 @@
-import React, {useContext, useState} from 'react'
+import React, {useContext, useState, useEffect} from 'react'
 import {X, BarChart2} from 'react-feather'
 
 import colors from '../styles/colors'
@@ -42,12 +42,27 @@ const charts = {
 
 const Statistics = () => {
   const theme = useContext(ThemeContext)
-  const {date, franceReport, selectedLocationReport, setSelectedLocation, isMobileDevice} = useContext(AppContext)
+  const {date, setDate, franceReport, selectedLocationReport, setSelectedLocation, isMobileDevice} = useContext(AppContext)
 
   const report = selectedLocationReport || franceReport
 
   const [selectedChart, setSelectedChart] = useState('mixed')
   const Chart = charts[selectedChart].chart
+ 
+  const startAnimation = (daysBefore) => {
+    let datesIndex = 0;
+    const dates = report.history.map(e => e.date).sort().slice(-daysBefore);
+    const interval = setInterval(() => {
+      // exit condition
+      if(datesIndex >= dates.length - 1) {
+        clearInterval(interval);
+        return ;
+      }    
+      setDate(dates[++datesIndex])
+    }, 400);
+  }
+
+
 
   return (
     <>
@@ -77,6 +92,11 @@ const Statistics = () => {
                 {charts[chart].name}
               </div>
             ))}
+            <div className={`chart-name`}
+              onClick={() => startAnimation(30)}
+            >
+              Animation 30 derniers jours
+            </div>
           </div>
         </>
       )}
