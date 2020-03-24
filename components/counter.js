@@ -3,7 +3,13 @@ import PropTypes from 'prop-types'
 
 import colors from '../styles/colors'
 
-const Counter = ({value, label, color, difference}) => {
+const Counter = ({value, label, color, previousValue}) => {
+  let difference = null
+
+  if (Number.isInteger(value) && Number.isInteger(previousValue)) {
+    difference = value - previousValue
+  }
+
   return (
     <div className='counter-container'>
       <div className='counter'>
@@ -52,14 +58,14 @@ const Counter = ({value, label, color, difference}) => {
 Counter.defaultProps = {
   label: null,
   color: 'almostBlack',
-  difference: null
+  previousValue: null
 }
 
 Counter.propTypes = {
   value: PropTypes.number.isRequired,
   label: PropTypes.string,
   color: PropTypes.string,
-  difference: PropTypes.number
+  previousValue: PropTypes.number
 }
 
 export default Counter
