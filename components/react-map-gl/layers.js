@@ -15,7 +15,7 @@ export const casConfirmesLayer = {
       0,
       10,
       100,
-      80
+      70
     ]
   }
 }
@@ -46,7 +46,7 @@ export const decesLayer = {
       0,
       10,
       100,
-      80
+      70
     ]
   }
 }
@@ -77,7 +77,7 @@ export const guerisLayer = {
       0,
       10,
       100,
-      80
+      70
     ]
   }
 }
@@ -108,7 +108,7 @@ export const hospitalisesLayer = {
       0,
       10,
       100,
-      80
+      70
     ]
   }
 }
@@ -139,7 +139,7 @@ export const reanimationLayer = {
       0,
       10,
       100,
-      80
+      70
     ]
   }
 }
