@@ -7,10 +7,10 @@ const Counter = ({value, label, color, difference}) => {
   return (
     <div className='counter-container'>
       <div className='counter'>
-        <div className='value'>{value}</div>
+        <div className='value'>{value ? value : '?'}</div>
         {difference && (
           <div className='difference'>
-            ( {Math.sign(difference) === 1 ? '+ ' : ''}{difference} )
+            ( {Math.sign(difference) === 1 ? '+' : ''}{difference} )
           </div>
         )}
         <div>{label}</div>
@@ -56,13 +56,10 @@ Counter.defaultProps = {
 }
 
 Counter.propTypes = {
-  value: PropTypes.oneOfType([
-    PropTypes.string,
-    PropTypes.number
-  ]).isRequired,
+  value: PropTypes.number.isRequired,
   label: PropTypes.string,
   color: PropTypes.string,
-  difference: PropTypes.string
+  difference: PropTypes.number
 }
 
 export default Counter
