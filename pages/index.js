@@ -34,6 +34,8 @@ const reportToGeoJSON = (report, date) => {
   return {
     type: 'FeatureCollection',
     features: Object.keys(report).filter(code => Boolean(centers[code])).map(code => {
+      const selectedDateAvailable = report[code].find(r => r.date === date)
+      const properties = selectedDateAvailable ? selectedDateAvailable : { code }
       return {
         type: 'Feature',
         geometry: {
@@ -41,6 +43,7 @@ const reportToGeoJSON = (report, date) => {
           coordinates: centers[code]
         },
         properties: {
+          ...properties,
           ...report[code].find(r => r.date === date),
           history: report[code].filter(r => date >= r.date)
         }
@@ -123,7 +126,6 @@ const MainPage = ({data, dates, isGouv}) => {
     } else if (code.includes('DEP')) {
       report = departementsReport
     }
-
     const feature = report.features.find(f => f.properties.code === code)
     return {...feature.properties}
   }, [regionsReport, departementsReport])
