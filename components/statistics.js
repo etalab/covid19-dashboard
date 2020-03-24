@@ -1,4 +1,4 @@
-import React, {useContext, useState, useEffect} from 'react'
+import React, {useContext, useState} from 'react'
 import {X, BarChart2} from 'react-feather'
 
 import colors from '../styles/colors'
