@@ -30,11 +30,9 @@ const Counter = ({value, label, color, previousValue}) => {
 
         .counter-container {
           background-color: white;
-          border-radius: .5em;
           display: flex;
           flex-direction: row;
           justify-content: space-around;
-          margin: 1em;
         }
 
         .difference {
