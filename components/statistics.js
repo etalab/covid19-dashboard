@@ -42,9 +42,10 @@ const charts = {
 
 const Statistics = () => {
   const theme = useContext(ThemeContext)
-  const {date, franceReport, selectedLocationReport, setSelectedLocation, isMobileDevice} = useContext(AppContext)
+  const {date, franceReport, previousFranceReport, selectedPreviousLocationReport, selectedLocationReport, setSelectedLocation, isMobileDevice} = useContext(AppContext)
 
   const report = selectedLocationReport || franceReport
+  const previousReport = selectedPreviousLocationReport || previousFranceReport
 
   const [selectedChart, setSelectedChart] = useState('mixed')
   const Chart = charts[selectedChart].chart
@@ -62,7 +63,7 @@ const Statistics = () => {
         <h2>{selectedLocationReport ? selectedLocationReport.nom : 'France'}</h2>
       </div>
 
-      <Counters report={report} />
+      <Counters report={report} previousReport={previousReport} />
 
       {report && report.history && (
         <>

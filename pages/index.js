@@ -35,7 +35,8 @@ const reportToGeoJSON = (report, date) => {
     type: 'FeatureCollection',
     features: Object.keys(report).filter(code => Boolean(centers[code])).map(code => {
       const selectedDateAvailable = report[code].find(r => r.date === date)
-      const properties = selectedDateAvailable ? selectedDateAvailable : { code }
+      const properties = selectedDateAvailable ? selectedDateAvailable : {code}
+
       return {
         type: 'Feature',
         geometry: {
@@ -67,9 +68,13 @@ const MainPage = ({data, dates, isGouv}) => {
   const [date, setDate] = useState(dates[dates.length - 1])
   const [selectedLocation, setSelectedLocation] = useState(null)
   const [selectedLocationReport, setSelectedLocationReport] = useState(null)
+  const [selectedPreviousLocationReport, setSelectedPreviousLocationReport] = useState(null)
   const [franceReport, setFranceReport] = useState({})
+  const [previousFranceReport, setPreviousFranceReport] = useState({})
   const [regionsReport, setRegionsReport] = useState({})
+  const [previousRegionsReport, setPreviousRegionsReport] = useState({})
   const [departementsReport, setDepartementsReport] = useState({})
+  const [previousDepartementsReport, setPreviousDepartementsReport] = useState({})
   const [viewport, setViewport] = useState(defaultViewport)
 
   const dateIdx = indexOf(dates, date)
@@ -99,12 +104,43 @@ const MainPage = ({data, dates, isGouv}) => {
     }
   }, [date, data])
 
+  const getPreviousFranceReport = useCallback(() => {
+    const reports = data.filter((item => item.nom === 'France'))
+    const idx = indexOf(dates, date)
+    const previousIdx = idx - 1
+    const previousDate = dates[previousIdx]
+    return {
+      ...reports.find(r => r.date === previousDate),
+      history: reports
+    }
+  }, [dates, date, data])
+
   const getRegionsReport = useCallback(() => {
     const regions = data.filter((item => item.code.includes('REG')))
     const byCode = groupBy(regions, 'code')
 
     return reportToGeoJSON(byCode, date)
   }, [date, data])
+
+  const getPreviousRegionsReport = useCallback(() => {
+    const regions = data.filter((item => item.code.includes('REG')))
+    const byCode = groupBy(regions, 'code')
+    const idx = indexOf(dates, date)
+    const previousIdx = idx - 1
+    const previousDate = dates[previousIdx]
+
+    return reportToGeoJSON(byCode, previousDate)
+  }, [dates, date, data])
+
+  const getPreviousDepartementsReport = useCallback(() => {
+    const departements = data.filter((item => item.code.includes('DEP')))
+    const byCode = groupBy(departements, 'code')
+    const idx = indexOf(dates, date)
+    const previousIdx = idx - 1
+    const previousDate = dates[previousIdx]
+
+    return reportToGeoJSON(byCode, previousDate)
+  }, [dates, date, data])
 
   const getDepartementsReport = useCallback(() => {
     const departements = data.filter((item => item.code.includes('DEP')))
@@ -130,14 +166,38 @@ const MainPage = ({data, dates, isGouv}) => {
     return {...feature.properties}
   }, [regionsReport, departementsReport])
 
+  const getPreviousLocationReport = useCallback(code => {
+    let report
+
+    if (code.includes('REG')) {
+      report = previousRegionsReport
+    } else if (code.includes('DEP')) {
+      report = previousDepartementsReport
+    }
+
+    const feature = report.features.find(f => f.properties.code === code)
+    return {...feature.properties}
+  }, [previousRegionsReport, previousDepartementsReport])
+
   useEffect(() => {
     if (selectedLocation) {
       const locationReport = getLocationReport(selectedLocation)
       setSelectedLocationReport(locationReport)
+      setSelectedPreviousLocationReport(locationReport)
     } else {
       setSelectedLocationReport(null)
+      setSelectedPreviousLocationReport(null)
     }
   }, [regionsReport, selectedLocation, getLocationReport])
+
+  useEffect(() => {
+    if (selectedLocation) {
+      const locationReport = getPreviousLocationReport(selectedLocation)
+      setSelectedPreviousLocationReport(locationReport)
+    } else {
+      setSelectedPreviousLocationReport(null)
+    }
+  }, [previousRegionsReport, selectedLocation, getPreviousLocationReport])
 
   useEffect(() => {
     const {latitude, longitude} = viewport
@@ -158,12 +218,21 @@ const MainPage = ({data, dates, isGouv}) => {
     const franceReport = getFranceReport()
     setFranceReport(franceReport)
 
+    const previousFranceReport = getPreviousFranceReport()
+    setPreviousFranceReport(previousFranceReport)
+
     const regionsReport = getRegionsReport()
     setRegionsReport(regionsReport)
 
+    const previousRegionsReport = getPreviousRegionsReport()
+    setPreviousRegionsReport(previousRegionsReport)
+
+    const previousDepartementsReport = getPreviousDepartementsReport()
+    setPreviousDepartementsReport(previousDepartementsReport)
+
     const departementsReport = getDepartementsReport()
     setDepartementsReport(departementsReport)
-  }, [date, getFranceReport, getRegionsReport, getDepartementsReport])
+  }, [date, getFranceReport, getPreviousFranceReport, getRegionsReport, getPreviousRegionsReport, getDepartementsReport, getPreviousDepartementsReport])
 
   useEffect(() => {
     const mobileWidth = parseInt(theme.mobileDisplay.split('px')[0])
@@ -252,7 +321,7 @@ const MainPage = ({data, dates, isGouv}) => {
       properties: 'gueris',
       data: departementsReport,
       layers: [guerisLayer, guerisCountLayer]
-    },
+    }
   ]
 
   return (
@@ -264,8 +333,12 @@ const MainPage = ({data, dates, isGouv}) => {
           selectedLocationReport,
           setSelectedLocation,
           franceReport,
+          previousFranceReport,
           regionsReport,
+          previousRegionsReport,
+          selectedPreviousLocationReport,
           departementsReport,
+          previousDepartementsReport,
           prev: dateIdx > 0 ? previousReport : null,
           next: dateIdx < dates.length - 1 ? nextReport : null,
           setViewport,
