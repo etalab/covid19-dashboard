@@ -11,7 +11,6 @@ const Counters = ({report, previousReport}) => {
   const previousHospitalises = previousReport.hospitalises
   const previousReanimation = previousReport.reanimation
 
-
   return (
     <div className='stats'>
       <Counter value={casConfirmes ?? '?'} difference={casConfirmes - previousCasConfirmes || ''} label='cas confirmés' color='orange' />
@@ -33,11 +32,13 @@ const Counters = ({report, previousReport}) => {
 }
 
 Counters.defaultProps = {
-  report: {}
+  report: {},
+  previousReport: {}
 }
 
 Counters.propTypes = {
-  report: PropTypes.object
+  report: PropTypes.object,
+  previousReport: PropTypes.object
 }
 
 export default Counters

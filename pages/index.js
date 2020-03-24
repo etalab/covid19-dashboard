@@ -325,7 +325,7 @@ const MainPage = ({data, dates, isGouv}) => {
       properties: 'gueris',
       data: departementsReport,
       layers: [guerisLayer, guerisCountLayer]
-    },
+    }
   ]
 
   return (
