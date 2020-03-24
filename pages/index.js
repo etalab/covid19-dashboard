@@ -261,6 +261,7 @@ const MainPage = ({data, dates, isGouv}) => {
       <div className='main-page-container'>
         <AppContext.Provider value={{
           date,
+          setDate,
           selectedLocationReport,
           setSelectedLocation,
           franceReport,
