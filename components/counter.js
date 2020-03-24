@@ -52,13 +52,14 @@ const Counter = ({value, label, color, previousValue}) => {
 }
 
 Counter.defaultProps = {
+  value: null,
   label: null,
   color: 'almostBlack',
   previousValue: null
 }
 
 Counter.propTypes = {
-  value: PropTypes.number.isRequired,
+  value: PropTypes.number,
   label: PropTypes.string,
   color: PropTypes.string,
   previousValue: PropTypes.number
