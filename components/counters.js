@@ -8,13 +8,13 @@ const Counters = ({report, previousReport}) => {
 
   return (
     <div className='stats'>
-      <Counter value={casConfirmes} previousValue={previousReport.casConfirmes} label='cas confirmés' color='orange' />
       <div className='counters'>
         <Counter value={gueris} previousValue={previousReport.gueris} label='guéris' color='green' />
         <Counter value={deces} previousValue={previousReport.deces} label='décès' color='red' />
         <Counter value={hospitalises} previousValue={previousReport.hospitalises} label='hospitalisations' color='darkGrey' />
         <Counter value={reanimation} previousValue={previousReport.reanimation} label='en réanimation' color='darkerGrey' />
       </div>
+      <Counter value={casConfirmes} previousValue={previousReport.casConfirmes} label='cas confirmés' color='orange' />
       <style jsx>{`
         .counters {
           background-color: whitesmoke;
