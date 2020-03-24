@@ -35,12 +35,8 @@ const reportToGeoJSON = (report, date) => {
     type: 'FeatureCollection',
     features: Object.keys(report).filter(code => Boolean(centers[code])).map(code => {
       const selectedDateAvailable = report[code].find(r => r.date === date)
-<<<<<<< HEAD
-      const properties = selectedDateAvailable ? selectedDateAvailable : { code }
-=======
       const properties = selectedDateAvailable ? selectedDateAvailable : {code}
 
->>>>>>> add previous report for regions & departements
       return {
         type: 'Feature',
         geometry: {

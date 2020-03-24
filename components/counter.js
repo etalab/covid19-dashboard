@@ -10,7 +10,7 @@ const Counter = ({value, label, color, difference}) => {
         <div className='value'>{value}</div>
         {difference && (
           <div className='difference'>
-            ( + {difference} )
+            ( {Math.sign(difference) === 1 ? '+ ' : ''}{difference} )
           </div>
         )}
         <div>{label}</div>

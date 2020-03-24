@@ -5,20 +5,20 @@ import Counter from './counter'
 
 const Counters = ({report, previousReport}) => {
   const {casConfirmes, hospitalises, reanimation, deces, gueris} = report || {}
-  const previousCasConfirmes = previousReport.casConfirmes
-  const previousGueris = previousReport.gueris
-  const previousDeces = previousReport.deces
-  const previousHospitalises = previousReport.hospitalises
-  const previousReanimation = previousReport.reanimation
+  const differenceCasConfirmes = casConfirmes - previousReport.casConfirmes
+  const differenceGueris = gueris - previousReport.gueris
+  const differenceDeces = deces - previousReport.deces
+  const differenceHospitalises = hospitalises - previousReport.hospitalises
+  const differenceReanimation = reanimation - previousReport.reanimation
 
   return (
     <div className='stats'>
-      <Counter value={casConfirmes ?? '?'} difference={casConfirmes - previousCasConfirmes || ''} label='cas confirmés' color='orange' />
+      <Counter value={casConfirmes ?? '?'} difference={differenceCasConfirmes || ''} label='cas confirmés' color='orange' />
       <div className='counters'>
-        <Counter value={gueris ?? '?'} difference={gueris - previousGueris || ''} label='guéris' color='green' />
-        <Counter value={deces ?? '?'} difference={deces - previousDeces || ''} label='décès' color='red' />
-        <Counter value={hospitalises ?? '?'} difference={hospitalises - previousHospitalises || ''} label='hospitalisations' color='darkGrey' />
-        <Counter value={reanimation ?? '?'} difference={reanimation - previousReanimation || ''} label='en réanimation' color='darkerGrey' />
+        <Counter value={gueris ?? '?'} difference={differenceGueris || ''} label='guéris' color='green' />
+        <Counter value={deces ?? '?'} difference={differenceDeces || ''} label='décès' color='red' />
+        <Counter value={hospitalises ?? '?'} difference={differenceHospitalises || ''} label='hospitalisations' color='darkGrey' />
+        <Counter value={reanimation ?? '?'} difference={differenceReanimation || ''} label='en réanimation' color='darkerGrey' />
       </div>
       <style jsx>{`
         .counters {
