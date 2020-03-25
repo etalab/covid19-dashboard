@@ -274,7 +274,7 @@ const MainPage = ({data, dates, isGouv}) => {
       layers: [hospitalisesLayer, hospitalisesCountLayer]
     },
     {
-      name: 'Carte des cas en réanimation',
+      name: 'Carte des patients en réanimation',
       category: 'régionale',
       properties: 'reanimation',
       data: regionsReport,
@@ -309,7 +309,7 @@ const MainPage = ({data, dates, isGouv}) => {
       layers: [hospitalisesLayer, hospitalisesCountLayer]
     },
     {
-      name: 'Carte des cas en réanimation',
+      name: 'Carte des patients en réanimation',
       category: 'départementale',
       properties: 'reanimation',
       data: departementsReport,
