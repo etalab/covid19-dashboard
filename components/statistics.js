@@ -3,7 +3,7 @@ import {X, BarChart2} from 'react-feather'
 
 import colors from '../styles/colors'
 
-import {AppContext, ThemeContext} from '../pages'
+import {AppContext} from '../pages'
 
 import Counters from './counters'
 import MixedChart from './charts/mixed-chart'
@@ -41,7 +41,6 @@ const charts = {
 }
 
 const Statistics = () => {
-  const theme = useContext(ThemeContext)
   const {date, franceReport, previousFranceReport, selectedPreviousLocationReport, selectedLocationReport, setSelectedLocation, isMobileDevice} = useContext(AppContext)
 
   const report = selectedLocationReport || franceReport
@@ -70,12 +69,13 @@ const Statistics = () => {
           <Chart data={report.history.filter(r => date >= r.date)} height={isMobileDevice ? 150 : 150} />
           <div className='charts-list'>
             {Object.keys(charts).map(chart => (
-              <div
-                key={chart}
-                className={`chart-name ${chart === selectedChart ? 'selected' : ''}`}
-                onClick={() => setSelectedChart(chart)}
-              >
-                {charts[chart].name}
+              <div key={chart} className='button-container'>
+                <div
+                  className={`chart-name ${chart === selectedChart ? 'selected' : ''}`}
+                  onClick={() => setSelectedChart(chart)}
+                >
+                  {charts[chart].name}
+                </div>
               </div>
             ))}
           </div>
@@ -119,27 +119,49 @@ const Statistics = () => {
 
         .charts-list {
           display: grid;
-          grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
+          grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
           grid-gap: 0.2em;
           margin: 0.5em;
+          background: #FFF;
         }
 
         .chart-name {
+          display: block;
+          font-weight: bold;
+          height: 100%;
           text-align: center;
-          background-color: ${theme.alt};
-          color: #fff;
-          border-radius: 4px;
-          margin: .2em 0;
-          padding: 0.2em 0.4em;
+          background-color: ${colors.white};
+          color: ${colors.darkBlue};
+          padding: 0.4em;
+          font-size: .7em;
+          letter-spacing: .1em;
+          border: 1px solid ${colors.darkBlue};
+          text-transform: uppercase;
+          transform: translate(-.1em, -.1em);
+          transition: transform .1s ease-out;
         }
 
         .chart-name:hover {
           cursor: pointer;
-          background-color: ${theme.secondary};
+          color: ${colors.white};
+          background-color: ${colors.darkBlue};
+          transform: translate(0px, 0px);
         }
 
         .chart-name.selected {
-          background-color: ${theme.primary};
+          color: #FFF;
+          background-color: ${colors.darkBlue};
+        }
+
+        .button-container {
+          background-color: ${colors.white};
+          border-bottom: 1px solid ${colors.darkBlue};
+          border-right: 1px solid ${colors.darkBlue};
+          margin: .3em;
+        }
+
+        .button-container.selected {
+          background-color: red;
         }
         `}</style>
     </>

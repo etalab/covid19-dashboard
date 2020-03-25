@@ -2,6 +2,7 @@ import React from 'react'
 import PropTypes from 'prop-types'
 
 import Counter from './counter'
+import colors from '../styles/colors'
 
 const Counters = ({report, previousReport}) => {
   const {casConfirmes, hospitalises, reanimation, deces, gueris} = report || {}
@@ -17,7 +18,6 @@ const Counters = ({report, previousReport}) => {
       <Counter value={casConfirmes} previousValue={previousReport.casConfirmes} label='cas confirmés' color='orange' />
       <style jsx>{`
         .counters {
-          background-color: whitesmoke;
           display: grid;
           grid-template-columns: 1fr 1fr;
         }

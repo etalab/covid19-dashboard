@@ -1,12 +1,10 @@
-import React, {useContext} from 'react'
+import React from 'react'
 import {GitHub} from 'react-feather'
 
 import theme from '../styles/theme'
-import {ThemeContext} from '../pages'
+import colors from '../styles/colors'
 
 const Footer = () => {
-  const Theme = useContext(ThemeContext)
-
   return (
     <div className='menu-footer'>
       <div>
@@ -18,7 +16,7 @@ const Footer = () => {
       <style jsx>{`
         .menu-footer {
           display: flex;
-          background: ${Theme.primary};
+          background: ${colors.darkBlue};
           padding: 1em;
         }
   

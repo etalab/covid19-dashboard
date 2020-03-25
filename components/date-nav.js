@@ -2,7 +2,7 @@ import React, {useContext} from 'react'
 import PropTypes from 'prop-types'
 import {ChevronLeft, ChevronRight} from 'react-feather'
 
-import {AppContext, ThemeContext} from '../pages'
+import {AppContext} from '../pages'
 
 import theme from '../styles/theme'
 import colors from '../styles/colors'
@@ -15,7 +15,6 @@ const formatDate = isoString => {
 
 const DateNav = ({disabled}) => {
   const {date, prev, next} = useContext(AppContext)
-  const Theme = useContext(ThemeContext)
   const formatedDate = formatDate(date)
 
   return (
@@ -38,7 +37,7 @@ const DateNav = ({disabled}) => {
           text-align: center;
           box-shadow: 0 1px 4px ${colors.lightGrey};
           padding: 0 1em;
-          background-color: ${Theme.primary};
+          background-color: ${colors.darkBlue};
           color: #fff;
         }
 

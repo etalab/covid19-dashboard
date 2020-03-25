@@ -29,7 +29,6 @@ const Counter = ({value, label, color, previousValue}) => {
         }
 
         .counter-container {
-          background-color: white;
           display: flex;
           flex-direction: row;
           justify-content: space-around;

@@ -1,5 +1,7 @@
 import React from 'react'
 
+import colors from '../styles/colors'
+
 export default function MyApp({Component, pageProps}) {
   return (
     <>
@@ -13,6 +15,15 @@ export default function MyApp({Component, pageProps}) {
         body {
           height: 100%;
           position: relative;
+        }
+
+        a {
+          color: ${colors.darkBlue}
+        }
+
+        @font-face {
+          font-family: "Marianne";
+          src: url('/fonts/Marianne-Regular.woff2')
         }
 
         @font-face {
@@ -37,7 +48,7 @@ export default function MyApp({Component, pageProps}) {
           padding: 0;
           margin: 0;
           overflow: auto;
-          font-family: "Source Sans Pro", Arial, sans-serif;
+          font-family: "Marianne", Arial;
         }
       `}</style>
     </>

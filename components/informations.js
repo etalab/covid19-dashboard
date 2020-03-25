@@ -1,5 +1,7 @@
 import React from 'react'
 
+import colors from '../styles/colors'
+
 const Informations = React.memo(() => (
   <div className='informations'>
     <h3>Informations</h3>
@@ -17,10 +19,12 @@ const Informations = React.memo(() => (
     <style jsx>{`
       .informations {
         padding: 1em;
+        background-color: ${colors.sand};
       }
 
       .informations p {
-        font-size: 0.85em;
+        font-size: 14px;
+        line-height: 22px;
       }
     `}</style>
   </div>

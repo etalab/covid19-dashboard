@@ -1,10 +1,11 @@
 export default ({
   blue: '#004192',
-  lightBlue: '#0B6BA8',
-  darkBlue: '#000090',
-  lighterBlue: '#B4E1FA',
+  lightBlue: '#7e7ec6',
+  darkBlue: '#000091',
+  lighterBlue: '#4b4bb1',
 
   white: '#fff',
+  sand: '#f4f2ea',
   lighterGrey: '#EBEFF3',
   lightGrey: '#C9D3DF',
   grey: '#adb9c9',
