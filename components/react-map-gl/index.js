@@ -88,7 +88,7 @@ const Map = () => {
         {...viewport}
         width='100%'
         height='100%'
-        mapStyle='https://openmaptiles.geo.data.gouv.fr/styles/osm-bright/style.json'
+        mapStyle='https://etalab-tiles.fr/styles/osm-bright/style.json'
         {...settings}
         interactiveLayerIds={maps[selectedMapIdx].layers.map(layer => layer.id)}
         onViewportChange={setViewport}
