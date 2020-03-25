@@ -35,7 +35,7 @@ const charts = {
     chart: DecesChart
   },
   gueris: {
-    name: 'Guéris',
+    name: 'Retours à domicile',
     chart: GuerisChart
   }
 }

@@ -9,7 +9,7 @@ const Counters = ({report, previousReport}) => {
   return (
     <div className='stats'>
       <div className='counters'>
-        <Counter value={gueris} previousValue={previousReport.gueris} label='guéris' color='green' />
+        <Counter value={gueris} previousValue={previousReport.gueris} label='retours à domicile' color='green' />
         <Counter value={deces} previousValue={previousReport.deces} label='décès' color='red' />
         <Counter value={hospitalises} previousValue={previousReport.hospitalises} label='hospitalisations' color='darkGrey' />
         <Counter value={reanimation} previousValue={previousReport.reanimation} label='en réanimation' color='darkerGrey' />

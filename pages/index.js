@@ -281,7 +281,7 @@ const MainPage = ({data, dates, isGouv}) => {
       layers: [reanimationLayer, reanimationCountLayer]
     },
     {
-      name: 'Carte des cas guéris',
+      name: 'Carte des retours à domicile',
       category: 'régionale',
       properties: 'gueris',
       data: regionsReport,
@@ -316,7 +316,7 @@ const MainPage = ({data, dates, isGouv}) => {
       layers: [reanimationLayer, reanimationCountLayer]
     },
     {
-      name: 'Carte des cas guéris',
+      name: 'Carte des retours à domicile',
       category: 'départementale',
       properties: 'gueris',
       data: departementsReport,
