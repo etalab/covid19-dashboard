@@ -9,7 +9,7 @@ const Counter = ({value, label, color, previousValue}) => {
   return (
     <div className='counter-container'>
       <div className='counter'>
-        <div className='value'>{value ? value : '?'}</div>
+        <div className='value'>{typeof value === 'number' ? value : '?'}</div>
         {difference && (
           <div className='difference'>
             ( {Math.sign(difference) === 1 ? '+' : ''}{difference} )
