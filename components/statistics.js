@@ -35,16 +35,17 @@ const charts = {
     chart: DecesChart
   },
   gueris: {
-    name: 'Guéris',
+    name: 'Retours à domicile',
     chart: GuerisChart
   }
 }
 
 const Statistics = () => {
   const theme = useContext(ThemeContext)
-  const {date, setDate, franceReport, selectedLocationReport, setSelectedLocation, isMobileDevice} = useContext(AppContext)
+  const {date, setDate, franceReport, previousFranceReport, selectedPreviousLocationReport, selectedLocationReport, setSelectedLocation, isMobileDevice} = useContext(AppContext)
 
   const report = selectedLocationReport || franceReport
+  const previousReport = selectedPreviousLocationReport || previousFranceReport
 
   const [selectedChart, setSelectedChart] = useState('mixed')
   const Chart = charts[selectedChart].chart
@@ -74,14 +75,14 @@ const Statistics = () => {
             <div className='back' onClick={() => setSelectedLocation(null)}><BarChart2 /> <span>France</span></div>
           )
         )}
-        <h2>{selectedLocationReport ? selectedLocationReport.nom : 'France'}</h2>
+        <h2>COVID-19 en {selectedLocationReport ? selectedLocationReport.nom : 'France'}</h2>
       </div>
 
-      <Counters report={report} />
+      <Counters report={report} previousReport={previousReport} />
 
       {report && report.history && (
         <>
-          <Chart data={report.history.filter(r => date >= r.date)} height={isMobileDevice ? 220 : 250} />
+          <Chart data={report.history.filter(r => date >= r.date)} height={isMobileDevice ? 150 : 150} />
           <div className='charts-list'>
             {Object.keys(charts).map(chart => (
               <div

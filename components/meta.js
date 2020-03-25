@@ -25,7 +25,6 @@ const Meta = ({title, description}) => {
       <meta itemProp='description' content={description} />
       <meta itemProp='image' content={`${SITE_URL}/images/previews/default.png`} />
 
-
       {/* Twitter */}
       <meta name='twitter:title' content={title} />
       <meta name='twitter:description' content={description} />

@@ -71,7 +71,7 @@ const formatData = data => {
 
   if (data.some(h => h.gueris)) {
     datasets.push({
-      label: 'Guéris',
+      label: 'Retours à domicile',
       data: data.map(h => h.gueris || null),
       backgroundColor: colors.green
     })

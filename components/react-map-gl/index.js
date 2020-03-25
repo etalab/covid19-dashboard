@@ -16,7 +16,7 @@ const settings = {
 }
 
 const Map = () => {
-  const [selectedMapIdx, setSelectedMapIdx] = useState(0)
+  const [selectedMapIdx, setSelectedMapIdx] = useState(2)
 
   const {
     selectedLocationReport,
