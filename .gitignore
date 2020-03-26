@@ -37,3 +37,4 @@ node_modules
 .now
 
 /chiffres-cles.json
+deploy.sh
