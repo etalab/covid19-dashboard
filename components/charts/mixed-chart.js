@@ -31,7 +31,10 @@ const options = {
       offset: true
     }],
     yAxes: [{
-      stacked: true
+      stacked: true,
+      ticks: {
+        beginAtZero: true
+      }
     }]
   }
 }
