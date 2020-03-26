@@ -47,6 +47,14 @@ const formatData = data => {
     })
   }
 
+  if (data.some(h => h.gueris)) {
+    datasets.push({
+      label: 'Retours à domicile',
+      data: data.map(h => h.gueris || null),
+      backgroundColor: colors.green
+    })
+  }
+
   if (data.some(h => h.reanimation)) {
     datasets.push({
       label: 'En réanimation',
@@ -66,14 +74,6 @@ const formatData = data => {
         return null
       }),
       backgroundColor: colors.darkGrey
-    })
-  }
-
-  if (data.some(h => h.gueris)) {
-    datasets.push({
-      label: 'Retours à domicile',
-      data: data.map(h => h.gueris || null),
-      backgroundColor: colors.green
     })
   }
 
