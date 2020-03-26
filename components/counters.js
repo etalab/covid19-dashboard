@@ -7,7 +7,7 @@ import colors from '../styles/colors'
 const Counters = ({report, previousReport}) => {
   const {casConfirmes, hospitalises, reanimation, deces, gueris} = report || {}
   const details = {
-    casConfirmes: 'Nombre cumulé de cas de COVID-19 confirmés par un test positif. <br />Ce chiffre est bien en deça du nombre probable de cas de COVID-19<br /> puisque la stratégie sanitaire actuelle est de ne tester que les cas les plus inquiétants.<br /> Un nouvel indicateur plus pertinent sera bientôt proposé.',
+    casConfirmes: 'Nombre cumulé de cas de COVID-19 confirmés par un test positif. <br />Un nouvel indicateur sera bientôt proposé.',
     gueris: 'Nombre cumulé de personnes ayant été hospitalisées <br />et de retour à domicile en raison de l’amélioration de leur état de santé',
     deces: 'Nombre cumulé de personnes décédées à l’hôpital',
     hospitalises: 'Nombre de personnes actuellement hospitalisées',
