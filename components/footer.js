@@ -8,7 +8,7 @@ const Footer = () => {
   return (
     <div className='menu-footer'>
       <div>
-        <a href='https://github.com/opencovid19-fr/dashboard'>
+        <a target='_top' href='https://github.com/opencovid19-fr/dashboard'>
           <GitHub style={{verticalAlign: 'middle'}} />
         </a>
       </div>
@@ -19,18 +19,18 @@ const Footer = () => {
           background: ${colors.darkBlue};
           padding: 1em;
         }
-  
+
         .menu-footer div {
           display: flex;
           flex: 1;
         }
-  
+
         a {
           color: #fff;
           width: 100%;
           text-align: center;
         }
-  
+
         @media (max-width: ${theme.mobileDisplay}) {
           .menu-footer {
             padding: 0.5em 1em;
