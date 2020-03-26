@@ -15,6 +15,11 @@ export default function MyApp({Component, pageProps}) {
           position: relative;
         }
 
+        .extra-class {
+          font-size: .5em !important;
+          pointer-events: auto !important;
+        }
+
         @font-face {
           font-family: "Source Sans Pro";
           src: url("/fonts/Source Sans Pro/SourceSansPro-Regular.otf");
