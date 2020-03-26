@@ -1,5 +1,17 @@
-import {groupBy, sortBy, defaults, pick} from 'lodash'
-import records from '../chiffres-cles.json'
+#!/usr/bin/env node
+require('dotenv').config()
+
+const {join} = require('path')
+const got = require('got')
+const {outputJson} = require('fs-extra')
+const {groupBy, sortBy, defaults, pick} =require('lodash')
+
+const DATA_URL = 'https://raw.githubusercontent.com/opencovid19-fr/data/master/dist/chiffres-cles.json'
+
+async function fetchJson(url) {
+  const response = await got(url, {responseType: 'json'})
+  return response.body
+}
 
 const SOURCE_PRIORITIES = {
   'ministere-sante': 1,
@@ -42,6 +54,13 @@ function filterRecords(records) {
   return records.filter(r => filters.every(filter => filter(r)))
 }
 
-export const getData = async () => {
-  return consolidate(filterRecords(records))
+async function main() {
+  const records = await fetchJson(DATA_URL)
+  const data = consolidate(filterRecords(records))
+  await outputJson(join(__dirname, 'chiffres-cles.json'), data, {spaces: 2})
 }
+
+main().catch(error => {
+  console.error(error)
+  process.exit(1)
+})

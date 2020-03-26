@@ -10,9 +10,9 @@
     "export": "next export",
     "start": "serve out",
     "publish:gh-pages": "gh-pages -d out --dotfiles",
-    "deploy": "yarn download-data && yarn build && yarn export && yarn publish:gh-pages",
+    "deploy": "yarn prepare-data && yarn build && yarn export && yarn publish:gh-pages",
     "lint": "xo",
-    "download-data": "node download-data",
+    "prepare-data": "node prepare-data",
     "centers:build": "node build-centers"
   },
   "devDependencies": {

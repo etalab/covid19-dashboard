@@ -31,10 +31,10 @@ yarn
 yarn dev
 ```
 
-## Télécharger les données
+## Préparer les données
 
 ```
-yarn download-data
+yarn prepare-data
 ```
 
 ## Générer le site statique
