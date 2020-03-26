@@ -3,8 +3,7 @@ import {useRouter} from 'next/router'
 import PropTypes from 'prop-types'
 import {groupBy, uniq, indexOf} from 'lodash'
 
-import {getData} from '../lib/api'
-
+import records from '../chiffres-cles.json'
 import centers from '../centers.json'
 
 import theme from '../styles/theme'
@@ -378,12 +377,10 @@ MainPage.propTypes = {
 }
 
 MainPage.getInitialProps = async () => {
-  const data = await getData()
-
   return {
-    data,
+    data: records,
     isGouv: process.env.GOUV === '1',
-    dates: uniq(data.filter(r => r.code === 'FRA').map(r => r.date)).sort()
+    dates: uniq(records.filter(r => r.code === 'FRA').map(r => r.date)).sort()
   }
 }
 
