@@ -31,7 +31,7 @@ const charts = {
     chart: ReanimationChart
   },
   deces: {
-    name: 'Décès',
+    name: 'Décès à l’hôpital',
     chart: DecesChart
   },
   gueris: {

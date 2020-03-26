@@ -1,56 +1,46 @@
 import React from 'react'
-import PropTypes from 'prop-types'
 import Head from 'next/head'
 
 const SITE_URL = process.env.SITE_URL
-const SITE_NAME = 'Tableau de bord de suivi de l’épidémie de coronavirus en France'
+const SITE_NAME = process.env.SITE_NAME || 'Tableau de bord COVID-19'
+const SITE_DESCRIPTION = process.env.SITE_DESCRIPTION || 'Suivi de l’épidémie de COVID-19 en France'
 
-const Meta = ({title, description}) => {
+const Meta = () => {
   return (
     <Head>
       <meta charSet='utf-8' />
       <meta httpEquiv='x-ua-compatible' content='ie=edge' />
       <meta name='viewport' content='width=device-width, initial-scale=1' />
 
-      {title ? <title>{title} | {SITE_NAME}</title> : <title>{SITE_NAME}</title>}
+      <title>{SITE_NAME} {SITE_DESCRIPTION}</title>
 
       <link rel='icon' href='/images/favicon.ico' />
       <link rel='stylesheet' href='/styles/mapbox-gl.css' />
 
       {/* Search Engine */}
-      <meta name='description' content={description} />
+      <meta name='description' content={SITE_DESCRIPTION} />
       <meta name='image' content={`${SITE_URL}/images/previews/default.png`} />
 
       {/* Schema.org for Google */}
-      <meta itemProp='name' content={title} />
-      <meta itemProp='description' content={description} />
+      <meta itemProp='name' content={SITE_NAME} />
+      <meta itemProp='description' content={SITE_DESCRIPTION} />
       <meta itemProp='image' content={`${SITE_URL}/images/previews/default.png`} />
 
       {/* Twitter */}
-      <meta name='twitter:title' content={title} />
-      <meta name='twitter:description' content={description} />
+      <meta name='twitter:title' content={SITE_NAME} />
+      <meta name='twitter:description' content={SITE_DESCRIPTION} />
       <meta name='twitter:image:src' content={`${SITE_URL}/images/previews/default.png`} />
 
       {/* Open Graph general (Facebook, Pinterest & Google+) */}
-      <meta name='og:title' content={title} />
-      <meta name='og:description' content={description} />
+      <meta name='og:title' content={SITE_NAME} />
+      <meta name='og:description' content={SITE_DESCRIPTION} />
       <meta name='og:image' content={`${SITE_URL}/images/previews/facebook.png`} />
       <meta name='og:url' content={SITE_URL} />
-      <meta name='og:site_name' content={title} />
+      <meta name='og:site_name' content={SITE_NAME} />
       <meta name='og:locale' content='fr_FR' />
       <meta name='og:type' content='website' />
     </Head>
   )
-}
-
-Meta.propTypes = {
-  title: PropTypes.string,
-  description: PropTypes.string
-}
-
-Meta.defaultProps = {
-  title: 'veille-coronavirus.fr',
-  description: 'Chiffres-clés sur la progression de l’épidémie de coronavirus en France'
 }
 
 export default Meta

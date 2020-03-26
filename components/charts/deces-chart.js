@@ -25,6 +25,11 @@ const options = {
         offsetGridLines: true
       },
       offset: true
+    }],
+    yAxes: [{
+      ticks: {
+        beginAtZero: true
+      }
     }]
   }
 }
@@ -34,7 +39,7 @@ const formatData = data => {
 
   if (data.some(h => h.deces)) {
     datasets.push({
-      label: 'Décès',
+      label: 'Décès à l’hôpital',
       data: data.map(h => h.deces),
       backgroundColor: colors.red
     })

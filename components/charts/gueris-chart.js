@@ -25,6 +25,11 @@ const options = {
         offsetGridLines: true
       },
       offset: true
+    }],
+    yAxes: [{
+      ticks: {
+        beginAtZero: true
+      }
     }]
   }
 }

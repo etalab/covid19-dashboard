@@ -31,7 +31,10 @@ const options = {
       offset: true
     }],
     yAxes: [{
-      stacked: true
+      stacked: true,
+      ticks: {
+        beginAtZero: true
+      }
     }]
   }
 }
@@ -41,7 +44,7 @@ const formatData = data => {
 
   if (data.some(h => h.deces)) {
     datasets.push({
-      label: 'Décès',
+      label: 'Décès à l’hôpital',
       data: data.map(h => h.deces || null),
       backgroundColor: colors.red
     })

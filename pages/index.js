@@ -260,7 +260,7 @@ const MainPage = ({data, dates, isGouv}) => {
       layers: [casConfirmesLayer, casConfirmesCountLayer]
     },
     {
-      name: 'Carte des décès',
+      name: 'Carte des décès à l’hôpital',
       category: 'régionale',
       data: regionsReport,
       properties: 'deces',
@@ -295,7 +295,7 @@ const MainPage = ({data, dates, isGouv}) => {
     //   layers: [casConfirmesLayer, casConfirmesCountLayer]
     // },
     {
-      name: 'Carte des décès',
+      name: 'Carte des décès à l’hôpital',
       category: 'départementale',
       data: departementsReport,
       properties: 'deces',
