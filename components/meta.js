@@ -15,6 +15,7 @@ const Meta = ({title, description}) => {
       {title ? <title>{title} | {SITE_NAME}</title> : <title>{SITE_NAME}</title>}
 
       <link rel='icon' href='/images/favicon.ico' />
+      <link rel='stylesheet' href='/styles/mapbox-gl.css' />
 
       {/* Search Engine */}
       <meta name='description' content={description} />
