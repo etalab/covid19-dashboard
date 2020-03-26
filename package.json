@@ -40,6 +40,7 @@
     "react-dom": "^16.13.0",
     "react-feather": "^2.0.3",
     "react-map-gl": "^5.2.3",
+    "react-tooltip": "^4.1.2",
     "serve": "^11.3.0"
   },
   "xo": {
