@@ -10,8 +10,9 @@
     "export": "next export",
     "start": "serve out",
     "publish:gh-pages": "gh-pages -d out --dotfiles",
-    "deploy": "yarn build && yarn export && yarn publish:gh-pages",
+    "deploy": "yarn download-data && yarn build && yarn export && yarn publish:gh-pages",
     "lint": "xo",
+    "download-data": "node download-data",
     "centers:build": "node build-centers"
   },
   "devDependencies": {
@@ -22,15 +23,15 @@
     "eslint-config-xo-nextjs": "^1.5.0",
     "eslint-plugin-react": "^7.19.0",
     "eslint-plugin-react-hooks": "^2.5.0",
-    "fs-extra": "^8.1.0",
     "get-stream": "^5.1.0",
     "gh-pages": "^2.2.0",
-    "got": "^10.6.0",
     "xo": "^0.28.0"
   },
   "dependencies": {
     "chart.js": "^2.9.3",
     "dotenv": "^8.2.0",
+    "fs-extra": "^8.1.0",
+    "got": "^10.6.0",
     "isomorphic-unfetch": "^3.0.0",
     "lodash": "^4.17.15",
     "next": "^9.3.0",

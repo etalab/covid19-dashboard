@@ -31,6 +31,12 @@ yarn
 yarn dev
 ```
 
+## Télécharger les données
+
+```
+yarn download-data
+```
+
 ## Générer le site statique
 
 ```
