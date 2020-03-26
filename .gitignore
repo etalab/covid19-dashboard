@@ -35,3 +35,5 @@ node_modules
 /out
 
 .now
+
+/chiffres-cles.json
