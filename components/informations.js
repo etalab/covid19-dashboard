@@ -25,6 +25,7 @@ const Informations = React.memo(() => (
       .informations p {
         font-size: 14px;
         line-height: 22px;
+        text-align: justify;
       }
     `}</style>
   </div>
