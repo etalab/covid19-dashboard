@@ -141,7 +141,7 @@ const Map = () => {
           position: absolute;
           display: flex;
           justify-content: space-between;
-          align-items: end;
+          align-items: start;
           width: 100%;
           padding: 0.5em;
         }
