@@ -3,14 +3,22 @@ require('dotenv').config()
 
 const {join} = require('path')
 const got = require('got')
-const {outputJson} = require('fs-extra')
+const {outputJson, readJson} = require('fs-extra')
 const {groupBy, sortBy, defaults, pick} =require('lodash')
 
-const DATA_URL = 'https://raw.githubusercontent.com/opencovid19-fr/data/master/dist/chiffres-cles.json'
+const DATA_SOURCE = process.env.DATA_SOURCE || 'https://raw.githubusercontent.com/opencovid19-fr/data/master/dist/chiffres-cles.json'
 
 async function fetchJson(url) {
   const response = await got(url, {responseType: 'json'})
   return response.body
+}
+
+async function loadJson(dataSource) {
+  if (dataSource.startsWith('http')) {
+    return fetchJson(dataSource)
+  }
+
+  return readJson(dataSource)
 }
 
 const SOURCE_PRIORITIES = {
@@ -55,7 +63,7 @@ function filterRecords(records) {
 }
 
 async function main() {
-  const records = await fetchJson(DATA_URL)
+  const records = await loadJson(DATA_SOURCE)
   const data = consolidate(filterRecords(records))
   await outputJson(join(__dirname, 'chiffres-cles.json'), data, {spaces: 2})
 }
