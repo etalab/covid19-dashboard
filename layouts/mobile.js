@@ -22,7 +22,7 @@ const VIEWS = {
 }
 
 const MobilePage = () => {
-  const [selectedView, setSelectedView] = useState('map')
+  const [selectedView, setSelectedView] = useState('stats')
 
   const app = useContext(AppContext)
 
@@ -39,14 +39,14 @@ const MobilePage = () => {
       </Scrollable>
 
       <div className='view-selector'>
-        <div className={`${selectedView === 'informations' ? 'selected' : ''}`} onClick={() => handleClick('informations')}>
-          <FileText />
+        <div className={`${selectedView === 'stats' ? 'selected' : ''}`} onClick={() => handleClick('stats')}>
+          <BarChart2 />
         </div>
         <div className={`${selectedView === 'map' ? 'selected' : ''}`} onClick={() => handleClick('map')}>
           <Map />
         </div>
-        <div className={`${selectedView === 'stats' ? 'selected' : ''}`} onClick={() => handleClick('stats')}>
-          <BarChart2 />
+        <div className={`${selectedView === 'informations' ? 'selected' : ''}`} onClick={() => handleClick('informations')}>
+          <FileText />
         </div>
       </div>
 
