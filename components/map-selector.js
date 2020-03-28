@@ -81,7 +81,7 @@ const MapSelector = ({mapIdx, selectMap}) => {
         }
 
         .menu-item.selected:hover {
-          background-color: none;
+          background-color: transparent;
           cursor: initial;
         }
 
