@@ -11,8 +11,6 @@ import theme from '../styles/theme'
 import Page from '../layouts/main'
 
 import {
-  casConfirmesLayer,
-  casConfirmesCountLayer,
   decesLayer,
   decesCountLayer,
   hospitalisesLayer,
@@ -252,13 +250,6 @@ const MainPage = ({data, dates, isGouv}) => {
 
   const maps = [
     {
-      name: 'Carte des cas confirmés',
-      category: 'régionale',
-      data: regionsReport,
-      properties: 'casConfirmes',
-      layers: [casConfirmesLayer, casConfirmesCountLayer]
-    },
-    {
       name: 'Carte des décès à l’hôpital',
       category: 'régionale',
       data: regionsReport,
@@ -286,13 +277,6 @@ const MainPage = ({data, dates, isGouv}) => {
       data: regionsReport,
       layers: [guerisLayer, guerisCountLayer]
     },
-    // {
-    //   name: 'Carte des cas confirmés',
-    //   category: 'départementale',
-    //   data: departementsReport,
-    //   properties: 'casConfirmes',
-    //   layers: [casConfirmesLayer, casConfirmesCountLayer]
-    // },
     {
       name: 'Carte des décès à l’hôpital',
       category: 'départementale',
