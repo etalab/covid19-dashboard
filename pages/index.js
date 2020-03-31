@@ -76,6 +76,7 @@ const MainPage = ({data, dates, isGouv}) => {
   const [viewport, setViewport] = useState(defaultViewport)
 
   const dateIdx = indexOf(dates, date)
+  const previousDate = dates[dateIdx - 1]
 
   const previousReport = useCallback(() => {
     const idx = indexOf(dates, date)
@@ -164,19 +165,19 @@ const MainPage = ({data, dates, isGouv}) => {
     const franceReport = getReport(date, 'FRA')
     setFranceReport(franceReport)
 
-    const previousFranceReport = getReport(dates[dateIdx - 1], 'FRA')
+    const previousFranceReport = getReport(previousDate, 'FRA')
     setPreviousFranceReport(previousFranceReport)
 
     const regionsReport = getReport(date, 'REG')
     setRegionsReport(reportToGeoJSON(regionsReport, date))
 
-    const previousRegionsReport = getReport(dates[dateIdx - 1], 'REG')
-    setPreviousRegionsReport(reportToGeoJSON(previousRegionsReport, dates[dateIdx - 1]))
+    const previousRegionsReport = getReport(previousDate, 'REG')
+    setPreviousRegionsReport(reportToGeoJSON(previousRegionsReport, previousDate))
 
     const departementsReport = getReport(date, 'DEP')
     setDepartementsReport(departementsReport)
 
-    const previousDepartementsReport = reportToGeoJSON(getReport(dates[dateIdx - 1], 'DEP'), date)
+    const previousDepartementsReport = reportToGeoJSON(getReport(previousDate, 'DEP'), date)
     setPreviousDepartementsReport(previousDepartementsReport)
   }, [date, dates, dateIdx, getReport])
 
