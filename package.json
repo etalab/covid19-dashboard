@@ -4,6 +4,7 @@
   "main": "index.js",
   "repository": "git@github.com:livingdata-co/covid19-dashboard.git",
   "private": true,
+  "license": "MIT",
   "scripts": {
     "dev": "next",
     "build": "next build",

@@ -61,3 +61,7 @@ Selon le besoin il est possible de configurer l’outil grâce à des variables 
 ```
 yarn centers:build
 ```
+
+## Licence
+
+MIT
