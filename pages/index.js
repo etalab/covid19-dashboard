@@ -28,6 +28,7 @@ const MainPage = () => {
   const [date, setDate] = useState(dates[dates.length - 1])
   const [selectedLocation, setSelectedLocation] = useState(null)
   const [viewport, setViewport] = useState(defaultViewport)
+  const [selectedMapIdx, setSelectedMapIdx] = useState(1)
 
   const handleResize = () => {
     const mobileWidth = Number.parseInt(theme.mobileDisplay.split('px')[0], 10)
@@ -76,6 +77,8 @@ const MainPage = () => {
           setDate,
           selectedLocation,
           setSelectedLocation,
+          selectedMapIdx,
+          setSelectedMapIdx,
           setViewport,
           viewport,
           isIframe,

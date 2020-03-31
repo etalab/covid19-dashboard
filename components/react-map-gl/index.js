@@ -19,11 +19,11 @@ const settings = {
 }
 
 const Map = () => {
-  const [selectedMapIdx, setSelectedMapIdx] = useState(1)
-
   const {
     date,
     selectedLocation,
+    selectedMapIdx,
+    setSelectedMapIdx,
     isIframe,
     viewport,
     setViewport,

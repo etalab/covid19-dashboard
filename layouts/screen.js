@@ -8,6 +8,10 @@ import Informations from '../components/informations'
 
 import colors from '../styles/colors'
 
+import Drom from '../components/react-map-gl/drom'
+
+const STATIC_MAP_HEIGHT = 200
+
 const ScreenPage = () => {
   return (
     <>
@@ -22,7 +26,12 @@ const ScreenPage = () => {
       </div>
 
       <div className='map'>
-        <ReactMapGl />
+        <div className='metropole'>
+          <ReactMapGl />
+        </div>
+        <div className='drom-container'>
+          <Drom />
+        </div>
       </div>
 
       <style jsx>{`
@@ -37,6 +46,34 @@ const ScreenPage = () => {
       .map {
         flex: 1;
         height: 100%;
+      }
+
+      .metropole {
+        height: calc(100% - ${STATIC_MAP_HEIGHT}px);
+      }
+
+      .drom-container {
+        padding: 0.5em;
+        height: ${STATIC_MAP_HEIGHT}px;
+      }
+
+      @media (max-width: 1250px) {
+        .metropole {
+          height: calc(100% - (${STATIC_MAP_HEIGHT}px * 2));
+        }
+
+        .drom-container {
+          height: ${STATIC_MAP_HEIGHT * 2}px;
+        }
+      }
+
+      @media (max-width: 955px) {
+        .drom-container {
+          height: 50%;
+        }
+        .metropole {
+          height: 50%;
+        }
       }
     `}</style>
     </>
