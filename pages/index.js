@@ -94,7 +94,7 @@ const MainPage = ({data, dates, isGouv}) => {
     }
   }, [dates, date])
 
-  const getReport = useCallback(({date, code}) => {
+  const getReport = useCallback((date, code) => {
     const filteredReports = data.filter(item => item.code.includes(code))
     return {
       ...filteredReports.find(r => r.date === date),
@@ -161,22 +161,22 @@ const MainPage = ({data, dates, isGouv}) => {
   }, [router])
 
   useEffect(() => {
-    const franceReport = getReport({date, code: 'FRA'})
+    const franceReport = getReport(date, 'FRA')
     setFranceReport(franceReport)
 
-    const previousFranceReport = getReport({date: dates[dateIdx - 1], code: 'FRA'})
+    const previousFranceReport = getReport(dates[dateIdx - 1], 'FRA')
     setPreviousFranceReport(previousFranceReport)
 
-    const regionsReport = getReport({date, code: 'REG'})
+    const regionsReport = getReport(date, 'REG')
     setRegionsReport(reportToGeoJSON(regionsReport, date))
 
-    const previousRegionsReport = getReport({date: dates[dateIdx - 1], code: 'REG'})
+    const previousRegionsReport = getReport(dates[dateIdx - 1], 'REG')
     setPreviousRegionsReport(reportToGeoJSON(previousRegionsReport, dates[dateIdx - 1]))
 
-    const departementsReport = getReport({date, code: 'DEP'})
+    const departementsReport = getReport(date, 'DEP')
     setDepartementsReport(departementsReport)
 
-    const previousDepartementsReport = reportToGeoJSON(getReport({date: dates[dateIdx - 1], code: 'DEP'}), date)
+    const previousDepartementsReport = reportToGeoJSON(getReport(dates[dateIdx - 1], 'DEP'), date)
     setPreviousDepartementsReport(previousDepartementsReport)
   }, [date, dates, dateIdx, getReport])
 
