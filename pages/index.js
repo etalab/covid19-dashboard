@@ -19,6 +19,8 @@ const defaultViewport = {
   zoom: 4.5
 }
 
+const MOBILE_WIDTH = Number.parseInt(theme.mobileDisplay.split('px')[0], 10)
+
 const MainPage = () => {
   const router = useRouter()
 
@@ -31,8 +33,7 @@ const MainPage = () => {
   const [selectedMapIdx, setSelectedMapIdx] = useState(1)
 
   const handleResize = () => {
-    const mobileWidth = Number.parseInt(theme.mobileDisplay.split('px')[0], 10)
-    setIsMobileDevice(window.innerWidth < mobileWidth)
+    setIsMobileDevice(window.innerWidth < MOBILE_WIDTH)
   }
 
   useEffect(() => {
@@ -52,8 +53,7 @@ const MainPage = () => {
   }, [router])
 
   useEffect(() => {
-    const mobileWidth = Number.parseInt(theme.mobileDisplay.split('px')[0], 10)
-    if (window.innerWidth < mobileWidth) {
+    if (window.innerWidth < MOBILE_WIDTH) {
       setIsMobileDevice(true)
     }
 
