@@ -88,8 +88,7 @@ const Statistics = () => {
           position: sticky;
           top: 0;
           background-color: white;
-          margin: ${isMobileDevice ? '0 -0.5em' : 0};
-          padding: 1px;
+          padding: 0.4em;
         }
 
         .back {
