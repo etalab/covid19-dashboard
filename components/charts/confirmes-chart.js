@@ -52,9 +52,7 @@ const formatData = data => {
 }
 
 const ConfirmesChart = ({data, height}) => (
-  <div style={{padding: '1em'}}>
-    <Bar data={formatData(data)} options={options} height={height} />
-  </div>
+  <Bar data={formatData(data)} options={options} height={height} />
 )
 
 ConfirmesChart.defaultProps = {

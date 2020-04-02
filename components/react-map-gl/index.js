@@ -172,7 +172,6 @@ const Map = () => {
           background-color: #fff;
           width: 100%;
           margin: auto;
-          padding: 0.5em;
           transition: 0.5s;
         }
 
