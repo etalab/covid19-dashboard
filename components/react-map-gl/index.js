@@ -30,6 +30,7 @@ const Map = () => {
 
   const [map, setMap] = useState()
   const [hovered, setHovered] = useState(null)
+  const enableZoom = isIframe && isMobileDevice
 
   const mapRef = useCallback(ref => {
     if (ref) {
@@ -89,14 +90,14 @@ const Map = () => {
         width='100%'
         height='100%'
         mapStyle='https://etalab-tiles.fr/styles/osm-bright/style.json'
-        scrollZoom={!isIframe}
+        scrollZoom={enableZoom}
         {...settings}
         interactiveLayerIds={maps[selectedMapIdx].layers.map(layer => layer.id)}
         onViewportChange={setViewport}
         onHover={isMobileDevice ? null : onHover}
         onClick={onClick}
       >
-        {isIframe && (
+        {!enableZoom && (
           <div className='control navigation'>
             <NavigationControl showCompass={false} />
           </div>
