@@ -71,12 +71,12 @@ const Map = () => {
   return (
     <div className='map-container'>
       <div className='controls'>
-        <div className='control'>
+        <div className='custom-control'>
           <MapSelector mapIdx={selectedMapIdx} selectMap={setSelectedMapIdx} />
         </div>
 
         {isIframe && (
-          <div className='control maximize'>
+          <div className='custom-control maximize'>
             <a href={SITE_URL} target='_top'><Maximize2 style={{verticalAlign: 'middle'}} /></a>
           </div>
         )}
@@ -89,12 +89,18 @@ const Map = () => {
         width='100%'
         height='100%'
         mapStyle='https://etalab-tiles.fr/styles/osm-bright/style.json'
+        scrollZoom={!isIframe}
         {...settings}
         interactiveLayerIds={maps[selectedMapIdx].layers.map(layer => layer.id)}
         onViewportChange={setViewport}
         onHover={isMobileDevice ? null : onHover}
         onClick={onClick}
       >
+        {isIframe && (
+          <div className='control navigation'>
+            <NavigationControl showCompass={false} />
+          </div>
+        )}
 
         <Source
           type='geojson'
@@ -146,11 +152,21 @@ const Map = () => {
           padding: 0.5em;
         }
 
-        .control {
+        .custom-control {
           background-color: #000000aa;
           color: #fff;
           border-radius: 4px;
           margin: 0;
+        }
+
+        .control {
+          position: absolute;
+          margin: 0.5em;
+        }
+
+        .navigation {
+          top: 40px;
+          right: 0;
         }
 
         .maximize {
