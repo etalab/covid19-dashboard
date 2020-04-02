@@ -89,6 +89,7 @@ const Statistics = () => {
           top: 0;
           background-color: white;
           padding: 0.4em;
+          box-shadow: 0 1px 4px ${colors.lightGrey};
         }
 
         .back {
