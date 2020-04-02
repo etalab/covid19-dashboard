@@ -65,8 +65,7 @@ const Statistics = () => {
       <Counters report={report} previousReport={previousReport} />
 
       {report && report.history && (
-        <>
-          <Chart data={report.history.filter(r => date >= r.date)} height={isMobileDevice ? 150 : 150} />
+        <div className='chart-container'>
           <div className='charts-list'>
             {Object.keys(charts).map(chart => (
               <div key={chart} className='button-container'>
@@ -79,7 +78,7 @@ const Statistics = () => {
               </div>
             ))}
           </div>
-        </>
+        </div>
       )}
 
       <style jsx>{`
@@ -115,6 +114,10 @@ const Statistics = () => {
         .back:hover {
           cursor: pointer;
           background: ${colors.lightGrey};
+        }
+
+        .chart-container {
+          margin: ${isMobileDevice ? '0 0.2em' : '0 1em'};
         }
 
         .charts-list {
