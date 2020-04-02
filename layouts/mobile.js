@@ -2,9 +2,8 @@ import React, {useState, useContext} from 'react'
 import {FileText, Map, BarChart2} from 'react-feather'
 
 import colors from '../styles/colors'
-import theme from '../styles/theme'
 
-import {AppContext} from '../pages'
+import {AppContext, ThemeContext} from '../pages'
 
 import DateNav from '../components/date-nav'
 import Scrollable from '../components/scrollable'
@@ -25,6 +24,7 @@ const MobilePage = () => {
   const [selectedView, setSelectedView] = useState('stats')
 
   const app = useContext(AppContext)
+  const theme = useContext(ThemeContext)
 
   const handleClick = view => {
     app.setSelectedLocation(null)
@@ -69,17 +69,7 @@ const MobilePage = () => {
         }
 
         .view-selector > div.selected {
-          border-top: 2px solid ${colors.blue};
-        }
-
-        @media (max-width: ${theme.mobileDisplay}) {
-          .view-selector {
-            display: grid;
-            grid-template-columns: 1fr 1fr 1fr;
-            justify-content: center;
-            align-items: center;
-            background-color: #fff;
-          }
+          border-top: 4px solid ${theme.primary};
         }
       `}</style>
     </div>
