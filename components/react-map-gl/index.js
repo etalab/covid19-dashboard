@@ -1,5 +1,5 @@
 import React, {useState, useCallback, useContext} from 'react'
-import ReactMapGL, {Source, Layer, Popup} from 'react-map-gl'
+import ReactMapGL, {NavigationControl, Source, Layer, Popup} from 'react-map-gl'
 import {Maximize2} from 'react-feather'
 
 import {AppContext} from '../../pages'
@@ -16,8 +16,6 @@ const settings = {
 }
 
 const Map = () => {
-  const [selectedMapIdx, setSelectedMapIdx] = useState(1)
-
   const {
     selectedLocationReport,
     setSelectedLocation,
@@ -30,6 +28,10 @@ const Map = () => {
 
   const [map, setMap] = useState()
   const [hovered, setHovered] = useState(null)
+  const [selectedMapIdx, setSelectedMapIdx] = useState(1)
+  const [showZoomMessage, setShowZoomMessage] = useState(false)
+  const [zoomMessageCoolDown, setZoomMessageCoolDown] = useState(true)
+
   const enableZoom = isIframe && isMobileDevice
 
   const mapRef = useCallback(ref => {
@@ -69,6 +71,15 @@ const Map = () => {
     setHovered(null)
   }
 
+  const displayAlert = () => {
+    if (!showZoomMessage && zoomMessageCoolDown) {
+      setShowZoomMessage(true)
+      setZoomMessageCoolDown(false)
+      setTimeout(() => setShowZoomMessage(null), 5000)
+      setTimeout(() => setZoomMessageCoolDown(true), 60000)
+    }
+  }
+
   return (
     <div className='map-container'>
       <div className='controls'>
@@ -83,6 +94,13 @@ const Map = () => {
         )}
       </div>
 
+      {showZoomMessage && (
+        <div className='zoom-message'>
+          <p>Le zoom à la souris est désactivé.</p>
+          <p>Merci d’utiliser les contrôles +/- situés en haut à droite.</p>
+        </div>
+      )}
+
       <ReactMapGL
         reuseMaps
         ref={mapRef}
@@ -96,6 +114,7 @@ const Map = () => {
         onViewportChange={setViewport}
         onHover={isMobileDevice ? null : onHover}
         onClick={onClick}
+        onWheel={enableZoom ? null : displayAlert}
       >
         {!enableZoom && (
           <div className='control navigation'>
@@ -168,6 +187,22 @@ const Map = () => {
         .navigation {
           top: 40px;
           right: 0;
+        }
+
+        .zoom-message {
+          z-index: 999;
+          position: absolute;
+          display: flex;
+          flex-direction: column;
+          justify-content: center;
+          align-items: center;
+          width: 100%;
+          height: 100%;
+          background-color: #000000aa;
+          color: #fff;
+          padding: 30%;
+          font-size: xx-large;
+          text-align: center;
         }
 
         .maximize {
