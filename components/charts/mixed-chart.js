@@ -42,6 +42,14 @@ const options = {
 const formatData = data => {
   const datasets = []
 
+  if (data.some(h => h.decesEhpad)) {
+    datasets.push({
+      label: 'Décès en EHPAD ou EMS',
+      data: data.map(h => h.decesEhpad || null),
+      backgroundColor: colors.darkRed
+    })
+  }
+
   if (data.some(h => h.deces)) {
     datasets.push({
       label: 'Décès à l’hôpital',
@@ -84,7 +92,7 @@ const formatData = data => {
     datasets.push({
       label: 'Autre',
       data: data.map(h => {
-        return h.casConfirmes - ((h.gueris || 0) + (h.deces || 0) + (h.hospitalises || h.reanimation || 0))
+        return h.casConfirmes - ((h.gueris || 0) + (h.deces || 0) + (h.decesEhpad || 0) + (h.hospitalises || h.reanimation || 0))
       }),
       backgroundColor: colors.orange
     })
