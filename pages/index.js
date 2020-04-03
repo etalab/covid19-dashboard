@@ -175,11 +175,11 @@ const MainPage = ({data, dates, isGouv}) => {
     setPreviousRegionsReport(reportToGeoJSON(previousRegionsReport, previousDate))
 
     const departementsReport = getReport(date, 'DEP')
-    setDepartementsReport(departementsReport)
+    setDepartementsReport(reportToGeoJSON(departementsReport, date))
 
     const previousDepartementsReport = reportToGeoJSON(getReport(previousDate, 'DEP'), date)
     setPreviousDepartementsReport(previousDepartementsReport)
-  }, [date, dates, dateIdx, getReport])
+  }, [date, dates, dateIdx, getReport, previousDate])
 
   useEffect(() => {
     const mobileWidth = parseInt(theme.mobileDisplay.split('px')[0])
