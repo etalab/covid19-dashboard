@@ -4,7 +4,7 @@ require('dotenv').config()
 const {join} = require('path')
 const got = require('got')
 const {outputJson, readJson} = require('fs-extra')
-const {groupBy, sortBy, defaults, pick} =require('lodash')
+const {groupBy, sortBy, defaults, pick} = require('lodash')
 
 const DATA_SOURCE = process.env.DATA_SOURCE || 'https://raw.githubusercontent.com/opencovid19-fr/data/master/dist/chiffres-cles.json'
 
