@@ -22,7 +22,8 @@ const options = {
         tooltipFormat: 'DD/MM'
       },
       gridLines: {
-        offsetGridLines: true
+        offsetGridLines: true,
+        display: false
       },
       offset: true
     }],
