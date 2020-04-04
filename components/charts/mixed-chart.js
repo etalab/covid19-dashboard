@@ -104,8 +104,8 @@ const formatData = data => {
   }
 }
 
-const MixedChart = ({data, height}) => (
-  <Bar data={formatData(data)} options={options} height={height} />
+const MixedChart = ({reports, height}) => (
+  <Bar data={formatData(reports)} options={options} height={height} />
 )
 
 MixedChart.defaultProps = {
@@ -113,7 +113,7 @@ MixedChart.defaultProps = {
 }
 
 MixedChart.propTypes = {
-  data: PropTypes.array.isRequired,
+  reports: PropTypes.array.isRequired,
   height: PropTypes.number
 }
 
