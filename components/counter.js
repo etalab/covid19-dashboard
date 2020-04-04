@@ -4,6 +4,7 @@ import PropTypes from 'prop-types'
 import {Info} from 'react-feather'
 import ReactTooltip from 'react-tooltip'
 import colors from '../styles/colors'
+import {formatInteger} from '../lib/numbers'
 
 const Counter = ({value, label, color, previousValue, details}) => {
   const difference = (Number.isInteger(value) && Number.isInteger(previousValue) && value - previousValue !== 0) ? value - previousValue : null
@@ -12,7 +13,7 @@ const Counter = ({value, label, color, previousValue, details}) => {
     <div className='counter-container'>
       <div className='counter'>
         <div className='value'>
-          {typeof value === 'number' ? value : '-'}
+          {typeof value === 'number' ? formatInteger(value) : '-'}
           <div className='hover'>
             <Info size={12} data-tip={details} data-for='overridePosition' />
             <ReactTooltip
@@ -34,7 +35,7 @@ const Counter = ({value, label, color, previousValue, details}) => {
         </div>
         {difference && (
           <div className='difference'>
-            ( {Math.sign(difference) === 1 ? '+' : ''}{difference} )
+            ( {formatInteger(difference, true)} )
           </div>
         )}
         <div>{label}</div>
