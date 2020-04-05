@@ -44,7 +44,7 @@ const formatData = data => {
 
   if (data.some(h => h.decesEhpad)) {
     datasets.push({
-      label: 'Décès en EHPAD ou EMS',
+      label: 'Décès en EHPAD et EMS',
       data: data.map(h => h.decesEhpad || null),
       backgroundColor: colors.darkRed
     })

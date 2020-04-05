@@ -11,7 +11,7 @@ const Counters = ({report, previousReport}) => {
     deces: 'Nombre cumulé de décès de patients hospitalisés pour COVID-19 depuis le 1er mars 2020',
     hospitalises: 'Nombre de patients actuellement hospitalisés pour COVID-19',
     reanimation: ' Nombre de patients actuellement en réanimation ou soins intensifs',
-    decesEhpad: 'Nombre cumulé de décès en EHPAD ou EMS (établissements médico-sociaux)'
+    decesEhpad: 'Nombre cumulé de décès en EHPAD et EMS (établissements médico-sociaux)'
   }
 
   return (
@@ -22,7 +22,7 @@ const Counters = ({report, previousReport}) => {
       </div>
       {decesEhpad ? <div className='counters'>
         <Counter value={deces} previousValue={previousReport.deces} label='décès à l’hôpital' details={details.deces} color='red' />
-        <Counter value={decesEhpad} previousValue={previousReport.decesEhpad} label='décès en EHPAD ou EMS' details={details.decesEhpad} color='darkRed' />
+        <Counter value={decesEhpad} previousValue={previousReport.decesEhpad} label='décès en EHPAD et EMS' details={details.decesEhpad} color='darkRed' />
       </div> : <Counter value={deces} previousValue={previousReport.deces} label='décès à l’hôpital' details={details.deces} color='red' />}
 
       <Counter value={gueris} previousValue={previousReport.gueris} label='retours à domicile' details={details.gueris} color='green' />
