@@ -16,6 +16,8 @@ const Counters = ({report, previousReport}) => {
 
   return (
     <div className='stats'>
+      <Counter value={gueris} previousValue={previousReport.gueris} label='retours à domicile' details={details.gueris} color='green' />
+
       <div className='counters'>
         <Counter value={hospitalises} previousValue={previousReport.hospitalises} label='hospitalisations' details={details.hospitalises} color='darkGrey' />
         <Counter value={reanimation} previousValue={previousReport.reanimation} label='en réanimation' details={details.reanimation} color='darkerGrey' />
@@ -24,8 +26,6 @@ const Counters = ({report, previousReport}) => {
         <Counter value={deces} previousValue={previousReport.deces} label='décès à l’hôpital' details={details.deces} color='red' />
         <Counter value={decesEhpad} previousValue={previousReport.decesEhpad} label='décès en EHPAD et EMS' details={details.decesEhpad} color='darkRed' />
       </div> : <Counter value={deces} previousValue={previousReport.deces} label='décès à l’hôpital' details={details.deces} color='red' />}
-
-      <Counter value={gueris} previousValue={previousReport.gueris} label='retours à domicile' details={details.gueris} color='green' />
 
       {casConfirmes && <Counter value={casConfirmes} previousValue={previousReport.casConfirmes} label='cas confirmés' details={details.casConfirmes} color='orange' />}
       <style jsx>{`
