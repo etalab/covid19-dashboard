@@ -106,7 +106,7 @@ const Statistics = () => {
 
       {report && report.history && (
         <>
-          {toggleable && <a className='toggle' onClick={() => setShowVariations(!showVariations)}>{showVariations ? 'Afficher le graphique cumulé' : 'Afficher les variations quotidiennes'}</a>}
+          {toggleable && <a className='toggle' onClick={() => setShowVariations(!showVariations)}>{showVariations ? 'Afficher les valeurs cumulées' : 'Afficher les variations quotidiennes'}</a>}
 
           <div className='chart-container'>
             <Chart reports={report.history.filter(r => date >= r.date)} {...chartOptions} />
