@@ -1,5 +1,6 @@
 import React, {useState, useCallback, useContext} from 'react'
 import ReactMapGL, {Source, Layer, Popup} from 'react-map-gl'
+import Router from 'next/router'
 import {Maximize2} from 'react-feather'
 
 import {AppContext} from '../../pages'
@@ -60,12 +61,21 @@ const Map = () => {
 
     if (feature) {
       const {properties} = feature
+      handleClick(selectedMapIdx, properties)
       setSelectedLocation(properties.code)
     } else {
       setSelectedLocation(null)
     }
 
     setHovered(null)
+  }
+
+  const handleClick = (selectedMapIdx, properties) => {
+    const code = properties.code
+    const regions = selectedMapIdx >= 0 && selectedMapIdx <= 3
+    const as = `/${regions ? 'regions' : 'departements'}/${code.slice(4)}`
+
+    Router.push('/', as)
   }
 
   return (
