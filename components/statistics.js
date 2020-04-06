@@ -1,4 +1,4 @@
-import React, {useContext, useState} from 'react'
+import React, {useContext} from 'react'
 import {X, BarChart2} from 'react-feather'
 import Link from 'next/link'
 
@@ -28,24 +28,6 @@ const Statistics = () => {
       </div>
 
       <Counters report={report} previousReport={previousReport} date={date} />
-
-      {/* {report && report.history && (
-        <div className='chart-container'>
-          <Chart data={report.history.filter(r => date >= r.date)} />
-          <div className='charts-list'>
-            {Object.keys(charts).map(chart => (
-              <div key={chart} className='button-container'>
-                <div
-                  className={`chart-name ${chart === selectedChart ? 'selected' : ''}`}
-                  onClick={() => setSelectedChart(chart)}
-                >
-                  {charts[chart].name}
-                </div>
-              </div>
-            ))}
-          </div>
-        </div>
-      )} */}
 
       <style jsx>{`
         .header {

@@ -96,7 +96,9 @@ Counter.defaultProps = {
   label: null,
   color: 'almostBlack',
   previousValue: null,
-  details: null
+  details: null,
+  onClick: null,
+  isSelected: null
 }
 
 Counter.propTypes = {
@@ -104,7 +106,9 @@ Counter.propTypes = {
   label: PropTypes.string,
   color: PropTypes.string,
   previousValue: PropTypes.number,
-  details: PropTypes.string
+  details: PropTypes.string,
+  onClick: PropTypes.func,
+  isSelected: PropTypes.bool
 }
 
 export default Counter

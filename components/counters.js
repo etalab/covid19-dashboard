@@ -53,8 +53,6 @@ const Counters = ({report, previousReport, date}) => {
   const [selectedChart, setSelectedChart] = useState('mixed')
   const Chart = charts[selectedChart].chart
 
-  console.log(selectedChart)
-
   return (
     <>
       <div className='stats'>
@@ -186,7 +184,8 @@ Counters.defaultProps = {
 
 Counters.propTypes = {
   report: PropTypes.object,
-  previousReport: PropTypes.object
+  previousReport: PropTypes.object,
+  date: PropTypes.string.isRequired
 }
 
 export default Counters
