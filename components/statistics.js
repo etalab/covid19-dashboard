@@ -7,48 +7,12 @@ import colors from '../styles/colors'
 import {AppContext} from '../pages'
 
 import Counters from './counters'
-import MixedChart from './charts/mixed-chart'
-import ConfirmesChart from './charts/confirmes-chart'
-import DecesChart from './charts/deces-chart'
-import ReanimationChart from './charts/reanimation-chart'
-import HospitalisesChart from './charts/hospitalises-chart'
-import GuerisChart from './charts/gueris-chart'
-
-const charts = {
-  mixed: {
-    name: 'Tout afficher',
-    chart: MixedChart
-  },
-  confirmed: {
-    name: 'Cas confirmés',
-    chart: ConfirmesChart
-  },
-  hospitalises: {
-    name: 'Hospitalisations',
-    chart: HospitalisesChart
-  },
-  reanimation: {
-    name: 'Réanimations',
-    chart: ReanimationChart
-  },
-  deces: {
-    name: 'Décès à l’hôpital',
-    chart: DecesChart
-  },
-  gueris: {
-    name: 'Retours à domicile',
-    chart: GuerisChart
-  }
-}
 
 const Statistics = () => {
   const {date, franceReport, previousFranceReport, selectedPreviousLocationReport, selectedLocationReport, isMobileDevice} = useContext(AppContext)
 
   const report = selectedLocationReport || franceReport
   const previousReport = selectedPreviousLocationReport || previousFranceReport
-
-  const [selectedChart, setSelectedChart] = useState('mixed')
-  const Chart = charts[selectedChart].chart
 
   return (
     <>
@@ -63,9 +27,9 @@ const Statistics = () => {
         <h2>COVID-19 en {selectedLocationReport ? selectedLocationReport.nom : 'France'}</h2>
       </div>
 
-      <Counters report={report} previousReport={previousReport} />
+      <Counters report={report} previousReport={previousReport} date={date} />
 
-      {report && report.history && (
+      {/* {report && report.history && (
         <div className='chart-container'>
           <Chart data={report.history.filter(r => date >= r.date)} />
           <div className='charts-list'>
@@ -81,7 +45,7 @@ const Statistics = () => {
             ))}
           </div>
         </div>
-      )}
+      )} */}
 
       <style jsx>{`
         .header {

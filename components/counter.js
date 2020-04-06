@@ -6,11 +6,10 @@ import ReactTooltip from 'react-tooltip'
 import colors from '../styles/colors'
 import {formatInteger} from '../lib/numbers'
 
-const Counter = ({value, label, color, previousValue, details}) => {
+const Counter = ({value, label, color, previousValue, details, onClick, isSelected}) => {
   const difference = (Number.isInteger(value) && Number.isInteger(previousValue) && value - previousValue !== 0) ? value - previousValue : null
-
   return (
-    <div className='counter-container'>
+    <div className={`counter-container ${isSelected ? 'selected' : ''}`} onClick={onClick}>
       <div className='counter'>
         <div className='value'>
           {typeof value === 'number' ? formatInteger(value) : '-'}
@@ -61,6 +60,17 @@ const Counter = ({value, label, color, previousValue, details}) => {
           display: flex;
           flex-direction: row;
           justify-content: space-around;
+          border-radius: 10px;
+          margin: .5em;
+        }
+
+        .counter-container:hover {
+          cursor: pointer;
+          background-color: ${colors.lighterGrey}
+        }
+
+        .counter-container.selected {
+          background-color: ${colors.lighterGrey};
         }
 
         .difference {
@@ -69,7 +79,7 @@ const Counter = ({value, label, color, previousValue, details}) => {
         }
 
         .value {
-          font-size: xx-large;
+          font-size: x-large;
           font-weight: bold;
           margin-right: -12px;
           display: flex;
