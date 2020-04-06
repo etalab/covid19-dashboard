@@ -48,29 +48,35 @@ const Counter = ({value, label, color, previousValue, details, onClick, isSelect
         }
 
         .counter {
+          color: white;
           display: flex;
           flex-direction: column;
           justify-content: space-around;
           text-align: center;
           margin: 1em 0;
-          color: ${colors[color]};
+          background-color: ${colors[color]};
         }
 
         .counter-container {
           display: flex;
           flex-direction: row;
           justify-content: space-around;
-          border-radius: 10px;
           margin: .5em;
+          background-color: ${colors[color]};
+          border: 2px solid white;
         }
 
         .counter-container:hover {
           cursor: pointer;
-          background-color: ${colors.lighterGrey}
+          border: 2px solid black;
+        }
+
+        .counter-container:active {
+          transform: translate(1px, 1px);
         }
 
         .counter-container.selected {
-          background-color: ${colors.lighterGrey};
+          border: 2px solid black;
         }
 
         .difference {
