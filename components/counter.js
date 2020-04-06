@@ -85,7 +85,7 @@ const Counter = ({value, label, color, previousValue, details, onClick, isSelect
         }
 
         .value {
-          font-size: xx-large;
+          font-size: x-large;
           font-weight: bold;
           margin-right: -12px;
           display: flex;

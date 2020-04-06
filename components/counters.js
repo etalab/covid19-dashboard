@@ -64,7 +64,7 @@ const Counters = ({report, previousReport, date}) => {
             details={details.gueris}
             color='green'
             isSelected={selectedChart === 'gueris'}
-            onClick={() => selectedChart === 'gueris' ? setSelectedChart('mixed') : setSelectedChart('gueris')}
+            onClick={() => setSelectedChart('gueris')}
           />
           <Counter
             value={hospitalises}
@@ -73,7 +73,7 @@ const Counters = ({report, previousReport, date}) => {
             details={details.hospitalises}
             color='darkGrey'
             isSelected={selectedChart === 'hospitalises'}
-            onClick={() => selectedChart === 'hospitalises' ? setSelectedChart('mixed') : setSelectedChart('hospitalises')}
+            onClick={() => setSelectedChart('hospitalises')}
           />
           <Counter
             value={reanimation}
@@ -82,12 +82,28 @@ const Counters = ({report, previousReport, date}) => {
             details={details.reanimation}
             color='darkerGrey'
             isSelected={selectedChart === 'reanimation'}
-            onClick={() => selectedChart === 'reanimation' ? setSelectedChart('mixed') : setSelectedChart('reanimation')}
+            onClick={() => setSelectedChart('reanimation')}
           />
-
-        </div>
-        {decesEhpad ? (
-          <div className='counters'>
+          {decesEhpad ? (
+            <>
+              <Counter
+                value={deces}
+                previousValue={previousReport.deces}
+                label='décès à l’hôpital'
+                details={details.deces}
+                color='red'
+                isSelected={selectedChart === 'deces'}
+                onClick={() => setSelectedChart('deces')}
+              />
+              <Counter
+                value={decesEhpad}
+                previousValue={previousReport.decesEhpad}
+                label='décès en EHPAD et EMS'
+                details={details.decesEhpad}
+                color='darkRed'
+              />
+            </>
+          ) : (
             <Counter
               value={deces}
               previousValue={previousReport.deces}
@@ -95,37 +111,27 @@ const Counters = ({report, previousReport, date}) => {
               details={details.deces}
               color='red'
               isSelected={selectedChart === 'deces'}
-              onClick={() => selectedChart === 'deces' ? setSelectedChart('mixed') : setSelectedChart('deces')}
+              onClick={() => setSelectedChart('deces')}
             />
+          )}
+
+          {casConfirmes && (
             <Counter
-              value={decesEhpad}
-              previousValue={previousReport.decesEhpad}
-              label='décès en EHPAD et EMS'
-              details={details.decesEhpad}
-              color='darkRed'
+              value={casConfirmes}
+              previousValue={previousReport.casConfirmes}
+              label='cas confirmés'
+              details={details.casConfirmes}
+              color='orange'
+              isSelected={selectedChart === 'confirmed'}
+              onClick={() => setSelectedChart('confirmed')}
             />
+          )}
+
+        </div>
+        {selectedChart !== 'mixed' && (
+          <div className='button-container'>
+            <div className='chart-name' onClick={() => setSelectedChart('mixed')}>Afficher tout</div>
           </div>
-        ) : (
-          <Counter
-            value={deces}
-            previousValue={previousReport.deces}
-            label='décès à l’hôpital'
-            details={details.deces}
-            color='red'
-            isSelected={selectedChart === 'deces'}
-            onClick={() => selectedChart === 'deces' ? setSelectedChart('mixed') : setSelectedChart('deces')}
-          />
-        )}
-        {casConfirmes && (
-          <Counter
-            value={casConfirmes}
-            previousValue={previousReport.casConfirmes}
-            label='cas confirmés'
-            details={details.casConfirmes}
-            color='orange'
-            isSelected={selectedChart === 'confirmed'}
-            onClick={() => selectedChart === 'confirmed' ? setSelectedChart('mixed') : setSelectedChart('confirmed')}
-          />
         )}
       </div>
       {report && report.history && (
