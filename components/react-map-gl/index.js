@@ -60,22 +60,20 @@ const Map = () => {
     const feature = event.features && event.features[0]
 
     if (feature) {
-      const {properties} = feature
-      handleClick(selectedMapIdx, properties)
-      setSelectedLocation(properties.code)
+      const [typeTerritoire, codeTerritoire] = feature.properties.code.split('-')
+      Router.push({
+        pathname: '/',
+        query: {
+          show: feature.properties.code
+        }
+      }, `/${typeTerritoire === 'REG' ? 'regions' : 'departements'}/${codeTerritoire}`)
     } else {
-      setSelectedLocation(null)
+      Router.push({
+        pathname: '/'
+      })
     }
 
     setHovered(null)
-  }
-
-  const handleClick = (selectedMapIdx, properties) => {
-    const code = properties.code
-    const regions = selectedMapIdx >= 0 && selectedMapIdx <= 3
-    const as = `/${regions ? 'regions' : 'departements'}/${code.slice(4)}`
-
-    Router.push('/', as)
   }
 
   return (
