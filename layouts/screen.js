@@ -1,20 +1,14 @@
-import React, {useContext} from 'react'
-
-import {AppContext} from '../pages'
+import React from 'react'
 
 import DateNav from '../components/date-nav'
 import Scrollable from '../components/scrollable'
 import ReactMapGl from '../components/react-map-gl'
 import Statistics from '../components/statistics'
 import Informations from '../components/informations'
-import Footer from '../components/footer'
 
 import colors from '../styles/colors'
 
-const DISABLE_FOOTER = process.env.DISABLE_FOOTER === '1'
-
 const ScreenPage = () => {
-  const {isIframe} = useContext(AppContext)
   return (
     <>
       <div className='menu'>
@@ -25,7 +19,6 @@ const ScreenPage = () => {
             <Informations />
           </>
         </Scrollable>
-        {!isIframe && !DISABLE_FOOTER && <Footer />}
       </div>
 
       <div className='map'>

@@ -57,7 +57,7 @@ const defaultViewport = {
   zoom: 5
 }
 
-const MainPage = ({data, dates, isGouv}) => {
+const MainPage = ({data, dates}) => {
   const router = useRouter()
 
   const [isIframe, setIsIframe] = useState(false)
@@ -280,7 +280,7 @@ const MainPage = ({data, dates, isGouv}) => {
           isTouchScreenDevice
         }}
         >
-          <ThemeContext.Provider value={isGouv ? theme.gouv : theme.default}>
+          <ThemeContext.Provider value={theme.gouv}>
             {isMobileDevice ? (
               <MobilePage />
             ) : (
@@ -304,14 +304,12 @@ const MainPage = ({data, dates, isGouv}) => {
 
 MainPage.propTypes = {
   data: PropTypes.array.isRequired,
-  isGouv: PropTypes.bool.isRequired,
   dates: PropTypes.array.isRequired
 }
 
 MainPage.getInitialProps = async () => {
   return {
     data: records,
-    isGouv: process.env.GOUV === '1',
     dates: uniq(records.filter(r => r.code === 'FRA').map(r => r.date)).sort()
   }
 }

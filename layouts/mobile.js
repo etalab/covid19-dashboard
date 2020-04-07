@@ -10,9 +10,6 @@ import Scrollable from '../components/scrollable'
 import ReactMapGl from '../components/react-map-gl'
 import Statistics from '../components/statistics'
 import Informations from '../components/informations'
-import Footer from '../components/footer'
-
-const DISABLE_FOOTER = process.env.DISABLE_FOOTER === '1'
 
 const VIEWS = {
   map: () => <ReactMapGl />,
@@ -49,8 +46,6 @@ const MobilePage = () => {
           <FileText size={32} color={selectedView === 'informations' ? theme.primary : colors.black} />
         </div>
       </div>
-
-      {!app.isIframe && !DISABLE_FOOTER && <Footer />}
 
       <style jsx>{`
         .mobile-page-container {
