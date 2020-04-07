@@ -1,4 +1,4 @@
-import React, {useState} from 'react'
+import React, {useState, useContext, useEffect} from 'react'
 import PropTypes from 'prop-types'
 
 import Counter from './counter'
@@ -11,6 +11,7 @@ import DecesChart from './charts/deces-chart'
 import ReanimationChart from './charts/reanimation-chart'
 import HospitalisesChart from './charts/hospitalises-chart'
 import GuerisChart from './charts/gueris-chart'
+import {AppContext} from '../pages'
 
 const charts = {
   mixed: {
@@ -40,6 +41,7 @@ const charts = {
 }
 
 const Counters = ({report, previousReport, date}) => {
+  const {selectedData, setSelectedData} = useContext(AppContext)
   const {casConfirmes, hospitalises, reanimation, deces, decesEhpad, gueris} = report || {}
   const details = {
     casConfirmes: 'Nombre cumulé de cas de COVID-19 confirmés par un test positif. <br />Un nouvel indicateur sera bientôt proposé.',
@@ -53,6 +55,14 @@ const Counters = ({report, previousReport, date}) => {
   const [selectedChart, setSelectedChart] = useState('mixed')
   const Chart = charts[selectedChart].chart
 
+  const handleSelectCounter = dataName => {
+    setSelectedData(dataName === selectedData ? null : dataName)
+  }
+
+  useEffect(() => {
+    setSelectedChart(selectedData || 'mixed')
+  }, [selectedData])
+
   return (
     <>
       <div className='stats'>
@@ -64,7 +74,7 @@ const Counters = ({report, previousReport, date}) => {
             details={details.gueris}
             color='green'
             isSelected={selectedChart === 'gueris'}
-            onClick={() => setSelectedChart('gueris')}
+            onClick={() => handleSelectCounter('gueris')}
           />
           <Counter
             value={hospitalises}
@@ -73,7 +83,7 @@ const Counters = ({report, previousReport, date}) => {
             details={details.hospitalises}
             color='darkGrey'
             isSelected={selectedChart === 'hospitalises'}
-            onClick={() => setSelectedChart('hospitalises')}
+            onClick={() => handleSelectCounter('hospitalises')}
           />
           <Counter
             value={reanimation}
@@ -82,7 +92,7 @@ const Counters = ({report, previousReport, date}) => {
             details={details.reanimation}
             color='darkerGrey'
             isSelected={selectedChart === 'reanimation'}
-            onClick={() => setSelectedChart('reanimation')}
+            onClick={() => handleSelectCounter('reanimation')}
           />
 
         </div>
@@ -95,7 +105,7 @@ const Counters = ({report, previousReport, date}) => {
               details={details.deces}
               color='red'
               isSelected={selectedChart === 'deces'}
-              onClick={() => setSelectedChart('deces')}
+              onClick={() => handleSelectCounter('deces')}
             />
             <Counter
               value={decesEhpad}
@@ -113,7 +123,7 @@ const Counters = ({report, previousReport, date}) => {
             details={details.deces}
             color='red'
             isSelected={selectedChart === 'deces'}
-            onClick={() => setSelectedChart('deces')}
+            onClick={() => handleSelectCounter('deces')}
           />
         )}
         {casConfirmes && (
@@ -124,7 +134,7 @@ const Counters = ({report, previousReport, date}) => {
             details={details.casConfirmes}
             color='orange'
             isSelected={selectedChart === 'confirmed'}
-            onClick={() => setSelectedChart('confirmed')}
+            onClick={() => handleSelectCounter('confirmed')}
           />
         )}
         {selectedChart !== 'mixed' && (

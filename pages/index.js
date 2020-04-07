@@ -74,6 +74,7 @@ const MainPage = ({data, dates}) => {
   const [departementsReport, setDepartementsReport] = useState({})
   const [previousDepartementsReport, setPreviousDepartementsReport] = useState({})
   const [viewport, setViewport] = useState(defaultViewport)
+  const [selectedData, setSelectedData] = useState(null)
 
   const dateIdx = indexOf(dates, date)
   const previousDate = dates[dateIdx - 1]
@@ -278,7 +279,9 @@ const MainPage = ({data, dates}) => {
           viewport,
           isIframe,
           isMobileDevice,
-          isTouchScreenDevice
+          isTouchScreenDevice,
+          selectedData,
+          setSelectedData
         }}
         >
           <ThemeContext.Provider value={theme.gouv}>
