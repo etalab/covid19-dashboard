@@ -14,8 +14,9 @@ import colors from '../styles/colors'
 import Drom from '../components/react-map-gl/drom'
 import MapSelector from '../components/map-selector'
 
-const ScreenPage = () => {
+const DesktopPage = () => {
   const {selectedLocation, selectedMapIdx, setSelectedMapIdx} = useContext(AppContext)
+
   return (
     <>
       <div className='menu'>
@@ -91,4 +92,4 @@ const ScreenPage = () => {
   )
 }
 
-export default ScreenPage
+export default DesktopPage
