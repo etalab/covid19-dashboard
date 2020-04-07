@@ -53,6 +53,7 @@ const Statistics = () => {
           position: absolute;
           top: 0;
           right: 0.5em;
+          padding: .5em;
         }
 
         .back span {
