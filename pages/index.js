@@ -156,10 +156,10 @@ const MainPage = ({data, dates}) => {
   }, [isMobileDevice]) // eslint-disable-line react-hooks/exhaustive-deps
 
   useEffect(() => {
-    const {iframe, show} = router.query
+    const {iframe, location} = router.query
 
     setIsIframe(Boolean(iframe === '1'))
-    setSelectedLocation(show)
+    setSelectedLocation(location)
   }, [router])
 
   useEffect(() => {

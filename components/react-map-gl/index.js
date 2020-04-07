@@ -64,7 +64,7 @@ const Map = () => {
       Router.push({
         pathname: '/',
         query: {
-          show: feature.properties.code
+          location: feature.properties.code
         }
       }, `/${typeTerritoire === 'REG' ? 'regions' : 'departements'}/${codeTerritoire}`)
     } else {

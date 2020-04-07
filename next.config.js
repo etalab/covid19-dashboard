@@ -7,7 +7,7 @@ const regionsRoutes = regions.reduce((routes, region) => {
   routes[`/regions/${region.code}`] = {
     page: '/',
     query: {
-      show: `REG-${region.code}`
+      location: `REG-${region.code}`
     }
   }
   return routes
@@ -17,7 +17,7 @@ const departementsRoutes = departements.reduce((routes, departement) => {
   routes[`/departements/${departement.code}`] = {
     page: '/',
     query: {
-      show: `DEP-${departement.code}`
+      location: `DEP-${departement.code}`
     }
   }
   return routes
