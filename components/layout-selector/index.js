@@ -1,7 +1,7 @@
 import React, {useContext} from 'react'
 import PropTypes from 'prop-types'
 
-import {AppContext} from '../pages'
+import {AppContext} from '../../pages'
 
 import Desktop from './desktop-layout-selector'
 import Mobile from './mobile-layout-selector'

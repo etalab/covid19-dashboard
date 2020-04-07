@@ -1,7 +1,7 @@
 import React, {useContext} from 'react'
 import PropTypes from 'prop-types'
 
-import {ThemeContext} from '../pages'
+import {ThemeContext} from '../../pages'
 
 const DesktopLayoutSelector = ({selected, layouts, selectLayout}) => {
   const theme = useContext(ThemeContext)

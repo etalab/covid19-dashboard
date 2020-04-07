@@ -10,6 +10,7 @@ import Scrollable from '../components/scrollable'
 import Statistics from '../components/statistics'
 import Informations from '../components/informations'
 import MobileMap from '../components/mobile-map'
+import LayoutSelector from '../components/layout-selector'
 
 const VIEWS = {
   map: <MobileMap />,
@@ -28,6 +29,19 @@ const VIEWS = {
 const MobilePage = () => {
   const [selectedView, setSelectedView] = useState('stats')
 
+  const LAYOUTS = {
+    'Vue d’ensemble': VIEWS[selectedView],
+    'Suivi des hospitalisations': (
+      <h1>Suivi des hospitalisations</h1>
+    ),
+    'Suivi des tests': (
+      <h1>
+        Suivi des tests
+      </h1>
+    )
+  }
+  const [selectedLayout, setSelectedLayout] = useState(Object.keys(LAYOUTS)[0])
+
   const app = useContext(AppContext)
   const theme = useContext(ThemeContext)
 
@@ -39,7 +53,14 @@ const MobilePage = () => {
   return (
     <div className='mobile-page-container'>
       <DateNav disabled={selectedView === 'informations'} />
-      {VIEWS[selectedView]}
+      <LayoutSelector
+        selected={selectedLayout}
+        layouts={Object.keys(LAYOUTS)}
+        selectLayout={setSelectedLayout}
+      />
+      <Scrollable>
+        {LAYOUTS[selectedLayout]}
+      </Scrollable>
 
       <div className='view-selector'>
         <div className={`${selectedView === 'stats' ? 'selected' : ''}`} onClick={() => handleClick('stats')}>
