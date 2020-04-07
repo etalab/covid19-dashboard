@@ -30,7 +30,7 @@ const ScreenPage = () => {
         z-index: 1;
         display: flex;
         flex-direction: column;
-        max-width: 700px;
+        max-width: 600px;
         box-shadow: 0 1px 4px ${colors.lightGrey};
       }
 
