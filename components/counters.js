@@ -56,17 +56,6 @@ const Counters = ({report, previousReport, date}) => {
   return (
     <>
       <div className='stats'>
-        {casConfirmes && (
-          <Counter
-            value={casConfirmes}
-            previousValue={previousReport.casConfirmes}
-            label='cas confirmés'
-            details={details.casConfirmes}
-            color='orange'
-            isSelected={selectedChart === 'confirmed'}
-            onClick={() => setSelectedChart('confirmed')}
-          />
-        )}
         <div className='counters'>
           <Counter
             value={gueris}
@@ -125,6 +114,17 @@ const Counters = ({report, previousReport, date}) => {
             color='red'
             isSelected={selectedChart === 'deces'}
             onClick={() => setSelectedChart('deces')}
+          />
+        )}
+        {casConfirmes && (
+          <Counter
+            value={casConfirmes}
+            previousValue={previousReport.casConfirmes}
+            label='cas confirmés'
+            details={details.casConfirmes}
+            color='orange'
+            isSelected={selectedChart === 'confirmed'}
+            onClick={() => setSelectedChart('confirmed')}
           />
         )}
         {selectedChart !== 'mixed' && (
