@@ -1,10 +1,9 @@
 import React, {useState, useCallback, useEffect} from 'react'
 import {useRouter} from 'next/router'
 import PropTypes from 'prop-types'
-import {uniq, indexOf} from 'lodash'
+import {indexOf} from 'lodash'
 
-import {reportToGeoJSON} from '../lib/data'
-import records from '../chiffres-cles.json'
+import {reportToGeoJSON, getReport, getDates} from '../lib/data'
 
 import theme from '../styles/theme'
 
@@ -33,7 +32,7 @@ const defaultViewport = {
   zoom: 5
 }
 
-const MainPage = ({data, dates}) => {
+const MainPage = ({dates}) => {
   const router = useRouter()
 
   const [isIframe, setIsIframe] = useState(false)
@@ -70,14 +69,6 @@ const MainPage = ({data, dates}) => {
       setDate(dates[nextIdx])
     }
   }, [dates, date])
-
-  const getReport = useCallback((date, code) => {
-    const filteredReports = data.filter(item => item.code.includes(code))
-    return {
-      ...filteredReports.find(r => r.date === date),
-      history: filteredReports
-    }
-  }, [data])
 
   const handleResize = () => {
     const mobileWidth = Number.parseInt(theme.mobileDisplay.split('px')[0], 10)
@@ -156,7 +147,7 @@ const MainPage = ({data, dates}) => {
 
     const previousDepartementsReport = reportToGeoJSON(getReport(previousDate, 'DEP'), date)
     setPreviousDepartementsReport(previousDepartementsReport)
-  }, [date, dates, dateIdx, getReport, previousDate])
+  }, [date, dates, dateIdx, previousDate])
 
   useEffect(() => {
     const mobileWidth = Number.parseInt(theme.mobileDisplay.split('px')[0], 10)
@@ -280,14 +271,12 @@ const MainPage = ({data, dates}) => {
 }
 
 MainPage.propTypes = {
-  data: PropTypes.array.isRequired,
   dates: PropTypes.array.isRequired
 }
 
 MainPage.getInitialProps = async () => {
   return {
-    data: records,
-    dates: uniq(records.filter(r => r.code === 'FRA').map(r => r.date)).sort()
+    dates: getDates()
   }
 }
 
