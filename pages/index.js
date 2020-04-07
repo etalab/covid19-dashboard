@@ -1,10 +1,10 @@
 import React, {useState, useCallback, useEffect} from 'react'
 import {useRouter} from 'next/router'
 import PropTypes from 'prop-types'
-import {groupBy, uniq, indexOf} from 'lodash'
+import {uniq, indexOf} from 'lodash'
 
+import {reportToGeoJSON} from '../lib/data'
 import records from '../chiffres-cles.json'
-import centers from '../centers.json'
 
 import theme from '../styles/theme'
 
@@ -26,30 +26,6 @@ import MobilePage from '../layouts/mobile'
 
 export const AppContext = React.createContext()
 export const ThemeContext = React.createContext('theme.default')
-
-const reportToGeoJSON = (report, date) => {
-  const byCode = groupBy(report.history, 'code')
-  return {
-    type: 'FeatureCollection',
-    features: Object.keys(byCode).filter(code => Boolean(centers[code])).map(code => {
-      const selectedDateAvailable = byCode[code].find(r => r.date === date)
-      const properties = selectedDateAvailable ? selectedDateAvailable : {code}
-
-      return {
-        type: 'Feature',
-        geometry: {
-          type: 'Point',
-          coordinates: centers[code]
-        },
-        properties: {
-          ...properties,
-          ...byCode[code].find(r => r.date === date),
-          history: byCode[code].filter(r => date >= r.date)
-        }
-      }
-    }).filter(i => Boolean(i))
-  }
-}
 
 const defaultViewport = {
   latitude: 46.9,
@@ -104,7 +80,7 @@ const MainPage = ({data, dates}) => {
   }, [data])
 
   const handleResize = () => {
-    const mobileWidth = parseInt(theme.mobileDisplay.split('px')[0])
+    const mobileWidth = Number.parseInt(theme.mobileDisplay.split('px')[0], 10)
     setIsMobileDevice(window.innerWidth < mobileWidth)
   }
 
@@ -183,7 +159,7 @@ const MainPage = ({data, dates}) => {
   }, [date, dates, dateIdx, getReport, previousDate])
 
   useEffect(() => {
-    const mobileWidth = parseInt(theme.mobileDisplay.split('px')[0])
+    const mobileWidth = Number.parseInt(theme.mobileDisplay.split('px')[0], 10)
     if (window.innerWidth < mobileWidth) {
       setIsMobileDevice(true)
     }
