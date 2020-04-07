@@ -2,13 +2,26 @@ import React, {useState, useCallback, useContext} from 'react'
 import ReactMapGL, {Source, Layer, Popup} from 'react-map-gl'
 import Router from 'next/router'
 import {Maximize2} from 'react-feather'
+import {groupBy} from 'lodash'
 
 import {AppContext} from '../../pages'
 
 import MapSelector from '../map-selector'
+import centers from '../../centers.json'
 
 import SumUp from './sumup'
 import Statistics from '../statistics'
+
+import {
+  decesLayer,
+  decesCountLayer,
+  hospitalisesLayer,
+  hospitalisesCountLayer,
+  reanimationLayer,
+  reanimationCountLayer,
+  guerisLayer,
+  guerisCountLayer
+} from './layers'
 
 const SITE_URL = process.env.SITE_URL
 
@@ -16,19 +29,58 @@ const settings = {
   maxZoom: 10
 }
 
+const LAYERS = [
+  decesLayer,
+  decesCountLayer,
+  hospitalisesLayer,
+  hospitalisesCountLayer,
+  reanimationLayer,
+  reanimationCountLayer,
+  guerisLayer,
+  guerisCountLayer
+]
+
+const reportToGeoJSON = (report, date) => {
+  const byCode = groupBy(report.history, 'code')
+  return {
+    type: 'FeatureCollection',
+    features: Object.keys(byCode).filter(code => Boolean(centers[code])).map(code => {
+      const selectedDateAvailable = byCode[code].find(r => r.date === date)
+      const properties = selectedDateAvailable ? selectedDateAvailable : {code}
+
+      return {
+        type: 'Feature',
+        geometry: {
+          type: 'Point',
+          coordinates: centers[code]
+        },
+        properties: {
+          ...properties,
+          ...byCode[code].find(r => r.date === date),
+          history: byCode[code].filter(r => date >= r.date)
+        }
+      }
+    }).filter(i => Boolean(i))
+  }
+}
+
 const Map = () => {
   const [selectedMapIdx, setSelectedMapIdx] = useState(1)
+  const defaultSelectedData = 'hospitalises'
 
   const {
+    date,
     selectedLocationReport,
     setSelectedLocation,
+    selectedData,
     isIframe,
     viewport,
-    maps,
+    mapReport,
     setViewport,
     isMobileDevice
   } = useContext(AppContext)
 
+  const layers = LAYERS.filter(layer => layer.id.startsWith(selectedData || defaultSelectedData))
   const [map, setMap] = useState()
   const [hovered, setHovered] = useState(null)
 
@@ -37,6 +89,12 @@ const Map = () => {
       setMap(ref.getMap())
     }
   }, [])
+
+  const getGeoJSONFromReport = useCallback(() => {
+    if (mapReport) {
+      return reportToGeoJSON(mapReport, date)
+    }
+  }, [mapReport, date])
 
   const onHover = event => {
     event.stopPropagation()
@@ -98,22 +156,23 @@ const Map = () => {
         height='100%'
         mapStyle='https://etalab-tiles.fr/styles/osm-bright/style.json'
         {...settings}
-        interactiveLayerIds={maps[selectedMapIdx].layers.map(layer => layer.id)}
+        interactiveLayerIds={layers.map(layer => layer.id)}
         onViewportChange={setViewport}
         onHover={isMobileDevice ? null : onHover}
         onClick={onClick}
       >
 
-        <Source
-          type='geojson'
-          id='cas-confirmes'
-          attribution='Données Santé publique France'
-          data={maps[selectedMapIdx].data}
-        >
-          {maps[selectedMapIdx].layers.map(layer => (
-            <Layer key={layer.id} {...layer} />
-          ))}
-        </Source>
+        {mapReport && (
+          <Source
+            type='geojson'
+            attribution='Données Santé publique France'
+            data={getGeoJSONFromReport()}
+          >
+            {layers.map(layer => (
+              <Layer key={layer.id} {...layer} />
+            ))}
+          </Source>
+        )}
 
         {hovered && (
           <Popup

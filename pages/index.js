@@ -1,55 +1,18 @@
 import React, {useState, useCallback, useEffect} from 'react'
 import {useRouter} from 'next/router'
 import PropTypes from 'prop-types'
-import {groupBy, uniq, indexOf} from 'lodash'
+import {uniq, indexOf} from 'lodash'
 
 import records from '../chiffres-cles.json'
-import centers from '../centers.json'
-
 import theme from '../styles/theme'
 
 import Page from '../layouts/main'
-
-import {
-  decesLayer,
-  decesCountLayer,
-  hospitalisesLayer,
-  hospitalisesCountLayer,
-  reanimationLayer,
-  reanimationCountLayer,
-  guerisLayer,
-  guerisCountLayer
-} from '../components/react-map-gl/layers'
 
 import ScreenPage from '../layouts/screen'
 import MobilePage from '../layouts/mobile'
 
 export const AppContext = React.createContext()
 export const ThemeContext = React.createContext('theme.default')
-
-const reportToGeoJSON = (report, date) => {
-  const byCode = groupBy(report.history, 'code')
-  return {
-    type: 'FeatureCollection',
-    features: Object.keys(byCode).filter(code => Boolean(centers[code])).map(code => {
-      const selectedDateAvailable = byCode[code].find(r => r.date === date)
-      const properties = selectedDateAvailable ? selectedDateAvailable : {code}
-
-      return {
-        type: 'Feature',
-        geometry: {
-          type: 'Point',
-          coordinates: centers[code]
-        },
-        properties: {
-          ...properties,
-          ...byCode[code].find(r => r.date === date),
-          history: byCode[code].filter(r => date >= r.date)
-        }
-      }
-    }).filter(i => Boolean(i))
-  }
-}
 
 const defaultViewport = {
   latitude: 46.9,
@@ -74,7 +37,8 @@ const MainPage = ({data, dates}) => {
   const [departementsReport, setDepartementsReport] = useState({})
   const [previousDepartementsReport, setPreviousDepartementsReport] = useState({})
   const [viewport, setViewport] = useState(defaultViewport)
-  const [selectedData, setSelectedData] = useState(null)
+  const [selectedData, setSelectedData] = useState()
+  const [mapReport, setMapReport] = useState(null)
 
   const dateIdx = indexOf(dates, date)
   const previousDate = dates[dateIdx - 1]
@@ -110,30 +74,12 @@ const MainPage = ({data, dates}) => {
   }
 
   const getLocationReport = useCallback(code => {
-    let report
-
-    if (code.includes('REG')) {
-      report = regionsReport
-    } else if (code.includes('DEP')) {
-      report = departementsReport
-    }
-
-    const feature = report.features.find(f => f.properties.code === code)
-    return {...feature.properties}
-  }, [regionsReport, departementsReport])
+    return getReport(date, code)
+  }, [date, getReport])
 
   const getPreviousLocationReport = useCallback(code => {
-    let report
-
-    if (code.includes('REG')) {
-      report = previousRegionsReport
-    } else if (code.includes('DEP')) {
-      report = previousDepartementsReport
-    }
-
-    const feature = report.features.find(f => f.properties.code === code)
-    return {...feature.properties}
-  }, [previousRegionsReport, previousDepartementsReport])
+    return getReport(date, code)
+  }, [date, getReport])
 
   useEffect(() => {
     if (selectedLocation) {
@@ -171,17 +117,23 @@ const MainPage = ({data, dates}) => {
     setPreviousFranceReport(previousFranceReport)
 
     const regionsReport = getReport(date, 'REG')
-    setRegionsReport(reportToGeoJSON(regionsReport, date))
+    setRegionsReport(regionsReport, date)
 
     const previousRegionsReport = getReport(previousDate, 'REG')
-    setPreviousRegionsReport(reportToGeoJSON(previousRegionsReport, previousDate))
+    setPreviousRegionsReport(previousRegionsReport, previousDate)
 
     const departementsReport = getReport(date, 'DEP')
-    setDepartementsReport(reportToGeoJSON(departementsReport, date))
+    setDepartementsReport(departementsReport, date)
 
-    const previousDepartementsReport = reportToGeoJSON(getReport(previousDate, 'DEP'), date)
-    setPreviousDepartementsReport(previousDepartementsReport)
+    const previousDepartementsReport = getReport(previousDate, 'DEP')
+    setPreviousDepartementsReport(previousDepartementsReport, date)
   }, [date, dates, dateIdx, getReport, previousDate])
+
+  useEffect(() => { // Init mapReport
+    if (!mapReport && Object.keys(regionsReport).length > 0) {
+      setMapReport(regionsReport)
+    }
+  }, [mapReport, regionsReport])
 
   useEffect(() => {
     const mobileWidth = parseInt(theme.mobileDisplay.split('px')[0])
@@ -200,65 +152,6 @@ const MainPage = ({data, dates}) => {
     setIsTouchScreenDevice('ontouchstart' in document.documentElement)
   }, [])
 
-  const maps = [
-    {
-      name: 'Carte des décès à l’hôpital',
-      category: 'régionale',
-      data: regionsReport,
-      properties: 'deces',
-      layers: [decesLayer, decesCountLayer]
-    },
-    {
-      name: 'Carte des hospitalisations',
-      category: 'régionale',
-      properties: 'hospitalises',
-      data: regionsReport,
-      layers: [hospitalisesLayer, hospitalisesCountLayer]
-    },
-    {
-      name: 'Carte des patients en réanimation',
-      category: 'régionale',
-      properties: 'reanimation',
-      data: regionsReport,
-      layers: [reanimationLayer, reanimationCountLayer]
-    },
-    {
-      name: 'Carte des retours à domicile',
-      category: 'régionale',
-      properties: 'gueris',
-      data: regionsReport,
-      layers: [guerisLayer, guerisCountLayer]
-    },
-    {
-      name: 'Carte des décès à l’hôpital',
-      category: 'départementale',
-      data: departementsReport,
-      properties: 'deces',
-      layers: [decesLayer, decesCountLayer]
-    },
-    {
-      name: 'Carte des hospitalisations',
-      category: 'départementale',
-      properties: 'hospitalises',
-      data: departementsReport,
-      layers: [hospitalisesLayer, hospitalisesCountLayer]
-    },
-    {
-      name: 'Carte des patients en réanimation',
-      category: 'départementale',
-      properties: 'reanimation',
-      data: departementsReport,
-      layers: [reanimationLayer, reanimationCountLayer]
-    },
-    {
-      name: 'Carte des retours à domicile',
-      category: 'départementale',
-      properties: 'gueris',
-      data: departementsReport,
-      layers: [guerisLayer, guerisCountLayer]
-    }
-  ]
-
   return (
     <Page title='Tableau de bord de suivi de l’épidémie de coronavirus en France'>
 
@@ -275,7 +168,8 @@ const MainPage = ({data, dates}) => {
           prev: dateIdx > 0 ? previousReport : null,
           next: dateIdx < dates.length - 1 ? nextReport : null,
           setViewport,
-          maps,
+          mapReport,
+          setMapReport,
           viewport,
           isIframe,
           isMobileDevice,
