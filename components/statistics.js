@@ -1,5 +1,6 @@
 import React, {useContext, useState} from 'react'
 import {X, BarChart2} from 'react-feather'
+import Link from 'next/link'
 
 import colors from '../styles/colors'
 
@@ -41,7 +42,7 @@ const charts = {
 }
 
 const Statistics = () => {
-  const {date, franceReport, previousFranceReport, selectedPreviousLocationReport, selectedLocationReport, setSelectedLocation, isMobileDevice} = useContext(AppContext)
+  const {date, franceReport, previousFranceReport, selectedPreviousLocationReport, selectedLocationReport, isMobileDevice} = useContext(AppContext)
 
   const report = selectedLocationReport || franceReport
   const previousReport = selectedPreviousLocationReport || previousFranceReport
@@ -54,9 +55,9 @@ const Statistics = () => {
       <div className='header'>
         {selectedLocationReport && (
           isMobileDevice ? (
-            <div className='close' onClick={() => setSelectedLocation(null)}><X /></div>
+            <Link href='/'><div className='close'><X /></div></Link>
           ) : (
-            <div className='back' onClick={() => setSelectedLocation(null)}><BarChart2 /> <span>France</span></div>
+            <Link href='/'><div className='back'><BarChart2 /> <span>France</span></div></Link>
           )
         )}
         <h2>COVID-19 en {selectedLocationReport ? selectedLocationReport.nom : 'France'}</h2>

@@ -29,6 +29,7 @@
     "xo": "^0.28.0"
   },
   "dependencies": {
+    "@etalab/decoupage-administratif": "^0.8.0",
     "chart.js": "^2.9.3",
     "dotenv": "^8.2.0",
     "fs-extra": "^8.1.0",

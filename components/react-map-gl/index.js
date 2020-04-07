@@ -1,5 +1,6 @@
 import React, {useState, useCallback, useContext} from 'react'
 import ReactMapGL, {Source, Layer, Popup} from 'react-map-gl'
+import Router from 'next/router'
 import {Maximize2} from 'react-feather'
 
 import {AppContext} from '../../pages'
@@ -59,10 +60,17 @@ const Map = () => {
     const feature = event.features && event.features[0]
 
     if (feature) {
-      const {properties} = feature
-      setSelectedLocation(properties.code)
+      const [typeTerritoire, codeTerritoire] = feature.properties.code.split('-')
+      Router.push({
+        pathname: '/',
+        query: {
+          location: feature.properties.code
+        }
+      }, `/${typeTerritoire === 'REG' ? 'regions' : 'departements'}/${codeTerritoire}`)
     } else {
-      setSelectedLocation(null)
+      Router.push({
+        pathname: '/'
+      })
     }
 
     setHovered(null)
