@@ -52,12 +52,15 @@ const MobilePage = () => {
 
   return (
     <div className='mobile-page-container'>
-      <DateNav disabled={selectedView === 'informations'} />
-      <LayoutSelector
-        selected={selectedLayout}
-        layouts={Object.keys(LAYOUTS)}
-        selectLayout={setSelectedLayout}
-      />
+      <div className='mobile-page-header'>
+        <DateNav disabled={selectedView === 'informations'} />
+        <LayoutSelector
+          selected={selectedLayout}
+          layouts={Object.keys(LAYOUTS)}
+          selectLayout={setSelectedLayout}
+        />
+      </div>
+
       <Scrollable>
         {LAYOUTS[selectedLayout]}
       </Scrollable>
@@ -79,6 +82,10 @@ const MobilePage = () => {
           display: flex;
           flex-direction: column;
           flex: 1;
+        }
+
+        .mobile-page-header {
+          z-index: 3;
         }
 
         .view-selector {

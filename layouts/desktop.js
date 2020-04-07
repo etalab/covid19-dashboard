@@ -1,6 +1,6 @@
 import React, {useState, useContext} from 'react'
 
-import {AppContext} from '../pages'
+import {AppContext, ThemeContext} from '../pages'
 
 import DateNav from '../components/date-nav'
 import Scrollable from '../components/scrollable'
@@ -15,10 +15,14 @@ import LayoutSelector from '../components/layout-selector'
 import Drom from '../components/react-map-gl/drom'
 import MapSelector from '../components/map-selector'
 
+const HEADER_HEIGHT = '50px'
+
 const DesktopPage = () => {
   const {selectedLocation, selectedMapIdx, setSelectedMapIdx} = useContext(AppContext)
+  const themeContext = useContext(ThemeContext)
+
   const LAYOUTS = {
-    'Vue d’ensemble': () => (
+    'Vue d’ensemble': (
       <>
         <div className='menu'>
           <Scrollable>
@@ -90,13 +94,11 @@ const DesktopPage = () => {
     `}</style>
       </>
     ),
-    'Suivi des hospitalisations': () => (
+    'Suivi des hospitalisations': (
       <h1>Suivi des hospitalisations</h1>
     ),
-    'Suivi des tests': () => (
-      <h1>
-        Suivi des tests
-      </h1>
+    'Suivi des tests': (
+      <h1>Suivi des tests</h1>
     )
   }
 
@@ -114,7 +116,7 @@ const DesktopPage = () => {
       </div>
 
       <div className='desktop-content'>
-        {LAYOUTS[selectedLayout]()}
+        {LAYOUTS[selectedLayout]}
       </div>
 
       <style jsx>{`
@@ -127,11 +129,15 @@ const DesktopPage = () => {
         .desktop-header {
           z-index: 10;
           display: flex;
-          flex-direction: column;
+          background-color: ${themeContext.primary};
           box-shadow: 0 1px 4px ${colors.lightGrey};
+          width: 100%;
+          height: ${HEADER_HEIGHT};
         }
+
         .desktop-content {
           display: flex;
+          height: calc(100% - ${HEADER_HEIGHT});
         }
     `}</style>
     </div>
