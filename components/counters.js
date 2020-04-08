@@ -1,6 +1,8 @@
 import React, {useState, useContext, useEffect} from 'react'
 import PropTypes from 'prop-types'
 
+import colors from '../styles/colors'
+
 import Counter from './counter'
 
 import MixedChart from './charts/mixed-chart'
@@ -70,7 +72,7 @@ const Counters = ({report, previousReport, date}) => {
             previousValue={previousReport.gueris}
             label='retours à domicile'
             details={details.gueris}
-            color='green'
+            color={colors.gueris}
             isSelected={selectedChart === 'gueris'}
             onClick={() => handleSelectCounter('gueris')}
           />
@@ -79,7 +81,7 @@ const Counters = ({report, previousReport, date}) => {
             previousValue={previousReport.hospitalises}
             label='hospitalisations'
             details={details.hospitalises}
-            color='darkGrey'
+            color={colors.hospitalises}
             isSelected={selectedChart === 'hospitalises'}
             onClick={() => handleSelectCounter('hospitalises')}
           />
@@ -88,7 +90,7 @@ const Counters = ({report, previousReport, date}) => {
             previousValue={previousReport.reanimation}
             label='en réanimation'
             details={details.reanimation}
-            color='darkerGrey'
+            color={colors.reanimation}
             isSelected={selectedChart === 'reanimation'}
             onClick={() => handleSelectCounter('reanimation')}
           />
@@ -101,7 +103,7 @@ const Counters = ({report, previousReport, date}) => {
               previousValue={previousReport.deces}
               label='décès à l’hôpital'
               details={details.deces}
-              color='red'
+              color={colors.deces}
               isSelected={selectedChart === 'deces'}
               onClick={() => handleSelectCounter('deces')}
             />
@@ -110,7 +112,7 @@ const Counters = ({report, previousReport, date}) => {
               previousValue={previousReport.decesEhpad}
               label='décès en EHPAD et EMS'
               details={details.decesEhpad}
-              color='darkRed'
+              color={colors.decesEhpad}
             />
           </div>
         ) : (
@@ -119,7 +121,7 @@ const Counters = ({report, previousReport, date}) => {
             previousValue={previousReport.deces}
             label='décès à l’hôpital'
             details={details.deces}
-            color='red'
+            color={colors.deces}
             isSelected={selectedChart === 'deces'}
             onClick={() => handleSelectCounter('deces')}
           />
@@ -130,7 +132,7 @@ const Counters = ({report, previousReport, date}) => {
             previousValue={previousReport.casConfirmes}
             label='cas confirmés'
             details={details.casConfirmes}
-            color='orange'
+            color={colors.casConfirmes}
             isSelected={selectedChart === 'confirmed'}
             onClick={() => handleSelectCounter('confirmed')}
           />

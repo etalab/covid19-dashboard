@@ -18,13 +18,13 @@ const VIEWS = {
 }
 
 const MobilePage = () => {
-  const [selectedView, setSelectedView] = useState('stats')
-
-  const app = useContext(AppContext)
+  const {selectedData, setSelectedLocation} = useContext(AppContext)
   const theme = useContext(ThemeContext)
 
+  const [selectedView, setSelectedView] = useState('stats')
+
   const handleClick = view => {
-    app.setSelectedLocation(null)
+    setSelectedLocation(null)
     setSelectedView(view)
   }
 
@@ -32,6 +32,7 @@ const MobilePage = () => {
     <div className='mobile-page-container'>
       <DateNav disabled={selectedView === 'informations'} />
       <Scrollable>
+        {selectedData && <div className='data-banner'>{selectedData}</div>}
         {VIEWS[selectedView]()}
       </Scrollable>
 
@@ -72,6 +73,13 @@ const MobilePage = () => {
 
         .view-selector > div.selected {
           border-top: 4px solid ${theme.primary};
+        }
+
+        .data-banner {
+          text-align: center;
+          padding: 0.2em;
+          color: #fff;
+          background-color: ${colors[selectedData]};
         }
       `}</style>
     </div>

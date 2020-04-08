@@ -7,7 +7,7 @@ export const decesLayer = {
   filter: ['>', 'deces', 0],
   paint: {
     'circle-opacity': 0.6,
-    'circle-color': colors.red,
+    'circle-color': colors.deces,
     'circle-radius': [
       'interpolate',
       ['linear'],
@@ -38,7 +38,7 @@ export const guerisLayer = {
   filter: ['>', 'gueris', 0],
   paint: {
     'circle-opacity': 0.6,
-    'circle-color': colors.green,
+    'circle-color': colors.gueris,
     'circle-radius': [
       'interpolate',
       ['linear'],
@@ -69,7 +69,7 @@ export const hospitalisesLayer = {
   filter: ['>', 'hospitalises', 0],
   paint: {
     'circle-opacity': 0.6,
-    'circle-color': colors.darkGrey,
+    'circle-color': colors.hospitalises,
     'circle-radius': [
       'interpolate',
       ['linear'],
@@ -100,7 +100,7 @@ export const reanimationLayer = {
   filter: ['>', 'reanimation', 0],
   paint: {
     'circle-opacity': 0.6,
-    'circle-color': colors.darkerGrey,
+    'circle-color': colors.reanimation,
     'circle-radius': [
       'interpolate',
       ['linear'],

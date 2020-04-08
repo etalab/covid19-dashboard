@@ -1,9 +1,8 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-
 import {Info} from 'react-feather'
 import ReactTooltip from 'react-tooltip'
-import colors from '../styles/colors'
+
 import {formatInteger} from '../lib/numbers'
 
 const Counter = ({value, label, color, previousValue, details, onClick, isSelected}) => {
@@ -54,7 +53,7 @@ const Counter = ({value, label, color, previousValue, details, onClick, isSelect
           justify-content: space-around;
           text-align: center;
           margin: 1em 0;
-          background-color: ${colors[color]};
+          background-color: ${color};
         }
 
         .counter-container {
@@ -62,7 +61,7 @@ const Counter = ({value, label, color, previousValue, details, onClick, isSelect
           flex-direction: row;
           justify-content: space-around;
           margin: .5em;
-          background-color: ${colors[color]};
+          background-color: ${color};
           border: 2px solid white;
         }
 

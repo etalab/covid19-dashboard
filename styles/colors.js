@@ -20,5 +20,12 @@ export default ({
   lightOrange: '#FFF0E4',
   red: '#D1335B',
   darkRed: '#B1133B',
-  lightRed: '#F8E1E7'
+  lightRed: '#F8E1E7',
+
+  gueris: '#03BD5B',
+  hospitalises: '#8393A7',
+  reanimation: '#53657D',
+  deces: '#D1335B',
+  decesEhpad: '#B1133B',
+  casConfirmes: '#FF9947'
 })
