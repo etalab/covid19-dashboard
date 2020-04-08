@@ -7,7 +7,6 @@ import {Maximize2} from 'react-feather'
 import {AppContext} from '../../pages'
 import {getReport, reportToGeoJSON} from '../../lib/data'
 
-import MapSelector from '../map-selector'
 import maps from '../maps'
 
 import Map from './map'
@@ -21,7 +20,6 @@ const ReactMapGL = ({zoom, latitude, longitude}) => {
     date,
     selectedLocation,
     selectedMapIdx,
-    setSelectedMapIdx,
     isIframe,
     isMobileDevice
   } = useContext(AppContext)
@@ -74,9 +72,6 @@ const ReactMapGL = ({zoom, latitude, longitude}) => {
   return (
     <div className='map-container'>
       <div className='controls'>
-        <div className='control'>
-          <MapSelector mapIdx={selectedMapIdx} selectMap={setSelectedMapIdx} />
-        </div>
 
         {isIframe && (
           <div className='control maximize'>

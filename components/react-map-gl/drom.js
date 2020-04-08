@@ -18,7 +18,7 @@ const Drom = () => {
             grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
             grid-gap: 0.5em;
             align-items: center;
-            height: 100%;
+            flex: 1;
           }
         `}</style>
     </div>

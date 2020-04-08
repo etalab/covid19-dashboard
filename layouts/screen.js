@@ -1,4 +1,6 @@
-import React from 'react'
+import React, {useContext} from 'react'
+
+import {AppContext} from '../pages'
 
 import DateNav from '../components/date-nav'
 import Scrollable from '../components/scrollable'
@@ -10,10 +12,12 @@ import colors from '../styles/colors'
 
 import Drom from '../components/react-map-gl/drom'
 import {franceMetropolitan} from '../components/react-map-gl/maps'
+import MapSelector from '../components/map-selector'
 
 const STATIC_MAP_HEIGHT = 200
 
 const ScreenPage = () => {
+  const {selectedMapIdx, setSelectedMapIdx} = useContext(AppContext)
   return (
     <>
       <div className='menu'>
@@ -28,6 +32,9 @@ const ScreenPage = () => {
 
       <div className='map'>
         <div className='metropole'>
+          <div className='map-selector'>
+            <MapSelector mapIdx={selectedMapIdx} selectMap={setSelectedMapIdx} />
+          </div>
           <ReactMapGl {...franceMetropolitan} />
         </div>
         <div className='drom-container'>
@@ -54,8 +61,18 @@ const ScreenPage = () => {
       }
 
       .drom-container {
+        display: flex;
         padding: 0.5em;
         height: ${STATIC_MAP_HEIGHT}px;
+      }
+
+      .map-selector {
+        z-index: 1;
+        position: absolute;
+        background-color: #000000aa;
+        color: #fff;
+        border-radius: 4px;
+        margin: 0.5em;
       }
 
       @media (max-width: 1250px) {

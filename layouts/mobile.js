@@ -7,15 +7,22 @@ import {AppContext, ThemeContext} from '../pages'
 
 import DateNav from '../components/date-nav'
 import Scrollable from '../components/scrollable'
-import ReactMapGl from '../components/react-map-gl'
 import Statistics from '../components/statistics'
 import Informations from '../components/informations'
-import {franceMetropolitan} from '../components/react-map-gl/maps'
+import MobileMap from '../components/mobile-map'
 
 const VIEWS = {
-  map: () => <ReactMapGl {...franceMetropolitan} zoom={franceMetropolitan.mobileZoom} />,
-  stats: () => <Statistics />,
-  informations: () => <Informations />
+  map: <MobileMap />,
+  stats: (
+    <Scrollable>
+      <Statistics />
+    </Scrollable>
+  ),
+  informations: (
+    <Scrollable>
+      <Informations />
+    </Scrollable>
+  )
 }
 
 const MobilePage = () => {
@@ -32,9 +39,7 @@ const MobilePage = () => {
   return (
     <div className='mobile-page-container'>
       <DateNav disabled={selectedView === 'informations'} />
-      <Scrollable>
-        {VIEWS[selectedView]()}
-      </Scrollable>
+      {VIEWS[selectedView]}
 
       <div className='view-selector'>
         <div className={`${selectedView === 'stats' ? 'selected' : ''}`} onClick={() => handleClick('stats')}>
