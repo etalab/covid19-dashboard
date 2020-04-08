@@ -65,56 +65,6 @@ const Statistics = () => {
           background: ${colors.lightGrey};
         }
 
-        .chart-container {
-          margin: ${isMobileDevice ? '0 0.2em' : '0 1em'};
-        }
-
-        .charts-list {
-          display: grid;
-          grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
-          grid-gap: 0.2em;
-          margin: 0.5em;
-          background: #FFF;
-        }
-
-        .chart-name {
-          display: block;
-          font-weight: bold;
-          height: 100%;
-          text-align: center;
-          background-color: ${colors.white};
-          color: ${colors.darkBlue};
-          padding: 0.4em;
-          font-size: .7em;
-          letter-spacing: .1em;
-          border: 1px solid ${colors.darkBlue};
-          text-transform: uppercase;
-          transform: translate(-.1em, -.1em);
-          transition: transform .1s ease-out;
-        }
-
-        .chart-name:hover {
-          cursor: pointer;
-          color: ${colors.white};
-          background-color: ${colors.darkBlue};
-          transform: translate(0px, 0px);
-        }
-
-        .chart-name.selected {
-          color: #FFF;
-          background-color: ${colors.darkBlue};
-        }
-
-        .button-container {
-          background-color: ${colors.white};
-          border-bottom: 1px solid ${colors.darkBlue};
-          border-right: 1px solid ${colors.darkBlue};
-          margin: .3em;
-        }
-
-        .button-container.selected {
-          background-color: red;
-        }
         `}</style>
     </>
   )
