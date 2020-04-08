@@ -9,7 +9,7 @@ const Drom = () => {
     <div className='drom-grid'>
 
       {droms.map(drom => (
-        <ReactMapGL key={drom.code} {...drom} />
+        <ReactMapGL key={drom.code} {...drom} hidePopup />
       ))}
 
       <style jsx>{`
