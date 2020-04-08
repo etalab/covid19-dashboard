@@ -3,8 +3,6 @@ import PropTypes from 'prop-types'
 
 import Counter from './counter'
 
-import colors from '../styles/colors'
-
 import MixedChart from './charts/mixed-chart'
 import ConfirmesChart from './charts/confirmes-chart'
 import DecesChart from './charts/deces-chart'

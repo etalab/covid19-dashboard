@@ -66,12 +66,11 @@ const reportToGeoJSON = (report, date) => {
 
 const Map = () => {
   const [selectedMapIdx, setSelectedMapIdx] = useState(1)
-  const defaultSelectedData = 'hospitalises'
+  const DEFAULT_DATA = 'hospitalises'
 
   const {
     date,
     selectedLocationReport,
-    setSelectedLocation,
     selectedData,
     isIframe,
     viewport,
@@ -80,7 +79,7 @@ const Map = () => {
     isMobileDevice
   } = useContext(AppContext)
 
-  const layers = LAYERS.filter(layer => layer.id.startsWith(selectedData || defaultSelectedData))
+  const layers = LAYERS.filter(layer => layer.id.startsWith(selectedData || DEFAULT_DATA))
   const [map, setMap] = useState()
   const [hovered, setHovered] = useState(null)
 

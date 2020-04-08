@@ -15,7 +15,7 @@ const Statistics = () => {
   const previousReport = selectedPreviousLocationReport || previousFranceReport
 
   return (
-    <>
+    <div className='stats'>
       <div className='header'>
         {selectedLocationReport && (
           isMobileDevice ? (
@@ -30,6 +30,9 @@ const Statistics = () => {
       <Counters report={report} previousReport={previousReport} date={date} />
 
       <style jsx>{`
+        .stats {
+          width: 99%;
+        }
         .header {
           text-align: center;
           position: sticky;
@@ -66,7 +69,7 @@ const Statistics = () => {
         }
 
         `}</style>
-    </>
+    </div>
   )
 }
 

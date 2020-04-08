@@ -67,12 +67,12 @@ const Counter = ({value, label, color, previousValue, details, onClick, isSelect
         }
 
         .counter-container:hover {
-          cursor: pointer;
-          border: 2px solid black;
+          cursor: ${onClick ? 'pointer' : ''};
+          border: ${onClick ? '2px solid black' : ''};
         }
 
         .counter-container:active {
-          transform: translate(1px, 1px);
+          transform: ${onClick ? 'translate(1px, 1px)' : ''};
         }
 
         .counter-container.selected {
@@ -104,7 +104,7 @@ Counter.defaultProps = {
   previousValue: null,
   details: null,
   onClick: null,
-  isSelected: null
+  isSelected: false
 }
 
 Counter.propTypes = {

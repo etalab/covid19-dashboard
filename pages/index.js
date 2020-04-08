@@ -73,25 +73,17 @@ const MainPage = ({data, dates}) => {
     setIsMobileDevice(window.innerWidth < mobileWidth)
   }
 
-  const getLocationReport = useCallback(code => {
-    return getReport(date, code)
-  }, [date, getReport])
-
-  const getPreviousLocationReport = useCallback(code => {
-    return getReport(date, code)
-  }, [date, getReport])
-
   useEffect(() => {
     if (selectedLocation) {
-      const locationReport = getLocationReport(selectedLocation)
-      const previousLocationReport = getPreviousLocationReport(selectedLocation)
+      const locationReport = getReport(date, selectedLocation)
+      const previousLocationReport = getReport(previousDate, selectedLocation)
       setSelectedLocationReport(locationReport)
       setSelectedPreviousLocationReport(previousLocationReport)
     } else {
       setSelectedLocationReport(null)
       setSelectedPreviousLocationReport(null)
     }
-  }, [selectedLocation, getLocationReport, getPreviousLocationReport])
+  }, [selectedLocation, date, previousDate, getReport])
 
   useEffect(() => {
     const {latitude, longitude} = viewport
