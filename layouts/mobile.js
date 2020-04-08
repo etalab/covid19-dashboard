@@ -10,9 +10,10 @@ import Scrollable from '../components/scrollable'
 import ReactMapGl from '../components/react-map-gl'
 import Statistics from '../components/statistics'
 import Informations from '../components/informations'
+import {franceMetropolitan} from '../components/react-map-gl/maps'
 
 const VIEWS = {
-  map: () => <ReactMapGl />,
+  map: () => <ReactMapGl {...franceMetropolitan} zoom={franceMetropolitan.mobileZoom} />,
   stats: () => <Statistics />,
   informations: () => <Informations />
 }

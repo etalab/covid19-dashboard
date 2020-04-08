@@ -1,6 +1,7 @@
 import React, {useState, useContext} from 'react'
-import ReactMapGL, {Source, Layer, Popup} from 'react-map-gl'
+import PropTypes from 'prop-types'
 import Router from 'next/router'
+import {Popup} from 'react-map-gl'
 import {Maximize2} from 'react-feather'
 
 import {AppContext} from '../../pages'
@@ -9,24 +10,19 @@ import {getReport, reportToGeoJSON} from '../../lib/data'
 import MapSelector from '../map-selector'
 import maps from '../maps'
 
+import Map from './map'
 import SumUp from './sumup'
 import Statistics from '../statistics'
 
 const SITE_URL = process.env.SITE_URL
 
-const settings = {
-  maxZoom: 10
-}
-
-const Map = () => {
+const ReactMapGL = ({zoom, latitude, longitude}) => {
   const {
     date,
     selectedLocation,
     selectedMapIdx,
     setSelectedMapIdx,
     isIframe,
-    viewport,
-    setViewport,
     isMobileDevice
   } = useContext(AppContext)
 
@@ -89,30 +85,15 @@ const Map = () => {
         )}
       </div>
 
-      <ReactMapGL
-        reuseMaps
-        {...viewport}
-        width='100%'
-        height='100%'
-        mapStyle='https://etalab-tiles.fr/styles/osm-bright/style.json'
-        {...settings}
-        interactiveLayerIds={currentMap.layers.map(layer => layer.id)}
-        onViewportChange={setViewport}
+      <Map
+        zoom={zoom}
+        latitude={latitude}
+        longitude={longitude}
+        data={layerData}
+        layers={currentMap.layers}
         onHover={isMobileDevice ? null : onHover}
         onClick={onClick}
       >
-
-        <Source
-          type='geojson'
-          id='cas-confirmes'
-          attribution='Données Santé publique France'
-          data={layerData}
-        >
-          {currentMap.layers.map(layer => (
-            <Layer key={layer.id} {...layer} />
-          ))}
-        </Source>
-
         {hovered && (
           <Popup
             longitude={hovered.longitude}
@@ -125,7 +106,7 @@ const Map = () => {
             <SumUp nom={hovered.feature.properties.nom} />
           </Popup>
         )}
-      </ReactMapGL>
+      </Map>
 
       {isMobileDevice && (
         <div className={`mobile-sumup ${report ? 'show' : 'hide'}`}>
@@ -194,4 +175,10 @@ const Map = () => {
   )
 }
 
-export default Map
+ReactMapGL.propTypes = {
+  latitude: PropTypes.number.isRequired,
+  longitude: PropTypes.number.isRequired,
+  zoom: PropTypes.number.isRequired
+}
+
+export default ReactMapGL

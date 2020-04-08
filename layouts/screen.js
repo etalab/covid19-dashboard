@@ -9,6 +9,7 @@ import Informations from '../components/informations'
 import colors from '../styles/colors'
 
 import Drom from '../components/react-map-gl/drom'
+import {franceMetropolitan} from '../components/react-map-gl/maps'
 
 const STATIC_MAP_HEIGHT = 200
 
@@ -27,7 +28,7 @@ const ScreenPage = () => {
 
       <div className='map'>
         <div className='metropole'>
-          <ReactMapGl />
+          <ReactMapGl {...franceMetropolitan} />
         </div>
         <div className='drom-container'>
           <Drom />
