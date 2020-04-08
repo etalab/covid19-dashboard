@@ -137,11 +137,6 @@ const Counters = ({report, previousReport, date}) => {
             onClick={() => handleSelectCounter('confirmed')}
           />
         )}
-        {selectedChart !== 'mixed' && (
-          <div className='button-container'>
-            <div className='chart-name' onClick={() => setSelectedChart('mixed')}>Afficher tout</div>
-          </div>
-        )}
       </div>
       {report && report.history && (
         <Chart data={report.history.filter(r => date >= r.date)} />
