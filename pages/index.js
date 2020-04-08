@@ -10,10 +10,30 @@ import Page from '../layouts/main'
 import DesktopPage from '../layouts/desktop'
 import MobilePage from '../layouts/mobile'
 
+import BigPicture from '../components/layouts/big-picture'
+
 export const AppContext = React.createContext()
 export const ThemeContext = React.createContext('theme.default')
 
 const MOBILE_WIDTH = Number.parseInt(theme.mobileDisplay.split('px')[0], 10)
+
+const LAYOUTS = [
+  {
+    id: 'big-picture',
+    label: 'Vue d’ensemble',
+    component: <BigPicture />
+  },
+  {
+    id: 'hospitalisations',
+    label: 'Suivi des hospitalisations',
+    component: <h1>Suivi des hospitalisations</h1>
+  },
+  {
+    id: 'test',
+    label: 'Suivi des tests',
+    component: <h1>Suivi des tests</h1>
+  }
+]
 
 const MainPage = () => {
   const router = useRouter()
@@ -24,6 +44,7 @@ const MainPage = () => {
   const [date, setDate] = useState(dates[dates.length - 1])
   const [selectedLocation, setSelectedLocation] = useState(null)
   const [selectedMapIdx, setSelectedMapIdx] = useState(1)
+  const [selectedLayout, setSelectedLayout] = useState(LAYOUTS[0])
 
   const handleResize = () => {
     setIsMobileDevice(window.innerWidth < MOBILE_WIDTH)
@@ -65,7 +86,10 @@ const MainPage = () => {
           setSelectedMapIdx,
           isIframe,
           isMobileDevice,
-          isTouchScreenDevice
+          isTouchScreenDevice,
+          selectedLayout,
+          setSelectedLayout,
+          layouts: LAYOUTS
         }}
         >
           <ThemeContext.Provider value={theme.gouv}>
