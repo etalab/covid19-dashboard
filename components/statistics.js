@@ -6,7 +6,7 @@ import colors from '../styles/colors'
 
 import {AppContext} from '../pages'
 
-import {getPreviousReport} from '../lib/data'
+import {getPreviousReport, getReport} from '../lib/data'
 
 import Counters from './counters'
 import MixedChart from './charts/mixed-chart'
@@ -44,9 +44,9 @@ const charts = {
 }
 
 const Statistics = () => {
-  const {date, franceReport, selectedLocationReport, isMobileDevice} = useContext(AppContext)
+  const {date, selectedLocationReport, isMobileDevice} = useContext(AppContext)
 
-  const report = selectedLocationReport || franceReport
+  const report = selectedLocationReport || getReport(date, 'FRA')
   const previousReport = getPreviousReport(report)
 
   const [selectedChart, setSelectedChart] = useState('mixed')

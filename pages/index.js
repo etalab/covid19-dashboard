@@ -39,7 +39,6 @@ const MainPage = () => {
   const [date, setDate] = useState(dates[dates.length - 1])
   const [selectedLocation, setSelectedLocation] = useState(null)
   const [selectedLocationReport, setSelectedLocationReport] = useState(null)
-  const [franceReport, setFranceReport] = useState({})
   const [regionsReport, setRegionsReport] = useState({})
   const [departementsReport, setDepartementsReport] = useState({})
   const [viewport, setViewport] = useState(defaultViewport)
@@ -88,9 +87,6 @@ const MainPage = () => {
   }, [router])
 
   useEffect(() => {
-    const franceReport = getReport(date, 'FRA')
-    setFranceReport(franceReport)
-
     const regionsReport = getReport(date, 'REG')
     setRegionsReport(reportToGeoJSON(regionsReport, date))
 
@@ -183,7 +179,6 @@ const MainPage = () => {
           setDate,
           selectedLocationReport,
           setSelectedLocation,
-          franceReport,
           regionsReport,
           departementsReport,
           setViewport,
