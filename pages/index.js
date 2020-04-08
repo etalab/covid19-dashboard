@@ -1,8 +1,7 @@
 import React, {useState, useCallback, useEffect} from 'react'
 import {useRouter} from 'next/router'
-import {indexOf} from 'lodash'
 
-import {reportToGeoJSON, getReport, dates, getPreviousDate} from '../lib/data'
+import {reportToGeoJSON, getReport, dates} from '../lib/data'
 
 import theme from '../styles/theme'
 
@@ -40,16 +39,10 @@ const MainPage = () => {
   const [date, setDate] = useState(dates[dates.length - 1])
   const [selectedLocation, setSelectedLocation] = useState(null)
   const [selectedLocationReport, setSelectedLocationReport] = useState(null)
-  const [selectedPreviousLocationReport, setSelectedPreviousLocationReport] = useState(null)
   const [franceReport, setFranceReport] = useState({})
-  const [previousFranceReport, setPreviousFranceReport] = useState({})
   const [regionsReport, setRegionsReport] = useState({})
-  const [previousRegionsReport, setPreviousRegionsReport] = useState({})
   const [departementsReport, setDepartementsReport] = useState({})
-  const [previousDepartementsReport, setPreviousDepartementsReport] = useState({})
   const [viewport, setViewport] = useState(defaultViewport)
-
-  const previousDate = getPreviousDate(date)
 
   const handleResize = () => {
     const mobileWidth = Number.parseInt(theme.mobileDisplay.split('px')[0], 10)
@@ -69,30 +62,14 @@ const MainPage = () => {
     return {...feature.properties}
   }, [regionsReport, departementsReport])
 
-  const getPreviousLocationReport = useCallback(code => {
-    let report
-
-    if (code.includes('REG')) {
-      report = previousRegionsReport
-    } else if (code.includes('DEP')) {
-      report = previousDepartementsReport
-    }
-
-    const feature = report.features.find(f => f.properties.code === code)
-    return {...feature.properties}
-  }, [previousRegionsReport, previousDepartementsReport])
-
   useEffect(() => {
     if (selectedLocation) {
       const locationReport = getLocationReport(selectedLocation)
-      const previousLocationReport = getPreviousLocationReport(selectedLocation)
       setSelectedLocationReport(locationReport)
-      setSelectedPreviousLocationReport(previousLocationReport)
     } else {
       setSelectedLocationReport(null)
-      setSelectedPreviousLocationReport(null)
     }
-  }, [selectedLocation, getLocationReport, getPreviousLocationReport])
+  }, [selectedLocation, getLocationReport])
 
   useEffect(() => {
     const {latitude, longitude} = viewport
@@ -114,21 +91,12 @@ const MainPage = () => {
     const franceReport = getReport(date, 'FRA')
     setFranceReport(franceReport)
 
-    const previousFranceReport = getReport(previousDate, 'FRA')
-    setPreviousFranceReport(previousFranceReport)
-
     const regionsReport = getReport(date, 'REG')
     setRegionsReport(reportToGeoJSON(regionsReport, date))
 
-    const previousRegionsReport = getReport(previousDate, 'REG')
-    setPreviousRegionsReport(reportToGeoJSON(previousRegionsReport, previousDate))
-
     const departementsReport = getReport(date, 'DEP')
     setDepartementsReport(reportToGeoJSON(departementsReport, date))
-
-    const previousDepartementsReport = reportToGeoJSON(getReport(previousDate, 'DEP'), date)
-    setPreviousDepartementsReport(previousDepartementsReport)
-  }, [date, previousDate])
+  }, [date])
 
   useEffect(() => {
     const mobileWidth = Number.parseInt(theme.mobileDisplay.split('px')[0], 10)
@@ -214,10 +182,8 @@ const MainPage = () => {
           date,
           setDate,
           selectedLocationReport,
-          selectedPreviousLocationReport,
           setSelectedLocation,
           franceReport,
-          previousFranceReport,
           regionsReport,
           departementsReport,
           setViewport,
