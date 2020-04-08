@@ -1,9 +1,8 @@
 import React, {useState, useCallback, useEffect} from 'react'
 import {useRouter} from 'next/router'
-import PropTypes from 'prop-types'
 import {indexOf} from 'lodash'
 
-import {reportToGeoJSON, getReport, getDates} from '../lib/data'
+import {reportToGeoJSON, getReport, dates} from '../lib/data'
 
 import theme from '../styles/theme'
 
@@ -32,7 +31,7 @@ const defaultViewport = {
   zoom: 5
 }
 
-const MainPage = ({dates}) => {
+const MainPage = () => {
   const router = useRouter()
 
   const [isIframe, setIsIframe] = useState(false)
@@ -60,7 +59,7 @@ const MainPage = ({dates}) => {
     if (previousIdx >= 0) {
       setDate(dates[previousIdx])
     }
-  }, [dates, date])
+  }, [date])
 
   const nextReport = useCallback(() => {
     const idx = indexOf(dates, date)
@@ -68,7 +67,7 @@ const MainPage = ({dates}) => {
     if (nextIdx <= dates.length - 1) {
       setDate(dates[nextIdx])
     }
-  }, [dates, date])
+  }, [date])
 
   const handleResize = () => {
     const mobileWidth = Number.parseInt(theme.mobileDisplay.split('px')[0], 10)
@@ -147,7 +146,7 @@ const MainPage = ({dates}) => {
 
     const previousDepartementsReport = reportToGeoJSON(getReport(previousDate, 'DEP'), date)
     setPreviousDepartementsReport(previousDepartementsReport)
-  }, [date, dates, dateIdx, previousDate])
+  }, [date, dateIdx, previousDate])
 
   useEffect(() => {
     const mobileWidth = Number.parseInt(theme.mobileDisplay.split('px')[0], 10)
@@ -268,16 +267,6 @@ const MainPage = ({dates}) => {
       </div>
     </Page>
   )
-}
-
-MainPage.propTypes = {
-  dates: PropTypes.array.isRequired
-}
-
-MainPage.getInitialProps = async () => {
-  return {
-    dates: getDates()
-  }
 }
 
 export default MainPage
