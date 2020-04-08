@@ -2,7 +2,7 @@ import React, {useState, useCallback, useEffect} from 'react'
 import {useRouter} from 'next/router'
 import {indexOf} from 'lodash'
 
-import {reportToGeoJSON, getReport, dates} from '../lib/data'
+import {reportToGeoJSON, getReport, dates, getPreviousDate} from '../lib/data'
 
 import theme from '../styles/theme'
 
@@ -49,25 +49,7 @@ const MainPage = () => {
   const [previousDepartementsReport, setPreviousDepartementsReport] = useState({})
   const [viewport, setViewport] = useState(defaultViewport)
 
-  const dateIdx = indexOf(dates, date)
-  const previousDate = dates[dateIdx - 1]
-
-  const previousReport = useCallback(() => {
-    const idx = indexOf(dates, date)
-    const previousIdx = idx - 1
-
-    if (previousIdx >= 0) {
-      setDate(dates[previousIdx])
-    }
-  }, [date])
-
-  const nextReport = useCallback(() => {
-    const idx = indexOf(dates, date)
-    const nextIdx = idx + 1
-    if (nextIdx <= dates.length - 1) {
-      setDate(dates[nextIdx])
-    }
-  }, [date])
+  const previousDate = getPreviousDate(date)
 
   const handleResize = () => {
     const mobileWidth = Number.parseInt(theme.mobileDisplay.split('px')[0], 10)
@@ -146,7 +128,7 @@ const MainPage = () => {
 
     const previousDepartementsReport = reportToGeoJSON(getReport(previousDate, 'DEP'), date)
     setPreviousDepartementsReport(previousDepartementsReport)
-  }, [date, dateIdx, previousDate])
+  }, [date, previousDate])
 
   useEffect(() => {
     const mobileWidth = Number.parseInt(theme.mobileDisplay.split('px')[0], 10)
@@ -230,6 +212,7 @@ const MainPage = () => {
       <div className='main-page-container'>
         <AppContext.Provider value={{
           date,
+          setDate,
           selectedLocationReport,
           selectedPreviousLocationReport,
           setSelectedLocation,
@@ -237,8 +220,6 @@ const MainPage = () => {
           previousFranceReport,
           regionsReport,
           departementsReport,
-          prev: dateIdx > 0 ? previousReport : null,
-          next: dateIdx < dates.length - 1 ? nextReport : null,
           setViewport,
           maps,
           viewport,
