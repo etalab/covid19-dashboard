@@ -2,7 +2,7 @@ import React, {useContext, useState} from 'react'
 
 import {AppContext, ThemeContext} from '../pages'
 
-import {franceMetropolitan} from '../components/react-map-gl/maps'
+import {franceMetropolitan, droms} from '../components/react-map-gl/maps'
 
 import MapSelector from './map-selector'
 import ReactMapGL from './react-map-gl'
@@ -10,9 +10,9 @@ import Drom from './react-map-gl/drom'
 
 const MobileMap = () => {
   const themeContext = useContext(ThemeContext)
-  const {selectedMapIdx, setSelectedMapIdx} = useContext(AppContext)
+  const {selectedLocationReport, selectedMapIdx, setSelectedMapIdx} = useContext(AppContext)
 
-  const [showDrom, setShowDrom] = useState(false)
+  const [showDrom, setShowDrom] = useState(selectedLocationReport && droms.find(({code}) => selectedLocationReport.code === code))
 
   return (
     <div className='mobile-map-container'>
