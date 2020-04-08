@@ -96,6 +96,8 @@ const Map = () => {
     }
   }, [mapReport, date])
 
+  const data = getGeoJSONFromReport()
+
   const onHover = event => {
     event.stopPropagation()
     const feature = event.features && event.features[0]
@@ -142,8 +144,6 @@ const Map = () => {
       setHasNoData(false)
     }
   }, [data, selectedData])
-
-  const data = getGeoJSONFromReport()
 
   return (
     <div className='map-container'>
