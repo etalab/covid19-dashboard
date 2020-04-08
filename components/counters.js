@@ -18,7 +18,7 @@ const charts = {
     name: 'Tout afficher',
     chart: MixedChart
   },
-  confirmed: {
+  casConfirmes: {
     name: 'Cas confirmés',
     chart: ConfirmesChart
   },
@@ -133,8 +133,8 @@ const Counters = ({report, previousReport, date}) => {
             label='cas confirmés'
             details={details.casConfirmes}
             color={colors.casConfirmes}
-            isSelected={selectedChart === 'confirmed'}
-            onClick={() => handleSelectCounter('confirmed')}
+            isSelected={selectedChart === 'casConfirmes'}
+            onClick={() => handleSelectCounter('casConfirmes')}
           />
         )}
       </div>

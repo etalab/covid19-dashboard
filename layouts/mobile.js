@@ -11,6 +11,14 @@ import ReactMapGl from '../components/react-map-gl'
 import Statistics from '../components/statistics'
 import Informations from '../components/informations'
 
+const dataLabel = {
+  gueris: 'Retours à domicile',
+  hospitalises: 'Hospitalisations',
+  reanimation: 'En réanimation',
+  deces: 'Décès à l’hôpital',
+  casConfirmes: 'Cas confirmés'
+}
+
 const VIEWS = {
   map: () => <ReactMapGl />,
   stats: () => <Statistics />,
@@ -32,7 +40,7 @@ const MobilePage = () => {
     <div className='mobile-page-container'>
       <DateNav disabled={selectedView === 'informations'} />
       <Scrollable>
-        {selectedData && <div className='data-banner'>{selectedData}</div>}
+        {selectedData && <div className='data-banner'>{dataLabel[selectedData]}</div>}
         {VIEWS[selectedView]()}
       </Scrollable>
 
