@@ -1,4 +1,4 @@
-import React, {useState, useCallback, useContext} from 'react'
+import React, {useState, useCallback, useContext, useEffect} from 'react'
 import ReactMapGL, {Source, Layer, Popup} from 'react-map-gl'
 import Router from 'next/router'
 import {Maximize2} from 'react-feather'
@@ -66,6 +66,7 @@ const reportToGeoJSON = (report, date) => {
 
 const Map = () => {
   const [selectedMapIdx, setSelectedMapIdx] = useState(1)
+  const [hasNoData, setHasNoData] = useState(false)
   const DEFAULT_DATA = 'hospitalises'
 
   const {
@@ -133,6 +134,17 @@ const Map = () => {
     setHovered(null)
   }
 
+  useEffect(() => {
+    if (data && selectedData) {
+      const hasNoData = data.features.filter(({properties}) => Boolean(properties[selectedData])).length === 0
+      setHasNoData(hasNoData)
+    } else {
+      setHasNoData(false)
+    }
+  }, [data, selectedData])
+
+  const data = getGeoJSONFromReport()
+
   return (
     <div className='map-container'>
       <div className='controls'>
@@ -146,6 +158,10 @@ const Map = () => {
           </div>
         )}
       </div>
+
+      {hasNoData && (
+        <div className='no-data'>Aucune données à afficher</div>
+      )}
 
       <ReactMapGL
         reuseMaps
@@ -165,7 +181,7 @@ const Map = () => {
           <Source
             type='geojson'
             attribution='Données Santé publique France'
-            data={getGeoJSONFromReport()}
+            data={data}
           >
             {layers.map(layer => (
               <Layer key={layer.id} {...layer} />
@@ -248,6 +264,19 @@ const Map = () => {
 
         .mobile-sumup.show {
           height: 100%;
+        }
+
+        .no-data {
+          z-index: 3;
+          position: absolute;
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          width: 100%;
+          height: 100%;
+          padding: 1em;
+          background-color: #000000aa;
+          color: #fff;
         }
       `}</style>
     </div>
