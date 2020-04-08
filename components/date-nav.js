@@ -25,9 +25,9 @@ const DateNav = ({disabled}) => {
     <div className='menu-header'>
       {!disabled && (
         <>
-          <div className={`report-nav ${previousDate ? '' : 'disabled'}`} onClick={() => setDate(previousDate)}><ChevronLeft /></div>
+          <div className={`report-nav ${previousDate ? '' : 'disabled'}`} onClick={previousDate ? () => setDate(previousDate) : null}><ChevronLeft /></div>
           <h2>Données au {formatedDate}</h2>
-          <div className={`report-nav ${nextDate ? '' : 'disabled'}`} onClick={() => setDate(nextDate)}><ChevronRight /></div>
+          <div className={`report-nav ${nextDate ? '' : 'disabled'}`} onClick={nextDate ? () => setDate(nextDate) : null}><ChevronRight /></div>
         </>
       )}
 
