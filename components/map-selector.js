@@ -1,14 +1,13 @@
-import React, {useState, useCallback, useContext} from 'react'
+import React, {useState, useCallback} from 'react'
 import PropTypes from 'prop-types'
 import {indexOf, uniq} from 'lodash'
 import {ChevronDown, ChevronUp, Check} from 'react-feather'
 
+import maps from './maps'
+
 import colors from '../styles/colors'
 
-import {AppContext} from '../pages'
-
 const MapSelector = ({mapIdx, selectMap}) => {
-  const {maps} = useContext(AppContext)
   const selectedMap = maps[mapIdx]
 
   const [isOpen, setIsOpen] = useState(false)

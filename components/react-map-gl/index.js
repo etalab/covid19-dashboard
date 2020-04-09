@@ -7,6 +7,7 @@ import {AppContext} from '../../pages'
 import {getReport, reportToGeoJSON} from '../../lib/data'
 
 import MapSelector from '../map-selector'
+import maps from '../maps'
 
 import SumUp from './sumup'
 import Statistics from '../statistics'
@@ -25,7 +26,6 @@ const Map = () => {
     selectedLocation,
     isIframe,
     viewport,
-    maps,
     setViewport,
     isMobileDevice
   } = useContext(AppContext)
