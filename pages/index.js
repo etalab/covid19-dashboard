@@ -176,4 +176,8 @@ const MainPage = () => {
   )
 }
 
+MainPage.getInitialProps = () => {
+  return {}
+}
+
 export default MainPage
