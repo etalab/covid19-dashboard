@@ -8,13 +8,11 @@ import ReactMapGl from '../components/react-map-gl'
 import Statistics from '../components/statistics'
 import Informations from '../components/informations'
 
+import theme from '../styles/theme'
 import colors from '../styles/colors'
 
 import Drom from '../components/react-map-gl/drom'
-import {franceMetropolitan} from '../components/react-map-gl/maps'
 import MapSelector from '../components/map-selector'
-
-const STATIC_MAP_HEIGHT = 200
 
 const ScreenPage = () => {
   const {selectedMapIdx, setSelectedMapIdx} = useContext(AppContext)
@@ -35,7 +33,7 @@ const ScreenPage = () => {
           <div className='map-selector'>
             <MapSelector mapIdx={selectedMapIdx} selectMap={setSelectedMapIdx} />
           </div>
-          <ReactMapGl {...franceMetropolitan} />
+          <ReactMapGl />
         </div>
         <div className='drom-container'>
           <Drom />
@@ -47,23 +45,25 @@ const ScreenPage = () => {
         z-index: 1;
         display: flex;
         flex-direction: column;
-        max-width: 500px;
+        max-width: ${theme.menuWidth};
         box-shadow: 0 1px 4px ${colors.lightGrey};
       }
 
       .map {
+        display: flex;
         flex: 1;
+        flex-direction: column;
         height: 100%;
       }
 
       .metropole {
-        height: calc(100% - ${STATIC_MAP_HEIGHT}px);
+        flex: 1;
       }
 
       .drom-container {
         display: flex;
         padding: 0.5em;
-        height: ${STATIC_MAP_HEIGHT}px;
+        height: 25%;
       }
 
       .map-selector {
@@ -75,21 +75,14 @@ const ScreenPage = () => {
         margin: 0.5em;
       }
 
-      @media (max-width: 1250px) {
-        .metropole {
-          height: calc(100% - (${STATIC_MAP_HEIGHT}px * 2));
-        }
-
+      @media (max-width: 1000px) {
         .drom-container {
-          height: ${STATIC_MAP_HEIGHT * 2}px;
+          height: 40%;
         }
       }
 
-      @media (max-width: 955px) {
+      @media (max-width: 800px) {
         .drom-container {
-          height: 50%;
-        }
-        .metropole {
           height: 50%;
         }
       }

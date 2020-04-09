@@ -15,7 +15,7 @@ import Statistics from '../statistics'
 
 const SITE_URL = process.env.SITE_URL
 
-const ReactMapGL = ({zoom, latitude, longitude, hidePopup}) => {
+const ReactMapGL = ({code, hidePopup}) => {
   const {
     date,
     selectedLocation,
@@ -24,12 +24,11 @@ const ReactMapGL = ({zoom, latitude, longitude, hidePopup}) => {
     isMobileDevice
   } = useContext(AppContext)
 
-  const report = getReport(date, selectedLocation)
-
   const [hovered, setHovered] = useState(null)
 
   const currentMap = maps[selectedMapIdx]
-  const layerData = reportToGeoJSON(getReport(date, currentMap.granularity === 'regions' ? 'REG' : 'DEP'), date)
+  const report = getReport(date, currentMap.granularity === 'regions' ? 'REG' : 'DEP')
+  const layerData = reportToGeoJSON(report, date)
 
   const onHover = event => {
     event.stopPropagation()
@@ -81,9 +80,7 @@ const ReactMapGL = ({zoom, latitude, longitude, hidePopup}) => {
       </div>
 
       <Map
-        zoom={zoom}
-        latitude={latitude}
-        longitude={longitude}
+        code={code}
         data={layerData}
         layers={currentMap.layers}
         onHover={isMobileDevice ? null : onHover}
@@ -104,8 +101,8 @@ const ReactMapGL = ({zoom, latitude, longitude, hidePopup}) => {
       </Map>
 
       {isMobileDevice && (
-        <div className={`mobile-sumup ${report ? 'show' : 'hide'}`}>
-          {report && (
+        <div className={`mobile-sumup ${selectedLocation ? 'show' : 'hide'}`}>
+          {selectedLocation && (
             <Statistics />
           )}
         </div>
@@ -171,13 +168,12 @@ const ReactMapGL = ({zoom, latitude, longitude, hidePopup}) => {
 }
 
 ReactMapGL.defaultProps = {
+  code: null,
   hidePopup: false
 }
 
 ReactMapGL.propTypes = {
-  latitude: PropTypes.number.isRequired,
-  longitude: PropTypes.number.isRequired,
-  zoom: PropTypes.number.isRequired,
+  code: PropTypes.string,
   hidePopup: PropTypes.bool
 }
 

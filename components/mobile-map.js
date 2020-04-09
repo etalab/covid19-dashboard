@@ -2,7 +2,7 @@ import React, {useContext, useState} from 'react'
 
 import {AppContext, ThemeContext} from '../pages'
 
-import {franceMetropolitan, droms} from '../components/react-map-gl/maps'
+import {droms} from './react-map-gl/maps'
 
 import MapSelector from './map-selector'
 import ReactMapGL from './react-map-gl'
@@ -27,7 +27,7 @@ const MobileMap = () => {
           {showDrom ? (
             <Drom />
           ) : (
-            <ReactMapGL {...franceMetropolitan} zoom={franceMetropolitan.mobileZoom} />
+            <ReactMapGL />
           )}
         </div>
       </div>

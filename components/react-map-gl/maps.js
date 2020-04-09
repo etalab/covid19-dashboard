@@ -1,46 +1,57 @@
 export const franceMetropolitan = {
   name: 'France métropolitaine',
   code: 'FR',
-  latitude: 47,
-  longitude: 2.5,
-  zoom: 5,
-  mobileZoom: 3.9
+  bounds: [
+    [-3.079, 42.173],
+    [9.047, 49.963]
+  ],
+  zoom: 5
 }
 
 export const droms = [
   {
     name: 'Guadeloupe',
     code: 'REG-01',
-    latitude: 16.172,
-    longitude: -61.406,
+    bounds: [
+      [-61.406, 16.172],
+      [-61.406, 16.172]
+    ],
     zoom: 7
   },
   {
     name: 'Martinique',
     code: 'REG-02',
-    latitude: 14.637,
-    longitude: -61.02,
+    bounds: [
+      [-61.02, 14.637],
+      [-61.02, 14.637]
+    ],
     zoom: 7
   },
   {
     name: 'Guyane',
     code: 'REG-03',
-    latitude: 3.931,
-    longitude: -53.119,
+    bounds: [
+      [-53.119, 3.931],
+      [-53.119, 3.931]
+    ],
     zoom: 5
   },
   {
     name: 'La Réunion',
     code: 'REG-04',
-    latitude: -21.13,
-    longitude: 55.527,
+    bounds: [
+      [55.527, -21.13],
+      [55.527, -21.13]
+    ],
     zoom: 7
   },
   {
     name: 'Mayotte',
     code: 'REG-06',
-    latitude: -12.818,
-    longitude: 45.158,
+    bounds: [
+      [45.158, -12.818],
+      [45.158, -12.818]
+    ],
     zoom: 7
   }
 ]

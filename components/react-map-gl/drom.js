@@ -8,8 +8,11 @@ const Drom = () => {
   return (
     <div className='drom-grid'>
 
-      {droms.map(drom => (
-        <ReactMapGL key={drom.code} {...drom} hidePopup />
+      {droms.map(({code, name}) => (
+        <div key={code} className='drom'>
+          <div className='drom-name'>{name}</div>
+          <ReactMapGL code={code} hidePopup />
+        </div>
       ))}
 
       <style jsx>{`
@@ -18,7 +21,22 @@ const Drom = () => {
             grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
             grid-gap: 0.5em;
             align-items: center;
-            flex: 1;
+            width: 100%;
+          }
+
+          .drom {
+            position: relative;
+            width: 100%;
+            height: 100%;
+          }
+
+          .drom-name {
+            z-index: 1;
+            position: absolute;
+            top: 0;
+            width: 100%;
+            text-align: center;
+            background-color: #ffffff99;
           }
         `}</style>
     </div>
