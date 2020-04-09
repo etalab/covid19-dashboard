@@ -1,41 +1,34 @@
 import React, {useState, useContext} from 'react'
-import ReactMapGL, {Source, Layer, Popup} from 'react-map-gl'
+import PropTypes from 'prop-types'
 import Router from 'next/router'
+import {Popup} from 'react-map-gl'
 import {Maximize2} from 'react-feather'
 
 import {AppContext} from '../../pages'
 import {getReport, reportToGeoJSON} from '../../lib/data'
 
-import MapSelector from '../map-selector'
 import maps from '../maps'
 
+import Map from './map'
 import SumUp from './sumup'
 import Statistics from '../statistics'
 
 const SITE_URL = process.env.SITE_URL
 
-const settings = {
-  maxZoom: 10
-}
-
-const Map = () => {
-  const [selectedMapIdx, setSelectedMapIdx] = useState(1)
-
+const ReactMapGL = ({code, hidePopup}) => {
   const {
     date,
     selectedLocation,
+    selectedMapIdx,
     isIframe,
-    viewport,
-    setViewport,
     isMobileDevice
   } = useContext(AppContext)
-
-  const report = getReport(date, selectedLocation)
 
   const [hovered, setHovered] = useState(null)
 
   const currentMap = maps[selectedMapIdx]
-  const layerData = reportToGeoJSON(getReport(date, currentMap.granularity === 'regions' ? 'REG' : 'DEP'), date)
+  const report = getReport(date, currentMap.granularity === 'regions' ? 'REG' : 'DEP')
+  const layerData = reportToGeoJSON(report, date)
 
   const onHover = event => {
     event.stopPropagation()
@@ -78,9 +71,6 @@ const Map = () => {
   return (
     <div className='map-container'>
       <div className='controls'>
-        <div className='control'>
-          <MapSelector mapIdx={selectedMapIdx} selectMap={setSelectedMapIdx} />
-        </div>
 
         {isIframe && (
           <div className='control maximize'>
@@ -89,31 +79,14 @@ const Map = () => {
         )}
       </div>
 
-      <ReactMapGL
-        reuseMaps
-        {...viewport}
-        width='100%'
-        height='100%'
-        mapStyle='https://etalab-tiles.fr/styles/osm-bright/style.json'
-        {...settings}
-        interactiveLayerIds={currentMap.layers.map(layer => layer.id)}
-        onViewportChange={setViewport}
+      <Map
+        code={code}
+        data={layerData}
+        layers={currentMap.layers}
         onHover={isMobileDevice ? null : onHover}
         onClick={onClick}
       >
-
-        <Source
-          type='geojson'
-          id='cas-confirmes'
-          attribution='Données Santé publique France'
-          data={layerData}
-        >
-          {currentMap.layers.map(layer => (
-            <Layer key={layer.id} {...layer} />
-          ))}
-        </Source>
-
-        {hovered && (
+        {hovered && !hidePopup && (
           <Popup
             longitude={hovered.longitude}
             latitude={hovered.latitude}
@@ -125,11 +98,11 @@ const Map = () => {
             <SumUp nom={hovered.feature.properties.nom} />
           </Popup>
         )}
-      </ReactMapGL>
+      </Map>
 
       {isMobileDevice && (
-        <div className={`mobile-sumup ${report ? 'show' : 'hide'}`}>
-          {report && (
+        <div className={`mobile-sumup ${selectedLocation ? 'show' : 'hide'}`}>
+          {selectedLocation && (
             <Statistics />
           )}
         </div>
@@ -194,4 +167,14 @@ const Map = () => {
   )
 }
 
-export default Map
+ReactMapGL.defaultProps = {
+  code: null,
+  hidePopup: false
+}
+
+ReactMapGL.propTypes = {
+  code: PropTypes.string,
+  hidePopup: PropTypes.bool
+}
+
+export default ReactMapGL

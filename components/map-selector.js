@@ -50,6 +50,7 @@ const MapSelector = ({mapIdx, selectMap}) => {
         .switch {
           display: flex;
           flex-direction: column;
+          position: relative;
         }
 
         .header {
@@ -64,8 +65,12 @@ const MapSelector = ({mapIdx, selectMap}) => {
         }
 
         .menu {
+          position: absolute;
           display: flex;
           flex-direction: column;
+          width: 100%;
+          top: 100%;
+          background-color: #000000aa;
         }
 
         .menu-item {

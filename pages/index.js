@@ -13,11 +13,7 @@ import MobilePage from '../layouts/mobile'
 export const AppContext = React.createContext()
 export const ThemeContext = React.createContext('theme.default')
 
-const defaultViewport = {
-  latitude: 46.9,
-  longitude: 1.7,
-  zoom: 5
-}
+const MOBILE_WIDTH = Number.parseInt(theme.mobileDisplay.split('px')[0], 10)
 
 const MainPage = () => {
   const router = useRouter()
@@ -27,21 +23,11 @@ const MainPage = () => {
   const [isTouchScreenDevice, setIsTouchScreenDevice] = useState(false)
   const [date, setDate] = useState(dates[dates.length - 1])
   const [selectedLocation, setSelectedLocation] = useState(null)
-  const [viewport, setViewport] = useState(defaultViewport)
+  const [selectedMapIdx, setSelectedMapIdx] = useState(1)
 
   const handleResize = () => {
-    const mobileWidth = Number.parseInt(theme.mobileDisplay.split('px')[0], 10)
-    setIsMobileDevice(window.innerWidth < mobileWidth)
+    setIsMobileDevice(window.innerWidth < MOBILE_WIDTH)
   }
-
-  useEffect(() => {
-    const {latitude, longitude} = viewport
-    setViewport({
-      latitude,
-      longitude,
-      zoom: isMobileDevice ? 4.3 : 5
-    })
-  }, [isMobileDevice]) // eslint-disable-line react-hooks/exhaustive-deps
 
   useEffect(() => {
     const {iframe, location} = router.query
@@ -51,8 +37,7 @@ const MainPage = () => {
   }, [router])
 
   useEffect(() => {
-    const mobileWidth = Number.parseInt(theme.mobileDisplay.split('px')[0], 10)
-    if (window.innerWidth < mobileWidth) {
+    if (window.innerWidth < MOBILE_WIDTH) {
       setIsMobileDevice(true)
     }
 
@@ -76,8 +61,8 @@ const MainPage = () => {
           setDate,
           selectedLocation,
           setSelectedLocation,
-          setViewport,
-          viewport,
+          selectedMapIdx,
+          setSelectedMapIdx,
           isIframe,
           isMobileDevice,
           isTouchScreenDevice
