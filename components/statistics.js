@@ -6,6 +6,8 @@ import colors from '../styles/colors'
 
 import {AppContext} from '../pages'
 
+import {getPreviousReport, getReport} from '../lib/data'
+
 import Counters from './counters'
 import MixedChart from './charts/mixed-chart'
 import ConfirmesChart from './charts/confirmes-chart'
@@ -42,10 +44,10 @@ const charts = {
 }
 
 const Statistics = () => {
-  const {date, franceReport, previousFranceReport, selectedPreviousLocationReport, selectedLocationReport, isMobileDevice} = useContext(AppContext)
+  const {date, selectedLocation, isMobileDevice} = useContext(AppContext)
 
-  const report = selectedLocationReport || franceReport
-  const previousReport = selectedPreviousLocationReport || previousFranceReport
+  const report = getReport(date, selectedLocation || 'FRA')
+  const previousReport = getPreviousReport(report)
 
   const [selectedChart, setSelectedChart] = useState('mixed')
   const Chart = charts[selectedChart].chart
@@ -53,14 +55,14 @@ const Statistics = () => {
   return (
     <>
       <div className='header'>
-        {selectedLocationReport && (
+        {selectedLocation && (
           isMobileDevice ? (
             <Link href='/'><div className='close'><X /></div></Link>
           ) : (
             <Link href='/'><div className='back'><BarChart2 /> <span>France</span></div></Link>
           )
         )}
-        <h2>COVID-19 en {selectedLocationReport ? selectedLocationReport.nom : 'France'}</h2>
+        <h2>COVID-19 en {report ? report.nom : 'France'}</h2>
       </div>
 
       <Counters report={report} previousReport={previousReport} />

@@ -3,6 +3,7 @@ import PropTypes from 'prop-types'
 import {ChevronLeft, ChevronRight} from 'react-feather'
 
 import {AppContext} from '../pages'
+import {getNextDate, getPreviousDate} from '../lib/data'
 
 import theme from '../styles/theme'
 import colors from '../styles/colors'
@@ -14,16 +15,19 @@ const formatDate = isoString => {
 }
 
 const DateNav = ({disabled}) => {
-  const {date, prev, next} = useContext(AppContext)
+  const {date, setDate} = useContext(AppContext)
   const formatedDate = formatDate(date)
+
+  const previousDate = getPreviousDate(date)
+  const nextDate = getNextDate(date)
 
   return (
     <div className='menu-header'>
       {!disabled && (
         <>
-          <div className={`report-nav ${prev ? '' : 'disabled'}`} onClick={prev}><ChevronLeft /></div>
+          <div className={`report-nav ${previousDate ? '' : 'disabled'}`} onClick={previousDate ? () => setDate(previousDate) : null}><ChevronLeft /></div>
           <h2>Données au {formatedDate}</h2>
-          <div className={`report-nav ${next ? '' : 'disabled'}`} onClick={next}><ChevronRight /></div>
+          <div className={`report-nav ${nextDate ? '' : 'disabled'}`} onClick={nextDate ? () => setDate(nextDate) : null}><ChevronRight /></div>
         </>
       )}
 
