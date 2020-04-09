@@ -13,10 +13,12 @@ const MENU_WIDTH = Number.parseInt(theme.menuWidth.split('px')[0], 10)
 const Map = ({code, data, layers, onHover, onClick, children}) => {
   const {isMobileDevice} = useContext(AppContext)
   const [viewport, setViewport] = useState(null)
+  const [isDrom, setIsDrom] = useState(false)
 
   const handleResize = useCallback(() => {
     if (window) {
       const drom = code ? droms.find(drom => drom.code === code) : null
+      setIsDrom(Boolean(drom))
       const bounds = code ? drom.bounds : franceMetropolitan.bounds
       const width = isMobileDevice ? window.innerWidth : window.innerWidth - MENU_WIDTH
       const height = window.innerHeight
@@ -64,6 +66,7 @@ const Map = ({code, data, layers, onHover, onClick, children}) => {
         dragRotate={false}
         doubleClickZoom={false}
         touchZoom={false}
+        attributionControl={!isDrom}
       >
         <Source
           type='geojson'
