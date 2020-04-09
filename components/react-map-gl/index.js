@@ -1,4 +1,4 @@
-import React, {useState, useCallback, useContext, useEffect} from 'react'
+import React, {useState, useContext} from 'react'
 import ReactMapGL, {Source, Layer, Popup} from 'react-map-gl'
 import Router from 'next/router'
 import {Maximize2} from 'react-feather'
@@ -32,19 +32,10 @@ const Map = () => {
 
   const report = getReport(date, selectedLocation)
 
-  const [map, setMap] = useState()
   const [hovered, setHovered] = useState(null)
 
   const currentMap = maps[selectedMapIdx]
   const layerData = reportToGeoJSON(getReport(date, currentMap.granularity === 'regions' ? 'REG' : 'DEP'), date)
-
-  console.log(layerData)
-
-  const mapRef = useCallback(ref => {
-    if (ref) {
-      setMap(ref.getMap())
-    }
-  }, [])
 
   const onHover = event => {
     event.stopPropagation()
@@ -100,7 +91,6 @@ const Map = () => {
 
       <ReactMapGL
         reuseMaps
-        ref={mapRef}
         {...viewport}
         width='100%'
         height='100%'
