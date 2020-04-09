@@ -1,7 +1,7 @@
-import React, {useState, useCallback, useEffect} from 'react'
+import React, {useState, useEffect} from 'react'
 import {useRouter} from 'next/router'
 
-import {reportToGeoJSON, getReport, dates} from '../lib/data'
+import {dates} from '../lib/data'
 
 import theme from '../styles/theme'
 
@@ -38,37 +38,12 @@ const MainPage = () => {
   const [isTouchScreenDevice, setIsTouchScreenDevice] = useState(false)
   const [date, setDate] = useState(dates[dates.length - 1])
   const [selectedLocation, setSelectedLocation] = useState(null)
-  const [selectedLocationReport, setSelectedLocationReport] = useState(null)
-  const [regionsReport, setRegionsReport] = useState({})
-  const [departementsReport, setDepartementsReport] = useState({})
   const [viewport, setViewport] = useState(defaultViewport)
 
   const handleResize = () => {
     const mobileWidth = Number.parseInt(theme.mobileDisplay.split('px')[0], 10)
     setIsMobileDevice(window.innerWidth < mobileWidth)
   }
-
-  const getLocationReport = useCallback(code => {
-    let report
-
-    if (code.includes('REG')) {
-      report = regionsReport
-    } else if (code.includes('DEP')) {
-      report = departementsReport
-    }
-
-    const feature = report.features.find(f => f.properties.code === code)
-    return {...feature.properties}
-  }, [regionsReport, departementsReport])
-
-  useEffect(() => {
-    if (selectedLocation) {
-      const locationReport = getLocationReport(selectedLocation)
-      setSelectedLocationReport(locationReport)
-    } else {
-      setSelectedLocationReport(null)
-    }
-  }, [selectedLocation, getLocationReport])
 
   useEffect(() => {
     const {latitude, longitude} = viewport
@@ -85,14 +60,6 @@ const MainPage = () => {
     setIsIframe(Boolean(iframe === '1'))
     setSelectedLocation(location)
   }, [router])
-
-  useEffect(() => {
-    const regionsReport = getReport(date, 'REG')
-    setRegionsReport(reportToGeoJSON(regionsReport, date))
-
-    const departementsReport = getReport(date, 'DEP')
-    setDepartementsReport(reportToGeoJSON(departementsReport, date))
-  }, [date])
 
   useEffect(() => {
     const mobileWidth = Number.parseInt(theme.mobileDisplay.split('px')[0], 10)
@@ -115,7 +82,7 @@ const MainPage = () => {
     {
       name: 'Carte des décès à l’hôpital',
       category: 'régionale',
-      data: regionsReport,
+      granularity: 'regions',
       properties: 'deces',
       layers: [decesLayer, decesCountLayer]
     },
@@ -123,27 +90,27 @@ const MainPage = () => {
       name: 'Carte des hospitalisations',
       category: 'régionale',
       properties: 'hospitalises',
-      data: regionsReport,
+      granularity: 'regions',
       layers: [hospitalisesLayer, hospitalisesCountLayer]
     },
     {
       name: 'Carte des patients en réanimation',
       category: 'régionale',
       properties: 'reanimation',
-      data: regionsReport,
+      granularity: 'regions',
       layers: [reanimationLayer, reanimationCountLayer]
     },
     {
       name: 'Carte des retours à domicile',
       category: 'régionale',
       properties: 'gueris',
-      data: regionsReport,
+      granularity: 'regions',
       layers: [guerisLayer, guerisCountLayer]
     },
     {
       name: 'Carte des décès à l’hôpital',
       category: 'départementale',
-      data: departementsReport,
+      granularity: 'departements',
       properties: 'deces',
       layers: [decesLayer, decesCountLayer]
     },
@@ -151,21 +118,21 @@ const MainPage = () => {
       name: 'Carte des hospitalisations',
       category: 'départementale',
       properties: 'hospitalises',
-      data: departementsReport,
+      granularity: 'departements',
       layers: [hospitalisesLayer, hospitalisesCountLayer]
     },
     {
       name: 'Carte des patients en réanimation',
       category: 'départementale',
       properties: 'reanimation',
-      data: departementsReport,
+      granularity: 'departements',
       layers: [reanimationLayer, reanimationCountLayer]
     },
     {
       name: 'Carte des retours à domicile',
       category: 'départementale',
       properties: 'gueris',
-      data: departementsReport,
+      granularity: 'departements',
       layers: [guerisLayer, guerisCountLayer]
     }
   ]
@@ -177,10 +144,8 @@ const MainPage = () => {
         <AppContext.Provider value={{
           date,
           setDate,
-          selectedLocationReport,
+          selectedLocation,
           setSelectedLocation,
-          regionsReport,
-          departementsReport,
           setViewport,
           maps,
           viewport,

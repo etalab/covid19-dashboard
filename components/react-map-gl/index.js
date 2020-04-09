@@ -1,9 +1,10 @@
-import React, {useState, useCallback, useContext} from 'react'
+import React, {useState, useCallback, useContext, useEffect} from 'react'
 import ReactMapGL, {Source, Layer, Popup} from 'react-map-gl'
 import Router from 'next/router'
 import {Maximize2} from 'react-feather'
 
 import {AppContext} from '../../pages'
+import {getReport, reportToGeoJSON} from '../../lib/data'
 
 import MapSelector from '../map-selector'
 
@@ -20,8 +21,8 @@ const Map = () => {
   const [selectedMapIdx, setSelectedMapIdx] = useState(1)
 
   const {
-    selectedLocationReport,
-    setSelectedLocation,
+    date,
+    selectedLocation,
     isIframe,
     viewport,
     maps,
@@ -29,8 +30,15 @@ const Map = () => {
     isMobileDevice
   } = useContext(AppContext)
 
+  const report = getReport(date, selectedLocation)
+
   const [map, setMap] = useState()
   const [hovered, setHovered] = useState(null)
+
+  const currentMap = maps[selectedMapIdx]
+  const layerData = reportToGeoJSON(getReport(date, currentMap.granularity === 'regions' ? 'REG' : 'DEP'), date)
+
+  console.log(layerData)
 
   const mapRef = useCallback(ref => {
     if (ref) {
@@ -98,7 +106,7 @@ const Map = () => {
         height='100%'
         mapStyle='https://etalab-tiles.fr/styles/osm-bright/style.json'
         {...settings}
-        interactiveLayerIds={maps[selectedMapIdx].layers.map(layer => layer.id)}
+        interactiveLayerIds={currentMap.layers.map(layer => layer.id)}
         onViewportChange={setViewport}
         onHover={isMobileDevice ? null : onHover}
         onClick={onClick}
@@ -108,9 +116,9 @@ const Map = () => {
           type='geojson'
           id='cas-confirmes'
           attribution='Données Santé publique France'
-          data={maps[selectedMapIdx].data}
+          data={layerData}
         >
-          {maps[selectedMapIdx].layers.map(layer => (
+          {currentMap.layers.map(layer => (
             <Layer key={layer.id} {...layer} />
           ))}
         </Source>
@@ -130,8 +138,8 @@ const Map = () => {
       </ReactMapGL>
 
       {isMobileDevice && (
-        <div className={`mobile-sumup ${selectedLocationReport ? 'show' : 'hide'}`}>
-          {selectedLocationReport && (
+        <div className={`mobile-sumup ${report ? 'show' : 'hide'}`}>
+          {report && (
             <Statistics />
           )}
         </div>

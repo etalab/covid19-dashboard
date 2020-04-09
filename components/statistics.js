@@ -44,9 +44,9 @@ const charts = {
 }
 
 const Statistics = () => {
-  const {date, selectedLocationReport, isMobileDevice} = useContext(AppContext)
+  const {date, selectedLocation, isMobileDevice} = useContext(AppContext)
 
-  const report = selectedLocationReport || getReport(date, 'FRA')
+  const report = getReport(date, selectedLocation || 'FRA')
   const previousReport = getPreviousReport(report)
 
   const [selectedChart, setSelectedChart] = useState('mixed')
@@ -55,14 +55,14 @@ const Statistics = () => {
   return (
     <>
       <div className='header'>
-        {selectedLocationReport && (
+        {selectedLocation && (
           isMobileDevice ? (
             <Link href='/'><div className='close'><X /></div></Link>
           ) : (
             <Link href='/'><div className='back'><BarChart2 /> <span>France</span></div></Link>
           )
         )}
-        <h2>COVID-19 en {selectedLocationReport ? selectedLocationReport.nom : 'France'}</h2>
+        <h2>COVID-19 en {report ? report.nom : 'France'}</h2>
       </div>
 
       <Counters report={report} previousReport={previousReport} />
