@@ -37,6 +37,7 @@ async function main() {
   const departementsFeatures = await getFeatures(departements)
 
   const dataset = [
+    {code: 'FR', bbox: [-5.317, 41.277, 9.689, 51.234], center: [-5.317, 51.234]},
     ...regionsFeatures.map(feature => {
       return {
         center: getCenter(feature),
