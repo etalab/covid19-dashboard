@@ -4,7 +4,7 @@ import {AppContext} from '../pages'
 
 import DateNav from '../components/date-nav'
 import Scrollable from '../components/scrollable'
-import ReactMapGl from '../components/react-map-gl'
+import ReactMapGL from '../components/react-map-gl'
 import Statistics from '../components/statistics'
 import Informations from '../components/informations'
 
@@ -15,7 +15,7 @@ import Drom from '../components/react-map-gl/drom'
 import MapSelector from '../components/map-selector'
 
 const ScreenPage = () => {
-  const {selectedMapIdx, setSelectedMapIdx} = useContext(AppContext)
+  const {selectedLocation, selectedMapIdx, setSelectedMapIdx} = useContext(AppContext)
   return (
     <>
       <div className='menu'>
@@ -33,7 +33,7 @@ const ScreenPage = () => {
           <div className='map-selector'>
             <MapSelector mapIdx={selectedMapIdx} selectMap={setSelectedMapIdx} />
           </div>
-          <ReactMapGl />
+          <ReactMapGL code={selectedLocation} />
         </div>
         <div className='drom-container'>
           <Drom />

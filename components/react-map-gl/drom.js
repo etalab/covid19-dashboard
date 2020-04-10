@@ -1,8 +1,29 @@
 import React from 'react'
 
-import {droms} from './maps'
-
 import ReactMapGL from '.'
+
+export const droms = [
+  {
+    name: 'Guadeloupe',
+    code: 'REG-01'
+  },
+  {
+    name: 'Martinique',
+    code: 'REG-02'
+  },
+  {
+    name: 'Guyane',
+    code: 'REG-03'
+  },
+  {
+    name: 'La Réunion',
+    code: 'REG-04'
+  },
+  {
+    name: 'Mayotte',
+    code: 'REG-06'
+  }
+]
 
 const Drom = () => {
   return (
@@ -11,7 +32,7 @@ const Drom = () => {
       {droms.map(({code, name}) => (
         <div key={code} className='drom'>
           <div className='drom-name'>{name}</div>
-          <ReactMapGL code={code} hidePopup />
+          <ReactMapGL code={code} hidePopup hideAttribution />
         </div>
       ))}
 

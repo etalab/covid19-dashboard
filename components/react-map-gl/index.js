@@ -15,7 +15,7 @@ import Statistics from '../statistics'
 
 const SITE_URL = process.env.SITE_URL
 
-const ReactMapGL = ({code, hidePopup}) => {
+const ReactMapGL = ({code, hidePopup, hideAttribution}) => {
   const {
     date,
     selectedLocation,
@@ -80,9 +80,10 @@ const ReactMapGL = ({code, hidePopup}) => {
       </div>
 
       <Map
-        code={code}
+        code={isMobileDevice ? 'FR' : code || 'FR'}
         data={layerData}
         layers={currentMap.layers}
+        hideAttribution={hideAttribution}
         onHover={isMobileDevice ? null : onHover}
         onClick={onClick}
       >
@@ -110,6 +111,7 @@ const ReactMapGL = ({code, hidePopup}) => {
 
       <style jsx>{`
         .map-container {
+          display: flex;
           position: relative;
           width: 100%;
           height: 100%;
@@ -168,13 +170,14 @@ const ReactMapGL = ({code, hidePopup}) => {
 }
 
 ReactMapGL.defaultProps = {
-  code: null,
-  hidePopup: false
+  hidePopup: false,
+  hideAttribution: false
 }
 
 ReactMapGL.propTypes = {
-  code: PropTypes.string,
-  hidePopup: PropTypes.bool
+  code: PropTypes.string.isRequired,
+  hidePopup: PropTypes.bool,
+  hideAttribution: PropTypes.bool
 }
 
 export default ReactMapGL

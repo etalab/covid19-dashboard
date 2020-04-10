@@ -2,15 +2,13 @@ import React, {useContext, useState} from 'react'
 
 import {AppContext, ThemeContext} from '../pages'
 
-import {droms} from './react-map-gl/maps'
-
 import MapSelector from './map-selector'
 import ReactMapGL from './react-map-gl'
-import Drom from './react-map-gl/drom'
+import Drom, {droms} from './react-map-gl/drom'
 
 const MobileMap = () => {
   const themeContext = useContext(ThemeContext)
-  const {selectedLocationReport, selectedMapIdx, setSelectedMapIdx} = useContext(AppContext)
+  const {selectedLocation, selectedLocationReport, selectedMapIdx, setSelectedMapIdx} = useContext(AppContext)
 
   const [showDrom, setShowDrom] = useState(selectedLocationReport && droms.find(({code}) => selectedLocationReport.code === code))
 
@@ -27,7 +25,7 @@ const MobileMap = () => {
           {showDrom ? (
             <Drom />
           ) : (
-            <ReactMapGL />
+            <ReactMapGL code={selectedLocation} />
           )}
         </div>
       </div>
