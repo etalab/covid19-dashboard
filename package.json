@@ -14,7 +14,7 @@
     "deploy": "yarn prepare-data && yarn build && yarn export && yarn publish:gh-pages",
     "lint": "xo",
     "prepare-data": "node prepare-data",
-    "centers:build": "node build-centers"
+    "build:geo": "node build-geo"
   },
   "devDependencies": {
     "@turf/center": "^6.0.1",
@@ -30,6 +30,7 @@
   },
   "dependencies": {
     "@etalab/decoupage-administratif": "^0.8.0",
+    "@turf/bbox": "^6.0.1",
     "chart.js": "^2.9.3",
     "dotenv": "^8.2.0",
     "fs-extra": "^8.1.0",

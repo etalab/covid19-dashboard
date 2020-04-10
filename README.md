@@ -56,10 +56,10 @@ yarn deploy
 
 Selon le besoin il est possible de configurer l’outil grâce à des variables d’environnement. Le plus simple est de prendre exemple sur le fichier `.env.sample`.
 
-## Mettre à jour les centres géographiques
+## Mettre à jour les données géographiques
 
 ```
-yarn centers:build
+yarn build:geo
 ```
 
 ## Licence

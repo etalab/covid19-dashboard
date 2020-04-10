@@ -1056,7 +1056,7 @@
   dependencies:
     defer-to-connect "^2.0.0"
 
-"@turf/bbox@6.x":
+"@turf/bbox@6.x", "@turf/bbox@^6.0.1":
   version "6.0.1"
   resolved "https://registry.yarnpkg.com/@turf/bbox/-/bbox-6.0.1.tgz#b966075771475940ee1c16be2a12cf389e6e923a"
   integrity sha512-EGgaRLettBG25Iyx7VyUINsPpVj1x3nFQFiGS3ER8KCI1MximzNLsam3eXRabqQDjyAKyAE1bJ4EZEpGvspQxw==
