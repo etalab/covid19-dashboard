@@ -5,12 +5,13 @@ import {AppContext, ThemeContext} from '../pages'
 import MapSelector from './map-selector'
 import ReactMapGL from './react-map-gl'
 import Drom, {droms} from './react-map-gl/drom'
+import Statistics from './statistics'
 
 const MobileMap = () => {
   const themeContext = useContext(ThemeContext)
-  const {selectedLocation, selectedLocationReport, selectedMapIdx, setSelectedMapIdx} = useContext(AppContext)
+  const {selectedLocation, selectedMapIdx, setSelectedMapIdx} = useContext(AppContext)
 
-  const [showDrom, setShowDrom] = useState(selectedLocationReport && droms.find(({code}) => selectedLocationReport.code === code))
+  const [showDrom, setShowDrom] = useState(selectedLocation && droms.find(({code}) => selectedLocation === code))
 
   return (
     <div className='mobile-map-container'>
@@ -25,10 +26,20 @@ const MobileMap = () => {
           {showDrom ? (
             <Drom />
           ) : (
-            <ReactMapGL code={selectedLocation} />
+            <ReactMapGL code={selectedLocation || 'FR'} />
           )}
         </div>
       </div>
+
+      {selectedLocation && (
+        <div className={`mobile-sumup ${selectedLocation ? 'show' : 'hide'}`}>
+          {selectedLocation && (
+            <div className='mobile-statistics'>
+              <Statistics />
+            </div>
+          )}
+        </div>
+      )}
 
       <style jsx>{`
         .mobile-map-container {
@@ -58,7 +69,33 @@ const MobileMap = () => {
           display: flex;
           flex: 1;
         }
-        `}</style>
+
+        .mobile-sumup {
+          z-index: 2;
+          display: flex;
+          position: absolute;
+          bottom: 0;
+          background-color: #fff;
+          width: 100%;
+          margin: auto;
+          transition: 0.5s;
+        }
+
+        .mobile-sumup.hide {
+          height: 0;
+          padding: 0;
+        }
+
+        .mobile-sumup.show {
+          height: 100%;
+        }
+
+        .mobile-statistics {
+          position: relative;
+          flex: 1;
+          overflow: auto;
+        }
+      `}</style>
     </div>
 
   )

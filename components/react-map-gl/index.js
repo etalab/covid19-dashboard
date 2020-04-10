@@ -11,14 +11,12 @@ import maps from '../maps'
 
 import Map from './map'
 import SumUp from './sumup'
-import Statistics from '../statistics'
 
 const SITE_URL = process.env.SITE_URL
 
 const ReactMapGL = ({code, hidePopup, hideAttribution}) => {
   const {
     date,
-    selectedLocation,
     selectedMapIdx,
     isIframe,
     isMobileDevice
@@ -80,7 +78,7 @@ const ReactMapGL = ({code, hidePopup, hideAttribution}) => {
       </div>
 
       <Map
-        code={isMobileDevice ? 'FR' : code || 'FR'}
+        code={code}
         data={layerData}
         layers={currentMap.layers}
         hideAttribution={hideAttribution}
@@ -100,16 +98,6 @@ const ReactMapGL = ({code, hidePopup, hideAttribution}) => {
           </Popup>
         )}
       </Map>
-
-      {isMobileDevice && (
-        <div className={`mobile-sumup ${selectedLocation ? 'show' : 'hide'}`}>
-          {selectedLocation && (
-            <div className='mobile-statistics'>
-              <Statistics />
-            </div>
-          )}
-        </div>
-      )}
 
       <style jsx>{`
         .map-container {
@@ -146,32 +134,6 @@ const ReactMapGL = ({code, hidePopup, hideAttribution}) => {
         .maximize a {
           color: #fff;
           padding: 0.4em;
-        }
-
-        .mobile-sumup {
-          z-index: 2;
-          display: flex;
-          position: absolute;
-          bottom: 0;
-          background-color: #fff;
-          width: 100%;
-          margin: auto;
-          transition: 0.5s;
-        }
-
-        .mobile-sumup.hide {
-          height: 0;
-          padding: 0;
-        }
-
-        .mobile-sumup.show {
-          height: 100%;
-        }
-
-        .mobile-statistics {
-          position: relative;
-          flex: 1;
-          overflow: auto;
         }
       `}</style>
     </div>

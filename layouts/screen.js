@@ -33,7 +33,7 @@ const ScreenPage = () => {
           <div className='map-selector'>
             <MapSelector mapIdx={selectedMapIdx} selectMap={setSelectedMapIdx} />
           </div>
-          <ReactMapGL code={selectedLocation} />
+          <ReactMapGL code={selectedLocation || 'FR'} />
         </div>
         <div className='drom-container'>
           <Drom />

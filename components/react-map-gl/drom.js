@@ -43,6 +43,7 @@ const Drom = () => {
             grid-gap: 0.5em;
             align-items: center;
             width: 100%;
+            padding: 0.2em;
           }
 
           .drom {
