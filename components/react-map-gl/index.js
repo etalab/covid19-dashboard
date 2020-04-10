@@ -104,7 +104,9 @@ const ReactMapGL = ({code, hidePopup, hideAttribution}) => {
       {isMobileDevice && (
         <div className={`mobile-sumup ${selectedLocation ? 'show' : 'hide'}`}>
           {selectedLocation && (
-            <Statistics />
+            <div className='mobile-statistics'>
+              <Statistics />
+            </div>
           )}
         </div>
       )}
@@ -148,6 +150,7 @@ const ReactMapGL = ({code, hidePopup, hideAttribution}) => {
 
         .mobile-sumup {
           z-index: 2;
+          display: flex;
           position: absolute;
           bottom: 0;
           background-color: #fff;
@@ -163,6 +166,12 @@ const ReactMapGL = ({code, hidePopup, hideAttribution}) => {
 
         .mobile-sumup.show {
           height: 100%;
+        }
+
+        .mobile-statistics {
+          position: relative;
+          flex: 1;
+          overflow: auto;
         }
       `}</style>
     </div>
