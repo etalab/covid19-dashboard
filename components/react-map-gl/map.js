@@ -27,7 +27,7 @@ const Map = ({code, data, layers, onHover, onClick, children}) => {
         const viewport = new WebMercatorViewport({width, height})
           .fitBounds(bounds, {
             padding: 30,
-            offset: [0, -150]
+            offset: [0, -100]
           })
 
         setViewport({

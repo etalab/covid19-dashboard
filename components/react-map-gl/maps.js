@@ -2,8 +2,14 @@ export const franceMetropolitan = {
   name: 'France métropolitaine',
   code: 'FR',
   bounds: [
-    [-3.079, 42.173],
-    [9.047, 49.963]
+    [
+      -4.9658203125,
+      41.11246878918088
+    ],
+    [
+      9.931640625,
+      51.26191485308451
+    ]
   ],
   zoom: 5
 }
