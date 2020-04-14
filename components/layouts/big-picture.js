@@ -84,7 +84,7 @@ const MobileBigPicture = () => {
 }
 
 const DesktopBigPicture = () => {
-  const {selectedMapIdx, setSelectedMapIdx} = useContext(AppContext)
+  const {selectedLocation, selectedMapIdx, setSelectedMapIdx} = useContext(AppContext)
   return (
     <>
       <div className='menu'>
@@ -101,7 +101,7 @@ const DesktopBigPicture = () => {
           <div className='map-selector'>
             <MapSelector mapIdx={selectedMapIdx} selectMap={setSelectedMapIdx} />
           </div>
-          <ReactMapGl />
+          <ReactMapGl code={selectedLocation || 'FR'} />
         </div>
         <div className='drom-container'>
           <Drom />
