@@ -1,42 +1,27 @@
-import React, {useState, useCallback, useEffect, useContext} from 'react'
+import React, {useState, useCallback, useEffect, useRef} from 'react'
 import PropTypes from 'prop-types'
 import ReactMapGL, {Source, Layer, WebMercatorViewport} from 'react-map-gl'
 
-import {AppContext} from '../../pages'
+import geo from '../../geo.json'
 
-import theme from '../../styles/theme'
+const Map = ({code, data, layers, hideAttribution, onHover, onClick, children}) => {
+  const mapRef = useRef()
 
-import {droms, franceMetropolitan} from './maps'
-
-const MENU_WIDTH = Number.parseInt(theme.menuWidth.split('px')[0], 10)
-
-const Map = ({code, data, layers, onHover, onClick, children}) => {
-  const {isMobileDevice} = useContext(AppContext)
   const [viewport, setViewport] = useState(null)
-  const [isDrom, setIsDrom] = useState(false)
 
   const handleResize = useCallback(() => {
-    if (window) {
-      const drom = code ? droms.find(drom => drom.code === code) : null
-      setIsDrom(Boolean(drom))
-      const bounds = code ? drom.bounds : franceMetropolitan.bounds
-      const width = isMobileDevice ? window.innerWidth : window.innerWidth - MENU_WIDTH
-      const height = window.innerHeight
+    if (mapRef && mapRef.current) {
+      const {width, height} = mapRef.current.getBoundingClientRect()
 
-      if (width > 0) {
+      if (width > 0 && height > 0) {
+        const {bbox} = geo[code]
         const viewport = new WebMercatorViewport({width, height})
-          .fitBounds(bounds, {
-            padding: 30,
-            offset: [0, -150]
-          })
+          .fitBounds([[bbox[0], bbox[1]], [bbox[2], bbox[3]]], {padding: 20})
 
-        setViewport({
-          ...viewport,
-          zoom: drom ? drom.zoom : viewport.zoom
-        })
+        setViewport(viewport)
       }
     }
-  }, [isMobileDevice, code])
+  }, [mapRef, code])
 
   useEffect(() => {
     handleResize()
@@ -47,56 +32,60 @@ const Map = ({code, data, layers, onHover, onClick, children}) => {
     }
   }, [handleResize])
 
-  if (viewport) {
-    const {zoom, latitude, longitude} = viewport
-    return (
-      <ReactMapGL
-        reuseMaps
-        latitude={latitude}
-        longitude={longitude}
-        zoom={zoom}
-        width='100%'
-        height='100%'
-        mapStyle='https://etalab-tiles.fr/styles/osm-bright/style.json'
-        interactiveLayerIds={onHover || onClick ? layers.map(layer => layer.id) : null}
-        onHover={onHover}
-        onClick={onClick}
-        scrollZoom={false}
-        dragPan={false}
-        dragRotate={false}
-        doubleClickZoom={false}
-        touchZoom={false}
-        attributionControl={!isDrom}
-      >
-        <Source
-          type='geojson'
-          attribution='Données Santé publique France'
-          data={data}
+  return (
+    <div ref={mapRef} className='react-map-container'>
+      {viewport && (
+        <ReactMapGL
+          reuseMaps
+          {...viewport}
+          width='100%'
+          height='100%'
+          mapStyle='https://etalab-tiles.fr/styles/osm-bright/style.json'
+          interactiveLayerIds={onHover || onClick ? layers.map(layer => layer.id) : null}
+          onHover={onHover}
+          onClick={onClick}
+          scrollZoom={false}
+          dragPan={false}
+          dragRotate={false}
+          doubleClickZoom={false}
+          touchZoom={false}
+          attributionControl={!hideAttribution}
         >
-          {layers.map(layer => (
-            <Layer key={layer.id} {...layer} />
-          ))}
-        </Source>
+          <Source
+            type='geojson'
+            attribution='Données Santé publique France'
+            data={data}
+          >
+            {layers.map(layer => (
+              <Layer key={layer.id} {...layer} />
+            ))}
+          </Source>
 
-        {children}
-      </ReactMapGL>
-    )
-  }
+          {children}
+        </ReactMapGL>
+      )}
 
-  return null
+      <style jsx>{`
+          .react-map-container {
+            flex: 1;
+          }
+          `}</style>
+    </div>
+  )
 }
 
 Map.defaultProps = {
-  code: null,
+  hideAttribution: false,
   onHover: null,
   onClick: null,
   children: null
 }
 
 Map.propTypes = {
-  code: PropTypes.string,
+  code: PropTypes.string.isRequired,
   data: PropTypes.object.isRequired,
   layers: PropTypes.array.isRequired,
+  hideAttribution: PropTypes.bool,
   onHover: PropTypes.func,
   onClick: PropTypes.func,
   children: PropTypes.node

@@ -3,6 +3,7 @@ const {createGunzip} = require('zlib')
 const {join} = require('path')
 const got = require('got')
 const center = require('@turf/center').default
+const bbox = require('@turf/bbox').default
 const getStream = require('get-stream')
 const {outputJson} = require('fs-extra')
 
@@ -22,33 +23,43 @@ function toPrecision(float, precision) {
   return Math.round(float * matrix) / matrix
 }
 
+function getCenter(feature) {
+  const centerFeature = center(feature)
+  return centerFeature.geometry.coordinates.map(c => toPrecision(c, 3))
+}
+
+function getBbox(feature) {
+  return bbox(feature).map(c => toPrecision(c, 3))
+}
+
 async function main() {
   const regionsFeatures = await getFeatures(regions)
   const departementsFeatures = await getFeatures(departements)
 
-  const centers = [
+  const dataset = [
+    {code: 'FR', bbox: [-5.317, 41.277, 9.689, 51.234], center: [-5.317, 51.234]},
     ...regionsFeatures.map(feature => {
-      const centerFeature = center(feature)
       return {
-        center: centerFeature.geometry.coordinates.map(c => toPrecision(c, 3)),
+        center: getCenter(feature),
+        bbox: getBbox(feature),
         code: `REG-${feature.properties.code}`
       }
     }),
     ...departementsFeatures.map(feature => {
-      const centerFeature = center(feature)
       return {
-        center: centerFeature.geometry.coordinates.map(c => toPrecision(c, 3)),
+        center: getCenter(feature),
+        bbox: getBbox(feature),
         code: `DEP-${feature.properties.code}`
       }
     })
   ]
 
-  const centersIndex = centers.reduce((acc, center) => {
-    acc[center.code] = center.center
+  const index = dataset.reduce((acc, data) => {
+    acc[data.code] = {center: data.center, bbox: data.bbox}
     return acc
   }, {})
 
-  await outputJson(join(__dirname, 'centers.json'), centersIndex)
+  await outputJson(join(__dirname, 'geo.json'), index)
 }
 
 main().catch(error => {

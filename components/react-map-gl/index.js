@@ -11,14 +11,12 @@ import maps from '../maps'
 
 import Map from './map'
 import SumUp from './sumup'
-import Statistics from '../statistics'
 
 const SITE_URL = process.env.SITE_URL
 
-const ReactMapGL = ({code, hidePopup}) => {
+const ReactMapGL = ({code, hidePopup, hideAttribution}) => {
   const {
     date,
-    selectedLocation,
     selectedMapIdx,
     isIframe,
     isMobileDevice
@@ -27,7 +25,7 @@ const ReactMapGL = ({code, hidePopup}) => {
   const [hovered, setHovered] = useState(null)
 
   const currentMap = maps[selectedMapIdx]
-  const report = getReport(date, currentMap.granularity === 'regions' ? 'REG' : 'DEP')
+  const report = getReport(date, code === 'FR' ? 'REG' : 'DEP')
   const layerData = reportToGeoJSON(report, date)
 
   const onHover = event => {
@@ -83,6 +81,7 @@ const ReactMapGL = ({code, hidePopup}) => {
         code={code}
         data={layerData}
         layers={currentMap.layers}
+        hideAttribution={hideAttribution}
         onHover={isMobileDevice ? null : onHover}
         onClick={onClick}
       >
@@ -100,16 +99,9 @@ const ReactMapGL = ({code, hidePopup}) => {
         )}
       </Map>
 
-      {isMobileDevice && (
-        <div className={`mobile-sumup ${selectedLocation ? 'show' : 'hide'}`}>
-          {selectedLocation && (
-            <Statistics />
-          )}
-        </div>
-      )}
-
       <style jsx>{`
         .map-container {
+          display: flex;
           position: relative;
           width: 100%;
           height: 100%;
@@ -143,38 +135,20 @@ const ReactMapGL = ({code, hidePopup}) => {
           color: #fff;
           padding: 0.4em;
         }
-
-        .mobile-sumup {
-          z-index: 2;
-          position: absolute;
-          bottom: 0;
-          background-color: #fff;
-          width: 100%;
-          margin: auto;
-          transition: 0.5s;
-        }
-
-        .mobile-sumup.hide {
-          height: 0;
-          padding: 0;
-        }
-
-        .mobile-sumup.show {
-          height: 100%;
-        }
       `}</style>
     </div>
   )
 }
 
 ReactMapGL.defaultProps = {
-  code: null,
-  hidePopup: false
+  hidePopup: false,
+  hideAttribution: false
 }
 
 ReactMapGL.propTypes = {
-  code: PropTypes.string,
-  hidePopup: PropTypes.bool
+  code: PropTypes.string.isRequired,
+  hidePopup: PropTypes.bool,
+  hideAttribution: PropTypes.bool
 }
 
 export default ReactMapGL

@@ -92,12 +92,8 @@ const Statistics = () => {
   return (
     <>
       <div className='header'>
-        {selectedLocation && (
-          isMobileDevice ? (
-            <Link href='/'><div className='close'><X /></div></Link>
-          ) : (
-            <Link href='/'><div className='back'><BarChart2 /> <span>France</span></div></Link>
-          )
+        {selectedLocation && !isMobileDevice && (
+          <Link href='/'><div className='back'><BarChart2 /> <span>France</span></div></Link>
         )}
         <h2>COVID-19 en {report ? report.nom : 'France'}</h2>
       </div>
