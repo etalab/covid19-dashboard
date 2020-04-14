@@ -95,7 +95,7 @@ const Statistics = () => {
         {selectedLocation && !isMobileDevice && (
           <Link href='/'><div className='back'><BarChart2 /> <span>France</span></div></Link>
         )}
-        <h2>COVID-19 en {report ? report.nom : 'France'}</h2>
+        <h3>COVID-19 en {report ? report.nom : 'France'}</h3>
       </div>
 
       <Counters report={report} previousReport={previousReport} />
@@ -129,8 +129,12 @@ const Statistics = () => {
           position: sticky;
           top: 0;
           background-color: white;
-          padding: 0.4em;
+          padding: ${isMobileDevice ? '0.2em' : 0};
           box-shadow: 0 1px 4px ${colors.lightGrey};
+        }
+
+        .header h3 {
+          margin: 0.4em;
         }
 
         .back {

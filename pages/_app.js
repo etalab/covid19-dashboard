@@ -6,27 +6,25 @@ export default function MyApp({Component, pageProps}) {
   return (
     <>
       <Component {...pageProps} />
+
       <style jsx global>{`
         * {
           box-sizing: border-box;
         }
 
-        html,
-        body {
+        html {
           height: 100%;
           position: relative;
+          overflow: hidden;
         }
 
         a {
-          color: ${colors.darkBlue}
+          color: ${colors.darkBlue};
         }
 
         @font-face {
           font-family: "Marianne";
-          src: url('/fonts/Marianne-Regular.woff2')
-        .extra-class {
-          font-size: .5em !important;
-          pointer-events: auto !important;
+          src: url(’/fonts/Marianne-Regular.woff2’);
         }
 
         @font-face {
@@ -50,7 +48,6 @@ export default function MyApp({Component, pageProps}) {
         body {
           padding: 0;
           margin: 0;
-          overflow: auto;
           font-family: "Marianne", Arial;
         }
       `}</style>
