@@ -25,10 +25,9 @@ const MobileMap = () => {
 
   return (
     <div className='mobile-map-container'>
-      <div className='map-switch' onClick={() => setShowDrom(!showDrom)}>
-        {showDrom ? 'Voir la France métropolitaine' : 'Voir les DROM'}
+      <div className='map-switch clickable' onClick={() => setShowDrom(!showDrom)}>
       </div>
-      <div className='map-selector'>
+      <div className='map-selector clickable'>
         <MapSelector mapIdx={selectedMapIdx} selectMap={setSelectedMapIdx} />
       </div>
       <div className='map-content'>
@@ -43,7 +42,7 @@ const MobileMap = () => {
 
       {selectedLocation && !showDrom && (
         <div className={`mobile-sumup ${showStats ? 'show' : 'hide'}`}>
-          <div className='show-stats' onClick={() => setShowStats(!showStats)}>
+          <div className='show-stats clickable' onClick={() => setShowStats(!showStats)}>
             Chiffres {report.nom} {showStats ? <ChevronDown /> : <ChevronUp />}
           </div>
           <div className='mobile-statistics'>
@@ -117,6 +116,10 @@ const MobileMap = () => {
           position: relative;
           flex: 1;
           overflow: auto;
+        }
+
+        .clickable:hover {
+          cursor:
         }
       `}</style>
     </div>
