@@ -4,7 +4,7 @@
       "fin_transfert": "2020-03-18",
       "type_vecteur": "avion",
       "region_depart": "Grand Est",
-      "region_arrivee": "Provence-Alpes-Côte-d’Azur",
+      "region_arrivee": "Provence-Alpes-Côte d’Azur",
       "pays_arrivee": "",
       "nombre_patients_transferes": "6"
     },
@@ -22,7 +22,7 @@
       "fin_transfert": "2020-03-22",
       "type_vecteur": "bateau militaire",
       "region_depart": "Corse",
-      "region_arrivee": "Provence-Alpes-Côte-d’Azur",
+      "region_arrivee": "Provence-Alpes-Côte d’Azur",
       "pays_arrivee": "",
       "nombre_patients_transferes": "12"
     },
@@ -40,7 +40,7 @@
       "fin_transfert": "2020-03-26",
       "type_vecteur": "train",
       "region_depart": "Grand Est",
-      "region_arrivee": "Pays-de-la-Loire",
+      "region_arrivee": "Pays de la Loire",
       "pays_arrivee": "",
       "nombre_patients_transferes": "20"
     },
@@ -85,7 +85,7 @@
       "fin_transfert": "2020-03-30",
       "type_vecteur": "avion",
       "region_depart": "Bourgogne-Franche-Comté",
-      "region_arrivee": "Provence-Alpes-Côte-d’Azur",
+      "region_arrivee": "Provence-Alpes-Côte d’Azur",
       "pays_arrivee": "",
       "nombre_patients_transferes": "10"
     },
@@ -139,7 +139,7 @@
       "fin_transfert": "2020-04-03",
       "type_vecteur": "avion",
       "region_depart": "Île-de-France",
-      "region_arrivee": "Pays-de-la-Loire",
+      "region_arrivee": "Pays de la Loire",
       "pays_arrivee": "",
       "nombre_patients_transferes": "48"
     },
