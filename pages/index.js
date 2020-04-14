@@ -12,6 +12,7 @@ import MobilePage from '../layouts/mobile'
 
 import BigPicture from '../components/layouts/big-picture'
 import CovidTests from '../components/layouts/covid-tests'
+import Transfert from '../components/layouts/transfert'
 
 export const AppContext = React.createContext()
 export const ThemeContext = React.createContext('theme.default')
@@ -28,6 +29,11 @@ const LAYOUTS = [
     id: 'tests',
     label: 'Suivi des tests',
     component: <CovidTests />
+  },
+  {
+    id: 'transfert',
+    label: 'Suivi des transferts',
+    component: <Transfert />
   }
 ]
 
