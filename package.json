@@ -2,7 +2,7 @@
   "name": "covid19-dashboard",
   "version": "1.0.0",
   "main": "index.js",
-  "repository": "git@github.com:livingdata-co/covid19-dashboard.git",
+  "repository": "git@github.com:etalab/covid19-dashboard.git",
   "private": true,
   "license": "MIT",
   "scripts": {
