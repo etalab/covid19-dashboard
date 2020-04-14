@@ -1,7 +1,7 @@
 import React, {useState} from 'react'
 import DeckGL, {ArcLayer} from 'deck.gl'
 import ReactMapGL, {Popup} from 'react-map-gl'
-import centers from '../../centers.json'
+import geo from '../../geo.json'
 import transferts from '../../transferts.json'
 import regions from '../../regions.json'
 import TransfertPopup from './transfert-popup'
@@ -55,11 +55,11 @@ const Transfert = () => {
       patients: item.nombre_patients_transferes,
       from: {
         name: item.region_depart,
-        coordinates: [centers[regionDepart[index][0].code][0], centers[regionDepart[index][0].code][1]]
+        coordinates: [geo[regionDepart[index][0].code].center[0], geo[regionDepart[index][0].code].center[1]]
       },
       to: {
         name: item.region_arrivee,
-        coordinates: [regionArrivee[index][0] ? centers[regionArrivee[index][0].code][0] : null, regionArrivee[index][0] ? centers[regionArrivee[index][0].code][1] : null]
+        coordinates: [regionArrivee[index][0] ? geo[regionArrivee[index][0].code].center[0] : null, regionArrivee[index][0] ? geo[regionArrivee[index][0].code].center[1] : null]
       }
     }
 
@@ -80,8 +80,6 @@ const Transfert = () => {
       onHover: (info, event) => onHover(info, event)
     })
   ]
-
-  console.log(hovered)
 
   return (
     <ReactMapGL
