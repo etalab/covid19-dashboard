@@ -39,7 +39,7 @@ function consolidate(records) {
       .reduce((acc, row) => {
         defaults(acc, row)
         return acc
-      }, {}), ['casConfirmes', 'deces', 'decesEhpad', 'reanimation', 'hospitalises', 'gueris', 'date', 'code', 'nom'])
+      }, {}), ['casConfirmes', 'deces', 'decesEhpad', 'casEhpad', 'casConfirmesEhpad', 'casPossiblesEhpad', 'reanimation', 'hospitalises', 'gueris', 'date', 'code', 'nom'])
   })
 }
 
