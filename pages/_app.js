@@ -6,15 +6,16 @@ export default function MyApp({Component, pageProps}) {
   return (
     <>
       <Component {...pageProps} />
+
       <style jsx global>{`
         * {
           box-sizing: border-box;
         }
 
-        html,
-        body {
+        html {
           height: 100%;
           position: relative;
+          overflow: hidden;
         }
 
         a {
@@ -47,7 +48,6 @@ export default function MyApp({Component, pageProps}) {
         body {
           padding: 0;
           margin: 0;
-          overflow: auto;
           font-family: "Marianne", Arial;
         }
       `}</style>
