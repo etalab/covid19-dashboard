@@ -26,6 +26,7 @@ const MobileMap = () => {
   return (
     <div className='mobile-map-container'>
       <div className='map-switch clickable' onClick={() => setShowDrom(!showDrom)}>
+        Voir la France {showDrom ? 'métropolitaine' : 'd’outremer'}
       </div>
       <div className='map-selector clickable'>
         <MapSelector mapIdx={selectedMapIdx} selectMap={setSelectedMapIdx} />
