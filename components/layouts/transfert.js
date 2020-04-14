@@ -17,7 +17,6 @@ const Transfert = () => {
 
   const onHover = (info, event) => {
     if (info.object) {
-      console.log(event)
       const [longitude, latitude] = info.lngLat
       const hoverInfo = {
         longitude,
@@ -28,6 +27,8 @@ const Transfert = () => {
       }
 
       setHovered(hoverInfo)
+    } else {
+      setHovered(null)
     }
   }
 
@@ -71,7 +72,7 @@ const Transfert = () => {
       data,
       autoHighlight: true,
       pickable: true,
-      getWidth: 4,
+      getWidth: 8,
       getSourcePosition: d => d.from.coordinates,
       getTargetPosition: d => d.to.coordinates,
       getSourceColor: d => [Math.sqrt(d.inbound), 140, 0],
@@ -80,23 +81,28 @@ const Transfert = () => {
     })
   ]
 
+  console.log(hovered)
+
   return (
-    <DeckGL className='deck' initialViewState={defaultViewport} controller layers={layers}>
-      <ReactMapGL layers={layers} mapStyle='https://etalab-tiles.fr/styles/osm-bright/style.json'>
-        {hovered && (
-          <Popup
-            style={{position: 'absolute', zIndex: 1}}
-            longitude={hovered.longitude}
-            latitude={hovered.latitude}
-            closeButton={false}
-            closeOnClick={false}
-            onClose={() => setHovered(null)}
-            anchor='bottom-left'
-          >
-            <TransfertPopup depart={hovered.from.name} arrivee={hovered.to.name} patients={hovered.patients} />
-          </Popup>)}
-      </ReactMapGL>
-    </DeckGL>
+    <ReactMapGL
+      viewState={defaultViewport}
+      width='100%'
+      height='100%'
+      mapStyle='https://etalab-tiles.fr/styles/osm-bright/style.json'
+    >
+      <DeckGL initialViewState={defaultViewport} layers={layers} />
+      {hovered && (
+        <Popup
+          longitude={hovered.longitude}
+          latitude={hovered.latitude}
+          closeButton={false}
+          closeOnClick={false}
+          onClose={() => setHovered(null)}
+          anchor='bottom-left'
+        >
+          <TransfertPopup depart={hovered.from.name} arrivee={hovered.to.name} patients={hovered.patients} />
+        </Popup>)}
+    </ReactMapGL>
   )
 }
 
