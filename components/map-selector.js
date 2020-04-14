@@ -22,13 +22,12 @@ const MapSelector = ({mapIdx, selectMap}) => {
   return (
     <div className='switch'>
       <div className='header' onClick={() => setIsOpen(!isOpen)}>
-        <span>{selectedMap.name} - maille {selectedMap.category}</span> {isOpen ? <ChevronDown /> : <ChevronUp />}
+        <span>{selectedMap.name}</span> {isOpen ? <ChevronDown /> : <ChevronUp />}
       </div>
       {isOpen && (
         <div className='menu'>
           {categories.map(cat => (
             <div key={cat} className='sub-cat'>
-              <div className='sub-title'>{cat}</div>
               {maps.filter(({category}) => category === cat).map(map => {
                 const index = indexOf(maps, map)
                 return (
@@ -91,13 +90,6 @@ const MapSelector = ({mapIdx, selectMap}) => {
 
         .sub-cat {
           padding-bottom: 0.2em;
-        }
-
-        .sub-title {
-          font-size: larger;
-          text-transform: capitalize;
-          padding: 0.5em 0.4em;
-          background-color: #00000066;
         }
 
         span {

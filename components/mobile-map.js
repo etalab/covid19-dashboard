@@ -1,4 +1,5 @@
 import React, {useContext, useState} from 'react'
+import {ChevronUp, ChevronDown} from 'react-feather'
 
 import {AppContext, ThemeContext} from '../pages'
 
@@ -6,12 +7,21 @@ import MapSelector from './map-selector'
 import ReactMapGL from './react-map-gl'
 import Drom, {droms} from './react-map-gl/drom'
 import Statistics from './statistics'
+import {getReport} from '../lib/data'
+
+const SHOW_STATS_HEIGHT = 38
 
 const MobileMap = () => {
+  let report
   const themeContext = useContext(ThemeContext)
-  const {selectedLocation, selectedMapIdx, setSelectedMapIdx} = useContext(AppContext)
+  const {date, selectedLocation, selectedMapIdx, setSelectedMapIdx} = useContext(AppContext)
 
+  const [showStats, setShowStats] = useState(false)
   const [showDrom, setShowDrom] = useState(selectedLocation && droms.find(({code}) => selectedLocation === code))
+
+  if (selectedLocation) {
+    report = getReport(date, selectedLocation)
+  }
 
   return (
     <div className='mobile-map-container'>
@@ -31,13 +41,14 @@ const MobileMap = () => {
         </div>
       </div>
 
-      {selectedLocation && (
-        <div className={`mobile-sumup ${selectedLocation ? 'show' : 'hide'}`}>
-          {selectedLocation && (
-            <div className='mobile-statistics'>
-              <Statistics />
-            </div>
-          )}
+      {selectedLocation && !showDrom && (
+        <div className={`mobile-sumup ${showStats ? 'show' : 'hide'}`}>
+          <div className='show-stats' onClick={() => setShowStats(!showStats)}>
+            Chiffres {report.nom} {showStats ? <ChevronDown /> : <ChevronUp />}
+          </div>
+          <div className='mobile-statistics'>
+            <Statistics />
+          </div>
         </div>
       )}
 
@@ -74,20 +85,32 @@ const MobileMap = () => {
           z-index: 2;
           display: flex;
           position: absolute;
+          flex-direction: column;
           bottom: 0;
           background-color: #fff;
           width: 100%;
+          height: 100%;
           margin: auto;
           transition: 0.5s;
         }
 
         .mobile-sumup.hide {
-          height: 0;
+          height: ${SHOW_STATS_HEIGHT}px;
           padding: 0;
         }
 
         .mobile-sumup.show {
           height: 100%;
+        }
+
+        .show-stats {
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          padding: 0.4em;
+          color: #fff;
+          min-height: ${SHOW_STATS_HEIGHT}px;
+          background-color: ${themeContext.primary};
         }
 
         .mobile-statistics {
