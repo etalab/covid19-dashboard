@@ -41,6 +41,13 @@ const Counter = ({value, label, color, previousValue, details}) => {
         <div>{label}</div>
       </div>
 
+      <style jsx global>{`
+          .extra-class {
+            font-size: .5em !important;
+            pointer-events: auto !important;
+          }
+      `}</style>
+
       <style jsx>{`
         .hover {
           display: flex;
