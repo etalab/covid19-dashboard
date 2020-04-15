@@ -54,11 +54,10 @@ const Counter = ({value, label, color, previousValue, details, isBig}) => {
           text-align: center;
           margin: .5em;
           color: ${colors[color]};
-          padding: 5px;
           background-color: ${colors.white};
           border-radius: .5em;
           border: 1px solid lightGrey;
-          padding: ${isBig ? '1.5em' : '1em'};
+          padding: ${isBig ? '1.2em' : '1em'};
         }
 
         .counter-container {
