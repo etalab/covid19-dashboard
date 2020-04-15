@@ -135,7 +135,7 @@ const DesktopBigPicture = () => {
         }
 
         .map-selector {
-          z-index: 1;
+          z-index: 3;
           position: absolute;
           background-color: #000000aa;
           color: #fff;
