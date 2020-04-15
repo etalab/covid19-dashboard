@@ -59,7 +59,7 @@ const Counter = ({value, label, color, previousValue, details, isBig}) => {
           color: ${colors[color]};
           background-color: ${colors.white};
           border-radius: .5em;
-          border: 1px solid lightGrey;
+          border: 1px solid ${colors.lightGrey};
           padding: ${isBig ? '1.2em' : '1em'};
         }
 

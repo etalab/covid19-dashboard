@@ -1,6 +1,8 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 
+import colors from '../styles/colors'
+
 import Counter from './counter'
 
 const Counters = ({report, previousReport}) => {
@@ -40,12 +42,12 @@ const Counters = ({report, previousReport}) => {
 
       <style jsx>{`
         .stats {
-          background-color: #f2f2f2;
+          background-color: ${colors.lighterGrey};
         }
         .counters {
           display: grid;
           grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
-          border-bottom: 1px solid white;
+          border-bottom: 1px solid ${colors.white};
         }
 
         .title {
