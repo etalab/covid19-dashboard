@@ -1,110 +1,132 @@
-import React, {useState} from 'react'
-import DeckGL, {ArcLayer} from 'deck.gl'
-import ReactMapGL, {Popup} from 'react-map-gl'
-import geo from '../../geo.json'
-import transferts from '../../transferts.json'
-import regions from '../../regions.json'
-import TransfertPopup from './transfert-popup'
+import React, {useState, useContext} from 'react'
+import {FileText, Map, Layout} from 'react-feather'
 
-const Transfert = () => {
-  const [hovered, setHovered] = useState(null)
+import theme from '../../styles/theme'
+import colors from '../../styles/colors'
 
-  const defaultViewport = {
-    latitude: 46.9,
-    longitude: 1.7,
-    zoom: 5
+import {AppContext, ThemeContext} from '../../pages'
+
+import Scrollable from '../scrollable'
+import TransfertInformations from '../transfert-informations'
+
+import TransfertMap from '../react-map-gl/transfert-map'
+import TransfertTable from '../transfert-table'
+
+export const TransfertContext = React.createContext()
+
+const VIEWS = {
+  table: (
+    <Scrollable>
+      <TransfertTable />
+    </Scrollable>
+  ),
+  map: <TransfertMap />,
+  informations: (
+    <Scrollable>
+      <TransfertInformations />
+    </Scrollable>
+  )
+}
+
+const MobileTransfert = () => {
+  const [selectedView, setSelectedView] = useState('map')
+
+  const app = useContext(AppContext)
+  const theme = useContext(ThemeContext)
+
+  const handleClick = view => {
+    app.setSelectedLocation(null)
+    setSelectedView(view)
   }
-
-  const onHover = (info, event) => {
-    if (info.object) {
-      const [longitude, latitude] = info.lngLat
-      const hoverInfo = {
-        longitude,
-        latitude,
-        start: info.object.start,
-        end: info.object.end,
-        way: info.object.way,
-        from: info.object.from,
-        to: info.object.to,
-        patients: parseInt(info.object.patients, 10)
-      }
-
-      setHovered(hoverInfo)
-    } else {
-      setHovered(null)
-    }
-  }
-
-  const data = []
-  const regionDepart = []
-  const regionArrivee = []
-
-  transferts.map(item => {
-    return regionDepart.push(regions.filter(region => {
-      return region.region === item.region_depart
-    }))
-  })
-
-  transferts.map(item => {
-    return regionArrivee.push(regions.filter(region => {
-      return region.region === item.region_arrivee
-    }))
-  })
-
-  transferts.map((item, index) => {
-    const dataToPush = {
-      start: item.debut_transfert,
-      end: item.fin_transfert,
-      way: item.type_vecteur,
-      patients: item.nombre_patients_transferes,
-      from: {
-        name: item.region_depart,
-        coordinates: [geo[regionDepart[index][0].code].center[0], geo[regionDepart[index][0].code].center[1]]
-      },
-      to: {
-        name: regionArrivee[index][0] ? item.region_arrivee : 'Pays européens',
-        coordinates: [regionArrivee[index][0] ? geo[regionArrivee[index][0].code].center[0] : 11.9531, regionArrivee[index][0] ? geo[regionArrivee[index][0].code].center[1] : 50.2331]
-      }
-    }
-
-    return data.push(dataToPush)
-  })
-
-  const layers = [
-    new ArcLayer({
-      id: 'arcs',
-      data,
-      autoHighlight: true,
-      pickable: true,
-      getWidth: d => Math.sqrt(d.patients),
-      getSourcePosition: d => d.from.coordinates,
-      getTargetPosition: d => d.to.coordinates,
-      getSourceColor: [209, 51, 91],
-      getTargetColor: [0, 65, 146],
-      onHover: (info, event) => onHover(info, event)
-    })
-  ]
 
   return (
-    <ReactMapGL
-      viewState={defaultViewport}
-      width='100%'
-      height='100%'
-      mapStyle='https://etalab-tiles.fr/styles/osm-bright/style.json'
-    >
-      <DeckGL initialViewState={defaultViewport} layers={layers} />
-      {hovered && (
-        <Popup
-          longitude={hovered.longitude}
-          latitude={hovered.latitude}
-          closeButton={false}
-          closeOnClick={false}
-          onClose={() => setHovered(null)}
-          anchor='bottom-left'
-        >
-          <TransfertPopup data={hovered} />
-        </Popup>)}
-    </ReactMapGL>
+    <>
+      {VIEWS[selectedView]}
+
+      <div className='view-selector'>
+        <div className={`${selectedView === 'table' ? 'selected' : ''}`} onClick={() => handleClick('table')}>
+          <Layout size={32} color={selectedView === 'table' ? theme.primary : colors.black} />
+        </div>
+        <div className={`${selectedView === 'map' ? 'selected' : ''}`} onClick={() => handleClick('map')}>
+          <Map size={32} color={selectedView === 'map' ? theme.primary : colors.black} />
+        </div>
+        <div className={`${selectedView === 'informations' ? 'selected' : ''}`} onClick={() => handleClick('informations')}>
+          <FileText size={32} color={selectedView === 'informations' ? theme.primary : colors.black} />
+        </div>
+      </div>
+
+      <style jsx>{`
+        .view-selector {
+          z-index: 1;
+          display: grid;
+          grid-template-columns: 1fr 1fr 1fr;
+          justify-content: center;
+          align-items: center;
+          background-color: #fff;
+          box-shadow: 0 -1px 4px ${colors.lightGrey};
+        }
+
+        .view-selector > div {
+          padding: 0.5em;
+          margin: auto;
+          margin-bottom: -4px;
+        }
+
+        .view-selector > div.selected {
+          border-top: 4px solid ${theme.primary};
+        }
+      `}</style>
+    </>
+  )
+}
+
+const DesktopTransfert = () => {
+  return (
+    <>
+      <div className='menu'>
+        <Scrollable>
+          <>
+            <TransfertTable />
+            <TransfertInformations />
+          </>
+        </Scrollable>
+      </div>
+
+      <div className='map'>
+        <TransfertMap />
+      </div>
+
+      <style jsx>{`
+        .menu {
+          z-index: 1;
+          display: flex;
+          flex-direction: column;
+          max-width: ${theme.menuWidth};
+          box-shadow: 0 1px 4px ${colors.lightGrey};
+        }
+
+        .map {
+          display: flex;
+          flex: 1;
+          flex-direction: column;
+          height: 100%;
+        }
+      `}</style>
+    </>
+  )
+}
+
+const Transfert = props => {
+  const {isMobileDevice} = useContext(AppContext)
+
+  const [selectedTransferts, setSelectedTransferts] = useState(null)
+
+  const Component = isMobileDevice ? MobileTransfert : DesktopTransfert
+
+  return (
+    <TransfertContext.Provider value={{selectedTransferts, setSelectedTransferts}}>
+      <Component {...props} />
+    </TransfertContext.Provider>
   )
 }
 
