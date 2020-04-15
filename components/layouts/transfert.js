@@ -53,8 +53,6 @@ const Transfert = () => {
 
   transferts.map((item, index) => {
     const dataToPush = {
-      inbound: 72633, // Default : 72633
-      outbound: 74735, // Default : 74735
       start: item.debut_transfert,
       end: item.fin_transfert,
       way: item.type_vecteur,
@@ -81,8 +79,8 @@ const Transfert = () => {
       getWidth: d => Math.sqrt(d.patients),
       getSourcePosition: d => d.from.coordinates,
       getTargetPosition: d => d.to.coordinates,
-      getSourceColor: d => [Math.sqrt(d.inbound), 140, 0],
-      getTargetColor: d => [Math.sqrt(d.outbound), 140, 0],
+      getSourceColor: [209, 51, 91],
+      getTargetColor: [0, 65, 146],
       onHover: (info, event) => onHover(info, event)
     })
   ]
