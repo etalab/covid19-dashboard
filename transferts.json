@@ -218,7 +218,7 @@
     {
       "debut_transfert": "2020-03-21",
       "fin_transfert": "2020-04-05",
-      "type_vecteur": "avion;train",
+      "type_vecteur": ["avion", "train"],
       "region_depart": "Grand Est",
       "region_arrivee": "",
       "pays_arrivee": ["Allemagne", "Suisse", "Luxembourg", "Autriche"],
