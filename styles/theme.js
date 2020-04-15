@@ -1,7 +1,7 @@
 import colors from './colors'
 
 export default ({
-  menuWidth: '500px',
+  menuWidth: '550px',
   mobileDisplay: '720px',
 
   default: {

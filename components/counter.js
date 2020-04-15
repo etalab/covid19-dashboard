@@ -60,8 +60,12 @@ const Counter = ({value, label, color, previousValue, details}) => {
           flex-direction: column;
           justify-content: space-around;
           text-align: center;
-          margin: 1em 0;
+          margin: .5em;
           color: ${colors[color]};
+          padding: 5px;
+          background-color: snow;
+          border-radius: .5em;
+          padding: 1em;
         }
 
         .counter-container {
@@ -76,7 +80,7 @@ const Counter = ({value, label, color, previousValue, details}) => {
         }
 
         .value {
-          font-size: xx-large;
+          font-size: x-large;
           font-weight: bold;
           margin-right: -12px;
           display: flex;

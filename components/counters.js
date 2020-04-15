@@ -5,6 +5,8 @@ import Counter from './counter'
 
 const Counters = ({report, previousReport}) => {
   const {casConfirmes, hospitalises, reanimation, deces, decesEhpad, gueris} = report || {}
+  const totalDeces = deces + decesEhpad
+  const previousTotalDeces = previousReport.deces + previousReport.decesEhpad
   const details = {
     casConfirmes: 'Nombre cumulé de cas de COVID-19 confirmés par un test positif. <br />Un nouvel indicateur sera bientôt proposé.',
     gueris: 'Nombre cumulé de patients ayant été hospitalisés pour COVID-19 <br />et de retour à domicile en raison de l’amélioration de leur état de santé',
@@ -16,22 +18,37 @@ const Counters = ({report, previousReport}) => {
 
   return (
     <div className='stats'>
-      <Counter value={gueris} previousValue={previousReport.gueris} label='retours à domicile' details={details.gueris} color='green' />
-
+      <div className='counters'>
+        {casConfirmes && <Counter value={casConfirmes} previousValue={previousReport.casConfirmes} label='cas confirmés' details={details.casConfirmes} color='orange' />}
+        {decesEhpad && <Counter value={totalDeces} previousValue={previousTotalDeces} label='Cumul des décés' details='Cumul des décés' color='red' />}
+      </div>
+      <div className='title'>Données Hospitalières</div>
       <div className='counters'>
         <Counter value={hospitalises} previousValue={previousReport.hospitalises} label='hospitalisations' details={details.hospitalises} color='darkGrey' />
+        <Counter value={gueris} previousValue={previousReport.gueris} label='retours à domicile' details={details.gueris} color='green' />
         <Counter value={reanimation} previousValue={previousReport.reanimation} label='en réanimation' details={details.reanimation} color='darkerGrey' />
-      </div>
-      {decesEhpad ? <div className='counters'>
         <Counter value={deces} previousValue={previousReport.deces} label='décès à l’hôpital' details={details.deces} color='red' />
+      </div>
+      <div className='title'>Données EHPAD</div>
+      {decesEhpad && <div className='counters'>
+        <Counter value={reanimation} previousValue={previousReport.reanimation} label='cas confirmés en EHPAD et EMS' details='Cas confirmés en EHPAD et EMS' color='darkOrange' />
+        <Counter value={reanimation} previousValue={previousReport.reanimation} label='cas probables en EHPAD et EMS' details='Cas probables en EHPAD et EMS' color='lightOrange' />
         <Counter value={decesEhpad} previousValue={previousReport.decesEhpad} label='décès en EHPAD et EMS' details={details.decesEhpad} color='darkRed' />
-      </div> : <Counter value={deces} previousValue={previousReport.deces} label='décès à l’hôpital' details={details.deces} color='red' />}
+      </div>}
 
-      {casConfirmes && <Counter value={casConfirmes} previousValue={previousReport.casConfirmes} label='cas confirmés' details={details.casConfirmes} color='orange' />}
       <style jsx>{`
+        .stats {
+          background-color: #f2f2f2;
+        }
         .counters {
           display: grid;
-          grid-template-columns: 1fr 1fr;
+          grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+        }
+
+        .title {
+          text-align: center;
+          font-size: large;
+          padding: .5em;
         }
       `}</style>
     </div>
