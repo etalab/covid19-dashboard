@@ -70,7 +70,7 @@ const ReactMapGL = ({code, hidePopup, hideAttribution}) => {
     <div className='map-container'>
       <div className='controls'>
 
-        {isIframe && (
+        {isIframe && code === 'FR' && (
           <div className='control maximize'>
             <a href={SITE_URL} target='_top'><Maximize2 style={{verticalAlign: 'middle'}} /></a>
           </div>
@@ -108,10 +108,10 @@ const ReactMapGL = ({code, hidePopup, hideAttribution}) => {
         }
 
         .controls {
-          z-index: 1;
+          z-index: 2;
           position: absolute;
           display: flex;
-          justify-content: space-between;
+          justify-content: end;
           align-items: start;
           width: 100%;
           padding: 0.5em;
