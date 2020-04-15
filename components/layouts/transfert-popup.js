@@ -1,11 +1,20 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 
-const TransfertPopup = ({depart, arrivee, patients}) => {
+const TransfertPopup = ({data}) => {
+  const {patients, start, end, way} = data
+  const depart = data.from.name
+  const arrivee = data.to.name
+  const formatDate = isoString => {
+    const date = new Date(isoString)
+    return date.toLocaleDateString()
+  }
+
   return (
     <div className='sumup-container'>
-      <div className='title'>Départ : {depart}</div>
-      <div className='title'>Arrivée : {arrivee}</div>
+      <div className='title'>Départ : {depart} ({formatDate(start)})</div>
+      <div className='title'>Arrivée : {arrivee} ({formatDate(end)})</div>
+      <div className='footer'>Moyen de transport : {Array.isArray(way) ? way.map(item => (item + ' ')) : way}</div>
       <div className='footer'>{patients} patients transférés</div>
 
       <style jsx>{`
@@ -24,9 +33,7 @@ const TransfertPopup = ({depart, arrivee, patients}) => {
 }
 
 TransfertPopup.propTypes = {
-  depart: PropTypes.string.isRequired,
-  arrivee: PropTypes.string.isRequired,
-  patients: PropTypes.number.isRequired
+  data: PropTypes.object.isRequired
 }
 
 export default TransfertPopup
