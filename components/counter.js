@@ -1,5 +1,7 @@
-import React from 'react'
+import React, {useContext} from 'react'
 import PropTypes from 'prop-types'
+
+import {AppContext} from '../pages'
 
 import {Info} from 'react-feather'
 import ReactTooltip from 'react-tooltip'
@@ -8,6 +10,7 @@ import {formatInteger} from '../lib/numbers'
 
 const Counter = ({value, label, color, previousValue, details, isBig}) => {
   const difference = (Number.isInteger(value) && Number.isInteger(previousValue) && value - previousValue !== 0) ? value - previousValue : null
+  const {isMobileDevice} = useContext(AppContext)
 
   return (
     <div className='counter-container'>
@@ -52,7 +55,7 @@ const Counter = ({value, label, color, previousValue, details, isBig}) => {
           flex-direction: column;
           justify-content: space-around;
           text-align: center;
-          margin: .5em;
+          margin: ${isMobileDevice ? '.1em' : '.5em'};
           color: ${colors[color]};
           background-color: ${colors.white};
           border-radius: .5em;
