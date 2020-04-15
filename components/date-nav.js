@@ -7,11 +7,7 @@ import {getNextDate, getPreviousDate} from '../lib/data'
 
 import theme from '../styles/theme'
 
-const formatDate = isoString => {
-  const date = new Date(isoString)
-
-  return date.toLocaleDateString()
-}
+import {formatDate} from '../lib/date'
 
 const DateNav = ({disabled}) => {
   const themeContext = useContext(ThemeContext)
