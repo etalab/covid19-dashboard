@@ -21,6 +21,9 @@ const Transfert = () => {
       const hoverInfo = {
         longitude,
         latitude,
+        start: info.object.start,
+        end: info.object.end,
+        way: info.object.way,
         from: info.object.from,
         to: info.object.to,
         patients: parseInt(info.object.patients, 10)
@@ -52,18 +55,21 @@ const Transfert = () => {
     const dataToPush = {
       inbound: 72633, // Default : 72633
       outbound: 74735, // Default : 74735
+      start: item.debut_transfert,
+      end: item.fin_transfert,
+      way: item.type_vecteur,
       patients: item.nombre_patients_transferes,
       from: {
         name: item.region_depart,
         coordinates: [geo[regionDepart[index][0].code].center[0], geo[regionDepart[index][0].code].center[1]]
       },
       to: {
-        name: item.region_arrivee,
-        coordinates: [regionArrivee[index][0] ? geo[regionArrivee[index][0].code].center[0] : null, regionArrivee[index][0] ? geo[regionArrivee[index][0].code].center[1] : null]
+        name: regionArrivee[index][0] ? item.region_arrivee : 'Pays européens',
+        coordinates: [regionArrivee[index][0] ? geo[regionArrivee[index][0].code].center[0] : 11.9531, regionArrivee[index][0] ? geo[regionArrivee[index][0].code].center[1] : 50.2331]
       }
     }
 
-    return regionArrivee[index][0] ? data.push(dataToPush) : null
+    return data.push(dataToPush)
   })
 
   const layers = [
@@ -72,7 +78,7 @@ const Transfert = () => {
       data,
       autoHighlight: true,
       pickable: true,
-      getWidth: 8,
+      getWidth: d => Math.sqrt(d.patients),
       getSourcePosition: d => d.from.coordinates,
       getTargetPosition: d => d.to.coordinates,
       getSourceColor: d => [Math.sqrt(d.inbound), 140, 0],
@@ -98,7 +104,7 @@ const Transfert = () => {
           onClose={() => setHovered(null)}
           anchor='bottom-left'
         >
-          <TransfertPopup depart={hovered.from.name} arrivee={hovered.to.name} patients={hovered.patients} />
+          <TransfertPopup data={hovered} />
         </Popup>)}
     </ReactMapGL>
   )
