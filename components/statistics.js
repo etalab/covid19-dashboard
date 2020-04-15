@@ -95,7 +95,7 @@ const Statistics = () => {
         {selectedLocation && !isMobileDevice && (
           <Link href='/'><div className='back'><BarChart2 /> <span>France</span></div></Link>
         )}
-        <h3>COVID-19 en {report ? report.nom : 'France'}</h3>
+        <h3>COVID-19 - {report ? report.nom : 'France'}</h3>
       </div>
 
       <Counters report={report} previousReport={previousReport} />
@@ -168,9 +168,9 @@ const Statistics = () => {
 
         .charts-list {
           display: grid;
-          grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+          grid-template-columns: repeat(auto-fit, minmax(170px, 1fr));
           grid-gap: 0.2em;
-          margin: 0.5em;
+          margin: 0.3em;
           background: #FFF;
         }
 
