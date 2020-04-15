@@ -16,7 +16,6 @@ export default ({
 
   green: '#03BD5B',
   lightGreen: '#DAF5E7',
-  lighterOrange: '#FFF0E4',
   lightOrange: '#FFB980',
   orange: '#FF9947',
   darkOrange: '#FF7300',

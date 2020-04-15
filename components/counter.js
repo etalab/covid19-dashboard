@@ -6,7 +6,7 @@ import ReactTooltip from 'react-tooltip'
 import colors from '../styles/colors'
 import {formatInteger} from '../lib/numbers'
 
-const Counter = ({value, label, color, previousValue, details}) => {
+const Counter = ({value, label, color, previousValue, details, isBig}) => {
   const difference = (Number.isInteger(value) && Number.isInteger(previousValue) && value - previousValue !== 0) ? value - previousValue : null
 
   return (
@@ -18,7 +18,6 @@ const Counter = ({value, label, color, previousValue, details}) => {
             <Info size={12} data-tip={details} data-for='overridePosition' />
             <ReactTooltip
               id='overridePosition'
-              className='extra-class'
               backgroundColor='rgba(0, 0, 0, .3)'
               arrowColor='rgba(0, 0, 0, 0)'
               multiline
@@ -41,13 +40,6 @@ const Counter = ({value, label, color, previousValue, details}) => {
         <div>{label}</div>
       </div>
 
-      <style jsx global>{`
-          .extra-class {
-            font-size: .5em !important;
-            pointer-events: auto !important;
-          }
-      `}</style>
-
       <style jsx>{`
         .hover {
           display: flex;
@@ -63,9 +55,10 @@ const Counter = ({value, label, color, previousValue, details}) => {
           margin: .5em;
           color: ${colors[color]};
           padding: 5px;
-          background-color: snow;
+          background-color: ${colors.white};
           border-radius: .5em;
-          padding: 1em;
+          border: 1px solid lightGrey;
+          padding: ${isBig ? '1.5em' : '1em'};
         }
 
         .counter-container {
@@ -80,7 +73,7 @@ const Counter = ({value, label, color, previousValue, details}) => {
         }
 
         .value {
-          font-size: x-large;
+          font-size: ${isBig ? 'xx-large' : 'x-large'};
           font-weight: bold;
           margin-right: -12px;
           display: flex;
@@ -97,7 +90,8 @@ Counter.defaultProps = {
   label: null,
   color: 'almostBlack',
   previousValue: null,
-  details: null
+  details: null,
+  isBig: false
 }
 
 Counter.propTypes = {
@@ -105,7 +99,8 @@ Counter.propTypes = {
   label: PropTypes.string,
   color: PropTypes.string,
   previousValue: PropTypes.number,
-  details: PropTypes.string
+  details: PropTypes.string,
+  isBig: PropTypes.bool
 }
 
 export default Counter
