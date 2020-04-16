@@ -1,6 +1,6 @@
 import React, {useState, useContext, useEffect} from 'react'
 import {FileText, Map, Layout} from 'react-feather'
-import {groupBy, sum, uniq, sortBy} from 'lodash'
+import {groupBy, sum, uniq, sortBy, flattenDeep} from 'lodash'
 
 import allTransferts from '../../transferts.json'
 
@@ -138,7 +138,7 @@ const Transfert = props => {
       return {
         debutTransfert: sortBy(transferts, 'debut_transfert')[0].debut_transfert,
         finTransfert: sortBy(transferts, 'fin_transfert').reverse()[0].fin_transfert,
-        typeVecteur: uniq(transferts.map(transfert => transfert.type_vecteur)),
+        typeVecteur: uniq(flattenDeep(transferts.map(transfert => transfert.type_vecteur))),
         regionDepart: transferts[0].region_depart,
         regionArrivee: transferts[0].region_arrivee,
         paysArrivee: transferts[0].paysArrivee,
