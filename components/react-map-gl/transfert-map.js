@@ -17,7 +17,7 @@ const getRegionCenter = name => {
 }
 
 const TransfertMap = () => {
-  const {transferts} = useContext(TransfertContext)
+  const {transferts, setSelectedTransferts} = useContext(TransfertContext)
 
   const [hovered, setHovered] = useState(null)
 
@@ -37,6 +37,12 @@ const TransfertMap = () => {
       })
     } else {
       setHovered(null)
+    }
+  }
+
+  const onClick = info => {
+    if (info.object) {
+      setSelectedTransferts(info.object.transferts)
     }
   }
 
@@ -65,7 +71,8 @@ const TransfertMap = () => {
       getTargetPosition: d => d.to.coordinates,
       getSourceColor: [209, 51, 91],
       getTargetColor: [0, 65, 146],
-      onHover
+      onHover,
+      onClick
     })
   ]
 
