@@ -1,15 +1,49 @@
 import React, {useContext} from 'react'
 import PropTypes from 'prop-types'
-import {X} from 'react-feather'
+import {X, ArrowRight} from 'react-feather'
 
 import {formatDate} from '../lib/date'
+import {transports} from '../lib/transports'
 
 import colors from '../styles/colors'
 
 import {TransfertContext} from './layouts/transfert'
+import {ThemeContext} from '../pages'
 
 const getDestination = transfert => {
   return `${transfert.regionDepart} → ${transfert.regionArrivee || 'Europe'}`
+}
+
+const Destination = ({from, to}) => (
+  <div className='destination-container'>
+    <span className='from'>{from}</span>
+    <span><ArrowRight /></span>
+    <span className='to'>{to}</span>
+    <style jsx>{`
+      .destination-container {
+        display: inline-flex;
+        align-items: center;
+        justify-content: space-between;
+      }
+
+      .from {
+        color: ${colors.red};
+      }
+
+      .to {
+        color: ${colors.blue};
+      }
+
+      span {
+        margin: 0 0.2em;
+      }
+    `}</style>
+  </div>
+)
+
+Destination.propTypes = {
+  from: PropTypes.string.isRequired,
+  to: PropTypes.string.isRequired
 }
 
 const TransfertInfo = ({debutTransfert, finTransfert, nbPatientsTransferes, typeVecteur}) => {
@@ -23,14 +57,14 @@ const TransfertInfo = ({debutTransfert, finTransfert, nbPatientsTransferes, type
       <div><b>{nbPatientsTransferes} patients</b> transéférés</div>
       <div className='vecteur'>
         {typeVecteur.map(type => (
-          <div key={type} className='tag'>{type}</div>
+          <div key={type} className='tag'><img width={20} alt={type} title={`Transfert effectué en ${type}`} src={transports[type]} aria-hidden='true' /></div>
         ))}
       </div>
 
       <style jsx>{`
         .content {
           border-left: 4px solid ${colors.blue};
-          background-color: ${colors.lightGrey};
+          background-color: ${colors.lighterGrey};
           padding: 0.4em;
           margin: 0.2em 0;
         }
@@ -60,13 +94,14 @@ TransfertInfo.propTypes = {
 
 const SelectedGroup = () => {
   const {selectedTransferts, setSelectedTransferts} = useContext(TransfertContext)
+  const {regionDepart, regionArrivee} = selectedTransferts[0]
   const destination = getDestination(selectedTransferts[0])
 
   return (
     <div key={destination} className='transfert'>
       <div className='header'>
-        <div>{destination}</div>
-        <div onClick={() => setSelectedTransferts(null)}><X /></div>
+        <Destination from={regionDepart} to={regionArrivee} />
+        <div onClick={() => setSelectedTransferts(null)} className='close'><X /></div>
       </div>
 
       {selectedTransferts.map(transfert => (
@@ -87,12 +122,17 @@ const SelectedGroup = () => {
           flex-flow: wrap;
           margin-bottom: 0.2em;
         }
+
+        .close:hover {
+          cursor: pointer;
+        }
       `}</style>
     </div>
   )
 }
 
 const GroupedTranferts = () => {
+  const themeContext = useContext(ThemeContext)
   const {transfertsGroup, setSelectedTransferts} = useContext(TransfertContext)
 
   const handleSelect = transferts => {
@@ -104,12 +144,12 @@ const GroupedTranferts = () => {
   return (
     transfertsGroup.map(group => {
       const destination = getDestination(group)
-      const {transferts} = group
+      const {regionDepart, regionArrivee, transferts} = group
       return (
         <div key={destination} className='transfert'>
           <div className='header'>
-            <div>{destination}</div>
-            <div className={transferts.length > 1 ? 'show-transferts' : ''} onClick={() => handleSelect(transferts)}><b>{transferts.length} transferts</b></div>
+            <Destination from={regionDepart} to={regionArrivee} />
+            <div className={`tag ${transferts.length > 1 ? 'show-transferts' : ''}`} onClick={() => handleSelect(transferts)}><b>{transferts.length} transfert{transferts.length > 1 ? 's' : ''}</b></div>
           </div>
 
           <TransfertInfo {...group} />
@@ -136,12 +176,21 @@ const GroupedTranferts = () => {
               margin-bottom: 0.2em;
             }
 
-            .show-transferts {
-              text-decoration: underline;
+            .tag {
+              padding: 0.4em;
+              margin: 0.2em;
+              text-align: center;
+              border-radius: 4px;
             }
 
-            .show-transferts:hover {
+            .tag.show-transferts {
+              background-color: whitesmoke;
+            }
+
+            .tag.show-transferts:hover {
               cursor: pointer;
+              background-color: ${themeContext.primary};
+              color: ${colors.white};
             }
           `}</style>
         </div>

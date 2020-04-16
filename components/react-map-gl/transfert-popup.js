@@ -4,16 +4,11 @@ import PropTypes from 'prop-types'
 import colors from '../../styles/colors'
 
 import {formatDate} from '../../lib/date'
+import {transports} from '../../lib/transports'
 
 const TransfertPopup = ({debutTransfert, finTransfert, typeVecteur, regionDepart, regionArrivee, nbPatientsTransferes}) => {
   const startDate = formatDate(debutTransfert)
   const endDate = formatDate(finTransfert)
-  const transports = {
-    train: './icons/train.svg',
-    avion: './icons/plane.svg',
-    bus: './icons/bus.svg',
-    'bateau militaire': './icons/ship.svg'
-  }
 
   return (
     <div className='sumup-container'>
@@ -29,10 +24,10 @@ const TransfertPopup = ({debutTransfert, finTransfert, typeVecteur, regionDepart
         <span className='blue'>{regionArrivee || 'Europe'}</span>
       </div>
       <div className='footer'>Moyen de transport :
-        <span>{Array.isArray(typeVecteur) ? typeVecteur.map(type => (
-          <img key={type} className='icons' src={transports[type]} />
-        )) : typeVecteur}</span></div>
-      <div className='infos'>Cliquez pour plus d’informations</div>
+        <span>{typeVecteur.map(type => (
+          <img key={type} className='icons' src={transports[type]} alt={type} title={`Transfert effectué en ${type}`} aria-hidden='true' />
+        ))}</span></div>
+      <div className='infos'>Cliquez consulter le détail des transferts entre ces régions</div>
 
       <style jsx>{`
      .icons {
