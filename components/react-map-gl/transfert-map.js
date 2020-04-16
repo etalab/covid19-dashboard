@@ -1,14 +1,24 @@
-import React, {useState} from 'react'
+import React, {useState, useContext} from 'react'
 import DeckGL, {ArcLayer} from 'deck.gl'
 import ReactMapGL, {Popup} from 'react-map-gl'
 
 import geo from '../../geo.json'
-import transferts from '../../transferts.json'
 import regions from '../../regions.json'
+
+import {TransfertContext} from '../layouts/transfert'
 
 import TransfertPopup from './transfert-popup'
 
+const EUROPE_CENTER = [11.9531, 50.2331]
+
+const getRegionCenter = name => {
+  const {code} = regions.find(({region}) => region === name)
+  return geo[code].center
+}
+
 const TransfertMap = () => {
+  const {transferts} = useContext(TransfertContext)
+
   const [hovered, setHovered] = useState(null)
 
   const defaultViewport = {
@@ -17,59 +27,31 @@ const TransfertMap = () => {
     zoom: 5
   }
 
-  const onHover = (info, event) => {
+  const onHover = info => {
     if (info.object) {
       const [longitude, latitude] = info.lngLat
-      const hoverInfo = {
+      setHovered({
         longitude,
         latitude,
-        start: info.object.start,
-        end: info.object.end,
-        way: info.object.way,
-        from: info.object.from,
-        to: info.object.to,
-        patients: parseInt(info.object.patients, 10)
-      }
-
-      setHovered(hoverInfo)
+        ...info.object
+      })
     } else {
       setHovered(null)
     }
   }
 
-  const data = []
-  const regionDepart = []
-  const regionArrivee = []
-
-  transferts.map(item => {
-    return regionDepart.push(regions.filter(region => {
-      return region.region === item.region_depart
-    }))
-  })
-
-  transferts.map(item => {
-    return regionArrivee.push(regions.filter(region => {
-      return region.region === item.region_arrivee
-    }))
-  })
-
-  transferts.map((item, index) => {
-    const dataToPush = {
-      start: item.debut_transfert,
-      end: item.fin_transfert,
-      way: item.type_vecteur,
-      patients: item.nombre_patients_transferes,
+  const data = transferts.map(transfert => {
+    return {
+      ...transfert,
       from: {
-        name: item.region_depart,
-        coordinates: [geo[regionDepart[index][0].code].center[0], geo[regionDepart[index][0].code].center[1]]
+        name: transfert.region_depart,
+        coordinates: getRegionCenter(transfert.region_depart)
       },
       to: {
-        name: regionArrivee[index][0] ? item.region_arrivee : 'Pays européens',
-        coordinates: [regionArrivee[index][0] ? geo[regionArrivee[index][0].code].center[0] : 11.9531, regionArrivee[index][0] ? geo[regionArrivee[index][0].code].center[1] : 50.2331]
+        name: transfert.region_arrivee || 'Pays européens',
+        coordinates: transfert.region_arrivee ? getRegionCenter(transfert.region_arrivee) : EUROPE_CENTER
       }
     }
-
-    return data.push(dataToPush)
   })
 
   const layers = [
@@ -78,12 +60,12 @@ const TransfertMap = () => {
       data,
       autoHighlight: true,
       pickable: true,
-      getWidth: d => Math.sqrt(d.patients),
+      getWidth: d => Math.sqrt(d.nombre_patients_transferes),
       getSourcePosition: d => d.from.coordinates,
       getTargetPosition: d => d.to.coordinates,
       getSourceColor: [209, 51, 91],
       getTargetColor: [0, 65, 146],
-      onHover: (info, event) => onHover(info, event)
+      onHover
     })
   ]
 
@@ -104,7 +86,7 @@ const TransfertMap = () => {
           onClose={() => setHovered(null)}
           anchor='bottom-left'
         >
-          <TransfertPopup data={hovered} />
+          <TransfertPopup {...hovered} />
         </Popup>)}
     </ReactMapGL>
   )

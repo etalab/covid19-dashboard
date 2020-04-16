@@ -1,5 +1,7 @@
-import React, {useState, useContext} from 'react'
+import React, {useState, useContext, useEffect} from 'react'
 import {FileText, Map, Layout} from 'react-feather'
+
+import allTransferts from '../../transferts.json'
 
 import theme from '../../styles/theme'
 import colors from '../../styles/colors'
@@ -117,14 +119,19 @@ const DesktopTransfert = () => {
 }
 
 const Transfert = props => {
-  const {isMobileDevice} = useContext(AppContext)
+  const {date, isMobileDevice} = useContext(AppContext)
 
+  const [transferts, setTransferts] = useState(allTransferts)
   const [selectedTransferts, setSelectedTransferts] = useState(null)
 
   const Component = isMobileDevice ? MobileTransfert : DesktopTransfert
 
+  useEffect(() => {
+    setTransferts(allTransferts.filter(({fin_transfert}) => fin_transfert < date))
+  }, [date])
+
   return (
-    <TransfertContext.Provider value={{selectedTransferts, setSelectedTransferts}}>
+    <TransfertContext.Provider value={{transferts, selectedTransferts, setSelectedTransferts}}>
       <Component {...props} />
     </TransfertContext.Provider>
   )

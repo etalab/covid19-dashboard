@@ -1,27 +1,25 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-
-import colors from '../../styles/colors'
 import {ArrowRight} from 'react-feather'
 
-const TransfertPopup = ({data}) => {
-  const {patients, start, end, way} = data
-  const depart = data.from.name
-  const arrivee = data.to.name
-  const formatDate = isoString => {
-    const date = new Date(isoString)
-    return date.toLocaleDateString()
-  }
+import colors from '../../styles/colors'
 
-  const startDate = formatDate(start)
-  const endDate = formatDate(end)
+import {formatDate} from '../../lib/date'
+
+const TransfertPopup = ({debut_transfert, fin_transfert, type_vecteur, region_depart, region_arrivee, pays_arrivee, nombre_patients_transferes}) => {
+  const startDate = formatDate(debut_transfert)
+  const endDate = formatDate(fin_transfert)
 
   return (
     <div className='sumup-container'>
-      <div className='title'>{start === end ? 'Le' : 'Du'} {startDate} {start !== end && ' au ' + endDate}</div>
-      <div className='text'>{patients} patients transférés </div>
-      <div><span className='red'>{depart}</span> <ArrowRight style={{verticalAlign: 'sub'}} /> <span className='blue'>{arrivee}</span></div>
-      <div className='footer'>Moyen de transport : <span>{Array.isArray(way) ? way.join(', ') : way}</span></div>
+      <div className='title'>{debut_transfert === fin_transfert ? (
+        <>Le {startDate}</>
+      ) : (
+        <>Du {startDate} au {endDate}</>
+      )}</div>
+      <div className='text'>{nombre_patients_transferes} patients transférés </div>
+      <div><span className='red'>{region_depart}</span> <ArrowRight style={{verticalAlign: 'sub'}} /> <span className='blue'>{region_arrivee || 'Europe'}</span></div>
+      <div className='footer'>Moyen de transport : <span>{Array.isArray(type_vecteur) ? type_vecteur.join(', ') : type_vecteur}</span></div>
       <div className='infos'>Cliquez pour plus d’informations</div>
 
       <style jsx>{`
@@ -65,8 +63,19 @@ const TransfertPopup = ({data}) => {
   )
 }
 
+TransfertPopup.defaultProps = {
+  region_arrivee: null,
+  pays_arrivee: null
+}
+
 TransfertPopup.propTypes = {
-  data: PropTypes.object.isRequired
+  debut_transfert: PropTypes.string.isRequired,
+  fin_transfert: PropTypes.string.isRequired,
+  type_vecteur: PropTypes.string.isRequired,
+  region_depart: PropTypes.string.isRequired,
+  region_arrivee: PropTypes.string,
+  pays_arrivee: PropTypes.string,
+  nombre_patients_transferes: PropTypes.string.isRequired
 }
 
 export default TransfertPopup
