@@ -17,7 +17,7 @@ const getRegionCenter = name => {
 }
 
 const TransfertMap = () => {
-  const {transferts, setSelectedTransferts} = useContext(TransfertContext)
+  const {transfertsGroup, setSelectedTransferts} = useContext(TransfertContext)
 
   const [hovered, setHovered] = useState(null)
 
@@ -46,7 +46,7 @@ const TransfertMap = () => {
     }
   }
 
-  const data = transferts.map(transfert => {
+  const data = transfertsGroup.map(transfert => {
     return {
       ...transfert,
       from: {

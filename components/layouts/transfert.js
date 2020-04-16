@@ -1,5 +1,5 @@
 import React, {useState, useContext, useEffect} from 'react'
-import {FileText, Map, Layout} from 'react-feather'
+import {FileText, Map, List} from 'react-feather'
 import {groupBy, sum, uniq, sortBy, flattenDeep} from 'lodash'
 
 import allTransferts from '../../transferts.json'
@@ -13,14 +13,14 @@ import Scrollable from '../scrollable'
 import TransfertInformations from '../transfert-informations'
 
 import TransfertMap from '../react-map-gl/transfert-map'
-import TransfertTable from '../transfert-table'
+import TransfertsList from '../transferts-list'
 
 export const TransfertContext = React.createContext()
 
 const VIEWS = {
   table: (
     <Scrollable>
-      <TransfertTable />
+      <TransfertsList />
     </Scrollable>
   ),
   map: <TransfertMap />,
@@ -48,7 +48,7 @@ const MobileTransfert = () => {
 
       <div className='view-selector'>
         <div className={`${selectedView === 'table' ? 'selected' : ''}`} onClick={() => handleClick('table')}>
-          <Layout size={32} color={selectedView === 'table' ? theme.primary : colors.black} />
+          <List size={32} color={selectedView === 'table' ? theme.primary : colors.black} />
         </div>
         <div className={`${selectedView === 'map' ? 'selected' : ''}`} onClick={() => handleClick('map')}>
           <Map size={32} color={selectedView === 'map' ? theme.primary : colors.black} />
@@ -89,7 +89,7 @@ const DesktopTransfert = () => {
       <div className='menu'>
         <Scrollable>
           <>
-            <TransfertTable />
+            <TransfertsList />
             <TransfertInformations />
           </>
         </Scrollable>
@@ -122,7 +122,7 @@ const DesktopTransfert = () => {
 const Transfert = props => {
   const {date, isMobileDevice} = useContext(AppContext)
 
-  const [transferts, setTransferts] = useState([])
+  const [transfertsGroup, setTransfertsGroup] = useState([])
   const [selectedTransferts, setSelectedTransferts] = useState(null)
 
   const Component = isMobileDevice ? MobileTransfert : DesktopTransfert
@@ -133,7 +133,7 @@ const Transfert = props => {
       return `${filter.regionDepart}-${filter.regionArrivee || 'Europe'}`
     })
 
-    const transferts = Object.keys(groupedTransferts).map(index => {
+    const transfertsGroup = Object.keys(groupedTransferts).map(index => {
       const transferts = groupedTransferts[index]
       return {
         transferts,
@@ -147,11 +147,11 @@ const Transfert = props => {
       }
     })
 
-    setTransferts(transferts)
+    setTransfertsGroup(transfertsGroup)
   }, [date])
 
   return (
-    <TransfertContext.Provider value={{transferts, selectedTransferts, setSelectedTransferts}}>
+    <TransfertContext.Provider value={{transfertsGroup, selectedTransferts, setSelectedTransferts}}>
       <Component {...props} />
     </TransfertContext.Provider>
   )
