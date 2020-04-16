@@ -24,7 +24,7 @@ const Counters = ({report, previousReport}) => {
     <div className='stats'>
       <div className='counters'>
         {casConfirmes && <Counter value={casConfirmes} previousValue={previousReport.casConfirmes} label='cas confirmés' details={details.casConfirmes} color='orange' isBig />}
-        {decesEhpad && <Counter value={totalDeces} previousValue={previousTotalDeces} label='cumul des décés' details='Cumul des décés' color='red' isBig />}
+        {decesEhpad && <Counter value={totalDeces} previousValue={previousTotalDeces} label='cumul des décès' details='Cumul des décés' color='red' isBig />}
       </div>
       <div className='title'>Données hospitalières</div>
       <div className='counters'>
