@@ -1,6 +1,5 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import {ArrowRight} from 'react-feather'
 
 import colors from '../../styles/colors'
 
@@ -9,6 +8,12 @@ import {formatDate} from '../../lib/date'
 const TransfertPopup = ({debutTransfert, finTransfert, typeVecteur, regionDepart, regionArrivee, nbPatientsTransferes}) => {
   const startDate = formatDate(debutTransfert)
   const endDate = formatDate(finTransfert)
+  const transports = {
+    train: './icons/train.svg',
+    avion: './icons/plane.svg',
+    bus: './icons/bus.svg',
+    'bateau militaire': './icons/ship.svg'
+  }
 
   return (
     <div className='sumup-container'>
@@ -18,11 +23,24 @@ const TransfertPopup = ({debutTransfert, finTransfert, typeVecteur, regionDepart
         <>Du {startDate} au {endDate}</>
       )}</div>
       <div className='text'>{nbPatientsTransferes} patients transférés </div>
-      <div><span className='red'>{regionDepart}</span> <ArrowRight style={{verticalAlign: 'sub'}} /> <span className='blue'>{regionArrivee || 'Europe'}</span></div>
-      <div className='footer'>Moyen de transport : <span>{typeVecteur.join(', ')}</span></div>
+      <div>
+        <span className='red'>{regionDepart}</span>
+        <>→</>
+        <span className='blue'>{regionArrivee || 'Europe'}</span>
+      </div>
+      <div className='footer'>Moyen de transport :
+        <span>{Array.isArray(typeVecteur) ? typeVecteur.map(type => (
+          <img key={type} className='icons' src={transports[type]} />
+        )) : typeVecteur}</span></div>
       <div className='infos'>Cliquez pour plus d’informations</div>
 
       <style jsx>{`
+     .icons {
+        width: 1.28571429em;
+        text-align: center;
+        vertical-align: bottom;
+        margin: 0 .5em;
+      }
       .title {
         font-weight: bold;
         text-align: center;
