@@ -128,21 +128,22 @@ const Transfert = props => {
   const Component = isMobileDevice ? MobileTransfert : DesktopTransfert
 
   useEffect(() => {
-    const filteredTransferts = allTransferts.filter(filter => filter.fin_transfert < date)
+    const filteredTransferts = allTransferts.filter(filter => filter.finTransfert < date)
     const groupedTransferts = groupBy(filteredTransferts, filter => {
-      return `${filter.region_depart}-${filter.region_arrivee || 'Europe'}`
+      return `${filter.regionDepart}-${filter.regionArrivee || 'Europe'}`
     })
 
     const transferts = Object.keys(groupedTransferts).map(index => {
       const transferts = groupedTransferts[index]
       return {
-        debutTransfert: sortBy(transferts, 'debut_transfert')[0].debut_transfert,
-        finTransfert: sortBy(transferts, 'fin_transfert').reverse()[0].fin_transfert,
-        typeVecteur: uniq(flattenDeep(transferts.map(transfert => transfert.type_vecteur))),
-        regionDepart: transferts[0].region_depart,
-        regionArrivee: transferts[0].region_arrivee,
+        transferts,
+        debutTransfert: sortBy(transferts, 'debutTransfert')[0].debutTransfert,
+        finTransfert: sortBy(transferts, 'finTransfert').reverse()[0].finTransfert,
+        typeVecteur: uniq(flattenDeep(transferts.map(transfert => transfert.typeVecteur))),
+        regionDepart: transferts[0].regionDepart,
+        regionArrivee: transferts[0].regionArrivee,
         paysArrivee: transferts[0].paysArrivee,
-        nbPatientsTransferes: sum(transferts.map(transfert => parseInt(transfert.nombre_patients_transferes, 10)))
+        nbPatientsTransferes: sum(transferts.map(transfert => parseInt(transfert.nbPatientsTransferes, 10)))
       }
     })
 

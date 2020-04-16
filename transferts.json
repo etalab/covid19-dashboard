@@ -1,228 +1,227 @@
 [
     {
-      "debut_transfert": "2020-03-18",
-      "fin_transfert": "2020-03-18",
-      "type_vecteur": "avion",
-      "region_depart": "Grand Est",
-      "region_arrivee": "Provence-Alpes-Côte d’Azur",
-      "pays_arrivee": "",
-      "nombre_patients_transferes": "6"
+      "debutTransfert": "2020-03-18",
+      "finTransfert": "2020-03-18",
+      "typeVecteur": ["avion"],
+      "regionDepart": "Grand Est",
+      "regionArrivee": "Provence-Alpes-Côte d’Azur",
+      "paysArrivee": "",
+      "nbPatientsTransferes": "6"
     },
     {
-      "debut_transfert": "2020-03-21",
-      "fin_transfert": "2020-03-21",
-      "type_vecteur": "avion",
-      "region_depart": "Grand Est",
-      "region_arrivee": "Nouvelle-Aquitaine",
-      "pays_arrivee": "",
-      "nombre_patients_transferes": "6"
+      "debutTransfert": "2020-03-21",
+      "finTransfert": "2020-03-21",
+      "typeVecteur": ["avion"],
+      "regionDepart": "Grand Est",
+      "regionArrivee": "Nouvelle-Aquitaine",
+      "paysArrivee": "",
+      "nbPatientsTransferes": "6"
     },
     {
-      "debut_transfert": "2020-03-22",
-      "fin_transfert": "2020-03-22",
-      "type_vecteur": "bateau militaire",
-      "region_depart": "Corse",
-      "region_arrivee": "Provence-Alpes-Côte d’Azur",
-      "pays_arrivee": "",
-      "nombre_patients_transferes": "12"
+      "debutTransfert": "2020-03-22",
+      "finTransfert": "2020-03-22",
+      "typeVecteur": ["bateau militaire"],
+      "regionDepart": "Corse",
+      "regionArrivee": "Provence-Alpes-Côte d’Azur",
+      "paysArrivee": "",
+      "nbPatientsTransferes": "12"
     },
     {
-      "debut_transfert": "2020-03-23",
-      "fin_transfert": "2020-03-23",
-      "type_vecteur": "avion",
-      "region_depart": "Grand Est",
-      "region_arrivee": "Bretagne",
-      "pays_arrivee": "",
-      "nombre_patients_transferes": "6"
+      "debutTransfert": "2020-03-23",
+      "finTransfert": "2020-03-23",
+      "typeVecteur": ["avion"],
+      "regionDepart": "Grand Est",
+      "regionArrivee": "Bretagne",
+      "paysArrivee": "",
+      "nbPatientsTransferes": "6"
     },
     {
-      "debut_transfert": "2020-03-26",
-      "fin_transfert": "2020-03-26",
-      "type_vecteur": "train",
-      "region_depart": "Grand Est",
-      "region_arrivee": "Pays de la Loire",
-      "pays_arrivee": "",
-      "nombre_patients_transferes": "20"
+      "debutTransfert": "2020-03-26",
+      "finTransfert": "2020-03-26",
+      "typeVecteur": ["train"],
+      "regionDepart": "Grand Est",
+      "regionArrivee": "Pays de la Loire",
+      "paysArrivee": "",
+      "nbPatientsTransferes": "20"
     },
     {
-      "debut_transfert": "2020-03-27",
-      "fin_transfert": "2020-03-27",
-      "type_vecteur": "avion",
-      "region_depart": "Grand Est",
-      "region_arrivee": "Nouvelle-Aquitaine",
-      "pays_arrivee": "",
-      "nombre_patients_transferes": "6"
+      "debutTransfert": "2020-03-27",
+      "finTransfert": "2020-03-27",
+      "typeVecteur": ["avion"],
+      "regionDepart": "Grand Est",
+      "regionArrivee": "Nouvelle-Aquitaine",
+      "paysArrivee": "",
+      "nbPatientsTransferes": "6"
     },
     {
-      "debut_transfert": "2020-03-27",
-      "fin_transfert": "2020-03-28",
-      "type_vecteur": "avion",
-      "region_depart": "Grand Est",
-      "region_arrivee": "Nouvelle-Aquitaine",
-      "pays_arrivee": "",
-      "nombre_patients_transferes": "6"
+      "debutTransfert": "2020-03-27",
+      "finTransfert": "2020-03-28",
+      "typeVecteur": ["avion"],
+      "regionDepart": "Grand Est",
+      "regionArrivee": "Nouvelle-Aquitaine",
+      "paysArrivee": "",
+      "nbPatientsTransferes": "6"
     },
     {
-      "debut_transfert": "2020-03-28",
-      "fin_transfert": "2020-03-30",
-      "type_vecteur": "avion",
-      "region_depart": "Île-de-France",
-      "region_arrivee": "Centre-Val de Loire",
-      "pays_arrivee": "",
-      "nombre_patients_transferes": "12"
+      "debutTransfert": "2020-03-28",
+      "finTransfert": "2020-03-30",
+      "typeVecteur": ["avion"],
+      "regionDepart": "Île-de-France",
+      "regionArrivee": "Centre-Val de Loire",
+      "paysArrivee": "",
+      "nbPatientsTransferes": "12"
     },
     {
-      "debut_transfert": "2020-03-27",
-      "fin_transfert": "2020-03-30",
-      "type_vecteur": ["avion", "train"],
-      "region_depart": "Bourgogne-Franche-Comté",
-      "region_arrivee": "Auvergne-Rhône-Alpes",
-      "pays_arrivee": "",
-      "nombre_patients_transferes": "42"
+      "debutTransfert": "2020-03-27",
+      "finTransfert": "2020-03-30",
+      "typeVecteur": ["avion", "train"],
+      "regionDepart": "Bourgogne-Franche-Comté",
+      "regionArrivee": "Auvergne-Rhône-Alpes",
+      "paysArrivee": "",
+      "nbPatientsTransferes": "42"
     },
     {
-      "debut_transfert": "2020-03-28",
-      "fin_transfert": "2020-03-30",
-      "type_vecteur": "avion",
-      "region_depart": "Bourgogne-Franche-Comté",
-      "region_arrivee": "Provence-Alpes-Côte d’Azur",
-      "pays_arrivee": "",
-      "nombre_patients_transferes": "10"
+      "debutTransfert": "2020-03-28",
+      "finTransfert": "2020-03-30",
+      "typeVecteur": ["avion"],
+      "regionDepart": "Bourgogne-Franche-Comté",
+      "regionArrivee": "Provence-Alpes-Côte d’Azur",
+      "paysArrivee": "",
+      "nbPatientsTransferes": "10"
     },
     {
-      "debut_transfert": "2020-03-29",
-      "fin_transfert": "2020-03-29",
-      "type_vecteur": "train",
-      "region_depart": "Grand Est",
-      "region_arrivee": "Nouvelle-Aquitaine",
-      "pays_arrivee": "",
-      "nombre_patients_transferes": "12"
+      "debutTransfert": "2020-03-29",
+      "finTransfert": "2020-03-29",
+      "typeVecteur": ["train"],
+      "regionDepart": "Grand Est",
+      "regionArrivee": "Nouvelle-Aquitaine",
+      "paysArrivee": "",
+      "nbPatientsTransferes": "12"
     },
     {
-      "debut_transfert": "2020-03-29",
-      "fin_transfert": "2020-03-29",
-      "type_vecteur": "train",
-      "region_depart": "Grand Est",
-      "region_arrivee": "Nouvelle-Aquitaine",
-      "pays_arrivee": "",
-      "nombre_patients_transferes": "24"
+      "debutTransfert": "2020-03-29",
+      "finTransfert": "2020-03-29",
+      "typeVecteur": ["train"],
+      "regionDepart": "Grand Est",
+      "regionArrivee": "Nouvelle-Aquitaine",
+      "paysArrivee": "",
+      "nbPatientsTransferes": "24"
     },
     {
-      "debut_transfert": "2020-03-31",
-      "fin_transfert": "2020-03-31",
-      "type_vecteur": "avion",
-      "region_depart": "Grand Est",
-      "region_arrivee": "",
-      "pays_arrivee": "Allemagne",
-      "nombre_patients_transferes": "6"
+      "debutTransfert": "2020-03-31",
+      "finTransfert": "2020-03-31",
+      "typeVecteur": ["avion"],
+      "regionDepart": "Grand Est",
+      "regionArrivee": "",
+      "paysArrivee": "Allemagne",
+      "nbPatientsTransferes": "6"
     },
     {
-      "debut_transfert": "2020-04-01",
-      "fin_transfert": "2020-04-01",
-      "type_vecteur": "train",
-      "region_depart": "Île-de-France",
-      "region_arrivee": "Bretagne",
-      "pays_arrivee": "",
-      "nombre_patients_transferes": "36"
+      "debutTransfert": "2020-04-01",
+      "finTransfert": "2020-04-01",
+      "typeVecteur": ["train"],
+      "regionDepart": "Île-de-France",
+      "regionArrivee": "Bretagne",
+      "paysArrivee": "",
+      "nbPatientsTransferes": "36"
     },
     {
-      "debut_transfert": "2020-04-01",
-      "fin_transfert": "2020-04-02",
-      "type_vecteur": "avion",
-      "region_depart": "Grand Est",
-      "region_arrivee": "Occitanie",
-      "pays_arrivee": "",
-      "nombre_patients_transferes": "12"
+      "debutTransfert": "2020-04-01",
+      "finTransfert": "2020-04-02",
+      "typeVecteur": ["avion"],
+      "regionDepart": "Grand Est",
+      "regionArrivee": "Occitanie",
+      "paysArrivee": "",
+      "nbPatientsTransferes": "12"
     },
     {
-      "debut_transfert": "2020-04-01",
-      "fin_transfert": "2020-04-03",
-      "type_vecteur": "avion",
-      "region_depart": "Île-de-France",
-      "region_arrivee": "Pays de la Loire",
-      "pays_arrivee": "",
-      "nombre_patients_transferes": "48"
+      "debutTransfert": "2020-04-01",
+      "finTransfert": "2020-04-03",
+      "typeVecteur": ["avion"],
+      "regionDepart": "Île-de-France",
+      "regionArrivee": "Pays de la Loire",
+      "paysArrivee": "",
+      "nbPatientsTransferes": "48"
     },
     {
-      "debut_transfert": "2020-04-01",
-      "fin_transfert": "2020-04-03",
-      "type_vecteur": "avion",
-      "region_depart": "Île-de-France",
-      "region_arrivee": "Normandie",
-      "pays_arrivee": "",
-      "nombre_patients_transferes": "38"
+      "debutTransfert": "2020-04-01",
+      "finTransfert": "2020-04-03",
+      "typeVecteur": ["avion"],
+      "regionDepart": "Île-de-France",
+      "regionArrivee": "Normandie",
+      "paysArrivee": "",
+      "nbPatientsTransferes": "38"
     },
     {
-      "debut_transfert": "2020-04-01",
-      "fin_transfert": "2020-04-03",
-      "type_vecteur": "train",
-      "region_depart": "Île-de-France",
-      "region_arrivee": "Normandie",
-      "pays_arrivee": "",
-      "nombre_patients_transferes": "14"
+      "debutTransfert": "2020-04-01",
+      "finTransfert": "2020-04-03",
+      "typeVecteur": ["train"],
+      "regionDepart": "Île-de-France",
+      "regionArrivee": "Normandie",
+      "paysArrivee": "",
+      "nbPatientsTransferes": "14"
     },
     {
-      "debut_transfert": "2020-04-01",
-      "fin_transfert": "2020-04-03",
-      "type_vecteur": "avion",
-      "region_depart": "Île-de-France",
-      "region_arrivee": "Centre-Val de Loire",
-      "pays_arrivee": "",
-      "nombre_patients_transferes": "13"
+      "debutTransfert": "2020-04-01",
+      "finTransfert": "2020-04-03",
+      "typeVecteur": ["avion"],
+      "regionDepart": "Île-de-France",
+      "regionArrivee": "Centre-Val de Loire",
+      "paysArrivee": "",
+      "nbPatientsTransferes": "13"
     },
     {
-      "debut_transfert": "2020-04-03",
-      "fin_transfert": "2020-04-03",
-      "type_vecteur": "avion",
-      "region_depart": "Grand Est",
-      "region_arrivee": "Occitanie",
-      "pays_arrivee": "",
-      "nombre_patients_transferes": "6"
+      "debutTransfert": "2020-04-03",
+      "finTransfert": "2020-04-03",
+      "typeVecteur": ["avion"],
+      "regionDepart": "Grand Est",
+      "regionArrivee": "Occitanie",
+      "paysArrivee": "",
+      "nbPatientsTransferes": "6"
     },
     {
-      "debut_transfert": "2020-04-03",
-      "fin_transfert": "2020-04-03",
-      "type_vecteur": "train",
-      "region_depart": "Grand Est",
-      "region_arrivee": "Nouvelle-Aquitaine",
-      "pays_arrivee": "",
-      "nombre_patients_transferes": "24"
+      "debutTransfert": "2020-04-03",
+      "finTransfert": "2020-04-03",
+      "typeVecteur": ["train"],
+      "regionDepart": "Grand Est",
+      "regionArrivee": "Nouvelle-Aquitaine",
+      "paysArrivee": "",
+      "nbPatientsTransferes": "24"
     },
     {
-      "debut_transfert": "2020-04-03",
-      "fin_transfert": "2020-04-04",
-      "type_vecteur": "avion",
-      "region_depart": "Île-de-France",
-      "region_arrivee": "Auvergne-Rhône-Alpes",
-      "pays_arrivee": "",
-      "nombre_patients_transferes": "20"
+      "debutTransfert": "2020-04-03",
+      "finTransfert": "2020-04-04",
+      "typeVecteur": ["avion"],
+      "regionDepart": "Île-de-France",
+      "regionArrivee": "Auvergne-Rhône-Alpes",
+      "paysArrivee": "",
+      "nbPatientsTransferes": "20"
     },
     {
-      "debut_transfert": "2020-04-04",
-      "fin_transfert": "2020-04-05",
-      "type_vecteur": "avion",
-      "region_depart": "Grand Est",
-      "region_arrivee": "Occitanie",
-      "pays_arrivee": "",
-      "nombre_patients_transferes": "12"
+      "debutTransfert": "2020-04-04",
+      "finTransfert": "2020-04-05",
+      "typeVecteur": ["avion"],
+      "regionDepart": "Grand Est",
+      "regionArrivee": "Occitanie",
+      "paysArrivee": "",
+      "nbPatientsTransferes": "12"
     },
     {
-      "debut_transfert": "2020-04-05",
-      "fin_transfert": "2020-04-05",
-      "type_vecteur": "train",
-      "region_depart": "Île-de-France",
-      "region_arrivee": "Bretagne",
-      "pays_arrivee": "",
-      "nombre_patients_transferes": "41"
+      "debutTransfert": "2020-04-05",
+      "finTransfert": "2020-04-05",
+      "typeVecteur": ["train"],
+      "regionDepart": "Île-de-France",
+      "regionArrivee": "Bretagne",
+      "paysArrivee": "",
+      "nbPatientsTransferes": "41"
     },
     {
-      "debut_transfert": "2020-03-21",
-      "fin_transfert": "2020-04-05",
-      "type_vecteur": ["avion", "train"],
-      "region_depart": "Grand Est",
-      "region_arrivee": "",
-      "pays_arrivee": ["Allemagne", "Suisse", "Luxembourg", "Autriche"],
-      "nombre_patients_transferes": "172"
+      "debutTransfert": "2020-03-21",
+      "finTransfert": "2020-04-05",
+      "typeVecteur": ["avion", "train"],
+      "regionDepart": "Grand Est",
+      "regionArrivee": "",
+      "paysArrivee": ["Allemagne", "Suisse", "Luxembourg", "Autriche"],
+      "nbPatientsTransferes": "172"
     }
   ]
-  

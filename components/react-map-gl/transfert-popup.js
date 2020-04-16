@@ -6,7 +6,7 @@ import colors from '../../styles/colors'
 
 import {formatDate} from '../../lib/date'
 
-const TransfertPopup = ({debutTransfert, finTransfert, typeVecteur, regionDepart, regionArrivee, paysArrivee, nbPatientsTransferes}) => {
+const TransfertPopup = ({debutTransfert, finTransfert, typeVecteur, regionDepart, regionArrivee, nbPatientsTransferes}) => {
   const startDate = formatDate(debutTransfert)
   const endDate = formatDate(finTransfert)
 
@@ -19,7 +19,7 @@ const TransfertPopup = ({debutTransfert, finTransfert, typeVecteur, regionDepart
       )}</div>
       <div className='text'>{nbPatientsTransferes} patients transférés </div>
       <div><span className='red'>{regionDepart}</span> <ArrowRight style={{verticalAlign: 'sub'}} /> <span className='blue'>{regionArrivee || 'Europe'}</span></div>
-      <div className='footer'>Moyen de transport : <span>{Array.isArray(typeVecteur) ? typeVecteur.join(', ') : typeVecteur}</span></div>
+      <div className='footer'>Moyen de transport : <span>{typeVecteur.join(', ')}</span></div>
       <div className='infos'>Cliquez pour plus d’informations</div>
 
       <style jsx>{`
@@ -64,17 +64,15 @@ const TransfertPopup = ({debutTransfert, finTransfert, typeVecteur, regionDepart
 }
 
 TransfertPopup.defaultProps = {
-  regionArrivee: null,
-  paysArrivee: null
+  regionArrivee: null
 }
 
 TransfertPopup.propTypes = {
   debutTransfert: PropTypes.string.isRequired,
   finTransfert: PropTypes.string.isRequired,
-  typeVecteur: PropTypes.string.isRequired,
+  typeVecteur: PropTypes.array.isRequired,
   regionDepart: PropTypes.string.isRequired,
   regionArrivee: PropTypes.string,
-  paysArrivee: PropTypes.string,
   nbPatientsTransferes: PropTypes.string.isRequired
 }
 
