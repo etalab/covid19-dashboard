@@ -44,12 +44,12 @@ const TransfertMap = () => {
     return {
       ...transfert,
       from: {
-        name: transfert.region_depart,
-        coordinates: getRegionCenter(transfert.region_depart)
+        name: transfert.regionDepart,
+        coordinates: getRegionCenter(transfert.regionDepart)
       },
       to: {
-        name: transfert.region_arrivee || 'Pays européens',
-        coordinates: transfert.region_arrivee ? getRegionCenter(transfert.region_arrivee) : EUROPE_CENTER
+        name: transfert.regionArrivee || 'Pays européens',
+        coordinates: transfert.regionArrivee ? getRegionCenter(transfert.regionArrivee) : EUROPE_CENTER
       }
     }
   })
@@ -60,7 +60,7 @@ const TransfertMap = () => {
       data,
       autoHighlight: true,
       pickable: true,
-      getWidth: d => Math.sqrt(d.nombre_patients_transferes),
+      getWidth: d => Math.sqrt(d.nbPatientsTransferes),
       getSourcePosition: d => d.from.coordinates,
       getTargetPosition: d => d.to.coordinates,
       getSourceColor: [209, 51, 91],

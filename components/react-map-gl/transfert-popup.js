@@ -6,20 +6,20 @@ import colors from '../../styles/colors'
 
 import {formatDate} from '../../lib/date'
 
-const TransfertPopup = ({debut_transfert, fin_transfert, type_vecteur, region_depart, region_arrivee, pays_arrivee, nombre_patients_transferes}) => {
-  const startDate = formatDate(debut_transfert)
-  const endDate = formatDate(fin_transfert)
+const TransfertPopup = ({debutTransfert, finTransfert, typeVecteur, regionDepart, regionArrivee, paysArrivee, nbPatientsTransferes}) => {
+  const startDate = formatDate(debutTransfert)
+  const endDate = formatDate(finTransfert)
 
   return (
     <div className='sumup-container'>
-      <div className='title'>{debut_transfert === fin_transfert ? (
+      <div className='title'>{debutTransfert === finTransfert ? (
         <>Le {startDate}</>
       ) : (
         <>Du {startDate} au {endDate}</>
       )}</div>
-      <div className='text'>{nombre_patients_transferes} patients transférés </div>
-      <div><span className='red'>{region_depart}</span> <ArrowRight style={{verticalAlign: 'sub'}} /> <span className='blue'>{region_arrivee || 'Europe'}</span></div>
-      <div className='footer'>Moyen de transport : <span>{Array.isArray(type_vecteur) ? type_vecteur.join(', ') : type_vecteur}</span></div>
+      <div className='text'>{nbPatientsTransferes} patients transférés </div>
+      <div><span className='red'>{regionDepart}</span> <ArrowRight style={{verticalAlign: 'sub'}} /> <span className='blue'>{regionArrivee || 'Europe'}</span></div>
+      <div className='footer'>Moyen de transport : <span>{Array.isArray(typeVecteur) ? typeVecteur.join(', ') : typeVecteur}</span></div>
       <div className='infos'>Cliquez pour plus d’informations</div>
 
       <style jsx>{`
@@ -64,18 +64,18 @@ const TransfertPopup = ({debut_transfert, fin_transfert, type_vecteur, region_de
 }
 
 TransfertPopup.defaultProps = {
-  region_arrivee: null,
-  pays_arrivee: null
+  regionArrivee: null,
+  paysArrivee: null
 }
 
 TransfertPopup.propTypes = {
-  debut_transfert: PropTypes.string.isRequired,
-  fin_transfert: PropTypes.string.isRequired,
-  type_vecteur: PropTypes.string.isRequired,
-  region_depart: PropTypes.string.isRequired,
-  region_arrivee: PropTypes.string,
-  pays_arrivee: PropTypes.string,
-  nombre_patients_transferes: PropTypes.string.isRequired
+  debutTransfert: PropTypes.string.isRequired,
+  finTransfert: PropTypes.string.isRequired,
+  typeVecteur: PropTypes.string.isRequired,
+  regionDepart: PropTypes.string.isRequired,
+  regionArrivee: PropTypes.string,
+  paysArrivee: PropTypes.string,
+  nbPatientsTransferes: PropTypes.string.isRequired
 }
 
 export default TransfertPopup

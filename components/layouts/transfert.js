@@ -1,5 +1,6 @@
 import React, {useState, useContext, useEffect} from 'react'
 import {FileText, Map, Layout} from 'react-feather'
+import {groupBy, sum, uniq, sortBy} from 'lodash'
 
 import allTransferts from '../../transferts.json'
 
@@ -121,13 +122,31 @@ const DesktopTransfert = () => {
 const Transfert = props => {
   const {date, isMobileDevice} = useContext(AppContext)
 
-  const [transferts, setTransferts] = useState(allTransferts)
+  const [transferts, setTransferts] = useState([])
   const [selectedTransferts, setSelectedTransferts] = useState(null)
 
   const Component = isMobileDevice ? MobileTransfert : DesktopTransfert
 
   useEffect(() => {
-    setTransferts(allTransferts.filter(({fin_transfert}) => fin_transfert < date))
+    const filteredTransferts = allTransferts.filter(filter => filter.fin_transfert < date)
+    const groupedTransferts = groupBy(filteredTransferts, filter => {
+      return `${filter.region_depart}-${filter.region_arrivee || 'Europe'}`
+    })
+
+    const transferts = Object.keys(groupedTransferts).map(index => {
+      const transferts = groupedTransferts[index]
+      return {
+        debutTransfert: sortBy(transferts, 'debut_transfert')[0].debut_transfert,
+        finTransfert: sortBy(transferts, 'fin_transfert').reverse()[0].fin_transfert,
+        typeVecteur: uniq(transferts.map(transfert => transfert.type_vecteur)),
+        regionDepart: transferts[0].region_depart,
+        regionArrivee: transferts[0].region_arrivee,
+        paysArrivee: transferts[0].paysArrivee,
+        nbPatientsTransferes: sum(transferts.map(transfert => parseInt(transfert.nombre_patients_transferes, 10)))
+      }
+    })
+
+    setTransferts(transferts)
   }, [date])
 
   return (
