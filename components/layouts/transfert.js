@@ -14,6 +14,7 @@ import TransfertInformations from '../transfert-informations'
 
 import TransfertMap from '../react-map-gl/transfert-map'
 import TransfertsList from '../transferts-list'
+import TransfertMobileMap from '../transfert-mobile-map'
 
 export const TransfertContext = React.createContext()
 
@@ -23,7 +24,7 @@ const VIEWS = {
       <TransfertsList />
     </Scrollable>
   ),
-  map: <TransfertMap />,
+  map: <TransfertMobileMap />,
   informations: (
     <Scrollable>
       <TransfertInformations />

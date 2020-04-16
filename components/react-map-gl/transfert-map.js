@@ -8,6 +8,7 @@ import regions from '../../regions.json'
 import {TransfertContext} from '../layouts/transfert'
 
 import TransfertPopup from './transfert-popup'
+import {AppContext} from '../../pages'
 
 const EUROPE_CENTER = [11.9531, 50.2331]
 
@@ -17,6 +18,7 @@ const getRegionCenter = name => {
 }
 
 const TransfertMap = () => {
+  const {isMobileDevice} = useContext(AppContext)
   const {transfertsGroup, setSelectedTransferts} = useContext(TransfertContext)
 
   const [hovered, setHovered] = useState(null)
@@ -24,7 +26,7 @@ const TransfertMap = () => {
   const defaultViewport = {
     latitude: 46.9,
     longitude: 1.7,
-    zoom: 5
+    zoom: isMobileDevice ? 3.8 : 5
   }
 
   const onHover = info => {
@@ -71,7 +73,7 @@ const TransfertMap = () => {
       getTargetPosition: d => d.to.coordinates,
       getSourceColor: [209, 51, 91],
       getTargetColor: [0, 65, 146],
-      onHover,
+      onHover: isMobileDevice ? null : onHover,
       onClick
     })
   ]
