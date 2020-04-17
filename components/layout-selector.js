@@ -49,14 +49,14 @@ const DesktopLayoutSelector = ({selected, layouts, handleSelect}) => {
         .layout {
           padding: 0.5em;
           margin: 0 0.4em;
-          color: ${theme.primary};
-          background-color: #fff;
+          background-color: ${theme.secondary};
+          color: #fff;
           border-radius: 4px;
         }
 
         .layout.selected {
-          background-color: ${theme.secondary};
-          color: #fff;
+          color: ${theme.primary};
+          background-color: #fff;
         }
 
         .layout:hover {
