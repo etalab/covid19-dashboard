@@ -30,7 +30,7 @@ const TransfertMap = () => {
   }
 
   const onHover = useCallback(info => {
-    if (info) {
+    if (info && info.lngLat) {
       const [longitude, latitude] = info.lngLat
       setHovered({
         longitude,
@@ -73,9 +73,11 @@ const TransfertMap = () => {
         data: getData,
         autoHighlight: true,
         pickable: true,
+        getHeight: () => 2,
         getWidth: d => Math.sqrt(d.nbPatientsTransferes),
         getSourcePosition: d => d.from.coordinates,
         getTargetPosition: d => d.to.coordinates,
+        widthScale: 1.5,
         getSourceColor: [209, 51, 91],
         getTargetColor: [0, 65, 146],
         onHover: isMobileDevice ? null : onHover,
