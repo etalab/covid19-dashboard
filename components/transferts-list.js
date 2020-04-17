@@ -100,7 +100,7 @@ const SelectedGroup = () => {
   return (
     <div key={destination} className='transfert'>
       <div className='header'>
-        <Destination from={regionDepart} to={regionArrivee} />
+        <Destination from={regionDepart} to={regionArrivee || 'Europe'} />
         <div onClick={() => setSelectedTransferts(null)} className='close'><X /></div>
       </div>
 
@@ -148,7 +148,7 @@ const GroupedTranferts = () => {
       return (
         <div key={destination} className='transfert'>
           <div className='header'>
-            <Destination from={regionDepart} to={regionArrivee} />
+            <Destination from={regionDepart} to={regionArrivee || 'Europe'} />
             <div className={`tag ${transferts.length > 1 ? 'show-transferts' : ''}`} onClick={() => handleSelect(transferts)}><b>{transferts.length} transfert{transferts.length > 1 ? 's' : ''}</b></div>
           </div>
 
