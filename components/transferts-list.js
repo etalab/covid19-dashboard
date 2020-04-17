@@ -54,7 +54,7 @@ const TransfertInfo = ({debutTransfert, finTransfert, nbPatientsTransferes, type
       ) : (
         <>Du <b>{formatDate(debutTransfert)}</b> au <b>{formatDate(finTransfert)}</b></>
       )}
-      <div><b>{nbPatientsTransferes} patients</b> transéférés</div>
+      <div><b>{nbPatientsTransferes} patients</b> transférés</div>
       <div className='vecteur'>
         {typeVecteur.map(type => (
           <div key={type}><img className='icons' width={20} alt={type} title={`Transfert effectué en ${type}`} src={transports[type]} aria-hidden='true' /></div>
