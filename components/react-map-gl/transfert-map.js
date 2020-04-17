@@ -30,12 +30,12 @@ const TransfertMap = () => {
   }
 
   const onHover = info => {
-    if (info.object) {
+    if (info) {
       const [longitude, latitude] = info.lngLat
       setHovered({
         longitude,
         latitude,
-        ...info.object
+        data: info.object
       })
     } else {
       setHovered(null)
@@ -86,7 +86,7 @@ const TransfertMap = () => {
       mapStyle='https://etalab-tiles.fr/styles/osm-bright/style.json'
     >
       <DeckGL initialViewState={defaultViewport} layers={layers} />
-      {hovered && (
+      {hovered && hovered.data && (
         <Popup
           longitude={hovered.longitude}
           latitude={hovered.latitude}
@@ -95,7 +95,7 @@ const TransfertMap = () => {
           onClose={() => setHovered(null)}
           anchor='bottom-left'
         >
-          <TransfertPopup {...hovered} />
+          <TransfertPopup {...hovered.data} />
         </Popup>)}
     </ReactMapGL>
   )
