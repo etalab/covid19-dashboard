@@ -49,7 +49,7 @@ const TransfertMap = () => {
   }
 
   const onMapClick = () => {
-    if (!hovered) {
+    if (!hovered.data) {
       setSelectedTransferts(null)
     }
   }
