@@ -32,7 +32,7 @@ const LAYOUTS = [
   },
   {
     id: 'transfert',
-    label: 'Suivi des transferts',
+    label: 'Transfert de patients',
     component: <Transfert />
   }
 ]
