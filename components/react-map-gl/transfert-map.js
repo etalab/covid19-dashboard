@@ -1,4 +1,4 @@
-import React, {useState, useContext} from 'react'
+import React, {useState, useContext, useCallback, useMemo} from 'react'
 import DeckGL, {ArcLayer} from 'deck.gl'
 import ReactMapGL, {Popup} from 'react-map-gl'
 
@@ -29,7 +29,7 @@ const TransfertMap = () => {
     zoom: isMobileDevice ? 3.8 : 5
   }
 
-  const onHover = info => {
+  const onHover = useCallback(info => {
     if (info) {
       const [longitude, latitude] = info.lngLat
       setHovered({
@@ -37,52 +37,52 @@ const TransfertMap = () => {
         latitude,
         data: info.object
       })
-    } else {
-      setHovered(null)
     }
-  }
+  }, [])
 
-  const onClick = info => {
+  const onClick = useCallback(info => {
     if (info.object) {
       setSelectedTransferts(info.object.transferts)
     }
-  }
+  }, [setSelectedTransferts])
 
-  const onMapClick = () => {
+  const onMapClick = useCallback(() => {
     if (!hovered.data) {
       setSelectedTransferts(null)
     }
-  }
+  }, [hovered, setSelectedTransferts])
 
-  const data = transfertsGroup.map(transfert => {
-    return {
-      ...transfert,
-      from: {
-        name: transfert.regionDepart,
-        coordinates: getRegionCenter(transfert.regionDepart)
-      },
-      to: {
-        name: transfert.regionArrivee || 'Pays européens',
-        coordinates: transfert.regionArrivee ? getRegionCenter(transfert.regionArrivee) : EUROPE_CENTER
+  const getData = useMemo(() => {
+    return transfertsGroup.map(transfert => {
+      return {
+        ...transfert,
+        from: {
+          coordinates: getRegionCenter(transfert.regionDepart)
+        },
+        to: {
+          coordinates: transfert.regionArrivee ? getRegionCenter(transfert.regionArrivee) : EUROPE_CENTER
+        }
       }
-    }
-  })
-
-  const layers = [
-    new ArcLayer({
-      id: 'arcs',
-      data,
-      autoHighlight: true,
-      pickable: true,
-      getWidth: d => Math.sqrt(d.nbPatientsTransferes),
-      getSourcePosition: d => d.from.coordinates,
-      getTargetPosition: d => d.to.coordinates,
-      getSourceColor: [209, 51, 91],
-      getTargetColor: [0, 65, 146],
-      onHover: isMobileDevice ? null : onHover,
-      onClick
     })
-  ]
+  }, [transfertsGroup])
+
+  const getLayers = useMemo(() => {
+    return [
+      new ArcLayer({
+        id: 'arcs',
+        data: getData,
+        autoHighlight: true,
+        pickable: true,
+        getWidth: d => Math.sqrt(d.nbPatientsTransferes),
+        getSourcePosition: d => d.from.coordinates,
+        getTargetPosition: d => d.to.coordinates,
+        getSourceColor: [209, 51, 91],
+        getTargetColor: [0, 65, 146],
+        onHover: isMobileDevice ? null : onHover,
+        onClick
+      })
+    ]
+  }, [getData, isMobileDevice, onHover, onClick])
 
   return (
     <ReactMapGL
@@ -92,7 +92,7 @@ const TransfertMap = () => {
       mapStyle='https://etalab-tiles.fr/styles/osm-bright/style.json'
       onClick={onMapClick}
     >
-      <DeckGL initialViewState={defaultViewport} layers={layers} />
+      <DeckGL initialViewState={defaultViewport} layers={getLayers} />
       {hovered && hovered.data && (
         <Popup
           longitude={hovered.longitude}
