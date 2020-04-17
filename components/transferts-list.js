@@ -1,6 +1,6 @@
 import React, {useContext} from 'react'
 import PropTypes from 'prop-types'
-import {X, ArrowRight} from 'react-feather'
+import {X} from 'react-feather'
 
 import {formatDate} from '../lib/date'
 import {transports} from '../lib/transports'
@@ -17,7 +17,7 @@ const getDestination = transfert => {
 const Destination = ({from, to}) => (
   <div className='destination-container'>
     <span className='from'>{from}</span>
-    <span><ArrowRight /></span>
+    <span>→</span>
     <span className='to'>{to}</span>
     <style jsx>{`
       .destination-container {
@@ -57,7 +57,7 @@ const TransfertInfo = ({debutTransfert, finTransfert, nbPatientsTransferes, type
       <div><b>{nbPatientsTransferes} patients</b> transéférés</div>
       <div className='vecteur'>
         {typeVecteur.map(type => (
-          <div key={type} className='tag'><img width={20} alt={type} title={`Transfert effectué en ${type}`} src={transports[type]} aria-hidden='true' /></div>
+          <div key={type}><img className='icons' width={20} alt={type} title={`Transfert effectué en ${type}`} src={transports[type]} aria-hidden='true' /></div>
         ))}
       </div>
 
@@ -73,12 +73,11 @@ const TransfertInfo = ({debutTransfert, finTransfert, nbPatientsTransferes, type
           display: flex;
         }
 
-        .tag {
-          padding: 0.2em;
-          background-color: whitesmoke;
-          margin: 0.2em;
+      .icons {
+          width: 1.28571429em;
           text-align: center;
-          border-radius: 4px;
+          vertical-align: bottom;
+          margin: .5em;
         }
         `}</style>
     </div>

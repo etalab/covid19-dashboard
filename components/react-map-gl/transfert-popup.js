@@ -36,6 +36,7 @@ const TransfertPopup = ({debutTransfert, finTransfert, typeVecteur, regionDepart
         vertical-align: bottom;
         margin: 0 .5em;
       }
+
       .title {
         font-weight: bold;
         text-align: center;
