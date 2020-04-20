@@ -1,32 +1,34 @@
 import React, {useState, useContext} from 'react'
 import {FileText, Map, BarChart2} from 'react-feather'
 
-import theme from '../../styles/theme'
-import colors from '../../styles/colors'
+import theme from '../../../styles/theme'
+import colors from '../../../styles/colors'
 
-import {AppContext, ThemeContext} from '../../pages'
+import {AppContext, ThemeContext} from '../../../pages'
 
-import Scrollable from '../scrollable'
-import ReactMapGl from '../react-map-gl'
-import Statistics from '../statistics'
-import Informations from '../informations'
+import Scrollable from '../../scrollable'
+import ReactMapGl from '../../react-map-gl'
+import Drom from '../../react-map-gl/drom'
+import MapSelector from '../../map-selector'
 
-import Drom from '../react-map-gl/drom'
-import MapSelector from '../map-selector'
-import MobileMap from '../mobile-map'
+import bigPictureMaps from './big-picture-maps'
+
+import BigPictureInformations from './big-picture-informations'
+import BigPictureStatistics from './big-picture-statistics'
+import BigPictureMobileMap from './big-picture-mobile-map'
 
 export const BigPictureContext = React.createContext()
 
 const VIEWS = {
-  map: <MobileMap />,
+  map: <BigPictureMobileMap />,
   stats: (
     <Scrollable>
-      <Statistics />
+      <BigPictureStatistics />
     </Scrollable>
   ),
   informations: (
     <Scrollable>
-      <Informations />
+      <BigPictureInformations />
     </Scrollable>
   )
 }
@@ -89,13 +91,15 @@ const DesktopBigPicture = () => {
   const {selectedLocation} = useContext(AppContext)
   const {selectedMapIdx, setSelectedMapIdx} = useContext(BigPictureContext)
 
+  const {layers} = bigPictureMaps[selectedMapIdx]
+
   return (
     <>
       <div className='menu'>
         <Scrollable>
           <>
-            <Statistics />
-            <Informations />
+            <BigPictureStatistics />
+            <BigPictureInformations />
           </>
         </Scrollable>
       </div>
@@ -103,12 +107,12 @@ const DesktopBigPicture = () => {
       <div className='map'>
         <div className='metropole'>
           <div className='map-selector'>
-            <MapSelector mapIdx={selectedMapIdx} selectMap={setSelectedMapIdx} />
+            <MapSelector mapIdx={selectedMapIdx} maps={bigPictureMaps} selectMap={setSelectedMapIdx} />
           </div>
-          <ReactMapGl code={selectedLocation || 'FR'} />
+          <ReactMapGl code={selectedLocation || 'FR'} layers={layers} />
         </div>
         <div className='drom-container'>
-          <Drom />
+          <Drom layers={layers} />
         </div>
       </div>
 
@@ -171,9 +175,9 @@ const BigPicture = props => {
   const Component = isMobileDevice ? MobileBigPicture : DesktopBigPicture
 
   return (
-    <BigPictureContext value={{selectedMapIdx, setSelectedMapIdx}}>
+    <BigPictureContext.Provider value={{selectedMapIdx, setSelectedMapIdx}}>
       <Component {...props} />
-    </BigPictureContext>
+    </BigPictureContext.Provider>
   )
 }
 

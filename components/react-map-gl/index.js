@@ -4,21 +4,16 @@ import Router from 'next/router'
 import {Popup} from 'react-map-gl'
 
 import {AppContext} from '../../pages'
-import {BigPictureContext} from '../layouts/big-picture'
 import {getReport, reportToGeoJSON} from '../../lib/data'
-
-import maps from '../maps'
 
 import Map from './map'
 import SumUp from './sumup'
 
-const ReactMapGL = ({code, hidePopup, hideAttribution}) => {
+const ReactMapGL = ({code, layers, hidePopup, hideAttribution}) => {
   const {date, isMobileDevice} = useContext(AppContext)
-  const {selectedMapIdx} = useContext(BigPictureContext)
 
   const [hovered, setHovered] = useState(null)
 
-  const currentMap = maps[selectedMapIdx]
   const report = getReport(date, code === 'FR' ? 'REG' : 'DEP')
   const layerData = reportToGeoJSON(report, date)
 
@@ -65,7 +60,7 @@ const ReactMapGL = ({code, hidePopup, hideAttribution}) => {
       <Map
         code={code}
         data={layerData}
-        layers={currentMap.layers}
+        layers={layers}
         hideAttribution={hideAttribution}
         onHover={isMobileDevice ? null : onHover}
         onClick={onClick}
@@ -110,6 +105,7 @@ ReactMapGL.defaultProps = {
 
 ReactMapGL.propTypes = {
   code: PropTypes.string.isRequired,
+  layers: PropTypes.array.isRequired,
   hidePopup: PropTypes.bool,
   hideAttribution: PropTypes.bool
 }

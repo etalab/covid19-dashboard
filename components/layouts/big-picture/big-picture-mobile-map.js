@@ -1,18 +1,21 @@
 import React, {useContext, useState} from 'react'
 import {ChevronUp, ChevronDown} from 'react-feather'
 
-import {AppContext, ThemeContext} from '../pages'
-import {BigPictureContext} from './layouts/big-picture'
+import {AppContext, ThemeContext} from '../../../pages'
 
-import MapSelector from './map-selector'
-import ReactMapGL from './react-map-gl'
-import Drom, {droms} from './react-map-gl/drom'
-import Statistics from './statistics'
-import {getReport} from '../lib/data'
+import bigPictureMaps from './big-picture-maps'
+
+import MapSelector from '../../map-selector'
+import ReactMapGL from '../../react-map-gl'
+import Drom, {droms} from '../../react-map-gl/drom'
+import {getReport} from '../../../lib/data'
+
+import {BigPictureContext} from '.'
+import Statistics from './big-picture-statistics'
 
 const SHOW_STATS_HEIGHT = 38
 
-const MobileMap = () => {
+const BigPictureMobileMap = () => {
   let report
   const themeContext = useContext(ThemeContext)
   const {date, selectedLocation} = useContext(AppContext)
@@ -20,6 +23,8 @@ const MobileMap = () => {
 
   const [showStats, setShowStats] = useState(false)
   const [showDrom, setShowDrom] = useState(selectedLocation && droms.find(({code}) => selectedLocation === code))
+
+  const {layers} = bigPictureMaps[selectedMapIdx]
 
   if (selectedLocation) {
     report = getReport(date, selectedLocation)
@@ -31,14 +36,14 @@ const MobileMap = () => {
         Voir la France {showDrom ? 'métropolitaine' : 'd’outremer'}
       </div>
       <div className='map-selector clickable'>
-        <MapSelector mapIdx={selectedMapIdx} selectMap={setSelectedMapIdx} />
+        <MapSelector mapIdx={selectedMapIdx} maps={bigPictureMaps} selectMap={setSelectedMapIdx} />
       </div>
       <div className='map-content'>
         <div>
           {showDrom ? (
-            <Drom />
+            <Drom layers={layers} />
           ) : (
-            <ReactMapGL code={selectedLocation || 'FR'} />
+            <ReactMapGL code={selectedLocation || 'FR'} layers={layers} />
           )}
         </div>
       </div>
@@ -130,4 +135,4 @@ const MobileMap = () => {
   )
 }
 
-export default MobileMap
+export default BigPictureMobileMap

@@ -1,4 +1,5 @@
 import React from 'react'
+import PropTypes from 'prop-types'
 
 import ReactMapGL from '.'
 
@@ -25,14 +26,14 @@ export const droms = [
   }
 ]
 
-const Drom = () => {
+const Drom = ({layers}) => {
   return (
     <div className='drom-grid'>
 
       {droms.map(({code, name}) => (
         <div key={code} className='drom'>
           <div className='drom-name'>{name}</div>
-          <ReactMapGL code={code} hidePopup hideAttribution />
+          <ReactMapGL code={code} layers={layers} hidePopup hideAttribution />
         </div>
       ))}
 
@@ -66,3 +67,7 @@ const Drom = () => {
 }
 
 export default Drom
+
+Drom.propTypes = {
+  layers: PropTypes.array.isRequired
+}
