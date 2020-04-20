@@ -43,7 +43,6 @@ const MainPage = () => {
   const [isTouchScreenDevice, setIsTouchScreenDevice] = useState(false)
   const [date, setDate] = useState(dates[dates.length - 1])
   const [selectedLocation, setSelectedLocation] = useState(null)
-  const [selectedMapIdx, setSelectedMapIdx] = useState(1)
   const [selectedLayout, setSelectedLayout] = useState(LAYOUTS[0])
 
   const handleResize = () => {
@@ -82,8 +81,6 @@ const MainPage = () => {
           setDate,
           selectedLocation,
           setSelectedLocation,
-          selectedMapIdx,
-          setSelectedMapIdx,
           isIframe,
           isMobileDevice,
           isTouchScreenDevice,

@@ -4,6 +4,7 @@ import Router from 'next/router'
 import {Popup} from 'react-map-gl'
 
 import {AppContext} from '../../pages'
+import {BigPictureContext} from '../layouts/big-picture'
 import {getReport, reportToGeoJSON} from '../../lib/data'
 
 import maps from '../maps'
@@ -12,11 +13,8 @@ import Map from './map'
 import SumUp from './sumup'
 
 const ReactMapGL = ({code, hidePopup, hideAttribution}) => {
-  const {
-    date,
-    selectedMapIdx,
-    isMobileDevice
-  } = useContext(AppContext)
+  const {date, isMobileDevice} = useContext(AppContext)
+  const {selectedMapIdx} = useContext(BigPictureContext)
 
   const [hovered, setHovered] = useState(null)
 

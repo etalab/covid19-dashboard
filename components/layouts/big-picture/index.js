@@ -15,6 +15,8 @@ import Drom from '../react-map-gl/drom'
 import MapSelector from '../map-selector'
 import MobileMap from '../mobile-map'
 
+export const BigPictureContext = React.createContext()
+
 const VIEWS = {
   map: <MobileMap />,
   stats: (
@@ -84,7 +86,9 @@ const MobileBigPicture = () => {
 }
 
 const DesktopBigPicture = () => {
-  const {selectedLocation, selectedMapIdx, setSelectedMapIdx} = useContext(AppContext)
+  const {selectedLocation} = useContext(AppContext)
+  const {selectedMapIdx, setSelectedMapIdx} = useContext(BigPictureContext)
+
   return (
     <>
       <div className='menu'>
@@ -161,9 +165,16 @@ const DesktopBigPicture = () => {
 
 const BigPicture = props => {
   const {isMobileDevice} = useContext(AppContext)
+
+  const [selectedMapIdx, setSelectedMapIdx] = useState(1)
+
   const Component = isMobileDevice ? MobileBigPicture : DesktopBigPicture
 
-  return <Component {...props} />
+  return (
+    <BigPictureContext value={{selectedMapIdx, setSelectedMapIdx}}>
+      <Component {...props} />
+    </BigPictureContext>
+  )
 }
 
 export default BigPicture

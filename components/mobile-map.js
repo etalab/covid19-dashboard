@@ -2,6 +2,7 @@ import React, {useContext, useState} from 'react'
 import {ChevronUp, ChevronDown} from 'react-feather'
 
 import {AppContext, ThemeContext} from '../pages'
+import {BigPictureContext} from './layouts/big-picture'
 
 import MapSelector from './map-selector'
 import ReactMapGL from './react-map-gl'
@@ -14,7 +15,8 @@ const SHOW_STATS_HEIGHT = 38
 const MobileMap = () => {
   let report
   const themeContext = useContext(ThemeContext)
-  const {date, selectedLocation, selectedMapIdx, setSelectedMapIdx} = useContext(AppContext)
+  const {date, selectedLocation} = useContext(AppContext)
+  const {selectedMapIdx, setSelectedMapIdx} = useContext(BigPictureContext)
 
   const [showStats, setShowStats] = useState(false)
   const [showDrom, setShowDrom] = useState(selectedLocation && droms.find(({code}) => selectedLocation === code))
