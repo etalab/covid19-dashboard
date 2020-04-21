@@ -1,17 +1,17 @@
 import colors from '../../styles/colors'
 
-export const testsLayer = {
-  id: 'tests',
+export const testsRealisesLayer = {
+  id: 'testsRealises',
   type: 'circle',
-  source: 'tests',
-  filter: ['>', 'tests', 0],
+  source: 'testsRealises',
+  filter: ['>', 'testsRealises', 0],
   paint: {
     'circle-opacity': 0.6,
     'circle-color': colors.darkGrey,
     'circle-radius': [
       'interpolate',
       ['linear'],
-      ['sqrt', ['number', ['get', 'tests']]],
+      ['sqrt', ['number', ['get', 'testsRealises']]],
       0,
       10,
       100,
@@ -20,13 +20,13 @@ export const testsLayer = {
   }
 }
 
-export const testsCountLayer = {
-  id: 'tests-count',
+export const testsRealisesCountLayer = {
+  id: 'testsRealises-count',
   type: 'symbol',
-  source: 'tests',
-  filter: ['>', 'tests', 0],
+  source: 'testsRealises',
+  filter: ['>', 'testsRealises', 0],
   layout: {
-    'text-field': '{tests}',
+    'text-field': '{testsRealises}',
     'text-size': 16
   }
 }

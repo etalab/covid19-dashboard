@@ -1,6 +1,6 @@
 import {
-  testsLayer,
-  testsCountLayer,
+  testsRealisesLayer,
+  testsRealisesCountLayer,
   testsPositifsLayer,
   testsPositifsCountLayer
 } from '../../react-map-gl/layers'
@@ -8,8 +8,8 @@ import {
 const maps = [
   {
     name: 'Carte des tests effectués',
-    properties: 'tests',
-    layers: [testsLayer, testsCountLayer]
+    properties: 'testsRealises',
+    layers: [testsRealisesLayer, testsRealisesCountLayer]
   },
   {
     name: 'Carte des tests positifs',
