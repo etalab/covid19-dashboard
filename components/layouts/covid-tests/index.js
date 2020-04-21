@@ -6,7 +6,7 @@ import colors from '../../../styles/colors'
 
 import {AppContext, ThemeContext} from '../../../pages'
 
-import {getPreviousDate, hasSpecificData} from '../../../lib/data'
+import {getPreviousDate, hasSpecificsData} from '../../../lib/data'
 
 import Scrollable from '../../scrollable'
 import ReactMapGl from '../../react-map-gl'
@@ -175,10 +175,14 @@ const CovidTests = props => {
 
   useEffect(() => {
     const location = selectedLocation || 'FR'
-    if (hasSpecificData(date, location, 'testsRealises')) {
+    if (hasSpecificsData(date, location, ['testsRealises', 'testsPositifs'])) {
       setForcedDate(null)
     } else {
       setForcedDate(getPreviousDate(date))
+    }
+
+    return () => {
+      setForcedDate(null)
     }
   }, [date, selectedLocation, setForcedDate])
 

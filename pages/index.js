@@ -30,7 +30,7 @@ const LAYOUTS = [
     component: <h1>Suivi des hospitalisations</h1>
   },
   {
-    id: 'test',
+    id: 'tests',
     label: 'Suivi des tests',
     component: <CovidTests />
   }
