@@ -98,10 +98,18 @@ async function loadTests(url) {
         code: `REG-${region.code}`,
         nom: region.nom,
         testsRealises: firstRow.testsRealises.map(({age, sexe}) => {
-          return sumBy(regionRows, r => r.testsRealises.find(entry => entry.age === age && entry.sexe === sexe).value)
+          return {
+            age,
+            sexe,
+            value: sumBy(regionRows, r => r.testsRealises.find(entry => entry.age === age && entry.sexe === sexe).value)
+          }
         }),
         testsPositifs: firstRow.testsPositifs.map(({age, sexe}) => {
-          return sumBy(regionRows, r => r.testsPositifs.find(entry => entry.age === age && entry.sexe === sexe).value)
+          return {
+            age,
+            sexe,
+            value: sumBy(regionRows, r => r.testsPositifs.find(entry => entry.age === age && entry.sexe === sexe).value)
+          }
         }),
         sourceType: 'sante-publique-france'
       }
@@ -116,10 +124,18 @@ async function loadTests(url) {
         code: 'FRA',
         nom: 'France',
         testsRealises: firstRow.testsRealises.map(({age, sexe}) => {
-          return sumBy(rows, r => r.testsRealises.find(entry => entry.age === age && entry.sexe === sexe).value)
+          return {
+            age,
+            sexe,
+            value: sumBy(rows, r => r.testsRealises.find(entry => entry.age === age && entry.sexe === sexe).value)
+          }
         }),
         testsPositifs: firstRow.testsPositifs.map(({age, sexe}) => {
-          return sumBy(rows, r => r.testsPositifs.find(entry => entry.age === age && entry.sexe === sexe).value)
+          return {
+            age,
+            sexe,
+            value: sumBy(rows, r => r.testsPositifs.find(entry => entry.age === age && entry.sexe === sexe).value)
+          }
         }),
         sourceType: 'sante-publique-france'
       }
