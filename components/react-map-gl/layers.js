@@ -1,5 +1,67 @@
 import colors from '../../styles/colors'
 
+export const testsLayer = {
+  id: 'tests',
+  type: 'circle',
+  source: 'tests',
+  filter: ['>', 'tests', 0],
+  paint: {
+    'circle-opacity': 0.6,
+    'circle-color': colors.darkGrey,
+    'circle-radius': [
+      'interpolate',
+      ['linear'],
+      ['sqrt', ['number', ['get', 'tests']]],
+      0,
+      10,
+      100,
+      70
+    ]
+  }
+}
+
+export const testsCountLayer = {
+  id: 'tests-count',
+  type: 'symbol',
+  source: 'tests',
+  filter: ['>', 'tests', 0],
+  layout: {
+    'text-field': '{tests}',
+    'text-size': 16
+  }
+}
+
+export const testsPositifsLayer = {
+  id: 'testsPositifs',
+  type: 'circle',
+  source: 'testsPositifs',
+  filter: ['>', 'testsPositifs', 0],
+  paint: {
+    'circle-opacity': 0.6,
+    'circle-color': colors.red,
+    'circle-radius': [
+      'interpolate',
+      ['linear'],
+      ['sqrt', ['number', ['get', 'testsPositifs']]],
+      0,
+      10,
+      100,
+      70
+    ]
+  }
+}
+
+export const testsPositifsCountLayer = {
+  id: 'testsPositifs-count',
+  type: 'symbol',
+  source: 'testsPositifs',
+  filter: ['>', 'testsPositifs', 0],
+  layout: {
+    'text-field': '{testsPositifs}',
+    'text-size': 16
+  }
+}
+
 export const decesLayer = {
   id: 'deces',
   type: 'circle',
