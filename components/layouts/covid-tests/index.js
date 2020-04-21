@@ -10,10 +10,10 @@ import Scrollable from '../../scrollable'
 import ReactMapGl from '../../react-map-gl'
 import Drom from '../../react-map-gl/drom'
 import MapSelector from '../../map-selector'
+import BigPictureInformations from '../big-picture/big-picture-informations'
 
 import CovidTestsMaps from './covid-tests-maps'
 
-import CovidTestsInformations from './covid-tests-informations'
 import CovidTestsStatistics from './covid-tests-statistics'
 import CovidTestsMobileMap from './covid-tests-mobile-map'
 
@@ -28,7 +28,7 @@ const VIEWS = {
   ),
   informations: (
     <Scrollable>
-      <CovidTestsInformations />
+      <BigPictureInformations />
     </Scrollable>
   )
 }
@@ -97,10 +97,7 @@ const DesktopCovidTests = () => {
     <>
       <div className='menu'>
         <Scrollable>
-          <>
-            <CovidTestsStatistics />
-            <CovidTestsInformations />
-          </>
+          <CovidTestsStatistics />
         </Scrollable>
       </div>
 
