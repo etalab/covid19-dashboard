@@ -57,7 +57,7 @@ function consolidate(records) {
       .reduce((acc, row) => {
         defaults(acc, row)
         return acc
-      }, {}), ['casConfirmes', 'deces', 'decesEhpad', 'casEhpad', 'casConfirmesEhpad', 'casPossiblesEhpad', 'reanimation', 'hospitalises', 'gueris', 'date', 'code', 'nom', 'testsRealises', 'testsPositifs'])
+      }, {}), ['casConfirmes', 'deces', 'decesEhpad', 'casEhpad', 'casConfirmesEhpad', 'casPossiblesEhpad', 'reanimation', 'hospitalises', 'gueris', 'date', 'code', 'nom', 'testsRealises', 'testsPositifs', 'testsRealisesDetails', 'testsPositifsDetails'])
   })
 }
 
@@ -69,18 +69,20 @@ async function loadTests(url) {
         date: rows[0].jour,
         code: `DEP-${rows[0].dep}`,
         nom: departementsIndex[rows[0].dep].nom,
-        testsRealises: [],
-        testsPositifs: [],
+        testsRealises: sumBy(rows, r => Number.parseInt(r.nb_test, 10)),
+        testsRealisesDetails: [],
+        testsPositifs: sumBy(rows, r => Number.parseInt(r.nb_pos, 10)),
+        testsPositifsDetails: [],
         sourceType: 'sante-publique-france'
       }
 
       rows.forEach(r => {
-        report.testsRealises.push({age: r.clage_covid, sexe: '0', value: Number.parseInt(r.nb_test, 10)})
-        report.testsRealises.push({age: r.clage_covid, sexe: 'h', value: Number.parseInt(r.nb_test_h, 10)})
-        report.testsRealises.push({age: r.clage_covid, sexe: 'f', value: Number.parseInt(r.nb_test_f, 10)})
-        report.testsPositifs.push({age: r.clage_covid, sexe: '0', value: Number.parseInt(r.nb_pos, 10)})
-        report.testsPositifs.push({age: r.clage_covid, sexe: 'h', value: Number.parseInt(r.nb_pos_h, 10)})
-        report.testsPositifs.push({age: r.clage_covid, sexe: 'f', value: Number.parseInt(r.nb_pos_f, 10)})
+        report.testsRealisesDetails.push({age: r.clage_covid, sexe: '0', value: Number.parseInt(r.nb_test, 10)})
+        report.testsRealisesDetails.push({age: r.clage_covid, sexe: 'h', value: Number.parseInt(r.nb_test_h, 10)})
+        report.testsRealisesDetails.push({age: r.clage_covid, sexe: 'f', value: Number.parseInt(r.nb_test_f, 10)})
+        report.testsPositifsDetails.push({age: r.clage_covid, sexe: '0', value: Number.parseInt(r.nb_pos, 10)})
+        report.testsPositifsDetails.push({age: r.clage_covid, sexe: 'h', value: Number.parseInt(r.nb_pos_h, 10)})
+        report.testsPositifsDetails.push({age: r.clage_covid, sexe: 'f', value: Number.parseInt(r.nb_pos_f, 10)})
       })
 
       return report
@@ -97,18 +99,20 @@ async function loadTests(url) {
         date: firstRow.date,
         code: `REG-${region.code}`,
         nom: region.nom,
-        testsRealises: firstRow.testsRealises.map(({age, sexe}) => {
+        testsRealises: sumBy(regionRows, 'testsRealises'),
+        testsRealisesDetails: firstRow.testsRealisesDetails.map(({age, sexe}) => {
           return {
             age,
             sexe,
-            value: sumBy(regionRows, r => r.testsRealises.find(entry => entry.age === age && entry.sexe === sexe).value)
+            value: sumBy(regionRows, r => r.testsRealisesDetails.find(entry => entry.age === age && entry.sexe === sexe).value)
           }
         }),
-        testsPositifs: firstRow.testsPositifs.map(({age, sexe}) => {
+        testsPositifs: sumBy(regionRows, 'testsPositifs'),
+        testsPositifsDetails: firstRow.testsPositifsDetails.map(({age, sexe}) => {
           return {
             age,
             sexe,
-            value: sumBy(regionRows, r => r.testsPositifs.find(entry => entry.age === age && entry.sexe === sexe).value)
+            value: sumBy(regionRows, r => r.testsPositifsDetails.find(entry => entry.age === age && entry.sexe === sexe).value)
           }
         }),
         sourceType: 'sante-publique-france'
@@ -123,18 +127,20 @@ async function loadTests(url) {
         date: firstRow.date,
         code: 'FRA',
         nom: 'France',
-        testsRealises: firstRow.testsRealises.map(({age, sexe}) => {
+        testsRealises: sumBy(rows, 'testsRealises'),
+        testsRealisesDetails: firstRow.testsRealisesDetails.map(({age, sexe}) => {
           return {
             age,
             sexe,
-            value: sumBy(rows, r => r.testsRealises.find(entry => entry.age === age && entry.sexe === sexe).value)
+            value: sumBy(rows, r => r.testsRealisesDetails.find(entry => entry.age === age && entry.sexe === sexe).value)
           }
         }),
-        testsPositifs: firstRow.testsPositifs.map(({age, sexe}) => {
+        testsPositifs: sumBy(rows, 'testsPositifs'),
+        testsPositifsDetails: firstRow.testsPositifsDetails.map(({age, sexe}) => {
           return {
             age,
             sexe,
-            value: sumBy(rows, r => r.testsPositifs.find(entry => entry.age === age && entry.sexe === sexe).value)
+            value: sumBy(rows, r => r.testsPositifsDetails.find(entry => entry.age === age && entry.sexe === sexe).value)
           }
         }),
         sourceType: 'sante-publique-france'
