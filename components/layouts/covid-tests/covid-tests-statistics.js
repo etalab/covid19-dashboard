@@ -1,6 +1,7 @@
 import React, {useContext} from 'react'
 import {BarChart2} from 'react-feather'
 import Link from 'next/link'
+import {sumBy} from 'lodash'
 
 import colors from '../../../styles/colors'
 
@@ -10,12 +11,23 @@ import {getReport} from '../../../lib/data'
 
 import CovidTestsHistogram from './covid-tests-histogram'
 import CovidTestsAgeChart from './covid-tests-age-chart'
+import CovidTestsCounters from './covid-tests-counters'
+import PieChartPercent from '../../pie-chart-percent'
 
 const CovidTestsStatistics = () => {
   const {date, forcedDate, selectedLocation, isMobileDevice} = useContext(AppContext)
 
   const selectedDate = date || forcedDate
   const report = getReport(selectedDate, selectedLocation || 'FRA')
+  const filteredHistory = report.history.filter(r => selectedDate >= r.date)
+
+  const testsPositifs = sumBy(filteredHistory, 'testsPositifs')
+  const testsRealises = sumBy(filteredHistory, 'testsRealises')
+  const testsNegatifs = testsRealises - testsPositifs
+
+  const data = [testsNegatifs, testsPositifs]
+  const pieLabels = ['Tests négatifs', 'Tests positifs']
+  const pieColors = [colors.grey, colors.red]
 
   return (
     <>
@@ -25,6 +37,8 @@ const CovidTestsStatistics = () => {
         )}
         <h3>COVID-19 - {report ? report.nom : 'France'}</h3>
       </div>
+      <CovidTestsCounters testsPositifs={testsPositifs} testsRealises={testsRealises} />
+      <PieChartPercent data={data} labels={pieLabels} colors={pieColors} height={150} />
       <CovidTestsHistogram reports={report.history.filter(r => date >= r.date)} />
       <CovidTestsAgeChart reports={report.history.filter(r => selectedDate >= r.date)} />
       <style jsx>{`

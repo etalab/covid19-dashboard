@@ -44,6 +44,7 @@ const Counters = ({report, previousReport}) => {
         .stats {
           background-color: ${colors.lighterGrey};
         }
+
         .counters {
           display: grid;
           grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
