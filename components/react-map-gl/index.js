@@ -10,12 +10,13 @@ import Map from './map'
 import SumUp from './sumup'
 
 const ReactMapGL = ({code, layers, hidePopup, hideAttribution}) => {
-  const {date, isMobileDevice} = useContext(AppContext)
+  const {date, forcedDate, isMobileDevice} = useContext(AppContext)
 
   const [hovered, setHovered] = useState(null)
 
-  const report = getReport(date, code === 'FR' ? 'REG' : 'DEP')
-  const layerData = reportToGeoJSON(report, date)
+  const selectedDate = forcedDate || date
+  const report = getReport(selectedDate, code === 'FR' ? 'REG' : 'DEP')
+  const layerData = reportToGeoJSON(report, selectedDate)
 
   const onHover = event => {
     event.stopPropagation()

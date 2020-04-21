@@ -4,9 +4,10 @@ import {AppContext} from '../pages'
 
 import DateNav from '../components/date-nav'
 import LayoutSelector from '../components/layout-selector'
+import DateWarning from '../components/date-warning'
 
 const MobilePage = () => {
-  const {selectedLayout} = useContext(AppContext)
+  const {selectedLayout, forcedDate} = useContext(AppContext)
 
   return (
     <div className='mobile-page-container'>
@@ -14,6 +15,8 @@ const MobilePage = () => {
         <DateNav />
         <LayoutSelector />
       </div>
+
+      {forcedDate && <DateWarning date={forcedDate} />}
 
       {selectedLayout.component}
 

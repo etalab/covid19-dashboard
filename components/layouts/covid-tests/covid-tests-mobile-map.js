@@ -17,7 +17,7 @@ const SHOW_STATS_HEIGHT = 38
 const CovidTestsMobileMap = () => {
   let report
   const themeContext = useContext(ThemeContext)
-  const {date, selectedLocation} = useContext(AppContext)
+  const {date, forcedDate, selectedLocation} = useContext(AppContext)
   const {selectedMapIdx, setSelectedMapIdx} = useContext(CovidTestsContext)
 
   const [showStats, setShowStats] = useState(false)
@@ -26,7 +26,8 @@ const CovidTestsMobileMap = () => {
   const {layers} = bigPictureMaps[selectedMapIdx]
 
   if (selectedLocation) {
-    report = getReport(date, selectedLocation)
+    const selectedDate = forcedDate || date
+    report = getReport(selectedDate, selectedLocation)
   }
 
   return (

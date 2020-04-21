@@ -1,10 +1,12 @@
-import React, {useState, useContext} from 'react'
+import React, {useState, useContext, useEffect} from 'react'
 import {FileText, Map, BarChart2} from 'react-feather'
 
 import theme from '../../../styles/theme'
 import colors from '../../../styles/colors'
 
 import {AppContext, ThemeContext} from '../../../pages'
+
+import {getPreviousDate, hasSpecificData} from '../../../lib/data'
 
 import Scrollable from '../../scrollable'
 import ReactMapGl from '../../react-map-gl'
@@ -165,11 +167,20 @@ const DesktopCovidTests = () => {
 }
 
 const CovidTests = props => {
-  const {isMobileDevice} = useContext(AppContext)
+  const {date, setForcedDate, selectedLocation, isMobileDevice} = useContext(AppContext)
 
   const [selectedMapIdx, setSelectedMapIdx] = useState(1)
 
   const Component = isMobileDevice ? MobileCovidTests : DesktopCovidTests
+
+  useEffect(() => {
+    const location = selectedLocation || 'FR'
+    if (hasSpecificData(date, location, 'testsRealises')) {
+      setForcedDate(null)
+    } else {
+      setForcedDate(getPreviousDate(date))
+    }
+  }, [date, selectedLocation, setForcedDate])
 
   return (
     <CovidTestsContext.Provider value={{selectedMapIdx, setSelectedMapIdx}}>

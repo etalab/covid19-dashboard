@@ -6,11 +6,12 @@ import colors from '../styles/colors'
 
 import DateNav from '../components/date-nav'
 import LayoutSelector from '../components/layout-selector'
+import DateWarning from '../components/date-warning'
 
 const HEADER_HEIGHT = '50px'
 
 const DesktopPage = () => {
-  const {selectedLayout} = useContext(AppContext)
+  const {selectedLayout, forcedDate} = useContext(AppContext)
   const themeContext = useContext(ThemeContext)
 
   return (
@@ -19,6 +20,8 @@ const DesktopPage = () => {
         <DateNav />
         <LayoutSelector />
       </div>
+
+      {forcedDate && <DateWarning date={forcedDate} />}
 
       <div className='desktop-content'>
         {selectedLayout.component}
@@ -35,7 +38,7 @@ const DesktopPage = () => {
           z-index: 10;
           display: flex;
           background-color: ${themeContext.primary};
-          box-shadow: 0 1px 4px ${colors.lightGrey};
+          box-shadow: ${forcedDate ? '' : `0 1px 4px ${colors.lightGrey}`};
           width: 100%;
           height: ${HEADER_HEIGHT};
         }

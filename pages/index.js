@@ -43,6 +43,7 @@ const MainPage = () => {
   const [isMobileDevice, setIsMobileDevice] = useState(false)
   const [isTouchScreenDevice, setIsTouchScreenDevice] = useState(false)
   const [date, setDate] = useState(dates[dates.length - 1])
+  const [forcedDate, setForcedDate] = useState(null)
   const [selectedLocation, setSelectedLocation] = useState(null)
   const [selectedLayout, setSelectedLayout] = useState(LAYOUTS[0])
 
@@ -80,6 +81,8 @@ const MainPage = () => {
         <AppContext.Provider value={{
           date,
           setDate,
+          forcedDate,
+          setForcedDate,
           selectedLocation,
           setSelectedLocation,
           isIframe,
