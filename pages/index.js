@@ -25,11 +25,6 @@ const LAYOUTS = [
     component: <BigPicture />
   },
   {
-    id: 'hospitalisations',
-    label: 'Suivi des hospitalisations',
-    component: <h1>Suivi des hospitalisations</h1>
-  },
-  {
     id: 'tests',
     label: 'Suivi des tests',
     component: <CovidTests />
