@@ -38,7 +38,7 @@ const CovidTestsStatistics = () => {
         <h3>COVID-19 - {report ? report.nom : 'France'}</h3>
       </div>
       <CovidTestsCounters testsPositifs={testsPositifs} testsRealises={testsRealises} />
-      <PieChartPercent data={data} labels={pieLabels} colors={pieColors} height={150} />
+      <PieChartPercent data={data} labels={pieLabels} colors={pieColors} height={isMobileDevice ? '150' : '120'} />
       <CovidTestsHistogram reports={report.history.filter(r => date >= r.date)} />
       <CovidTestsAgeChart reports={report.history.filter(r => selectedDate >= r.date)} />
       <style jsx>{`

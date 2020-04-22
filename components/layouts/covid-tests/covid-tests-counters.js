@@ -17,7 +17,6 @@ const CovidTestsCounters = ({testsPositifs, testsRealises}) => {
       <style jsx>{`
         .stats {
           background-color: ${colors.lighterGrey};
-          min-width: 500px;
         }
 
         .counters {

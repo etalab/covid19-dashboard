@@ -48,9 +48,7 @@ const MobileCovidTests = () => {
 
   return (
     <>
-      <Scrollable>
-        {VIEWS[selectedView]}
-      </Scrollable>
+      {VIEWS[selectedView]}
 
       <div className='view-selector'>
         <div className={`${selectedView === 'stats' ? 'selected' : ''}`} onClick={() => handleClick('stats')}>
@@ -121,6 +119,7 @@ const DesktopCovidTests = () => {
           display: flex;
           flex-direction: column;
           max-width: ${theme.menuWidth};
+          width: ${theme.menuWidth};
           box-shadow: 0 1px 4px ${colors.lightGrey};
         }
 
