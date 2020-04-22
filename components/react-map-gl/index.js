@@ -15,7 +15,7 @@ const ReactMapGL = ({code, layers, hidePopup, hideAttribution}) => {
   const [hovered, setHovered] = useState(null)
 
   const selectedDate = forcedDate || date
-  const report = getReport(selectedDate, code === 'FR' ? 'REG' : 'DEP')
+  const report = getReport(selectedDate, code === 'FRA' ? 'REG' : 'DEP')
   const layerData = reportToGeoJSON(report, selectedDate)
 
   const onHover = event => {

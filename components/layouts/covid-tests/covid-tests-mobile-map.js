@@ -43,7 +43,7 @@ const CovidTestsMobileMap = () => {
           {showDrom ? (
             <Drom layers={layers} />
           ) : (
-            <ReactMapGL code={selectedLocation || 'FR'} layers={layers} />
+            <ReactMapGL code={selectedLocation || 'FRA'} layers={layers} />
           )}
         </div>
       </div>

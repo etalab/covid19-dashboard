@@ -108,7 +108,7 @@ const DesktopCovidTests = () => {
           <div className='map-selector'>
             <MapSelector mapIdx={selectedMapIdx} maps={CovidTestsMaps} selectMap={setSelectedMapIdx} />
           </div>
-          <ReactMapGl code={selectedLocation || 'FR'} layers={layers} />
+          <ReactMapGl code={selectedLocation || 'FRA'} layers={layers} />
         </div>
         <div className='drom-container'>
           <Drom layers={layers} />
@@ -174,7 +174,7 @@ const CovidTests = props => {
   const Component = isMobileDevice ? MobileCovidTests : DesktopCovidTests
 
   useEffect(() => {
-    const location = selectedLocation || 'FR'
+    const location = selectedLocation || 'FRA'
     if (hasSpecificsData(date, location, ['testsRealises', 'testsPositifs'])) {
       setForcedDate(null)
     } else {

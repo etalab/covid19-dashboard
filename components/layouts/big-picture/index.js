@@ -109,7 +109,7 @@ const DesktopBigPicture = () => {
           <div className='map-selector'>
             <MapSelector mapIdx={selectedMapIdx} maps={bigPictureMaps} selectMap={setSelectedMapIdx} />
           </div>
-          <ReactMapGl code={selectedLocation || 'FR'} layers={layers} />
+          <ReactMapGl code={selectedLocation || 'FRA'} layers={layers} />
         </div>
         <div className='drom-container'>
           <Drom layers={layers} />
