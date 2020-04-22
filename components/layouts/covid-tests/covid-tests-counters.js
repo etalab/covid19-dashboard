@@ -8,10 +8,10 @@ import colors from '../../../styles/colors'
 const CovidTestsCounters = ({testsPositifs, testsRealises}) => {
   return (
     <div className='stats'>
-      <div className='title'>Suivi des tests</div>
+      <div className='title'>Tests PCR en laboratoires de ville</div>
       <div className='counters'>
-        <Counter value={testsRealises} label='Tests réalisés' details='Total des tests réalisés en hopital' color='darkGrey' />
-        <Counter value={testsPositifs} label='Tests positifs' details='Tests diagnostiqués positifs en hopital' color='red' />
+        <Counter value={testsRealises} label='Tests réalisés' details='Nombre total de tests pour recherche de SARS-COV-2 ' color='darkGrey' />
+        <Counter value={testsPositifs} label='Tests positifs' details='Nombre total de tests positifs pour recherche de SARS-COV-2 à ce jour' color='red' />
       </div>
 
       <style jsx>{`

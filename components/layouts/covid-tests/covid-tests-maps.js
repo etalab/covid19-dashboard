@@ -7,12 +7,12 @@ import {
 
 const maps = [
   {
-    name: 'Carte des tests effectués',
+    name: 'Tests réalisés en laboratoires de ville - ce jour',
     properties: 'testsRealises',
     layers: [testsRealisesLayer, testsRealisesCountLayer]
   },
   {
-    name: 'Carte des tests positifs',
+    name: 'Tests positifs en laboratoires de ville - ce jour',
     properties: 'testPositifs',
     layers: [testsPositifsLayer, testsPositifsCountLayer]
   }
