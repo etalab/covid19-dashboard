@@ -3,11 +3,9 @@ import PropTypes from 'prop-types'
 import {indexOf, uniq} from 'lodash'
 import {ChevronDown, ChevronUp, Check} from 'react-feather'
 
-import maps from './maps'
-
 import colors from '../styles/colors'
 
-const MapSelector = ({mapIdx, selectMap}) => {
+const MapSelector = ({mapIdx, maps, selectMap}) => {
   const selectedMap = maps[mapIdx]
 
   const [isOpen, setIsOpen] = useState(false)
@@ -102,6 +100,7 @@ const MapSelector = ({mapIdx, selectMap}) => {
 
 MapSelector.propTypes = {
   mapIdx: PropTypes.number.isRequired,
+  maps: PropTypes.array.isRequired,
   selectMap: PropTypes.func.isRequired
 }
 

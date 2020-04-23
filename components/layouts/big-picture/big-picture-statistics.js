@@ -1,17 +1,17 @@
 import React, {useContext, useState} from 'react'
-import {X, BarChart2} from 'react-feather'
+import {BarChart2} from 'react-feather'
 import Link from 'next/link'
 
-import colors from '../styles/colors'
+import colors from '../../../styles/colors'
 
-import {AppContext} from '../pages'
+import {AppContext} from '../../../pages'
 
-import {getPreviousReport, getReport} from '../lib/data'
+import {getPreviousReport, getReport} from '../../../lib/data'
 
-import Counters from './counters'
-import MixedChart from './charts/mixed-chart'
-import IndicateurCumulChart from './charts/indicateur-cumul'
-import IndicateurVariationChart from './charts/indicateur-variation'
+import Counters from '../../counters'
+import MixedChart from '../../charts/mixed-chart'
+import IndicateurCumulChart from '../../charts/indicateur-cumul'
+import IndicateurVariationChart from '../../charts/indicateur-variation'
 
 const charts = {
   mixed: {
@@ -75,7 +75,7 @@ function getChart(chartName, showVariations) {
   }
 }
 
-const Statistics = () => {
+const BigPictureStatistics = () => {
   const {date, selectedLocation, isMobileDevice} = useContext(AppContext)
 
   const report = getReport(date, selectedLocation || 'FRA')
@@ -224,4 +224,4 @@ const Statistics = () => {
   )
 }
 
-export default Statistics
+export default BigPictureStatistics

@@ -2,31 +2,21 @@ import React, {useState, useContext} from 'react'
 import PropTypes from 'prop-types'
 import Router from 'next/router'
 import {Popup} from 'react-map-gl'
-import {Maximize2} from 'react-feather'
 
 import {AppContext} from '../../pages'
 import {getReport, reportToGeoJSON} from '../../lib/data'
 
-import maps from '../maps'
-
 import Map from './map'
 import SumUp from './sumup'
 
-const SITE_URL = process.env.SITE_URL
-
-const ReactMapGL = ({code, hidePopup, hideAttribution}) => {
-  const {
-    date,
-    selectedMapIdx,
-    isIframe,
-    isMobileDevice
-  } = useContext(AppContext)
+const ReactMapGL = ({code, layers, hidePopup, hideAttribution}) => {
+  const {date, forcedDate, isMobileDevice} = useContext(AppContext)
 
   const [hovered, setHovered] = useState(null)
 
-  const currentMap = maps[selectedMapIdx]
-  const report = getReport(date, code === 'FR' ? 'REG' : 'DEP')
-  const layerData = reportToGeoJSON(report, date)
+  const selectedDate = forcedDate || date
+  const report = getReport(selectedDate, code === 'FRA' ? 'REG' : 'DEP')
+  const layerData = reportToGeoJSON(report, selectedDate)
 
   const onHover = event => {
     event.stopPropagation()
@@ -68,19 +58,10 @@ const ReactMapGL = ({code, hidePopup, hideAttribution}) => {
 
   return (
     <div className='map-container'>
-      <div className='controls'>
-
-        {isIframe && code === 'FR' && (
-          <div className='control maximize'>
-            <a href={SITE_URL} target='_top'><Maximize2 style={{verticalAlign: 'middle'}} /></a>
-          </div>
-        )}
-      </div>
-
       <Map
         code={code}
         data={layerData}
-        layers={currentMap.layers}
+        layers={layers}
         hideAttribution={hideAttribution}
         onHover={isMobileDevice ? null : onHover}
         onClick={onClick}
@@ -107,33 +88,11 @@ const ReactMapGL = ({code, hidePopup, hideAttribution}) => {
           height: 100%;
         }
 
-        .controls {
-          z-index: 2;
-          position: absolute;
-          display: flex;
-          justify-content: end;
-          align-items: start;
-          width: 100%;
-          padding: 0.5em;
-        }
-
         .control {
           background-color: #000000aa;
           color: #fff;
           border-radius: 4px;
           margin: 0;
-        }
-
-        .maximize {
-          display: flex;
-          right: 0;
-          border-radius: 4px;
-          background: #53514f;
-        }
-
-        .maximize a {
-          color: #fff;
-          padding: 0.4em;
         }
       `}</style>
     </div>
@@ -147,6 +106,7 @@ ReactMapGL.defaultProps = {
 
 ReactMapGL.propTypes = {
   code: PropTypes.string.isRequired,
+  layers: PropTypes.array.isRequired,
   hidePopup: PropTypes.bool,
   hideAttribution: PropTypes.bool
 }

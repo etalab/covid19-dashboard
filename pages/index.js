@@ -7,13 +7,29 @@ import theme from '../styles/theme'
 
 import Page from '../layouts/main'
 
-import ScreenPage from '../layouts/screen'
+import DesktopPage from '../layouts/desktop'
 import MobilePage from '../layouts/mobile'
+
+import BigPicture from '../components/layouts/big-picture'
+import CovidTests from '../components/layouts/covid-tests'
 
 export const AppContext = React.createContext()
 export const ThemeContext = React.createContext('theme.default')
 
 const MOBILE_WIDTH = Number.parseInt(theme.mobileDisplay.split('px')[0], 10)
+
+const LAYOUTS = [
+  {
+    id: 'big-picture',
+    label: 'Vue d’ensemble',
+    component: <BigPicture />
+  },
+  {
+    id: 'tests',
+    label: 'Suivi des tests',
+    component: <CovidTests />
+  }
+]
 
 const MainPage = () => {
   const router = useRouter()
@@ -22,8 +38,9 @@ const MainPage = () => {
   const [isMobileDevice, setIsMobileDevice] = useState(false)
   const [isTouchScreenDevice, setIsTouchScreenDevice] = useState(false)
   const [date, setDate] = useState(dates[dates.length - 1])
+  const [forcedDate, setForcedDate] = useState(null)
   const [selectedLocation, setSelectedLocation] = useState(null)
-  const [selectedMapIdx, setSelectedMapIdx] = useState(1)
+  const [selectedLayout, setSelectedLayout] = useState(LAYOUTS[0])
 
   const handleResize = () => {
     setIsMobileDevice(window.innerWidth < MOBILE_WIDTH)
@@ -59,20 +76,23 @@ const MainPage = () => {
         <AppContext.Provider value={{
           date,
           setDate,
+          forcedDate,
+          setForcedDate,
           selectedLocation,
           setSelectedLocation,
-          selectedMapIdx,
-          setSelectedMapIdx,
           isIframe,
           isMobileDevice,
-          isTouchScreenDevice
+          isTouchScreenDevice,
+          selectedLayout,
+          setSelectedLayout,
+          layouts: LAYOUTS
         }}
         >
           <ThemeContext.Provider value={theme.gouv}>
             {isMobileDevice ? (
               <MobilePage />
             ) : (
-              <ScreenPage />
+              <DesktopPage />
             )}
           </ThemeContext.Provider>
         </AppContext.Provider>

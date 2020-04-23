@@ -2,20 +2,18 @@ import React, {useContext} from 'react'
 import PropTypes from 'prop-types'
 import {ChevronLeft, ChevronRight} from 'react-feather'
 
-import {AppContext} from '../pages'
+import {AppContext, ThemeContext} from '../pages'
 import {getNextDate, getPreviousDate} from '../lib/data'
 
 import theme from '../styles/theme'
-import colors from '../styles/colors'
 
-const formatDate = isoString => {
-  const date = new Date(isoString)
-
-  return date.toLocaleDateString()
-}
+import {formatDate} from '../lib/date'
 
 const DateNav = ({disabled}) => {
+  const themeContext = useContext(ThemeContext)
+
   const {date, setDate} = useContext(AppContext)
+
   const formatedDate = formatDate(date)
 
   const previousDate = getPreviousDate(date)
@@ -26,7 +24,7 @@ const DateNav = ({disabled}) => {
       {!disabled && (
         <>
           <div className={`report-nav ${previousDate ? '' : 'disabled'}`} onClick={previousDate ? () => setDate(previousDate) : null}><ChevronLeft /></div>
-          <h2>Données au {formatedDate}</h2>
+          <h3>Données au {formatedDate}</h3>
           <div className={`report-nav ${nextDate ? '' : 'disabled'}`} onClick={nextDate ? () => setDate(nextDate) : null}><ChevronRight /></div>
         </>
       )}
@@ -39,11 +37,14 @@ const DateNav = ({disabled}) => {
           justify-content: space-between;
           align-items: center;
           text-align: center;
-          box-shadow: 0 1px 4px ${colors.lightGrey};
           padding: 0 1em;
-          background-color: ${colors.darkBlue};
+          background-color: ${themeContext.primary};
           color: #fff;
         }
+
+          .menu-header h3 {
+            margin: 0.5em;
+          }
 
         .report-nav.disabled {
           color: #ffffff55;
@@ -63,7 +64,7 @@ const DateNav = ({disabled}) => {
             padding: ${disabled ? '1.7em 1em' : '0.5em 1em'};
           }
 
-          .menu-header h2 {
+          .menu-header h3 {
             margin: 0.2em;
           }
         }

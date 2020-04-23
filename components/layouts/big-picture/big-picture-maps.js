@@ -7,7 +7,7 @@ import {
   reanimationCountLayer,
   guerisLayer,
   guerisCountLayer
-} from './react-map-gl/layers'
+} from '../../react-map-gl/layers'
 
 const maps = [
   {

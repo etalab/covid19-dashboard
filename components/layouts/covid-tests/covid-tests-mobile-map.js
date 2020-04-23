@@ -1,26 +1,33 @@
 import React, {useContext, useState} from 'react'
 import {ChevronUp, ChevronDown} from 'react-feather'
 
-import {AppContext, ThemeContext} from '../pages'
+import {AppContext, ThemeContext} from '../../../pages'
 
-import MapSelector from './map-selector'
-import ReactMapGL from './react-map-gl'
-import Drom, {droms} from './react-map-gl/drom'
-import Statistics from './statistics'
-import {getReport} from '../lib/data'
+import MapSelector from '../../map-selector'
+import ReactMapGL from '../../react-map-gl'
+import Drom, {droms} from '../../react-map-gl/drom'
+import {getReport} from '../../../lib/data'
+
+import {CovidTestsContext} from '.'
+import bigPictureMaps from './covid-tests-maps'
+import Statistics from './covid-tests-statistics'
 
 const SHOW_STATS_HEIGHT = 38
 
-const MobileMap = () => {
+const CovidTestsMobileMap = () => {
   let report
   const themeContext = useContext(ThemeContext)
-  const {date, selectedLocation, selectedMapIdx, setSelectedMapIdx} = useContext(AppContext)
+  const {date, forcedDate, selectedLocation} = useContext(AppContext)
+  const {selectedMapIdx, setSelectedMapIdx} = useContext(CovidTestsContext)
 
   const [showStats, setShowStats] = useState(false)
   const [showDrom, setShowDrom] = useState(selectedLocation && droms.find(({code}) => selectedLocation === code))
 
+  const {layers} = bigPictureMaps[selectedMapIdx]
+
   if (selectedLocation) {
-    report = getReport(date, selectedLocation)
+    const selectedDate = forcedDate || date
+    report = getReport(selectedDate, selectedLocation)
   }
 
   return (
@@ -29,14 +36,14 @@ const MobileMap = () => {
         Voir la France {showDrom ? 'métropolitaine' : 'd’outremer'}
       </div>
       <div className='map-selector clickable'>
-        <MapSelector mapIdx={selectedMapIdx} selectMap={setSelectedMapIdx} />
+        <MapSelector mapIdx={selectedMapIdx} maps={bigPictureMaps} selectMap={setSelectedMapIdx} />
       </div>
       <div className='map-content'>
         <div>
           {showDrom ? (
-            <Drom />
+            <Drom layers={layers} />
           ) : (
-            <ReactMapGL code={selectedLocation || 'FR'} />
+            <ReactMapGL code={selectedLocation || 'FRA'} layers={layers} />
           )}
         </div>
       </div>
@@ -128,4 +135,4 @@ const MobileMap = () => {
   )
 }
 
-export default MobileMap
+export default CovidTestsMobileMap
