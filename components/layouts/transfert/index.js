@@ -2,19 +2,19 @@ import React, {useState, useContext, useEffect} from 'react'
 import {FileText, Map, List} from 'react-feather'
 import {groupBy, sum, uniq, sortBy, flattenDeep} from 'lodash'
 
-import allTransferts from '../../transferts.json'
+import allTransferts from '../../../transferts.json'
 
-import theme from '../../styles/theme'
-import colors from '../../styles/colors'
+import theme from '../../../styles/theme'
+import colors from '../../../styles/colors'
 
-import {AppContext, ThemeContext} from '../../pages'
+import {AppContext, ThemeContext} from '../../../pages'
 
-import Scrollable from '../scrollable'
-import TransfertInformations from '../transfert-informations'
+import Scrollable from '../../scrollable'
+import TransfertInformations from './transfert-informations'
 
-import TransfertMap from '../react-map-gl/transfert-map'
-import TransfertsList from '../transferts-list'
-import TransfertMobileMap from '../transfert-mobile-map'
+import TransfertMap from './transfert-map'
+import TransfertsList from './transferts-list'
+import TransfertMobileMap from './transfert-mobile-map'
 
 export const TransfertContext = React.createContext()
 

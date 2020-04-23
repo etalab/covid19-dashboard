@@ -2,13 +2,13 @@ import React, {useState, useContext, useCallback, useMemo} from 'react'
 import DeckGL, {ArcLayer} from 'deck.gl'
 import ReactMapGL, {Popup} from 'react-map-gl'
 
-import geo from '../../geo.json'
-import regions from '../../regions.json'
+import geo from '../../../geo.json'
+import regions from '../../../regions.json'
 
-import {TransfertContext} from '../layouts/transfert'
+import {TransfertContext} from '.'
 
 import TransfertPopup from './transfert-popup'
-import {AppContext} from '../../pages'
+import {AppContext} from '../../../pages'
 
 const EUROPE_CENTER = [11.9531, 50.2331]
 

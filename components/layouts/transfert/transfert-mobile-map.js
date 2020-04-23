@@ -1,10 +1,10 @@
 import React, {useContext} from 'react'
 
-import {TransfertContext} from './layouts/transfert'
+import {TransfertContext} from '.'
 
-import TransfertMap from './react-map-gl/transfert-map'
+import TransfertMap from './transfert-map'
 import TransfertsList from './transferts-list'
-import Scrollable from './scrollable'
+import Scrollable from '../../scrollable'
 
 const TransfertMobileMap = () => {
   const {selectedTransferts} = useContext(TransfertContext)

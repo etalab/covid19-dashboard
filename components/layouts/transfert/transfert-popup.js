@@ -1,10 +1,10 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 
-import colors from '../../styles/colors'
+import colors from '../../../styles/colors'
 
-import {formatDate} from '../../lib/date'
-import {transports} from '../../lib/transports'
+import {formatDate} from '../../../lib/date'
+import {transports} from '../../../lib/transports'
 
 const TransfertPopup = ({debutTransfert, finTransfert, typeVecteur, regionDepart, regionArrivee, nbPatientsTransferes}) => {
   const startDate = formatDate(debutTransfert)

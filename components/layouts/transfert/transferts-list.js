@@ -2,13 +2,13 @@ import React, {useContext} from 'react'
 import PropTypes from 'prop-types'
 import {X} from 'react-feather'
 
-import {formatDate} from '../lib/date'
-import {transports} from '../lib/transports'
+import {formatDate} from '../../../lib/date'
+import {transports} from '../../../lib/transports'
 
-import colors from '../styles/colors'
+import colors from '../../../styles/colors'
 
-import {TransfertContext} from './layouts/transfert'
-import {ThemeContext} from '../pages'
+import {TransfertContext} from '.'
+import {ThemeContext} from '../../../pages'
 
 const getDestination = transfert => {
   return `${transfert.regionDepart} → ${transfert.regionArrivee || 'Europe'}`
