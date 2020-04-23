@@ -47,7 +47,8 @@ const TransfertMap = () => {
   }, [setSelectedTransferts])
 
   const onMapClick = useCallback(() => {
-    if (!hovered.data) {
+    const {data} = hovered || {}
+    if (!data) {
       setSelectedTransferts(null)
     }
   }, [hovered, setSelectedTransferts])
@@ -92,7 +93,7 @@ const TransfertMap = () => {
       width='100%'
       height='100%'
       mapStyle='https://etalab-tiles.fr/styles/osm-bright/style.json'
-      onClick={onMapClick}
+      onClick={isMobileDevice ? null : onMapClick}
     >
       <DeckGL initialViewState={defaultViewport} layers={getLayers} />
       {hovered && hovered.data && (
