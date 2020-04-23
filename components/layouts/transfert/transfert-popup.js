@@ -87,7 +87,7 @@ TransfertPopup.propTypes = {
   typeVecteur: PropTypes.array.isRequired,
   regionDepart: PropTypes.string.isRequired,
   regionArrivee: PropTypes.string,
-  nbPatientsTransferes: PropTypes.string.isRequired
+  nbPatientsTransferes: PropTypes.number.isRequired
 }
 
 export default TransfertPopup

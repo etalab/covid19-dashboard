@@ -87,7 +87,7 @@ const TransfertInfo = ({debutTransfert, finTransfert, nbPatientsTransferes, type
 TransfertInfo.propTypes = {
   debutTransfert: PropTypes.string.isRequired,
   finTransfert: PropTypes.string.isRequired,
-  nbPatientsTransferes: PropTypes.number.isRequired,
+  nbPatientsTransferes: PropTypes.string.isRequired,
   typeVecteur: PropTypes.array.isRequired
 }
 
@@ -104,7 +104,7 @@ const SelectedGroup = () => {
       </div>
 
       {selectedTransferts.map(transfert => (
-        <TransfertInfo key={destination} {...transfert} />
+        <TransfertInfo key={transfert.debutTransfert} {...transfert} />
       ))}
 
       <style jsx>{`
