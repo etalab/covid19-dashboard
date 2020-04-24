@@ -1,0 +1,75 @@
+[
+    {
+      "code": "REG-01",
+      "region": "Guadeloupe"
+    },
+    {
+      "code": "REG-02",
+      "region": "Martinique"
+    },
+    {
+      "code": "REG-03",
+      "region": "Guyane"
+    },
+    {
+      "code": "REG-04",
+      "region": "La Réunion"
+    },
+    {
+      "code": "REG-06",
+      "region": "Mayotte"
+    },
+    {
+      "code": "REG-11",
+      "region": "Île-de-France"
+    },
+    {
+      "code": "REG-24",
+      "region": "Centre-Val de Loire"
+    },
+    {
+      "code": "REG-27",
+      "region": "Bourgogne-Franche-Comté"
+    },
+    {
+      "code": "REG-28",
+      "region": "Normandie"
+    },
+    {
+      "code": "REG-32",
+      "region": "Hauts-de-France"
+    },
+    {
+      "code": "REG-44",
+      "region": "Grand Est"
+    },
+    {
+      "code": "REG-52",
+      "region": "Pays de la Loire"
+    },
+    {
+      "code": "REG-53",
+      "region": "Bretagne"
+    },
+    {
+      "code": "REG-75",
+      "region": "Nouvelle-Aquitaine"
+    },
+    {
+      "code": "REG-76",
+      "region": "Occitanie"
+    },
+    {
+      "code": "REG-84",
+      "region": "Auvergne-Rhône-Alpes"
+    },
+    {
+      "code": "REG-93",
+      "region": "Provence-Alpes-Côte d’Azur"
+    },
+    {
+      "code": "REG-94",
+      "region": "Corse"
+    }
+  ]
+  
