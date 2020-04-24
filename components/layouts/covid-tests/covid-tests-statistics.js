@@ -1,4 +1,4 @@
-import React, {useContext} from 'react'
+import React, {useContext, useEffect, useState} from 'react'
 import {BarChart2} from 'react-feather'
 import Link from 'next/link'
 import {sumBy} from 'lodash'
@@ -16,16 +16,38 @@ import PieChartPercent from '../../pie-chart-percent'
 
 const CovidTestsStatistics = () => {
   const {date, forcedDate, selectedLocation, isMobileDevice} = useContext(AppContext)
-
   const selectedDate = date || forcedDate
-  const report = getReport(selectedDate, selectedLocation || 'FRA')
-  const filteredHistory = report.history.filter(r => selectedDate >= r.date)
 
-  const testsPositifs = sumBy(filteredHistory, 'testsPositifs')
-  const testsRealises = sumBy(filteredHistory, 'testsRealises')
-  const testsNegatifs = testsRealises - testsPositifs
+  const [report, setReport] = useState(null)
+  const [statistics, setStatistics] = useState(null)
 
-  const data = [testsNegatifs, testsPositifs]
+  useEffect(() => {
+    async function fetchReport() {
+      const report = await getReport(selectedDate, selectedLocation || 'FRA')
+      setReport(report)
+
+      const filteredHistory = report.history.filter(r => selectedDate >= r.date)
+
+      const testsPositifs = sumBy(filteredHistory, 'testsPositifs')
+      const testsRealises = sumBy(filteredHistory, 'testsRealises')
+      const testsNegatifs = testsRealises - testsPositifs
+
+      const pieChartData = [testsNegatifs, testsPositifs]
+
+      setStatistics({
+        pieChartData,
+        testsPositifs,
+        testsRealises
+      })
+    }
+
+    fetchReport()
+  }, [selectedDate, selectedLocation])
+
+  useEffect(() => {
+
+  }, [report])
+
   const pieLabels = ['Tests négatifs', 'Tests positifs']
   const pieColors = [colors.grey, colors.red]
 
@@ -37,10 +59,10 @@ const CovidTestsStatistics = () => {
         )}
         <h3>COVID-19 - {report ? report.nom : 'France'}</h3>
       </div>
-      <CovidTestsCounters testsPositifs={testsPositifs} testsRealises={testsRealises} />
-      <PieChartPercent data={data} labels={pieLabels} colors={pieColors} height={isMobileDevice ? '150' : '120'} />
-      <CovidTestsHistogram reports={report.history.filter(r => date >= r.date)} />
-      <CovidTestsAgeChart reports={report.history.filter(r => selectedDate >= r.date)} />
+      {statistics && <CovidTestsCounters testsPositifs={statistics.testsPositifs} testsRealises={statistics.testsRealises} />}
+      {statistics && <PieChartPercent data={statistics.pieChartData} labels={pieLabels} colors={pieColors} height={isMobileDevice ? '150' : '120'} />}
+      {report && <CovidTestsHistogram reports={report.history.filter(r => selectedDate >= r.date)} />}
+      {report && <CovidTestsAgeChart reports={report.history.filter(r => selectedDate >= r.date)} />}
       <style jsx>{`
         .header {
           text-align: center;

@@ -1,4 +1,4 @@
-import React, {useContext, useState} from 'react'
+import React, {useContext, useState, useEffect} from 'react'
 import {ChevronUp, ChevronDown} from 'react-feather'
 
 import {AppContext, ThemeContext} from '../../../pages'
@@ -15,20 +15,26 @@ import Statistics from './covid-tests-statistics'
 const SHOW_STATS_HEIGHT = 38
 
 const CovidTestsMobileMap = () => {
-  let report
   const themeContext = useContext(ThemeContext)
   const {date, forcedDate, selectedLocation} = useContext(AppContext)
   const {selectedMapIdx, setSelectedMapIdx} = useContext(CovidTestsContext)
 
+  const [report, setReport] = useState(null)
   const [showStats, setShowStats] = useState(false)
   const [showDrom, setShowDrom] = useState(selectedLocation && droms.find(({code}) => selectedLocation === code))
 
   const {layers} = bigPictureMaps[selectedMapIdx]
 
-  if (selectedLocation) {
-    const selectedDate = forcedDate || date
-    report = getReport(selectedDate, selectedLocation)
-  }
+  useEffect(() => {
+    async function fetchReport() {
+      const selectedDate = forcedDate || date
+      setReport(await getReport(selectedDate, selectedLocation))
+    }
+
+    if (selectedLocation) {
+      fetchReport()
+    }
+  }, [date, forcedDate, selectedLocation])
 
   return (
     <div className='mobile-map-container'>

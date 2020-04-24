@@ -1,4 +1,4 @@
-import React, {useContext, useState} from 'react'
+import React, {useContext, useState, useEffect} from 'react'
 import {BarChart2} from 'react-feather'
 import Link from 'next/link'
 
@@ -78,8 +78,26 @@ function getChart(chartName, showVariations) {
 const BigPictureStatistics = () => {
   const {date, selectedLocation, isMobileDevice} = useContext(AppContext)
 
-  const report = getReport(date, selectedLocation || 'FRA')
-  const previousReport = getPreviousReport(report)
+  const [report, setReport] = useState(null)
+  const [previousReport, setPreviousReport] = useState(null)
+
+  useEffect(() => {
+    async function fetchReport() {
+      setReport(await getReport(date, selectedLocation || 'FRA'))
+    }
+
+    fetchReport()
+  }, [date, selectedLocation])
+
+  useEffect(() => {
+    async function fetchPreviousReport() {
+      setPreviousReport(getPreviousReport(report))
+    }
+
+    if (report) {
+      fetchPreviousReport()
+    }
+  }, [report])
 
   const [selectedChart, setSelectedChart] = useState('mixed')
   const [showVariations, setShowVariations] = useState(false)
@@ -98,7 +116,7 @@ const BigPictureStatistics = () => {
         <h3>COVID-19 - {report ? report.nom : 'France'}</h3>
       </div>
 
-      <Counters report={report} previousReport={previousReport} />
+      {report && <Counters report={report} previousReport={previousReport} />}
 
       {report && report.history && (
         <>

@@ -1,4 +1,4 @@
-import React, {useContext, useState} from 'react'
+import React, {useContext, useState, useEffect} from 'react'
 import {ChevronUp, ChevronDown} from 'react-feather'
 
 import {AppContext, ThemeContext} from '../../../pages'
@@ -16,19 +16,25 @@ import Statistics from './big-picture-statistics'
 const SHOW_STATS_HEIGHT = 38
 
 const BigPictureMobileMap = () => {
-  let report
   const themeContext = useContext(ThemeContext)
   const {date, selectedLocation} = useContext(AppContext)
   const {selectedMapIdx, setSelectedMapIdx} = useContext(BigPictureContext)
 
+  const [report, setReport] = useState(null)
   const [showStats, setShowStats] = useState(false)
   const [showDrom, setShowDrom] = useState(selectedLocation && droms.find(({code}) => selectedLocation === code))
 
   const {layers} = bigPictureMaps[selectedMapIdx]
 
-  if (selectedLocation) {
-    report = getReport(date, selectedLocation)
-  }
+  useEffect(() => {
+    async function fetchReport() {
+      setReport(await getReport(date, selectedLocation))
+    }
+
+    if (date && selectedLocation) {
+      fetchReport()
+    }
+  }, [date, selectedLocation])
 
   return (
     <div className='mobile-map-container'>

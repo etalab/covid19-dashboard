@@ -57,15 +57,17 @@ const Map = ({code, data, layers, hideAttribution, onHover, onClick, children}) 
           touchZoom={false}
           attributionControl={!hideAttribution}
         >
-          <Source
-            type='geojson'
-            attribution='Données Santé publique France'
-            data={data}
-          >
-            {layers.map(layer => (
-              <Layer key={layer.id} {...layer} />
-            ))}
-          </Source>
+          {data &&
+            <Source
+              type='geojson'
+              attribution='Données Santé publique France'
+              data={data}
+            >
+              {layers.map(layer => (
+                <Layer key={layer.id} {...layer} />
+              ))}
+            </Source>
+          }
 
           {children}
         </ReactMapGL>
@@ -84,12 +86,13 @@ Map.defaultProps = {
   hideAttribution: false,
   onHover: null,
   onClick: null,
-  children: null
+  children: null,
+  data: null
 }
 
 Map.propTypes = {
   code: PropTypes.string.isRequired,
-  data: PropTypes.object.isRequired,
+  data: PropTypes.object,
   layers: PropTypes.array.isRequired,
   hideAttribution: PropTypes.bool,
   onHover: PropTypes.func,

@@ -1,4 +1,4 @@
-import React, {useState, useContext} from 'react'
+import React, {useState, useContext, useEffect} from 'react'
 import PropTypes from 'prop-types'
 import Router from 'next/router'
 import {Popup} from 'react-map-gl'
@@ -13,10 +13,18 @@ const ReactMapGL = ({code, layers, hidePopup, hideAttribution}) => {
   const {date, forcedDate, isMobileDevice} = useContext(AppContext)
 
   const [hovered, setHovered] = useState(null)
+  const [layerData, setLayerData] = useState(null)
 
   const selectedDate = forcedDate || date
-  const report = getReport(selectedDate, code === 'FRA' ? 'REG' : 'DEP')
-  const layerData = reportToGeoJSON(report, selectedDate)
+
+  useEffect(() => {
+    async function prepareLayerData() {
+      const report = await getReport(selectedDate, code === 'FRA' ? 'REG' : 'DEP')
+      setLayerData(reportToGeoJSON(report, selectedDate))
+    }
+
+    prepareLayerData()
+  }, [selectedDate, code])
 
   const onHover = event => {
     event.stopPropagation()

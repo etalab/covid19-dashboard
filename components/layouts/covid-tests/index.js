@@ -6,7 +6,7 @@ import colors from '../../../styles/colors'
 
 import {AppContext, ThemeContext} from '../../../pages'
 
-import {getMostRecentDateForData} from '../../../lib/data'
+import {findMostRecentDateForData, getReport} from '../../../lib/data'
 
 import Scrollable from '../../scrollable'
 import ReactMapGl from '../../react-map-gl'
@@ -173,11 +173,21 @@ const CovidTests = props => {
   const Component = isMobileDevice ? MobileCovidTests : DesktopCovidTests
 
   useEffect(() => {
-    const location = selectedLocation || 'FRA'
-    const mostRecentDate = getMostRecentDateForData(date, location, 'testsRealises')
-    setForcedDate(mostRecentDate === date ? null : mostRecentDate)
+    let isCancelled = false
+
+    async function fetchMostRecentDateForData() {
+      const location = selectedLocation || 'FRA'
+      const report = await getReport(date, location)
+      const mostRecentDate = findMostRecentDateForData(report, 'testsRealises')
+      if (!isCancelled) {
+        setForcedDate(mostRecentDate === date ? null : mostRecentDate)
+      }
+    }
+
+    fetchMostRecentDateForData()
 
     return () => {
+      isCancelled = true
       setForcedDate(null)
     }
   }, [date, selectedLocation, setForcedDate])

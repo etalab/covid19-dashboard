@@ -5,10 +5,13 @@ import colors from '../styles/colors'
 
 import Counter from './counter'
 
-const Counters = ({report, previousReport}) => {
-  const {casConfirmes, hospitalises, reanimation, deces, decesEhpad, gueris, casPossiblesEhpad, casConfirmesEhpad} = report || {}
-  const totalDeces = deces + decesEhpad
-  const previousTotalDeces = previousReport.deces + previousReport.decesEhpad
+const Counters = (props) => {
+  const {casConfirmes, hospitalises, reanimation, deces, decesEhpad, gueris, casPossiblesEhpad, casConfirmesEhpad} = props.report || {}
+
+  const totalDeces = (deces || 0) + (decesEhpad || 0)
+  const previousReport = props.previousReport || {}
+  const previousTotalDeces = (previousReport.deces || 0) + (previousReport.decesEhpad || 0)
+
   const details = {
     casConfirmes: 'Nombre cumulé de cas de COVID-19 confirmés par un test positif. <br />Un nouvel indicateur sera bientôt proposé.',
     gueris: 'Nombre cumulé de patients ayant été hospitalisés pour COVID-19 <br />et de retour à domicile en raison de l’amélioration de leur état de santé',
