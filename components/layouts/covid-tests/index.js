@@ -6,7 +6,7 @@ import colors from '../../../styles/colors'
 
 import {AppContext, ThemeContext} from '../../../pages'
 
-import {getPreviousDate, getMostRecentDateForData} from '../../../lib/data'
+import {getMostRecentDateForData} from '../../../lib/data'
 
 import Scrollable from '../../scrollable'
 import ReactMapGl from '../../react-map-gl'
