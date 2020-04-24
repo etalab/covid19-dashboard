@@ -42,7 +42,6 @@ const Map = ({code, data, layers, hideAttribution, onHover, onClick, children}) 
     <div ref={mapRef} className='react-map-container'>
       {viewport && (
         <ReactMapGL
-          reuseMaps
           {...viewport}
           width='100%'
           height='100%'
