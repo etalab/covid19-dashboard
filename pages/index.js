@@ -1,7 +1,7 @@
 import React, {useState, useEffect} from 'react'
 import {useRouter} from 'next/router'
 
-import {dates} from '../lib/data'
+import dates from '../dates.json'
 
 import theme from '../styles/theme'
 

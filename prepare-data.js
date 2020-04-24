@@ -6,7 +6,7 @@ const got = require('got')
 const {outputJson, readJson} = require('fs-extra')
 const getStream = require('get-stream')
 const csvParse = require('csv-parser')
-const {groupBy, sortBy, defaults, pick, keyBy, chain, sumBy} = require('lodash')
+const {groupBy, sortBy, defaults, pick, keyBy, chain, sumBy, uniq} = require('lodash')
 
 const departements = require('@etalab/decoupage-administratif/data/departements.json')
 const regions = require('@etalab/decoupage-administratif/data/regions.json')
@@ -173,7 +173,21 @@ async function main() {
   const records = await loadJson(DATA_SOURCE)
   const tests = await loadTests(TESTS_SOURCE)
   const data = consolidate(filterRecords([...records, ...tests]))
-  await outputJson(join(__dirname, 'chiffres-cles.json'), data)
+
+  const dates = uniq(data.map(r => r.date)).sort()
+  const codes = uniq(data.map(r => r.code))
+
+  const dataDirectory = join(__dirname, 'public', 'data')
+
+  await Promise.all(dates.map(async date => {
+    await outputJson(join(dataDirectory, `date-${date}.json`), data.filter(r => r.date === date))
+  }))
+
+  await Promise.all(codes.map(async code => {
+    await outputJson(join(dataDirectory, `code-${code}.json`), data.filter(r => r.code === code))
+  }))
+
+  await outputJson(join(__dirname, 'dates.json'), dates)
 }
 
 main().catch(error => {

@@ -36,5 +36,7 @@ node_modules
 
 .now
 
-/chiffres-cles.json
+/dates.json
 deploy.sh
+
+/public/data
