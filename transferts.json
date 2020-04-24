@@ -60,7 +60,7 @@
       "regionDepart": "Grand Est",
       "regionArrivee": "Nouvelle-Aquitaine",
       "paysArrivee": "",
-      "nbPatientsTransferes": "6"
+      "nbPatientsTransferes": "12"
     },
     {
       "debutTransfert": "2020-03-28",
@@ -78,7 +78,7 @@
       "regionDepart": "Bourgogne-Franche-Comté",
       "regionArrivee": "Auvergne-Rhône-Alpes",
       "paysArrivee": "",
-      "nbPatientsTransferes": "42"
+      "nbPatientsTransferes": "41"
     },
     {
       "debutTransfert": "2020-03-28",
@@ -123,7 +123,7 @@
       "regionDepart": "Île-de-France",
       "regionArrivee": "Bretagne",
       "paysArrivee": "",
-      "nbPatientsTransferes": "36"
+      "nbPatientsTransferes": "32"
     },
     {
       "debutTransfert": "2020-04-01",
@@ -141,25 +141,16 @@
       "regionDepart": "Île-de-France",
       "regionArrivee": "Pays de la Loire",
       "paysArrivee": "",
-      "nbPatientsTransferes": "48"
+      "nbPatientsTransferes": "47"
     },
     {
       "debutTransfert": "2020-04-01",
       "finTransfert": "2020-04-03",
-      "typeVecteur": ["avion"],
+      "typeVecteur": ["avion", "train"],
       "regionDepart": "Île-de-France",
       "regionArrivee": "Normandie",
       "paysArrivee": "",
-      "nbPatientsTransferes": "38"
-    },
-    {
-      "debutTransfert": "2020-04-01",
-      "finTransfert": "2020-04-03",
-      "typeVecteur": ["train"],
-      "regionDepart": "Île-de-France",
-      "regionArrivee": "Normandie",
-      "paysArrivee": "",
-      "nbPatientsTransferes": "14"
+      "nbPatientsTransferes": "44"
     },
     {
       "debutTransfert": "2020-04-01",
@@ -168,7 +159,7 @@
       "regionDepart": "Île-de-France",
       "regionArrivee": "Centre-Val de Loire",
       "paysArrivee": "",
-      "nbPatientsTransferes": "13"
+      "nbPatientsTransferes": "11"
     },
     {
       "debutTransfert": "2020-04-03",
@@ -223,5 +214,23 @@
       "regionArrivee": "",
       "paysArrivee": ["Allemagne", "Suisse", "Luxembourg", "Autriche"],
       "nbPatientsTransferes": "172"
+    },
+    {
+      "debutTransfert": "2020-03-26",
+      "finTransfert": "2020-03-28",
+      "typeVecteur": ["avion"],
+      "regionDepart": "Bourgogne-Franche-Comté",
+      "regionArrivee": "",
+      "paysArrivee": "Suisse",
+      "nbPatientsTransferes": "5"
+    },
+    {
+      "debutTransfert": "2020-04-10",
+      "finTransfert": "2020-04-10",
+      "typeVecteur": ["train"],
+      "regionDepart": "Île-de-France",
+      "regionArrivee": "Nouvelle-Aquitaine",
+      "paysArrivee": "",
+      "nbPatientsTransferes": "45"
     }
   ]
