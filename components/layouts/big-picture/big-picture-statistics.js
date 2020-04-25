@@ -10,6 +10,7 @@ import {getPreviousReport, getReport} from '../../../lib/data'
 
 import Counters from '../../counters'
 import MixedChart from '../../charts/mixed-chart'
+import IndicateurNouveauxChart from '../../charts/indicateur-nouveaux'
 import IndicateurCumulChart from '../../charts/indicateur-cumul'
 import IndicateurVariationChart from '../../charts/indicateur-variation'
 
@@ -17,6 +18,11 @@ const charts = {
   mixed: {
     name: 'Tout afficher',
     chart: MixedChart
+  },
+  nouveaux: {
+    name: 'Nouveaux cas',
+    chart: IndicateurNouveauxChart,
+   
   },
   confirmed: {
     name: 'Cas confirmés',
