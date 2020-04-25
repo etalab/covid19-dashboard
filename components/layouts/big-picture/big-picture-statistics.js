@@ -91,7 +91,7 @@ const BigPictureStatistics = () => {
 
   useEffect(() => {
     async function fetchPreviousReport() {
-      setPreviousReport(getPreviousReport(report))
+      setPreviousReport(await getPreviousReport(report))
     }
 
     if (report) {

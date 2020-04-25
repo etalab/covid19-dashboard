@@ -5,7 +5,7 @@ import colors from '../styles/colors'
 
 import Counter from './counter'
 
-const Counters = (props) => {
+const Counters = props => {
   const {casConfirmes, hospitalises, reanimation, deces, decesEhpad, gueris, casPossiblesEhpad, casConfirmesEhpad} = props.report || {}
 
   const totalDeces = (deces || 0) + (decesEhpad || 0)
