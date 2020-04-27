@@ -3,7 +3,7 @@ import DeckGL, {ArcLayer} from 'deck.gl'
 import ReactMapGL, {Popup} from 'react-map-gl'
 
 import geo from '../../../geo.json'
-import regions from '../../../regions.json'
+import regions from '@etalab/decoupage-administratif/data/regions.json'
 
 import {TransfertContext} from '.'
 
@@ -13,7 +13,7 @@ import {AppContext} from '../../../pages'
 const EUROPE_CENTER = [11.9531, 50.2331]
 
 const getRegionCenter = name => {
-  const {code} = regions.find(({region}) => region === name)
+  const {code} = regions.find(({nom}) => nom === name)
   return geo[code].center
 }
 
