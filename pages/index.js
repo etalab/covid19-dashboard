@@ -15,6 +15,7 @@ import CovidTests from '../components/layouts/covid-tests'
 import Transfert from '../components/layouts/transfert'
 import Synthese from '../components/layouts/synthese'
 import Entreprises from '../components/layouts/entreprises'
+import Masks from '../components/layouts/masks'
 
 export const AppContext = React.createContext()
 export const ThemeContext = React.createContext('theme.default')
@@ -51,6 +52,12 @@ const LAYOUTS = [
     name: 'aides-entreprises',
     label: 'Aides entreprises',
     component: <Entreprises />
+  },
+  {
+    id: 'masks',
+    name: 'production-masques',
+    label: 'Production des masques',
+    component: <Masks />
   }
 ]
 
