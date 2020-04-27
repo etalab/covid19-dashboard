@@ -46,20 +46,22 @@ const ReactMapGL = ({code, layers, hidePopup, hideAttribution}) => {
   const onClick = event => {
     event.stopPropagation()
     const feature = event.features && event.features[0]
+    let location
+    let as = '/'
 
     if (feature) {
       const [typeTerritoire, codeTerritoire] = feature.properties.code.split('-')
-      Router.push({
-        pathname: '/',
-        query: {
-          location: feature.properties.code
-        }
-      }, `/${typeTerritoire === 'REG' ? 'regions' : 'departements'}/${codeTerritoire}`)
-    } else {
-      Router.push({
-        pathname: '/'
-      })
+      location = feature.properties.code
+      as = `/${typeTerritoire === 'REG' ? 'regions' : 'departements'}/${codeTerritoire}`
     }
+
+    Router.push({
+      pathname: '/',
+      query: {
+        ...Router.query,
+        location
+      }
+    }, as)
 
     setHovered(null)
   }
