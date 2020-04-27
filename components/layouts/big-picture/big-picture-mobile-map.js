@@ -54,7 +54,7 @@ const BigPictureMobileMap = () => {
         </div>
       </div>
 
-      {selectedLocation && !showDrom && (
+      {report && selectedLocation && !showDrom && (
         <div className={`mobile-sumup ${showStats ? 'show' : 'hide'}`}>
           <div className='show-stats clickable' onClick={() => setShowStats(!showStats)}>
             Chiffres {report.nom} {showStats ? <ChevronDown /> : <ChevronUp />}
