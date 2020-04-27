@@ -15,29 +15,34 @@ import bigPictureMaps from './big-picture-maps'
 
 import BigPictureInformations from './big-picture-informations'
 import BigPictureStatistics from './big-picture-statistics'
-import BigPictureMobileMap from './big-picture-mobile-map'
+import TerritoriesMobileMap from '../../territories-mobile-map'
 
 export const BigPictureContext = React.createContext()
-
-const VIEWS = {
-  map: <BigPictureMobileMap />,
-  stats: (
-    <Scrollable>
-      <BigPictureStatistics />
-    </Scrollable>
-  ),
-  informations: (
-    <Scrollable>
-      <BigPictureInformations />
-    </Scrollable>
-  )
-}
 
 const MobileBigPicture = () => {
   const [selectedView, setSelectedView] = useState('stats')
 
   const app = useContext(AppContext)
   const theme = useContext(ThemeContext)
+  const {selectedMapIdx, setSelectedMapIdx} = useContext(BigPictureContext)
+
+  const views = {
+    map: (
+      <TerritoriesMobileMap maps={bigPictureMaps} mapIdx={selectedMapIdx} setMapIdx={setSelectedMapIdx} >
+        <BigPictureStatistics />
+      </TerritoriesMobileMap>
+    ),
+    stats: (
+      <Scrollable>
+        <BigPictureStatistics />
+      </Scrollable>
+    ),
+    informations: (
+      <Scrollable>
+        <BigPictureInformations />
+      </Scrollable>
+    )
+  }
 
   const handleClick = view => {
     app.setSelectedLocation(null)
@@ -47,7 +52,7 @@ const MobileBigPicture = () => {
   return (
     <>
       <Scrollable>
-        {VIEWS[selectedView]}
+        {views[selectedView]}
       </Scrollable>
 
       <div className='view-selector'>

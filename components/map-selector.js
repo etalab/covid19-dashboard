@@ -1,6 +1,6 @@
 import React, {useState, useCallback} from 'react'
 import PropTypes from 'prop-types'
-import {indexOf, uniq} from 'lodash'
+import {indexOf} from 'lodash'
 import {ChevronDown, ChevronUp, Check} from 'react-feather'
 
 import colors from '../styles/colors'
@@ -15,8 +15,6 @@ const MapSelector = ({mapIdx, maps, selectMap}) => {
     setIsOpen(false)
   }, [selectMap])
 
-  const categories = uniq(maps.map(map => map.category))
-
   return (
     <div className='switch'>
       <div className='header' onClick={() => setIsOpen(!isOpen)}>
@@ -24,22 +22,18 @@ const MapSelector = ({mapIdx, maps, selectMap}) => {
       </div>
       {isOpen && (
         <div className='menu'>
-          {categories.map(cat => (
-            <div key={cat} className='sub-cat'>
-              {maps.filter(({category}) => category === cat).map(map => {
-                const index = indexOf(maps, map)
-                return (
-                  <div
-                    key={map.name}
-                    className={`menu-item ${index === mapIdx ? 'selected' : ''}`}
-                    onClick={() => handleMap(index)}
-                  >
-                    <span>{map.name}</span> {index === mapIdx && <Check />}
-                  </div>
-                )
-              })}
-            </div>
-          ))}
+          {maps.map(map => {
+            const index = indexOf(maps, map)
+            return (
+              <div
+                key={map.name}
+                className={`menu-item ${index === mapIdx ? 'selected' : ''}`}
+                onClick={() => handleMap(index)}
+              >
+                <span>{map.name}</span> {index === mapIdx && <Check />}
+              </div>
+            )
+          })}
         </div>
       )}
 
@@ -84,10 +78,6 @@ const MapSelector = ({mapIdx, maps, selectMap}) => {
         .menu-item.selected:hover {
           background-color: transparent;
           cursor: initial;
-        }
-
-        .sub-cat {
-          padding-bottom: 0.2em;
         }
 
         span {

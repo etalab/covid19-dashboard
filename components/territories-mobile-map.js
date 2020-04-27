@@ -1,40 +1,36 @@
 import React, {useContext, useState, useEffect} from 'react'
+import PropTypes from 'prop-types'
 import {ChevronUp, ChevronDown} from 'react-feather'
 
-import {AppContext, ThemeContext} from '../../../pages'
+import {AppContext, ThemeContext} from '../pages'
 
-import bigPictureMaps from './big-picture-maps'
-
-import MapSelector from '../../map-selector'
-import ReactMapGL from '../../react-map-gl'
-import Drom, {droms} from '../../react-map-gl/drom'
-import {getReport} from '../../../lib/data'
-
-import {BigPictureContext} from '.'
-import Statistics from './big-picture-statistics'
+import MapSelector from './map-selector'
+import ReactMapGL from './react-map-gl'
+import Drom, {droms} from './react-map-gl/drom'
+import {getReport} from '../lib/data'
 
 const SHOW_STATS_HEIGHT = 38
 
-const BigPictureMobileMap = () => {
+const TerritoriesMobileMap = ({maps, mapIdx, setMapIdx, children}) => {
   const themeContext = useContext(ThemeContext)
-  const {date, selectedLocation} = useContext(AppContext)
-  const {selectedMapIdx, setSelectedMapIdx} = useContext(BigPictureContext)
+  const {date, forcedDate, selectedLocation} = useContext(AppContext)
 
   const [report, setReport] = useState(null)
   const [showStats, setShowStats] = useState(false)
   const [showDrom, setShowDrom] = useState(selectedLocation && droms.find(({code}) => selectedLocation === code))
 
-  const {layers} = bigPictureMaps[selectedMapIdx]
+  const {layers} = maps[mapIdx]
 
   useEffect(() => {
     async function fetchReport() {
-      setReport(await getReport(date, selectedLocation))
+      const selectedDate = forcedDate || date
+      setReport(await getReport(selectedDate, selectedLocation))
     }
 
-    if (date && selectedLocation) {
+    if (selectedLocation) {
       fetchReport()
     }
-  }, [date, selectedLocation])
+  }, [date, forcedDate, selectedLocation])
 
   return (
     <div className='mobile-map-container'>
@@ -42,7 +38,7 @@ const BigPictureMobileMap = () => {
         Voir la France {showDrom ? 'métropolitaine' : 'd’outremer'}
       </div>
       <div className='map-selector clickable'>
-        <MapSelector mapIdx={selectedMapIdx} maps={bigPictureMaps} selectMap={setSelectedMapIdx} />
+        <MapSelector mapIdx={mapIdx} maps={maps} selectMap={setMapIdx} />
       </div>
       <div className='map-content'>
         <div>
@@ -60,7 +56,7 @@ const BigPictureMobileMap = () => {
             Chiffres {report.nom} {showStats ? <ChevronDown /> : <ChevronUp />}
           </div>
           <div className='mobile-statistics'>
-            <Statistics />
+            {children}
           </div>
         </div>
       )}
@@ -141,4 +137,11 @@ const BigPictureMobileMap = () => {
   )
 }
 
-export default BigPictureMobileMap
+TerritoriesMobileMap.propTypes = {
+  maps: PropTypes.array.isRequired,
+  mapIdx: PropTypes.number.isRequired,
+  setMapIdx: PropTypes.func.isRequired,
+  children: PropTypes.node.isRequired
+}
+
+export default TerritoriesMobileMap
