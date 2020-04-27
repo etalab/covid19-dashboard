@@ -17,29 +17,38 @@ import BigPictureInformations from '../big-picture/big-picture-informations'
 import CovidTestsMaps from './covid-tests-maps'
 
 import CovidTestsStatistics from './covid-tests-statistics'
-import CovidTestsMobileMap from './covid-tests-mobile-map'
+import TerritoriesMobileMap from '../../territories-mobile-map'
 
 export const CovidTestsContext = React.createContext()
 
-const VIEWS = {
-  map: <CovidTestsMobileMap />,
-  stats: (
-    <Scrollable>
-      <CovidTestsStatistics />
-    </Scrollable>
-  ),
-  informations: (
-    <Scrollable>
-      <BigPictureInformations />
-    </Scrollable>
-  )
-}
-
 const MobileCovidTests = () => {
   const [selectedView, setSelectedView] = useState('stats')
+  const {selectedMapIdx, setSelectedMapIdx} = useContext(CovidTestsContext)
 
   const app = useContext(AppContext)
   const theme = useContext(ThemeContext)
+
+  const views = {
+    map: (
+      <TerritoriesMobileMap
+        maps={CovidTestsMaps}
+        mapIdx={selectedMapIdx}
+        setMapIdx={setSelectedMapIdx}
+      >
+        <CovidTestsStatistics />
+      </TerritoriesMobileMap>
+    ),
+    stats: (
+      <Scrollable>
+        <CovidTestsStatistics />
+      </Scrollable>
+    ),
+    informations: (
+      <Scrollable>
+        <BigPictureInformations />
+      </Scrollable>
+    )
+  }
 
   const handleClick = view => {
     app.setSelectedLocation(null)
@@ -48,7 +57,7 @@ const MobileCovidTests = () => {
 
   return (
     <>
-      {VIEWS[selectedView]}
+      {views[selectedView]}
 
       <div className='view-selector'>
         <div className={`${selectedView === 'stats' ? 'selected' : ''}`} onClick={() => handleClick('stats')}>
