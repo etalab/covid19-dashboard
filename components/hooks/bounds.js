@@ -34,7 +34,7 @@ function useBounds(mapRef, code) {
     }
   }, [handleResize])
 
-  return viewport
+  return [viewport]
 }
 
 export default useBounds
