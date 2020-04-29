@@ -6,7 +6,7 @@ import useBounds from '../hooks/bounds'
 
 const Map = ({code, interactiveLayerIds, hideAttribution, onHover, onClick, children}) => {
   const mapRef = useRef()
-  const viewport = useBounds(mapRef, code)
+  const [viewport] = useBounds(mapRef, code)
 
   return (
     <div ref={mapRef} className='react-map-container'>
