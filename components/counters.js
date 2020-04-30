@@ -11,7 +11,6 @@ const Counters = props => {
   const totalDeces = (deces || 0) + (decesEhpad || 0)
   const previousReport = props.previousReport || {}
   const previousTotalDeces = (previousReport.deces || 0) + (previousReport.decesEhpad || 0)
-  const warningLabel = '⚠️ Données en cours de consolidation'
 
   const details = {
     casConfirmes: 'Nombre cumulé de cas de COVID-19 confirmés par un test positif. <br />',
@@ -27,7 +26,7 @@ const Counters = props => {
   return (
     <div className='stats'>
       <div className='counters'>
-        {casConfirmes && <Counter value={casConfirmes} previousValue={previousReport.casConfirmes} label='cas confirmés' details={details.casConfirmes} color='orange' warningLabel={warningLabel} isBig />}
+        {casConfirmes && <Counter value={casConfirmes} previousValue={previousReport.casConfirmes} label='cas confirmés' details={details.casConfirmes} color='orange' isBig />}
         {decesEhpad && <Counter value={totalDeces} previousValue={previousTotalDeces} label='cumul des décès' details='Cumul des décés' color='red' isBig />}
       </div>
       <div className='title'>Données hospitalières</div>
