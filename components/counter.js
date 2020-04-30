@@ -8,13 +8,31 @@ import ReactTooltip from 'react-tooltip'
 import colors from '../styles/colors'
 import {formatInteger} from '../lib/numbers'
 
-const Counter = ({value, label, color, previousValue, details, isBig}) => {
+const Counter = ({value, label, color, previousValue, details, isWarning, warningLabel, isBig}) => {
   const difference = (Number.isInteger(value) && Number.isInteger(previousValue) && value - previousValue !== 0) ? value - previousValue : null
   const {isMobileDevice} = useContext(AppContext)
 
   return (
     <div className='counter-container'>
       <div className='counter'>
+        {isWarning && warningLabel && (
+          <div className='warning-icon' data-tip={warningLabel} data-for='warningPosition'>⚠️
+            <ReactTooltip
+              id='warningPosition'
+              backgroundColor='rgba(0, 0, 0)'
+              arrowColor='rgba(0, 0, 0, 0)'
+              multiline
+              overridePosition={(
+                {left, top}, currentEvent, currentTarget, node) => {
+                const d = document.documentElement
+                left = Math.min(d.clientWidth - node.clientWidth, left)
+                top = Math.min(d.clientHeight - node.clientHeight, top)
+                left = Math.max(0, left)
+                top = Math.max(0, top)
+                return {top, left}
+              }} />
+          </div>
+        )}
         <div className='value'>
           {typeof value === 'number' ? formatInteger(value) : '-'}
           <div className='hover'>
@@ -44,6 +62,13 @@ const Counter = ({value, label, color, previousValue, details, isBig}) => {
       </div>
 
       <style jsx>{`
+        .warning-icon {
+          position: absolute;
+          top: 2px;
+          left: 10px;
+          cursor: default;
+        }
+
         .hover {
           display: flex;
           flex-direction: column;
@@ -51,6 +76,7 @@ const Counter = ({value, label, color, previousValue, details, isBig}) => {
         }
 
         .counter {
+          position: relative;
           display: flex;
           flex-direction: column;
           justify-content: space-around;
@@ -93,6 +119,8 @@ Counter.defaultProps = {
   color: 'almostBlack',
   previousValue: null,
   details: null,
+  isWarning: false,
+  warningLabel: null,
   isBig: false
 }
 
@@ -102,6 +130,8 @@ Counter.propTypes = {
   color: PropTypes.string,
   previousValue: PropTypes.number,
   details: PropTypes.string,
+  isWarning: PropTypes.bool,
+  warningLabel: PropTypes.string,
   isBig: PropTypes.bool
 }
 
