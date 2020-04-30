@@ -8,14 +8,14 @@ import ReactTooltip from 'react-tooltip'
 import colors from '../styles/colors'
 import {formatInteger} from '../lib/numbers'
 
-const Counter = ({value, label, color, previousValue, details, isWarning, warningLabel, isBig}) => {
+const Counter = ({value, label, color, previousValue, details, warningLabel, isBig}) => {
   const difference = (Number.isInteger(value) && Number.isInteger(previousValue) && value - previousValue !== 0) ? value - previousValue : null
   const {isMobileDevice} = useContext(AppContext)
 
   return (
     <div className='counter-container'>
       <div className='counter'>
-        {isWarning && warningLabel && (
+        {warningLabel && (
           <div className='warning-icon' data-tip={warningLabel} data-for='warningPosition'>⚠️
             <ReactTooltip
               id='warningPosition'
@@ -62,13 +62,6 @@ const Counter = ({value, label, color, previousValue, details, isWarning, warnin
       </div>
 
       <style jsx>{`
-        .warning-icon {
-          position: absolute;
-          top: 2px;
-          left: 10px;
-          cursor: default;
-        }
-
         .hover {
           display: flex;
           flex-direction: column;
@@ -95,6 +88,13 @@ const Counter = ({value, label, color, previousValue, details, isWarning, warnin
           justify-content: space-around;
         }
 
+        .warning-icon {
+          position: absolute;
+          top: 0;
+          left: 10px;
+          cursor: default;
+        }
+
         .difference {
           font-size: small;
           font-style: italic;
@@ -119,7 +119,6 @@ Counter.defaultProps = {
   color: 'almostBlack',
   previousValue: null,
   details: null,
-  isWarning: false,
   warningLabel: null,
   isBig: false
 }
@@ -130,7 +129,6 @@ Counter.propTypes = {
   color: PropTypes.string,
   previousValue: PropTypes.number,
   details: PropTypes.string,
-  isWarning: PropTypes.bool,
   warningLabel: PropTypes.string,
   isBig: PropTypes.bool
 }

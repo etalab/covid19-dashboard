@@ -27,7 +27,7 @@ const Counters = props => {
   return (
     <div className='stats'>
       <div className='counters'>
-        {casConfirmes && <Counter value={casConfirmes} previousValue={previousReport.casConfirmes} label='cas confirmés' details={details.casConfirmes} color='orange' isWarning warningLabel={warningLabel} isBig />}
+        {casConfirmes && <Counter value={casConfirmes} previousValue={previousReport.casConfirmes} label='cas confirmés' details={details.casConfirmes} color='orange' warningLabel={warningLabel} isBig />}
         {decesEhpad && <Counter value={totalDeces} previousValue={previousTotalDeces} label='cumul des décès' details='Cumul des décés' color='red' isBig />}
       </div>
       <div className='title'>Données hospitalières</div>
