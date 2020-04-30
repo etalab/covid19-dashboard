@@ -50,6 +50,7 @@ const SyntheseMap = () => {
       <Source
         id='decoupage-administratif'
         type='vector'
+        attribution='Données Ministère des Solidarités et de la Santé'
         url='https://etalab-tiles.fr/data/decoupage-administratif.json'
       >
         <Layer {...indicateurSyntheseLayer} />
