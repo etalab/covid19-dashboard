@@ -36,7 +36,7 @@ const Counter = ({value, label, color, previousValue, details, warningLabel, isB
         <div className='value'>
           {typeof value === 'number' ? formatInteger(value) : '-'}
           <div className='hover'>
-            <Info size={12} data-tip={details} data-for='overridePosition' />
+            {details && <Info size={12} data-tip={details} data-for='overridePosition' />}
             <ReactTooltip
               id='overridePosition'
               backgroundColor='rgba(0, 0, 0, .3)'

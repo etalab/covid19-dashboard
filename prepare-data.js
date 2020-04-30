@@ -2,6 +2,7 @@
 require('dotenv').config()
 
 const {join} = require('path')
+const {createReadStream} = require('fs')
 const got = require('got')
 const {outputJson, readJson} = require('fs-extra')
 const getStream = require('get-stream')
@@ -57,7 +58,7 @@ function consolidate(records) {
       .reduce((acc, row) => {
         defaults(acc, row)
         return acc
-      }, {}), ['casConfirmes', 'deces', 'decesEhpad', 'casEhpad', 'casConfirmesEhpad', 'casPossiblesEhpad', 'reanimation', 'hospitalises', 'gueris', 'date', 'code', 'nom', 'testsRealises', 'testsPositifs', 'testsRealisesDetails', 'testsPositifsDetails'])
+      }, {}), ['casConfirmes', 'deces', 'decesEhpad', 'casEhpad', 'casConfirmesEhpad', 'casPossiblesEhpad', 'reanimation', 'hospitalises', 'gueris', 'date', 'code', 'nom', 'testsRealises', 'testsPositifs', 'testsRealisesDetails', 'testsPositifsDetails', 'indicateurSynthese'])
   })
 }
 
@@ -150,6 +151,22 @@ async function loadTests(url) {
   return [...departementsReports, ...regionsReports, ...franceReports]
 }
 
+async function loadIndicateurs() {
+  const rows = await getStream.array(
+    createReadStream(join(__dirname, 'data', 'donnees_carte_synthese_tricolore.csv'))
+      .pipe(csvParse({separator: ';'}))
+  )
+  return rows.map(row => {
+    return {
+      date: row.extract_date,
+      code: `DEP-${row.departement}`,
+      nom: departementsIndex[row.departement].nom,
+      indicateurSynthese: row.indic_synthese,
+      sourceType: 'ministere-sante'
+    }
+  })
+}
+
 function filterRecords(records) {
   const {START_DATE, END_DATE, ALLOWED_SOURCES} = process.env
   const filters = []
@@ -172,7 +189,8 @@ function filterRecords(records) {
 async function main() {
   const records = await loadJson(DATA_SOURCE)
   const tests = await loadTests(TESTS_SOURCE)
-  const data = consolidate(filterRecords([...records, ...tests]))
+  const indicateurs = await loadIndicateurs()
+  const data = consolidate(filterRecords([...records, ...tests, ...indicateurs]))
 
   const dates = uniq(data.map(r => r.date)).sort()
   const codes = uniq(data.map(r => r.code))

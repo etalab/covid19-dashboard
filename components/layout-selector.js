@@ -103,6 +103,12 @@ const DesktopLayoutSelector = ({selected, layouts, handleSelect}) => {
           background-color: #fff;
           border-radius: 4px;
         }
+
+        @media (max-width: 980px) {
+          .layout {
+            font-size: small;
+          }
+        }
         `}</style>
     </div>
   )
