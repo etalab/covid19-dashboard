@@ -42,9 +42,9 @@ const DateNav = ({disabled}) => {
           color: #fff;
         }
 
-          .menu-header h3 {
-            margin: 0.5em;
-          }
+        .menu-header h3 {
+          margin: 0.5em;
+        }
 
         .report-nav.disabled {
           color: #ffffff55;
@@ -66,6 +66,12 @@ const DateNav = ({disabled}) => {
 
           .menu-header h3 {
             margin: 0.2em;
+          }
+        }
+
+        @media (max-width: 980px) {
+          .menu-header {
+            font-size: small;
           }
         }
       `}</style>
