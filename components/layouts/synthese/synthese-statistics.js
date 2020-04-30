@@ -11,19 +11,19 @@ const SyntheseStatistics = () => {
     <div className='statistics-container'>
       <Counter
         value={synthese.filter((({indicateurSynthese}) => indicateurSynthese === 'vert')).length}
-        label='Départements où l’activité du virus est limitée'
+        label='départements classés vert'
         color='green'
         isBig
       />
       <Counter
         value={synthese.filter((({indicateurSynthese}) => indicateurSynthese === 'orange')).length}
-        label='Départements où l’activité du virus est importante'
+        label='départements classés orange'
         color='orange'
         isBig
       />
       <Counter
         value={synthese.filter((({indicateurSynthese}) => indicateurSynthese === 'rouge')).length}
-        label='Départements où l’activité du virus est élevée'
+        label='départements classés rouge'
         color='red'
         isBig
       />

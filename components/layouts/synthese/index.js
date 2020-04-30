@@ -99,13 +99,13 @@ const SyntheseDesktop = () => {
       </div>
 
       <div className='map-container'>
-        <div className='info'>
+        {/* <div className='info'>
           <div className='legends'>
             <div className='legend'>Activité limitée du virus <div className=' color green' /></div>
             <div className='legend'>Activité importante du virus <div className=' color orange' /></div>
             <div className='legend'>Activité élevée du virus <div className=' color red' /></div>
           </div>
-        </div>
+        </div> */}
 
         <SyntheseMap />
       </div>

@@ -33,13 +33,14 @@ const SyntheseMap = () => {
     type: 'fill',
     paint: {
       'fill-color': expression,
-      'fill-opacity': 0.7
+      'fill-opacity': 0.7,
+      'fill-outline-color': '#ffffff'
     }
   }
 
   return (
     <StaticMap
-      latitude={47}
+      latitude={46.7}
       longitude={2.7}
       zoom={isMobileDevice ? 3.8 : 5}
       width='100%'
