@@ -1,6 +1,6 @@
 import React, {useState, useCallback, useEffect, useRef} from 'react'
 import PropTypes from 'prop-types'
-import ReactMapGL, {Source, Layer, WebMercatorViewport} from 'react-map-gl'
+import ReactMapGL, {WebMercatorViewport} from 'react-map-gl'
 
 import geo from '../../geo.json'
 
@@ -10,7 +10,7 @@ const defaultViewport = {
   zoom: 5
 }
 
-const Map = ({code, data, layers, hideAttribution, onHover, onClick, children}) => {
+const Map = ({code, interactiveLayerIds, hideAttribution, onHover, onClick, children}) => {
   const mapRef = useRef()
 
   const [viewport, setViewport] = useState(defaultViewport)
@@ -46,7 +46,7 @@ const Map = ({code, data, layers, hideAttribution, onHover, onClick, children}) 
           width='100%'
           height='100%'
           mapStyle='https://etalab-tiles.fr/styles/osm-bright/style.json'
-          interactiveLayerIds={onHover || onClick ? layers.map(layer => layer.id) : null}
+          interactiveLayerIds={interactiveLayerIds}
           onHover={onHover}
           onClick={onClick}
           scrollZoom={false}
@@ -56,18 +56,6 @@ const Map = ({code, data, layers, hideAttribution, onHover, onClick, children}) 
           touchZoom={false}
           attributionControl={!hideAttribution}
         >
-          {data &&
-            <Source
-              type='geojson'
-              attribution='Données Santé publique France'
-              data={data}
-            >
-              {layers.map(layer => (
-                <Layer key={layer.id} {...layer} />
-              ))}
-            </Source>
-          }
-
           {children}
         </ReactMapGL>
       )}
@@ -86,13 +74,12 @@ Map.defaultProps = {
   onHover: null,
   onClick: null,
   children: null,
-  data: null
+  interactiveLayerIds: null
 }
 
 Map.propTypes = {
   code: PropTypes.string.isRequired,
-  data: PropTypes.object,
-  layers: PropTypes.array.isRequired,
+  interactiveLayerIds: PropTypes.array,
   hideAttribution: PropTypes.bool,
   onHover: PropTypes.func,
   onClick: PropTypes.func,

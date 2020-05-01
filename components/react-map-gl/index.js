@@ -1,7 +1,7 @@
 import React, {useState, useContext, useEffect} from 'react'
 import PropTypes from 'prop-types'
 import Router from 'next/router'
-import {Popup} from 'react-map-gl'
+import {Popup, Source, Layer} from 'react-map-gl'
 
 import {AppContext} from '../../pages'
 import {getReport, reportToGeoJSON} from '../../lib/data'
@@ -70,12 +70,22 @@ const ReactMapGL = ({code, layers, hidePopup, hideAttribution}) => {
     <div className='map-container'>
       <Map
         code={code}
-        data={layerData}
-        layers={layers}
+        interactiveLayerIds={onClick || onHover ? layers.map(l => l.id) : null}
         hideAttribution={hideAttribution}
         onHover={isMobileDevice ? null : onHover}
         onClick={onClick}
       >
+        {layerData &&
+          <Source
+            type='geojson'
+            attribution='Données Santé publique France'
+            data={layerData}
+          >
+            {layers.map(layer => (
+              <Layer key={layer.id} {...layer} />
+            ))}
+          </Source>}
+
         {hovered && !hidePopup && (
           <Popup
             longitude={hovered.longitude}
