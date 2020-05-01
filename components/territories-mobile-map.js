@@ -41,7 +41,7 @@ const TerritoriesMobileMap = ({maps, context, children}) => {
         </div>
       </div>
 
-      {selectedLocation && !showDrom && (
+      {children && selectedLocation && !showDrom && (
         <div className={`mobile-sumup ${showStats ? 'show' : 'hide'}`}>
           <div className='show-stats clickable' onClick={() => setShowStats(!showStats)}>
             {showStats ? 'Masquer' : 'Afficher'} les données {geo[selectedLocation].nom} {showStats ? <ChevronDown /> : <ChevronUp />}
@@ -128,9 +128,13 @@ const TerritoriesMobileMap = ({maps, context, children}) => {
   )
 }
 
+TerritoriesMobileMap.defaultProps = {
+  context: null
+}
+
 TerritoriesMobileMap.propTypes = {
   maps: PropTypes.array.isRequired,
-  context: PropTypes.object.isRequired,
+  context: PropTypes.object,
   children: PropTypes.node.isRequired
 }
 
