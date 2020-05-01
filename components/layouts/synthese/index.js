@@ -9,10 +9,12 @@ import {getReport} from '../../../lib/data'
 import {AppContext, ThemeContext} from '../../../pages'
 
 import Scrollable from '../../scrollable'
+import TerritoriesMobileMap from '../../territories-mobile-map'
+import TerritoriesDesktopMap from '../../territories-desktop-map'
 
 import SyntheseInformations from './synthese-informations'
 import SyntheseStatistics from './synthese-statistics'
-import SyntheseMap from './synthese-map'
+import maps from './synthese-maps'
 
 export const SyntheseContext = React.createContext()
 
@@ -24,7 +26,7 @@ const SyntheseMobile = () => {
 
   const views = {
     map: (
-      <SyntheseMap />
+      <TerritoriesMobileMap maps={maps} context={SyntheseContext} />
     ),
     stats: (
       <Scrollable>
@@ -98,7 +100,7 @@ const SyntheseDesktop = () => {
         </Scrollable>
       </div>
 
-      <div className='map-container'>
+      <div className='map'>
         {/* <div className='info'>
           <div className='legends'>
             <div className='legend'>Activité limitée du virus <div className=' color green' /></div>
@@ -107,7 +109,7 @@ const SyntheseDesktop = () => {
           </div>
         </div> */}
 
-        <SyntheseMap />
+        <TerritoriesDesktopMap maps={maps} context={SyntheseContext} />
       </div>
 
       <style jsx>{`
@@ -116,26 +118,15 @@ const SyntheseDesktop = () => {
           display: flex;
           flex-direction: column;
           max-width: ${theme.menuWidth};
+          width: ${theme.menuWidth};
           box-shadow: 0 1px 4px ${colors.lightGrey};
         }
 
-        .map-container {
+        .map {
           display: flex;
           flex: 1;
-          position: relative;
-        }
-
-        .banner {
-          margin: 0.5em;
-          text-align: center;
-        }
-
-        .banner p {
-          margin: 0.4em;
-        }
-
-        .banner a {
-          color: #fff;
+          flex-direction: column;
+          height: 100%;
         }
 
         .info {
@@ -181,6 +172,7 @@ const SyntheseDesktop = () => {
 const Synthese = props => {
   const {date, isMobileDevice} = useContext(AppContext)
 
+  const [selectedMapId, setSelectedMapId] = useState('Carte d’activité épidémique')
   const [synthese, setSynthese] = useState([])
 
   const Component = isMobileDevice ? SyntheseMobile : SyntheseDesktop
@@ -200,7 +192,7 @@ const Synthese = props => {
   }, [date])
 
   return (
-    <SyntheseContext.Provider value={{synthese}}>
+    <SyntheseContext.Provider value={{synthese, selectedMapId, setSelectedMapId}}>
       <Component {...props} />
     </SyntheseContext.Provider>
   )

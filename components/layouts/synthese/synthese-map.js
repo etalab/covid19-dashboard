@@ -1,9 +1,8 @@
 import React, {useContext, useMemo} from 'react'
-import {StaticMap, Source, Layer} from 'react-map-gl'
+import {Source, Layer} from 'react-map-gl'
 
 import colors from '../../../styles/colors'
 import {SyntheseContext} from '.'
-import {AppContext} from '../../../pages'
 
 const COLORS = {
   vert: colors.green,
@@ -11,8 +10,7 @@ const COLORS = {
   rouge: colors.red
 }
 
-const SyntheseMap = () => {
-  const {isMobileDevice} = useContext(AppContext)
+export const SyntheseMap = () => {
   const {synthese} = useContext(SyntheseContext)
 
   const expression = useMemo(() => {
@@ -39,24 +37,15 @@ const SyntheseMap = () => {
   }
 
   return (
-    <StaticMap
-      latitude={46.7}
-      longitude={2.7}
-      zoom={isMobileDevice ? 3.8 : 5}
-      width='100%'
-      height='100%'
-      mapStyle='https://etalab-tiles.fr/styles/osm-bright/style.json'
+    <Source
+      id='decoupage-administratif'
+      type='vector'
+      attribution='Données Ministère des Solidarités et de la Santé'
+      url='https://etalab-tiles.fr/data/decoupage-administratif.json'
     >
-      <Source
-        id='decoupage-administratif'
-        type='vector'
-        attribution='Données Ministère des Solidarités et de la Santé'
-        url='https://etalab-tiles.fr/data/decoupage-administratif.json'
-      >
-        <Layer {...indicateurSyntheseLayer} />
-      </Source>
-    </StaticMap>
+      <Layer {...indicateurSyntheseLayer} />
+    </Source>
   )
 }
 
-export default SyntheseMap
+export const interactiveLayersIds = []
