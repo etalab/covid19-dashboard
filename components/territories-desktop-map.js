@@ -16,9 +16,11 @@ const TerritoriesDesktopMap = ({maps, context}) => {
   return (
     <>
       <div className='metropole'>
-        <div className='map-selector'>
-          <MapSelector selectedMapId={selectedMapId} maps={maps} selectMap={setSelectedMapId} />
-        </div>
+        {maps.length > 1 && (
+          <div className='map-selector'>
+            <MapSelector selectedMapId={selectedMapId} maps={maps} selectMap={setSelectedMapId} />
+          </div>
+        )}
         <MapContext code={selectedLocation} map={selectedMap} />
       </div>
       <div className='drom-container'>

@@ -26,9 +26,11 @@ const TerritoriesMobileMap = ({maps, context, children}) => {
       <div className='map-switch clickable' onClick={() => setShowDrom(!showDrom)}>
         Voir la France {showDrom ? 'métropolitaine' : 'd’outremer'}
       </div>
-      <div className='map-selector clickable'>
-        <MapSelector selectedMapId={selectedMapId} maps={maps} selectMap={setSelectedMapId} />
-      </div>
+      {maps.length > 1 && (
+        <div className='map-selector clickable'>
+          <MapSelector selectedMapId={selectedMapId} maps={maps} selectMap={setSelectedMapId} />
+        </div>
+      )}
       <div className='map-content'>
         <div>
           {showDrom ? (
