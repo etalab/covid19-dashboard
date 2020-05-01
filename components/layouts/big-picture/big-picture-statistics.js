@@ -8,7 +8,7 @@ import {AppContext} from '../../../pages'
 
 import {getPreviousReport, getReport} from '../../../lib/data'
 
-import Counters from '../../counters'
+import Counters from './big-picture-counters'
 import MixedChart from '../../charts/mixed-chart'
 import IndicateurCumulChart from '../../charts/indicateur-cumul'
 import IndicateurVariationChart from '../../charts/indicateur-variation'

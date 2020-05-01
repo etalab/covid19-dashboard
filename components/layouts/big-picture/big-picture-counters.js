@@ -1,9 +1,9 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 
-import colors from '../styles/colors'
+import colors from '../../../styles/colors'
 
-import Counter from './counter'
+import Counter from '../../counter'
 
 const Counters = props => {
   const {casConfirmes, hospitalises, reanimation, deces, decesEhpad, gueris, casEhpad, casConfirmesEhpad} = props.report || {}
