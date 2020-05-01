@@ -26,14 +26,14 @@ export const droms = [
   }
 ]
 
-const Drom = ({layers}) => {
+const Drom = ({map}) => {
   return (
     <div className='drom-grid'>
 
       {droms.map(({code, name}) => (
         <div key={code} className='drom'>
           <div className='drom-name'>{name}</div>
-          <MapContext code={code} layers={layers} hidePopup hideAttribution />
+          <MapContext code={code} map={map} hidePopup hideAttribution />
         </div>
       ))}
 
@@ -69,5 +69,5 @@ const Drom = ({layers}) => {
 export default Drom
 
 Drom.propTypes = {
-  layers: PropTypes.array.isRequired
+  map: PropTypes.object.isRequired
 }

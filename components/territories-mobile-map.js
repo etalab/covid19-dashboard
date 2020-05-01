@@ -19,7 +19,7 @@ const TerritoriesMobileMap = ({maps, context, children}) => {
   const [showStats, setShowStats] = useState(false)
   const [showDrom, setShowDrom] = useState(selectedLocation && droms.find(({code}) => selectedLocation === code))
 
-  const {layers} = maps.find(m => m.name === selectedMapId)
+  const selectedMap = maps.find(m => m.name === selectedMapId)
 
   return (
     <div className='mobile-map-container'>
@@ -32,9 +32,9 @@ const TerritoriesMobileMap = ({maps, context, children}) => {
       <div className='map-content'>
         <div>
           {showDrom ? (
-            <Drom layers={layers} />
+            <Drom map={selectedMap} />
           ) : (
-            <MapContext code={selectedLocation} layers={layers} />
+            <MapContext code={selectedLocation} map={selectedMap} />
           )}
         </div>
       </div>

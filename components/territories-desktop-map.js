@@ -11,7 +11,7 @@ const TerritoriesDesktopMap = ({maps, context}) => {
   const {selectedLocation} = useContext(AppContext)
   const {selectedMapId, setSelectedMapId} = useContext(context)
 
-  const {layers} = maps.find(m => m.name === selectedMapId)
+  const selectedMap = maps.find(m => m.name === selectedMapId)
 
   return (
     <>
@@ -19,10 +19,10 @@ const TerritoriesDesktopMap = ({maps, context}) => {
         <div className='map-selector'>
           <MapSelector selectedMapId={selectedMapId} maps={maps} selectMap={setSelectedMapId} />
         </div>
-        <MapContext code={selectedLocation} layers={layers} />
+        <MapContext code={selectedLocation} map={selectedMap} />
       </div>
       <div className='drom-container'>
-        <Drom layers={layers} />
+        <Drom map={selectedMap} />
       </div>
 
       <style jsx>{`

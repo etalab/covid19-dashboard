@@ -9,11 +9,13 @@ import {getReport, reportToGeoJSON} from '../../lib/data'
 import Map from './map'
 import SumUp from './sumup'
 
-const MapContext = ({code, layers, hidePopup, hideAttribution}) => {
+const MapContext = ({code, map, hidePopup, hideAttribution}) => {
   const {date, forcedDate, isMobileDevice} = useContext(AppContext)
 
   const [hovered, setHovered] = useState(null)
   const [layerData, setLayerData] = useState(null)
+
+  const {layers} = map
 
   const selectedDate = forcedDate || date
 
@@ -126,7 +128,7 @@ MapContext.defaultProps = {
 
 MapContext.propTypes = {
   code: PropTypes.string.isRequired,
-  layers: PropTypes.array.isRequired,
+  map: PropTypes.object.isRequired,
   hidePopup: PropTypes.bool,
   hideAttribution: PropTypes.bool
 }
