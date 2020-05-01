@@ -1,17 +1,16 @@
 import React, {useState, useCallback} from 'react'
 import PropTypes from 'prop-types'
-import {indexOf} from 'lodash'
 import {ChevronDown, ChevronUp, Check} from 'react-feather'
 
 import colors from '../styles/colors'
 
-const MapSelector = ({mapIdx, maps, selectMap}) => {
-  const selectedMap = maps[mapIdx]
+const MapSelector = ({selectedMapId, maps, selectMap}) => {
+  const selectedMap = maps.find(m => m.name === selectedMapId)
 
   const [isOpen, setIsOpen] = useState(false)
 
-  const handleMap = useCallback(map => {
-    selectMap(map)
+  const handleMap = useCallback(mapId => {
+    selectMap(mapId)
     setIsOpen(false)
   }, [selectMap])
 
@@ -22,18 +21,15 @@ const MapSelector = ({mapIdx, maps, selectMap}) => {
       </div>
       {isOpen && (
         <div className='menu'>
-          {maps.map(map => {
-            const index = indexOf(maps, map)
-            return (
-              <div
-                key={map.name}
-                className={`menu-item ${index === mapIdx ? 'selected' : ''}`}
-                onClick={() => handleMap(index)}
-              >
-                <span>{map.name}</span> {index === mapIdx && <Check />}
-              </div>
-            )
-          })}
+          {maps.map(map => (
+            <div
+              key={map.name}
+              className={`menu-item ${selectedMapId === map.name ? 'selected' : ''}`}
+              onClick={() => handleMap(map.name)}
+            >
+              <span>{map.name}</span> {map.name === selectedMapId && <Check />}
+            </div>
+          ))}
         </div>
       )}
 
@@ -89,7 +85,7 @@ const MapSelector = ({mapIdx, maps, selectMap}) => {
 }
 
 MapSelector.propTypes = {
-  mapIdx: PropTypes.number.isRequired,
+  selectedMapId: PropTypes.string.isRequired,
   maps: PropTypes.array.isRequired,
   selectMap: PropTypes.func.isRequired
 }

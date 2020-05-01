@@ -9,15 +9,15 @@ import MapSelector from './map-selector'
 
 const TerritoriesDesktopMap = ({maps, context}) => {
   const {selectedLocation} = useContext(AppContext)
-  const {selectedMapIdx, setSelectedMapIdx} = useContext(context)
+  const {selectedMapId, setSelectedMapId} = useContext(context)
 
-  const {layers} = maps[selectedMapIdx]
+  const {layers} = maps.find(m => m.name === selectedMapId)
 
   return (
     <>
       <div className='metropole'>
         <div className='map-selector'>
-          <MapSelector mapIdx={selectedMapIdx} maps={maps} selectMap={setSelectedMapIdx} />
+          <MapSelector selectedMapId={selectedMapId} maps={maps} selectMap={setSelectedMapId} />
         </div>
         <MapContext code={selectedLocation} layers={layers} />
       </div>

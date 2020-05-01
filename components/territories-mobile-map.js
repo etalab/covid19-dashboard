@@ -14,12 +14,12 @@ const SHOW_STATS_HEIGHT = 38
 const TerritoriesMobileMap = ({maps, context, children}) => {
   const themeContext = useContext(ThemeContext)
   const {selectedLocation} = useContext(AppContext)
-  const {selectedMapIdx, setSelectedMapIdx} = useContext(context)
+  const {selectedMapId, setSelectedMapId} = useContext(context)
 
   const [showStats, setShowStats] = useState(false)
   const [showDrom, setShowDrom] = useState(selectedLocation && droms.find(({code}) => selectedLocation === code))
 
-  const {layers} = maps[selectedMapIdx]
+  const {layers} = maps.find(m => m.name === selectedMapId)
 
   return (
     <div className='mobile-map-container'>
@@ -27,7 +27,7 @@ const TerritoriesMobileMap = ({maps, context, children}) => {
         Voir la France {showDrom ? 'métropolitaine' : 'd’outremer'}
       </div>
       <div className='map-selector clickable'>
-        <MapSelector mapIdx={selectedMapIdx} maps={maps} selectMap={setSelectedMapIdx} />
+        <MapSelector selectedMapId={selectedMapId} maps={maps} selectMap={setSelectedMapId} />
       </div>
       <div className='map-content'>
         <div>
