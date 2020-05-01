@@ -83,7 +83,7 @@ const BigPictureStatistics = () => {
 
   useEffect(() => {
     async function fetchReport() {
-      setReport(await getReport(date, selectedLocation || 'FRA'))
+      setReport(await getReport(date, selectedLocation))
     }
 
     fetchReport()

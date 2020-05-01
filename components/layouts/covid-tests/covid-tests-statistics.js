@@ -23,7 +23,7 @@ const CovidTestsStatistics = () => {
 
   useEffect(() => {
     async function fetchReport() {
-      const report = await getReport(selectedDate, selectedLocation || 'FRA')
+      const report = await getReport(selectedDate, selectedLocation)
       setReport(report)
 
       const filteredHistory = report.history.filter(r => selectedDate >= r.date)

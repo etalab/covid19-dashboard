@@ -51,7 +51,7 @@ const MainPage = () => {
   const [isTouchScreenDevice, setIsTouchScreenDevice] = useState(false)
   const [date, setDate] = useState(dates[dates.length - 1])
   const [forcedDate, setForcedDate] = useState(null)
-  const [selectedLocation, setSelectedLocation] = useState(null)
+  const [selectedLocation, setSelectedLocation] = useState('FRA')
   const [selectedLayout, setSelectedLayout] = useState(LAYOUTS[0])
 
   const handleResize = () => {
@@ -60,9 +60,8 @@ const MainPage = () => {
 
   useEffect(() => {
     const {iframe, location} = router.query
-
     setIsIframe(Boolean(iframe === '1'))
-    setSelectedLocation(location)
+    setSelectedLocation(location || 'FRA')
   }, [router])
 
   useEffect(() => {

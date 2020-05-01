@@ -47,7 +47,7 @@ const MobileCovidTests = () => {
   }
 
   const handleClick = view => {
-    app.setSelectedLocation(null)
+    app.setSelectedLocation('FRA')
     setSelectedView(view)
   }
 
@@ -137,8 +137,7 @@ const CovidTests = props => {
     let isCancelled = false
 
     async function fetchMostRecentDateForData() {
-      const location = selectedLocation || 'FRA'
-      const report = await getReport(date, location)
+      const report = await getReport(date, selectedLocation)
       const mostRecentDate = findMostRecentDateForData(report, 'testsRealises')
       if (!isCancelled) {
         setForcedDate(mostRecentDate === date ? null : mostRecentDate)

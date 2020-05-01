@@ -19,7 +19,7 @@ const TerritoriesDesktopMap = ({maps, context}) => {
         <div className='map-selector'>
           <MapSelector mapIdx={selectedMapIdx} maps={maps} selectMap={setSelectedMapIdx} />
         </div>
-        <MapContext code={selectedLocation || 'FRA'} layers={layers} />
+        <MapContext code={selectedLocation} layers={layers} />
       </div>
       <div className='drom-container'>
         <Drom layers={layers} />

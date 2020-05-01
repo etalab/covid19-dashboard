@@ -34,7 +34,7 @@ const TerritoriesMobileMap = ({maps, context, children}) => {
           {showDrom ? (
             <Drom layers={layers} />
           ) : (
-            <MapContext code={selectedLocation || 'FRA'} layers={layers} />
+            <MapContext code={selectedLocation} layers={layers} />
           )}
         </div>
       </div>

@@ -42,7 +42,7 @@ const MobileBigPicture = () => {
   }
 
   const handleClick = view => {
-    app.setSelectedLocation(null)
+    app.setSelectedLocation('FRA')
     setSelectedView(view)
   }
 
