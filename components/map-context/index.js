@@ -1,32 +1,18 @@
-import React, {useState, useContext, useEffect} from 'react'
+import React, {useState, useContext} from 'react'
 import PropTypes from 'prop-types'
 import Router from 'next/router'
-import {Popup, Source, Layer} from 'react-map-gl'
+import {Popup} from 'react-map-gl'
 
 import {AppContext} from '../../pages'
-import {getReport, reportToGeoJSON} from '../../lib/data'
 
 import Map from './map'
 import SumUp from './sumup'
 
 const MapContext = ({code, map, hidePopup, hideAttribution, disableClick}) => {
-  const {date, forcedDate, isMobileDevice} = useContext(AppContext)
+  const {isMobileDevice} = useContext(AppContext)
+  const MapType = map.type
 
   const [hovered, setHovered] = useState(null)
-  const [layerData, setLayerData] = useState(null)
-
-  const {layers} = map
-
-  const selectedDate = forcedDate || date
-
-  useEffect(() => {
-    async function prepareLayerData() {
-      const report = await getReport(selectedDate, code === 'FRA' ? 'REG' : 'DEP')
-      setLayerData(reportToGeoJSON(report, selectedDate))
-    }
-
-    prepareLayerData()
-  }, [selectedDate, code])
 
   const onHover = event => {
     event.stopPropagation()
@@ -72,21 +58,12 @@ const MapContext = ({code, map, hidePopup, hideAttribution, disableClick}) => {
     <div className='map-container'>
       <Map
         code={code}
-        interactiveLayerIds={layers.map(l => l.id)}
+        interactiveLayerIds={map.interactiveLayersIds}
         hideAttribution={hideAttribution}
         onHover={isMobileDevice ? null : onHover}
         onClick={disableClick ? null : onClick}
       >
-        {layerData &&
-          <Source
-            type='geojson'
-            attribution='Données Santé publique France'
-            data={layerData}
-          >
-            {layers.map(layer => (
-              <Layer key={layer.id} {...layer} />
-            ))}
-          </Source>}
+        <MapType code={code} map={map} />
 
         {hovered && !hidePopup && (
           <Popup
