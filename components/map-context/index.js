@@ -9,7 +9,7 @@ import {getReport, reportToGeoJSON} from '../../lib/data'
 import Map from './map'
 import SumUp from './sumup'
 
-const MapContext = ({code, map, hidePopup, hideAttribution}) => {
+const MapContext = ({code, map, hidePopup, hideAttribution, disableClick}) => {
   const {date, forcedDate, isMobileDevice} = useContext(AppContext)
 
   const [hovered, setHovered] = useState(null)
@@ -75,7 +75,7 @@ const MapContext = ({code, map, hidePopup, hideAttribution}) => {
         interactiveLayerIds={layers.map(l => l.id)}
         hideAttribution={hideAttribution}
         onHover={isMobileDevice ? null : onHover}
-        onClick={onClick}
+        onClick={disableClick ? null : onClick}
       >
         {layerData &&
           <Source
@@ -123,14 +123,16 @@ const MapContext = ({code, map, hidePopup, hideAttribution}) => {
 
 MapContext.defaultProps = {
   hidePopup: false,
-  hideAttribution: false
+  hideAttribution: false,
+  disableClick: false
 }
 
 MapContext.propTypes = {
   code: PropTypes.string.isRequired,
   map: PropTypes.object.isRequired,
   hidePopup: PropTypes.bool,
-  hideAttribution: PropTypes.bool
+  hideAttribution: PropTypes.bool,
+  disableClick: PropTypes.bool
 }
 
 export default MapContext
