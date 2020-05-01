@@ -23,7 +23,6 @@ export const CovidTestsContext = React.createContext()
 
 const MobileCovidTests = () => {
   const [selectedView, setSelectedView] = useState('stats')
-  const {selectedMapIdx, setSelectedMapIdx} = useContext(CovidTestsContext)
 
   const app = useContext(AppContext)
   const theme = useContext(ThemeContext)
@@ -32,8 +31,7 @@ const MobileCovidTests = () => {
     map: (
       <TerritoriesMobileMap
         maps={CovidTestsMaps}
-        mapIdx={selectedMapIdx}
-        setMapIdx={setSelectedMapIdx}
+        context={CovidTestsContext}
       >
         <CovidTestsStatistics />
       </TerritoriesMobileMap>

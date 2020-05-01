@@ -11,15 +11,16 @@ import {getReport} from '../lib/data'
 
 const SHOW_STATS_HEIGHT = 38
 
-const TerritoriesMobileMap = ({maps, mapIdx, setMapIdx, children}) => {
+const TerritoriesMobileMap = ({maps, context, children}) => {
   const themeContext = useContext(ThemeContext)
   const {date, forcedDate, selectedLocation} = useContext(AppContext)
+  const {selectedMapIdx, setSelectedMapIdx} = useContext(context)
 
   const [report, setReport] = useState(null)
   const [showStats, setShowStats] = useState(false)
   const [showDrom, setShowDrom] = useState(selectedLocation && droms.find(({code}) => selectedLocation === code))
 
-  const {layers} = maps[mapIdx]
+  const {layers} = maps[selectedMapIdx]
 
   useEffect(() => {
     async function fetchReport() {
@@ -38,7 +39,7 @@ const TerritoriesMobileMap = ({maps, mapIdx, setMapIdx, children}) => {
         Voir la France {showDrom ? 'métropolitaine' : 'd’outremer'}
       </div>
       <div className='map-selector clickable'>
-        <MapSelector mapIdx={mapIdx} maps={maps} selectMap={setMapIdx} />
+        <MapSelector mapIdx={selectedMapIdx} maps={maps} selectMap={setSelectedMapIdx} />
       </div>
       <div className='map-content'>
         <div>
@@ -139,8 +140,7 @@ const TerritoriesMobileMap = ({maps, mapIdx, setMapIdx, children}) => {
 
 TerritoriesMobileMap.propTypes = {
   maps: PropTypes.array.isRequired,
-  mapIdx: PropTypes.number.isRequired,
-  setMapIdx: PropTypes.func.isRequired,
+  context: PropTypes.object.isRequired,
   children: PropTypes.node.isRequired
 }
 

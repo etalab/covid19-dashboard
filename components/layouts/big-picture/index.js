@@ -24,11 +24,10 @@ const MobileBigPicture = () => {
 
   const app = useContext(AppContext)
   const theme = useContext(ThemeContext)
-  const {selectedMapIdx, setSelectedMapIdx} = useContext(BigPictureContext)
 
   const views = {
     map: (
-      <TerritoriesMobileMap maps={bigPictureMaps} mapIdx={selectedMapIdx} setMapIdx={setSelectedMapIdx} >
+      <TerritoriesMobileMap maps={bigPictureMaps} context={BigPictureContext}>
         <BigPictureStatistics />
       </TerritoriesMobileMap>
     ),
