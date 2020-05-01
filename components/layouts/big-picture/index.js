@@ -7,15 +7,13 @@ import colors from '../../../styles/colors'
 import {AppContext, ThemeContext} from '../../../pages'
 
 import Scrollable from '../../scrollable'
-import ReactMapGl from '../../react-map-gl'
-import Drom from '../../react-map-gl/drom'
-import MapSelector from '../../map-selector'
 
 import bigPictureMaps from './big-picture-maps'
 
 import BigPictureInformations from './big-picture-informations'
 import BigPictureStatistics from './big-picture-statistics'
 import TerritoriesMobileMap from '../../territories-mobile-map'
+import TerritoriesDesktopMap from '../../territories-desktop-map'
 
 export const BigPictureContext = React.createContext()
 
@@ -92,11 +90,6 @@ const MobileBigPicture = () => {
 }
 
 const DesktopBigPicture = () => {
-  const {selectedLocation} = useContext(AppContext)
-  const {selectedMapIdx, setSelectedMapIdx} = useContext(BigPictureContext)
-
-  const {layers} = bigPictureMaps[selectedMapIdx]
-
   return (
     <>
       <div className='menu'>
@@ -109,15 +102,7 @@ const DesktopBigPicture = () => {
       </div>
 
       <div className='map'>
-        <div className='metropole'>
-          <div className='map-selector'>
-            <MapSelector mapIdx={selectedMapIdx} maps={bigPictureMaps} selectMap={setSelectedMapIdx} />
-          </div>
-          <ReactMapGl code={selectedLocation || 'FRA'} layers={layers} />
-        </div>
-        <div className='drom-container'>
-          <Drom layers={layers} />
-        </div>
+        <TerritoriesDesktopMap maps={bigPictureMaps} context={BigPictureContext} />
       </div>
 
       <style jsx>{`
@@ -134,37 +119,6 @@ const DesktopBigPicture = () => {
           flex: 1;
           flex-direction: column;
           height: 100%;
-        }
-
-        .metropole {
-          flex: 1;
-        }
-
-        .drom-container {
-          display: flex;
-          padding: 0.5em;
-          height: 25%;
-        }
-
-        .map-selector {
-          z-index: 3;
-          position: absolute;
-          background-color: #000000aa;
-          color: #fff;
-          border-radius: 4px;
-          margin: 0.5em;
-        }
-
-        @media (max-width: 1000px) {
-          .drom-container {
-            height: 40%;
-          }
-        }
-
-        @media (max-width: 800px) {
-          .drom-container {
-            height: 50%;
-          }
         }
       `}</style>
     </>
