@@ -1,3 +1,4 @@
+/* eslint react/prop-types: off */
 import React from 'react'
 
 import colors from '../styles/colors'
