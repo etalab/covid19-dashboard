@@ -70,7 +70,7 @@ const ReactMapGL = ({code, layers, hidePopup, hideAttribution}) => {
     <div className='map-container'>
       <Map
         code={code}
-        interactiveLayerIds={onClick || onHover ? layers.map(l => l.id) : null}
+        interactiveLayerIds={layers.map(l => l.id)}
         hideAttribution={hideAttribution}
         onHover={isMobileDevice ? null : onHover}
         onClick={onClick}
