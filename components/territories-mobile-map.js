@@ -1,37 +1,25 @@
-import React, {useContext, useState, useEffect} from 'react'
+import React, {useContext, useState} from 'react'
 import PropTypes from 'prop-types'
 import {ChevronUp, ChevronDown} from 'react-feather'
 
+import geo from '../geo.json'
 import {AppContext, ThemeContext} from '../pages'
 
 import MapSelector from './map-selector'
 import ReactMapGL from './react-map-gl'
 import Drom, {droms} from './react-map-gl/drom'
-import {getReport} from '../lib/data'
 
 const SHOW_STATS_HEIGHT = 38
 
 const TerritoriesMobileMap = ({maps, context, children}) => {
   const themeContext = useContext(ThemeContext)
-  const {date, forcedDate, selectedLocation} = useContext(AppContext)
+  const {selectedLocation} = useContext(AppContext)
   const {selectedMapIdx, setSelectedMapIdx} = useContext(context)
 
-  const [report, setReport] = useState(null)
   const [showStats, setShowStats] = useState(false)
   const [showDrom, setShowDrom] = useState(selectedLocation && droms.find(({code}) => selectedLocation === code))
 
   const {layers} = maps[selectedMapIdx]
-
-  useEffect(() => {
-    async function fetchReport() {
-      const selectedDate = forcedDate || date
-      setReport(await getReport(selectedDate, selectedLocation))
-    }
-
-    if (selectedLocation) {
-      fetchReport()
-    }
-  }, [date, forcedDate, selectedLocation])
 
   return (
     <div className='mobile-map-container'>
@@ -51,10 +39,10 @@ const TerritoriesMobileMap = ({maps, context, children}) => {
         </div>
       </div>
 
-      {report && selectedLocation && !showDrom && (
+      {selectedLocation && !showDrom && (
         <div className={`mobile-sumup ${showStats ? 'show' : 'hide'}`}>
           <div className='show-stats clickable' onClick={() => setShowStats(!showStats)}>
-            Chiffres {report.nom} {showStats ? <ChevronDown /> : <ChevronUp />}
+            {showStats ? 'Masquer' : 'Afficher'} les données {geo[selectedLocation].nom} {showStats ? <ChevronDown /> : <ChevronUp />}
           </div>
           <div className='mobile-statistics'>
             {children}
