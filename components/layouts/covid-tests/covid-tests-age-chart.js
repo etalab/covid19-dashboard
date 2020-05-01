@@ -17,6 +17,9 @@ const options = {
   scales: {
     yAxes: [{
       stacked: true
+    }],
+    xAxes: [{
+      stacked: true
     }]
   }
 }
@@ -30,12 +33,14 @@ const formatData = data => {
     {
       label: 'testés positifs',
       data: Object.keys(classesAge).map(classe => getSumOfByAge(data, 'testsPositifsDetails', classe)),
-      backgroundColor: colors.red
+      backgroundColor: colors.red,
+      stack: 'main'
     },
     {
-      label: 'testés',
-      data: Object.keys(classesAge).map(classe => getSumOfByAge(data, 'testsRealisesDetails', classe)),
-      backgroundColor: colors.lightGrey
+      label: 'testés négatifs',
+      data: Object.keys(classesAge).map(classe => getSumOfByAge(data, 'testsRealisesDetails', classe) - getSumOfByAge(data, 'testsPositifsDetails', classe)),
+      backgroundColor: colors.lightGrey,
+      stack: 'main'
     }
   ]
 
