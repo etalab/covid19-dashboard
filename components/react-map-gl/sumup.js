@@ -1,7 +1,7 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 
-const Sumup = ({nom}) => {
+const SumUp = ({nom}) => {
   return (
     <div className='sumup-container'>
       <div className='title'>{nom}</div>
@@ -26,8 +26,8 @@ const Sumup = ({nom}) => {
   )
 }
 
-Sumup.propTypes = {
+SumUp.propTypes = {
   nom: PropTypes.string.isRequired
 }
 
-export default Sumup
+export default SumUp

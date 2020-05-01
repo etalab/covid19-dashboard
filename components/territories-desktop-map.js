@@ -58,8 +58,6 @@ const TerritoriesDesktopMap = ({maps, context}) => {
         }
       `}</style>
     </>
-
-
   )
 }
 
