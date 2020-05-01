@@ -6,8 +6,8 @@ import geo from '../geo.json'
 import {AppContext, ThemeContext} from '../pages'
 
 import MapSelector from './map-selector'
-import ReactMapGL from './react-map-gl'
-import Drom, {droms} from './react-map-gl/drom'
+import MapContext from './map-context'
+import Drom, {droms} from './map-context/drom'
 
 const SHOW_STATS_HEIGHT = 38
 
@@ -34,7 +34,7 @@ const TerritoriesMobileMap = ({maps, context, children}) => {
           {showDrom ? (
             <Drom layers={layers} />
           ) : (
-            <ReactMapGL code={selectedLocation || 'FRA'} layers={layers} />
+            <MapContext code={selectedLocation || 'FRA'} layers={layers} />
           )}
         </div>
       </div>

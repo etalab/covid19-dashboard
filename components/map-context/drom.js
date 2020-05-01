@@ -1,7 +1,7 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 
-import ReactMapGL from '.'
+import MapContext from '.'
 
 export const droms = [
   {
@@ -33,7 +33,7 @@ const Drom = ({layers}) => {
       {droms.map(({code, name}) => (
         <div key={code} className='drom'>
           <div className='drom-name'>{name}</div>
-          <ReactMapGL code={code} layers={layers} hidePopup hideAttribution />
+          <MapContext code={code} layers={layers} hidePopup hideAttribution />
         </div>
       ))}
 

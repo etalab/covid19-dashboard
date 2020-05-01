@@ -9,7 +9,7 @@ import {getReport, reportToGeoJSON} from '../../lib/data'
 import Map from './map'
 import SumUp from './sumup'
 
-const ReactMapGL = ({code, layers, hidePopup, hideAttribution}) => {
+const MapContext = ({code, layers, hidePopup, hideAttribution}) => {
   const {date, forcedDate, isMobileDevice} = useContext(AppContext)
 
   const [hovered, setHovered] = useState(null)
@@ -119,16 +119,16 @@ const ReactMapGL = ({code, layers, hidePopup, hideAttribution}) => {
   )
 }
 
-ReactMapGL.defaultProps = {
+MapContext.defaultProps = {
   hidePopup: false,
   hideAttribution: false
 }
 
-ReactMapGL.propTypes = {
+MapContext.propTypes = {
   code: PropTypes.string.isRequired,
   layers: PropTypes.array.isRequired,
   hidePopup: PropTypes.bool,
   hideAttribution: PropTypes.bool
 }
 
-export default ReactMapGL
+export default MapContext

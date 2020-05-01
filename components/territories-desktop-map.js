@@ -3,8 +3,8 @@ import PropTypes from 'prop-types'
 
 import {AppContext} from '../pages'
 
-import ReactMapGl from './react-map-gl'
-import Drom from './react-map-gl/drom'
+import MapContext from './map-context'
+import Drom from './map-context/drom'
 import MapSelector from './map-selector'
 
 const TerritoriesDesktopMap = ({maps, context}) => {
@@ -19,7 +19,7 @@ const TerritoriesDesktopMap = ({maps, context}) => {
         <div className='map-selector'>
           <MapSelector mapIdx={selectedMapIdx} maps={maps} selectMap={setSelectedMapIdx} />
         </div>
-        <ReactMapGl code={selectedLocation || 'FRA'} layers={layers} />
+        <MapContext code={selectedLocation || 'FRA'} layers={layers} />
       </div>
       <div className='drom-container'>
         <Drom layers={layers} />
