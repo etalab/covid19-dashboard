@@ -37,25 +37,32 @@ async function main() {
   const departementsFeatures = await getFeatures(departements)
 
   const dataset = [
-    {code: 'FRA', bbox: [-5.317, 41.277, 9.689, 51.234], center: [-5.317, 51.234]},
+    {
+      code: 'FRA',
+      nom: 'France',
+      bbox: [-5.317, 41.277, 9.689, 51.234],
+      center: [-5.317, 51.234]
+    },
     ...regionsFeatures.map(feature => {
       return {
         center: getCenter(feature),
         bbox: getBbox(feature),
-        code: `REG-${feature.properties.code}`
+        code: `REG-${feature.properties.code}`,
+        nom: feature.properties.nom
       }
     }),
     ...departementsFeatures.map(feature => {
       return {
         center: getCenter(feature),
         bbox: getBbox(feature),
-        code: `DEP-${feature.properties.code}`
+        code: `DEP-${feature.properties.code}`,
+        nom: feature.properties.nom
       }
     })
   ]
 
   const index = dataset.reduce((acc, data) => {
-    acc[data.code] = {center: data.center, bbox: data.bbox}
+    acc[data.code] = {center: data.center, bbox: data.bbox, nom: data.nom}
     return acc
   }, {})
 
