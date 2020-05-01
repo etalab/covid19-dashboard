@@ -27,24 +27,6 @@ export default function MyApp({Component, pageProps}) {
           src: url(’/fonts/Marianne-Regular.woff2’);
         }
 
-        @font-face {
-          font-family: "Source Sans Pro";
-          src: url("/fonts/Source Sans Pro/SourceSansPro-Regular.otf");
-          font-weight: 400;
-        }
-
-        @font-face {
-          font-family: "Source Sans Pro";
-          src: url("/fonts/Source Sans Pro/SourceSansPro-Bold.otf");
-          font-weight: 800;
-        }
-
-        @font-face {
-          font-family: "Source Sans Pro";
-          src: url("/fonts/Source Sans Pro/SourceSansPro-It.otf");
-          font-style: italic;
-        }
-
         body {
           padding: 0;
           margin: 0;
