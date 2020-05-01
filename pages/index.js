@@ -38,7 +38,7 @@ const LAYOUTS = [
   },
   {
     id: 'synthese',
-    label: 'Situation épidémiologique',
+    label: 'Activité épidémiologique',
     component: <Synthese />
   }
 ]
