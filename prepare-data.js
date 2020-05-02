@@ -154,7 +154,7 @@ async function loadTests(url) {
 async function loadIndicateurs() {
   const rows = await getStream.array(
     createReadStream(join(__dirname, 'data', 'donnees_carte_synthese_tricolore.csv'))
-      .pipe(csvParse({separator: ';'}))
+      .pipe(csvParse())
   )
   return rows.map(row => {
     return {
