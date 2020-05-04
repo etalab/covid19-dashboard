@@ -33,6 +33,7 @@ module.exports = {
   exportPathMap() {
     return {
       '/': {page: '/'},
+      '/activite-epidemique': {page: '/', query: {layout: 'synthese'}},
       ...departementsRoutes,
       ...regionsRoutes
     }

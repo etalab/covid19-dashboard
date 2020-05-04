@@ -43,6 +43,14 @@ const LAYOUTS = [
   }
 ]
 
+function getLayout(layoutId) {
+  return LAYOUTS.find(l => l.id === layoutId)
+}
+
+function hasLayout(layoutId) {
+  Boolean(getLayout(layoutId))
+}
+
 const MainPage = () => {
   const router = useRouter()
 
@@ -52,16 +60,22 @@ const MainPage = () => {
   const [date, setDate] = useState(dates[dates.length - 1])
   const [forcedDate, setForcedDate] = useState(null)
   const [selectedLocation, setSelectedLocation] = useState('FRA')
-  const [selectedLayout, setSelectedLayout] = useState(LAYOUTS[0])
+  const [selectedLayout, setSelectedLayout] = useState(getLayout('big-picture'))
 
   const handleResize = () => {
     setIsMobileDevice(window.innerWidth < MOBILE_WIDTH)
   }
 
   useEffect(() => {
-    const {iframe, location} = router.query
+    const {iframe, location, layout} = router.query
     setIsIframe(Boolean(iframe === '1'))
     setSelectedLocation(location || 'FRA')
+
+    if (layout && hasLayout(layout)) {
+      setSelectedLayout(getLayout(layout))
+    } else {
+      setSelectedLayout(getLayout('big-picture'))
+    }
   }, [router])
 
   useEffect(() => {
