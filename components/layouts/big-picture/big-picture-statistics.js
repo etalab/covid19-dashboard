@@ -143,6 +143,7 @@ const BigPictureStatistics = () => {
 
       <style jsx>{`
         .header {
+          z-index: 2;
           text-align: center;
           position: sticky;
           top: 0;
