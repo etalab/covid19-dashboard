@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "main": "index.js",
   "repository": "git@github.com:etalab/covid19-dashboard.git",
-  "private": true,
+  "private": false,
   "license": "MIT",
   "scripts": {
     "dev": "next",
