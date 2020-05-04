@@ -48,7 +48,7 @@ function getLayout(layoutId) {
 }
 
 function hasLayout(layoutId) {
-  Boolean(getLayout(layoutId))
+  return Boolean(getLayout(layoutId))
 }
 
 const MainPage = () => {
