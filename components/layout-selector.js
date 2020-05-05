@@ -1,10 +1,11 @@
-import React, {useContext} from 'react'
+import React, {useContext, useCallback} from 'react'
 import PropTypes from 'prop-types'
 import {Maximize2} from 'react-feather'
 
 import {AppContext, ThemeContext} from '../pages'
 
 import SelectInput from './select-input'
+import Router from 'next/router'
 
 const SITE_URL = process.env.SITE_URL
 
@@ -121,10 +122,25 @@ DesktopLayoutSelector.propTypes = {
 }
 
 const LayoutSelector = () => {
-  const {isMobileDevice, selectedLayout, layouts, setSelectedLayout} = useContext(AppContext)
+  const {isMobileDevice, selectedLayout, layouts, selectedLocation, setSelectedLayout} = useContext(AppContext)
   const Component = isMobileDevice ? MobileLayoutSelector : DesktopLayoutSelector
 
-  return <Component selected={selectedLayout} layouts={layouts} handleSelect={setSelectedLayout} />
+  const handleSelect = useCallback(layout => {
+    const href = `/${layout.name}`
+    const as = selectedLocation ? `${href}?location=${selectedLocation}` : href
+
+    setSelectedLayout(layout)
+    Router.push({
+      pathname: '/',
+      query: {
+        ...Router.query,
+        layout: layout.id,
+        location: selectedLocation
+      }
+    }, as)
+  }, [selectedLocation, setSelectedLayout])
+
+  return <Component selected={selectedLayout} layouts={layouts} handleSelect={handleSelect} />
 }
 
 export default LayoutSelector
