@@ -11,7 +11,7 @@ import Drom, {droms} from './map-context/drom'
 
 const SHOW_STATS_HEIGHT = 38
 
-const TerritoriesMobileMap = ({maps, context, children}) => {
+const TerritoriesMobileMap = ({maps, context, children, disableClick}) => {
   const themeContext = useContext(ThemeContext)
   const {selectedLocation} = useContext(AppContext)
   const {selectedMapId, setSelectedMapId} = useContext(context)
@@ -34,9 +34,9 @@ const TerritoriesMobileMap = ({maps, context, children}) => {
       <div className='map-content'>
         <div>
           {showDrom ? (
-            <Drom map={selectedMap} />
+            <Drom map={selectedMap} disableClick={disableClick} />
           ) : (
-            <MapContext code={selectedLocation} map={selectedMap} />
+            <MapContext code={selectedLocation} map={selectedMap} disableClick={disableClick} />
           )}
         </div>
       </div>
@@ -129,13 +129,15 @@ const TerritoriesMobileMap = ({maps, context, children}) => {
 }
 
 TerritoriesMobileMap.defaultProps = {
-  context: null
+  context: null,
+  disableClick: false
 }
 
 TerritoriesMobileMap.propTypes = {
   maps: PropTypes.array.isRequired,
   context: PropTypes.object,
-  children: PropTypes.node.isRequired
+  children: PropTypes.node.isRequired,
+  disableClick: PropTypes.bool
 }
 
 export default TerritoriesMobileMap
