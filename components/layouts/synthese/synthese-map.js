@@ -11,6 +11,8 @@ const COLORS = {
   rouge: colors.red
 }
 
+const defaultColor = 'rgba(0,0,0,0)'
+
 export const SyntheseMap = ({hovered}) => {
   const {synthese} = useContext(SyntheseContext)
   const {code = ''} = hovered && hovered.feature ? hovered.feature.properties : {}
@@ -22,32 +24,42 @@ export const SyntheseMap = ({hovered}) => {
       expression.push(code, COLORS[indicateurSynthese])
     })
 
-    expression.push('rgba(0,0,0,0)')
+    expression.push(defaultColor)
 
     return expression
   }, [synthese])
 
-  const indicateurSyntheseLayer = {
-    id: 'indicateur',
-    'source-layer': 'departements',
-    type: 'fill',
-    paint: {
-      'fill-color': expression,
-      'fill-opacity': ['match', ['get', 'code'], code, 1, 0.7],
-      'fill-outline-color': '#ffffff'
+  const indicateurSyntheseLayer = useMemo(() => {
+    if (synthese) {
+      return {
+        id: 'indicateur',
+        'source-layer': 'departements',
+        type: 'fill',
+        paint: {
+          'fill-color': expression.length > 3 ? expression : defaultColor,
+          'fill-opacity': ['match', ['get', 'code'], code, 1, 0.5],
+          'fill-outline-color': '#ffffff'
+        }
+      }
     }
+
+    return null
+  }, [synthese, code, expression])
+
+  if (synthese) {
+    return (
+      <Source
+        id='decoupage-administratif'
+        type='vector'
+        attribution='Données Ministère des Solidarités et de la Santé'
+        url='https://etalab-tiles.fr/data/decoupage-administratif.json'
+      >
+        <Layer {...indicateurSyntheseLayer} />
+      </Source>
+    )
   }
 
-  return (
-    <Source
-      id='decoupage-administratif'
-      type='vector'
-      attribution='Données Ministère des Solidarités et de la Santé'
-      url='https://etalab-tiles.fr/data/decoupage-administratif.json'
-    >
-      <Layer {...indicateurSyntheseLayer} />
-    </Source>
-  )
+  return null
 }
 
 SyntheseMap.defaultProps = {
