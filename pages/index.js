@@ -23,21 +23,25 @@ const MOBILE_WIDTH = Number.parseInt(theme.mobileDisplay.split('px')[0], 10)
 const LAYOUTS = [
   {
     id: 'big-picture',
+    name: 'vue-d-ensemble',
     label: 'Vue d’ensemble',
     component: <BigPicture />
   },
   {
     id: 'tests',
+    name: 'suivi-des-tests',
     label: 'Suivi des tests',
     component: <CovidTests />
   },
   {
     id: 'transfert',
+    name: 'transferts-de-patients',
     label: 'Transferts de patients',
     component: <Transfert />
   },
   {
     id: 'synthese',
+    name: 'activite-epidemique',
     label: 'Activité épidémique',
     component: <Synthese />
   }
