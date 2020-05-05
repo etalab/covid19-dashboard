@@ -9,7 +9,7 @@ import Map from './map'
 import SumUp from './sumup'
 
 const MapContext = ({code, map, hidePopup, hideAttribution, disableClick}) => {
-  const {isMobileDevice} = useContext(AppContext)
+  const {selectedLayout, isMobileDevice} = useContext(AppContext)
   const MapType = map.type
 
   const [hovered, setHovered] = useState(null)
@@ -47,6 +47,7 @@ const MapContext = ({code, map, hidePopup, hideAttribution, disableClick}) => {
       pathname: '/',
       query: {
         ...Router.query,
+        layout: selectedLayout.id,
         location
       }
     }, as)
