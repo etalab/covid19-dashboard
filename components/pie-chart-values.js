@@ -70,15 +70,14 @@ const PieChartValues = ({title, data, labels, colors, height}) => {
 PieChartValues.defaultProps = {
   title: null,
   labels: null,
-  colors: ['black'],
   height: 100
 }
 
 PieChartValues.propTypes = {
   data: PropTypes.array.isRequired,
+  colors: PropTypes.array.isRequired,
   title: PropTypes.string,
   labels: PropTypes.array,
-  colors: PropTypes.array,
   height: PropTypes.number
 }
 
