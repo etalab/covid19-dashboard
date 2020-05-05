@@ -10,7 +10,7 @@ const SyntheseStatistics = () => {
   const {isMobileDevice} = useContext(AppContext)
   const {synthese} = useContext(SyntheseContext)
 
-  const title = 'Répartition du classement des départements'
+  const title = 'Répartition des départements selon leur couleur'
 
   const indicateurVert = synthese.filter((({indicateurSynthese}) => indicateurSynthese === 'vert')).length
   const indicateurOrange = synthese.filter((({indicateurSynthese}) => indicateurSynthese === 'orange')).length
