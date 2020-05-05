@@ -76,7 +76,9 @@ const MapContext = ({code, map, hidePopup, hideAttribution, disableClick}) => {
             onClose={() => setHovered(null)}
             anchor='bottom-left'
           >
-            <SumUp nom={hovered.feature.properties.nom} />
+            <SumUp nom={hovered.feature.properties.nom}>
+              {map.hovered && map.hovered(hovered.feature)}
+            </SumUp>
           </Popup>
         )}
       </Map>

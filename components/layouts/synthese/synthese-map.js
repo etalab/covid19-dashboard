@@ -70,4 +70,22 @@ SyntheseMap.propTypes = {
   hovered: PropTypes.object
 }
 
+export const HoveredInfos = ({feature}) => {
+  const {synthese} = useContext(SyntheseContext)
+  const {code} = feature.properties
+  const {indicateurSynthese} = synthese.find(s => s.code === code)
+
+  return (
+    <div>
+      Département classé <b style={{color: COLORS[indicateurSynthese]}}>{indicateurSynthese}</b>
+    </div>
+  )
+}
+
+HoveredInfos.propTypes = {
+  feature: PropTypes.shape({
+    properties: PropTypes.object.isRequired
+  }).isRequired
+}
+
 export const interactiveLayersIds = ['indicateur']
