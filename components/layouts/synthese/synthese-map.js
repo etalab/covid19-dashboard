@@ -1,4 +1,5 @@
 import React, {useContext, useMemo} from 'react'
+import PropTypes from 'prop-types'
 import {Source, Layer} from 'react-map-gl'
 
 import colors from '../../../styles/colors'
@@ -10,8 +11,9 @@ const COLORS = {
   rouge: colors.red
 }
 
-export const SyntheseMap = () => {
+export const SyntheseMap = ({hovered}) => {
   const {synthese} = useContext(SyntheseContext)
+  const {code = ''} = hovered && hovered.feature ? hovered.feature.properties : {}
 
   const expression = useMemo(() => {
     const expression = ['match', ['get', 'code']]
@@ -31,7 +33,7 @@ export const SyntheseMap = () => {
     type: 'fill',
     paint: {
       'fill-color': expression,
-      'fill-opacity': 0.7,
+      'fill-opacity': ['match', ['get', 'code'], code, 1, 0.7],
       'fill-outline-color': '#ffffff'
     }
   }
@@ -48,4 +50,12 @@ export const SyntheseMap = () => {
   )
 }
 
-export const interactiveLayersIds = []
+SyntheseMap.defaultProps = {
+  hovered: null
+}
+
+SyntheseMap.propTypes = {
+  hovered: PropTypes.object
+}
+
+export const interactiveLayersIds = ['indicateur']

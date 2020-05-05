@@ -3,6 +3,8 @@ import PropTypes from 'prop-types'
 import Router from 'next/router'
 import {Popup} from 'react-map-gl'
 
+import {getFeatureTerritoire} from '../../lib/data'
+
 import {AppContext} from '../../pages'
 
 import Map from './map'
@@ -63,7 +65,7 @@ const MapContext = ({code, map, hidePopup, hideAttribution, disableClick}) => {
         onHover={isMobileDevice ? null : onHover}
         onClick={disableClick ? null : onClick}
       >
-        <MapType code={code} map={map} />
+        <MapType code={code} map={map} hovered={hovered} />
 
         {hovered && !hidePopup && (
           <Popup
