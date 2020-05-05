@@ -10,22 +10,34 @@ const SyntheseStatistics = () => {
   const {isMobileDevice} = useContext(AppContext)
   const {synthese} = useContext(SyntheseContext)
 
+  const title = 'Répartition du classement des départements'
+
   const indicateurVert = synthese.filter((({indicateurSynthese}) => indicateurSynthese === 'vert')).length
   const indicateurOrange = synthese.filter((({indicateurSynthese}) => indicateurSynthese === 'orange')).length
   const indicateurRouge = synthese.filter((({indicateurSynthese}) => indicateurSynthese === 'rouge')).length
 
-  const data = [indicateurVert, indicateurOrange, indicateurRouge]
-  const pieColors = [colors.green, colors.orange, colors.red]
+  const data = [
+    {
+      label: 'vert',
+      value: indicateurVert
+    },
+    {
+      label: 'orange',
+      value: indicateurOrange
+    },
+    {
+      label: 'rouge',
+      value: indicateurRouge
+    }
+  ]
 
-  const title = 'Répartition du classement des départements'
-  const sliceLabels = ['vert', 'orange', 'rouge']
+  const pieColors = [colors.green, colors.orange, colors.red]
 
   return (
     <div className='statistics-container'>
       <PieChartValues
         title={title}
         data={data}
-        sliceLabels={sliceLabels}
         colors={pieColors}
         height={isMobileDevice ? 200 : 130} />
       <style jsx>{`

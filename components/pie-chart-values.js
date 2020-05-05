@@ -3,11 +3,12 @@ import PropTypes from 'prop-types'
 import Chart from 'chart.js'
 import {Pie} from 'react-chartjs-2'
 
-const PieChartValues = ({title, data, labels, sliceLabels, colors, height}) => {
+const PieChartValues = ({title, data, labels, colors, height}) => {
   const chartRef = useRef(null)
   const chart = {
     datasets: [{
-      data,
+      data: data.map(r => (r.value)),
+      label: data.map(r => (r.label ? r.label : null)),
       backgroundColor: colors,
       hoverBackgroundColor: colors,
       _meta: {}
@@ -41,7 +42,7 @@ const PieChartValues = ({title, data, labels, sliceLabels, colors, height}) => {
             const x = midRadius * Math.cos(midAngle)
             const y = midRadius * Math.sin(midAngle)
             ctx.fillStyle = '#fff'
-            const values = sliceLabels ? dataset.data[i] + ' ' + sliceLabels[i] : dataset.data[i]
+            const values = dataset.label[i] ? dataset.data[i] + ' ' + dataset.label[i] : dataset.data[i]
             ctx.fillText(values, model.x + x - 10, model.y + y + 15)
           }
         })
@@ -67,19 +68,17 @@ const PieChartValues = ({title, data, labels, sliceLabels, colors, height}) => {
 }
 
 PieChartValues.defaultProps = {
-  sliceLabels: null,
+  title: null,
   labels: null,
   colors: ['black'],
-  title: null,
   height: 100
 }
 
 PieChartValues.propTypes = {
   data: PropTypes.array.isRequired,
-  sliceLabels: PropTypes.array,
+  title: PropTypes.string,
   labels: PropTypes.array,
   colors: PropTypes.array,
-  title: PropTypes.string,
   height: PropTypes.number
 }
 
