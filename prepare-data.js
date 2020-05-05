@@ -3,6 +3,7 @@ require('dotenv').config()
 
 const {join} = require('path')
 const {createReadStream} = require('fs')
+const {Transform} = require('stream')
 const got = require('got')
 const {outputJson, readJson} = require('fs-extra')
 const getStream = require('get-stream')
@@ -23,6 +24,16 @@ async function fetchCsv(url, options = {}) {
   const rows = await getStream.array(
     got.stream(url)
       .pipe(csvParse(options))
+      .pipe(new Transform({
+        transform(row, enc, cb) {
+          if (!options.filter || options.filter(row)) {
+            return cb(null, row)
+          }
+
+          cb()
+        },
+        objectMode: true
+      }))
   )
   return rows
 }
@@ -62,8 +73,15 @@ function consolidate(records) {
   })
 }
 
+const TODAY = (new Date()).toISOString().slice(0, 10)
+
 async function loadTests(url) {
-  const departementsReports = chain(await fetchCsv(url, {separator: ';'}))
+  const csvOptions = {
+    separator: ';',
+    filter: row => row.jour === TODAY || row.jour < TODAY
+  }
+
+  const departementsReports = chain(await fetchCsv(url, csvOptions))
     .groupBy(r => `${r.jour}-${r.dep}`)
     .map(rows => {
       const report = {
