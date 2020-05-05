@@ -3,7 +3,7 @@ import PropTypes from 'prop-types'
 import Chart from 'chart.js'
 import {Pie} from 'react-chartjs-2'
 
-const PieChartValues = ({title, data, labels, sliceLabels, sliceLabelsFontSize, colors, height}) => {
+const PieChartValues = ({title, data, labels, sliceLabels, colors, height}) => {
   const chartRef = useRef(null)
   const chart = {
     datasets: [{
@@ -27,7 +27,7 @@ const PieChartValues = ({title, data, labels, sliceLabels, sliceLabelsFontSize, 
       onComplete: animation => {
         const {ctx} = animation.chart
         const {data} = chartRef.current.props
-        ctx.font = Chart.helpers.fontString(sliceLabelsFontSize, 'bold', Chart.defaults.global.defaultFontFamily)
+        ctx.font = Chart.helpers.fontString(14, 'bold', Chart.defaults.global.defaultFontFamily)
         ctx.textAlign = 'center'
         ctx.textBaseline = 'bottom'
         ctx.context = {}
@@ -68,7 +68,6 @@ const PieChartValues = ({title, data, labels, sliceLabels, sliceLabelsFontSize, 
 
 PieChartValues.defaultProps = {
   sliceLabels: null,
-  sliceLabelsFontSize: 13,
   labels: null,
   colors: ['black'],
   title: null,
@@ -78,7 +77,6 @@ PieChartValues.defaultProps = {
 PieChartValues.propTypes = {
   data: PropTypes.array.isRequired,
   sliceLabels: PropTypes.array,
-  sliceLabelsFontSize: PropTypes.number,
   labels: PropTypes.array,
   colors: PropTypes.array,
   title: PropTypes.string,

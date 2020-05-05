@@ -26,7 +26,6 @@ const SyntheseStatistics = () => {
         title={title}
         data={data}
         sliceLabels={sliceLabels}
-        sliceLabelsFontSize={13}
         colors={pieColors}
         height={isMobileDevice ? 200 : 130} />
       <style jsx>{`
