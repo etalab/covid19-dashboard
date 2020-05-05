@@ -1,5 +1,8 @@
 import React from 'react'
 import PropTypes from 'prop-types'
+import {invertBy} from 'lodash'
+
+import geo from '../../geo.json'
 
 import MapContext from '.'
 
@@ -26,16 +29,24 @@ export const droms = [
   }
 ]
 
+const getDROMCodeDep = nom => {
+  return invertBy(geo, 'nom')[nom][1]
+}
+
 const Drom = ({map, disableClick}) => {
   return (
     <div className='drom-grid'>
 
-      {droms.map(({code, name}) => (
-        <div key={code} className='drom'>
-          <div className='drom-name'>{name}</div>
-          <MapContext code={code} map={map} hidePopup hideAttribution disableClick={disableClick} />
-        </div>
-      ))}
+      {droms.map(({code, name}) => {
+        const codeDepartement = getDROMCodeDep(name).split('-')[1]
+        return (
+          <div key={code} className='drom'>
+            <div className='drom-name'>{name}</div>
+            {map.hovered && <div className='hovered'>{map.hovered({properties: {code: codeDepartement, name}})}</div>}
+            <MapContext code={code} map={map} hidePopup hideAttribution disableClick={disableClick} />
+          </div>
+        )
+      })}
 
       <style jsx>{`
           .drom-grid {
@@ -49,6 +60,7 @@ const Drom = ({map, disableClick}) => {
 
           .drom {
             position: relative;
+            display: flex;
             width: 100%;
             height: 100%;
           }
@@ -60,6 +72,26 @@ const Drom = ({map, disableClick}) => {
             width: 100%;
             text-align: center;
             background-color: #ffffff99;
+          }
+
+          .hovered {
+            visibility: hidden;
+            z-index: 2;
+            position: absolute;
+            display: flex;
+            height: 100%;
+            width: 100%;
+            padding: 1em;
+            flex-flow: wrap;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            background-color: #ffffffcc;
+          }
+
+          .drom:hover .hovered {
+            visibility: visible;
+            cursor: pointer;
           }
         `}</style>
     </div>

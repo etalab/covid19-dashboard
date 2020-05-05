@@ -72,14 +72,19 @@ SyntheseMap.propTypes = {
 
 export const HoveredInfos = ({feature}) => {
   const {synthese} = useContext(SyntheseContext)
-  const {code} = feature.properties
-  const {indicateurSynthese} = synthese.find(s => s.code === code)
 
-  return (
-    <div>
-      Département classé <b style={{color: COLORS[indicateurSynthese]}}>{indicateurSynthese}</b>
-    </div>
-  )
+  if (synthese && synthese.length > 0) {
+    const {code} = feature.properties
+    const {indicateurSynthese} = synthese.find(s => s.code === code)
+
+    return (
+      <div>
+        Département classé <b style={{color: COLORS[indicateurSynthese]}}>{indicateurSynthese}</b>
+      </div>
+    )
+  }
+
+  return null
 }
 
 HoveredInfos.propTypes = {
