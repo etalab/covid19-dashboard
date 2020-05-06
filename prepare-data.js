@@ -106,6 +106,7 @@ async function loadTests(url) {
 
       return report
     })
+    .filter(r => r.testsRealises > 0 || r.testsPositifs > 0)
     .value()
 
   const regionsReports = chain(departementsReports)
