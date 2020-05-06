@@ -1,6 +1,5 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import {invertBy} from 'lodash'
 
 import geo from '../../geo.json'
 
@@ -30,7 +29,14 @@ export const droms = [
 ]
 
 const getDROMCodeDep = nom => {
-  return invertBy(geo, 'nom')[nom][1]
+  let codeDep
+  Object.keys(geo).filter(code => code.includes('DEP')).forEach(code => {
+    if (geo[code].nom === nom) {
+      codeDep = code.split('-')[1]
+    }
+  })
+
+  return codeDep
 }
 
 const Drom = ({map, disableClick}) => {
@@ -38,7 +44,7 @@ const Drom = ({map, disableClick}) => {
     <div className='drom-grid'>
 
       {droms.map(({code, name}) => {
-        const codeDepartement = getDROMCodeDep(name).split('-')[1]
+        const codeDepartement = getDROMCodeDep(name)
         return (
           <div key={code} className='drom'>
             <div className='drom-name'>{name}</div>
