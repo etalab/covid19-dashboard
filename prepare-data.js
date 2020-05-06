@@ -214,15 +214,21 @@ async function main() {
   const dates = uniq(data.map(r => r.date)).sort()
   const codes = uniq(data.map(r => r.code))
 
+  const latest = dates[dates.length - 1]
+
   const dataDirectory = join(__dirname, 'public', 'data')
 
   await Promise.all(dates.map(async date => {
     await outputJson(join(dataDirectory, `date-${date}.json`), data.filter(r => r.date === date))
   }))
 
+  await outputJson(join(dataDirectory, 'date-latest.json'), data.filter(r => r.date === latest))
+
   await Promise.all(codes.map(async code => {
     await outputJson(join(dataDirectory, `code-${code}.json`), data.filter(r => r.code === code))
   }))
+
+  await outputJson(join(dataDirectory, 'fra-latest.json'), data.find(r => r.date === latest && r.code === 'FRA'))
 
   await outputJson(join(__dirname, 'dates.json'), dates)
 }
