@@ -35,12 +35,11 @@ const MapContext = ({code, map, hidePopup, hideAttribution, disableClick}) => {
     event.stopPropagation()
     const feature = event.features && event.features[0]
     let location
-    let as = '/'
+    let as = `/${selectedLayout.name}`
 
     if (feature) {
-      const [typeTerritoire, codeTerritoire] = feature.properties.code.split('-')
       location = feature.properties.code
-      as = `/${typeTerritoire === 'REG' ? 'regions' : 'departements'}/${codeTerritoire}`
+      as += `?location=${location}`
     }
 
     Router.push({
