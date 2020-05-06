@@ -7,6 +7,8 @@ import {AppContext, ThemeContext} from '../pages'
 import SelectInput from './select-input'
 import Router from 'next/router'
 
+import {AIDES_ENTREPRISES_URL} from './layouts/entreprises'
+
 const SITE_URL = process.env.SITE_URL
 
 const MobileLayoutSelector = ({selected, layouts, handleSelect}) => {
@@ -37,7 +39,7 @@ MobileLayoutSelector.propTypes = {
 }
 
 const DesktopLayoutSelector = ({selected, layouts, handleSelect}) => {
-  const {isIframe} = useContext(AppContext)
+  const {isIframe, selectedLayout} = useContext(AppContext)
   const themeContext = useContext(ThemeContext)
 
   return (
@@ -55,7 +57,7 @@ const DesktopLayoutSelector = ({selected, layouts, handleSelect}) => {
       </div>
 
       {isIframe && (
-        <a href={SITE_URL} className='maximize' target='_top'><Maximize2 style={{verticalAlign: 'middle'}} /></a>
+        <a href={selectedLayout.id === 'entreprises' ? AIDES_ENTREPRISES_URL : SITE_URL} className='maximize' target='_top'><Maximize2 style={{verticalAlign: 'middle'}} /></a>
       )}
 
       <style jsx>{`
@@ -105,7 +107,7 @@ const DesktopLayoutSelector = ({selected, layouts, handleSelect}) => {
           border-radius: 4px;
         }
 
-        @media (max-width: 980px) {
+        @media (max-width: 1120px) {
           .layout {
             font-size: small;
           }

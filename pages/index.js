@@ -14,6 +14,7 @@ import BigPicture from '../components/layouts/big-picture'
 import CovidTests from '../components/layouts/covid-tests'
 import Transfert from '../components/layouts/transfert'
 import Synthese from '../components/layouts/synthese'
+import Entreprises from '../components/layouts/entreprises'
 
 export const AppContext = React.createContext()
 export const ThemeContext = React.createContext('theme.default')
@@ -44,6 +45,12 @@ const LAYOUTS = [
     name: 'activite-epidemique',
     label: 'Activité épidémique',
     component: <Synthese />
+  },
+  {
+    id: 'entreprises',
+    name: 'aides-entreprises',
+    label: 'Aides entreprises',
+    component: <Entreprises />
   }
 ]
 
