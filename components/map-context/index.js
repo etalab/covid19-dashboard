@@ -1,9 +1,7 @@
-import React, {useState, useContext} from 'react'
+import React, { useState, useCallback, useContext} from 'react'
 import PropTypes from 'prop-types'
 import Router from 'next/router'
 import {Popup} from 'react-map-gl'
-
-import {getFeatureTerritoire} from '../../lib/data'
 
 import {AppContext} from '../../pages'
 
@@ -33,14 +31,15 @@ const MapContext = ({code, map, hidePopup, hideAttribution, disableClick}) => {
     setHovered(hoverInfo)
   }
 
-  const onClick = event => {
+  const onClick = useCallback(event => {
     event.stopPropagation()
     const feature = event.features && event.features[0]
     let location
     let as = `/${selectedLayout.name}`
 
     if (feature) {
-      location = feature.properties.code
+      const properties = map.onClick ? map.onClick(feature) : feature.properties
+      location = properties.code
       as += `?location=${location}`
     }
 
@@ -54,7 +53,7 @@ const MapContext = ({code, map, hidePopup, hideAttribution, disableClick}) => {
     }, as)
 
     setHovered(null)
-  }
+  }, [map, selectedLayout])
 
   return (
     <div className='map-container'>

@@ -26,7 +26,7 @@ const SyntheseMobile = () => {
 
   const views = {
     map: (
-      <TerritoriesMobileMap maps={maps} context={SyntheseContext} disableClick />
+      <TerritoriesMobileMap maps={maps} context={SyntheseContext} />
     ),
     stats: (
       <Scrollable>
@@ -109,7 +109,7 @@ const SyntheseDesktop = () => {
           </div>
         </div> */}
 
-        <TerritoriesDesktopMap maps={maps} context={SyntheseContext} disableClick />
+        <TerritoriesDesktopMap maps={maps} context={SyntheseContext} />
       </div>
 
       <style jsx>{`
