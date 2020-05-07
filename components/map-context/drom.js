@@ -1,6 +1,5 @@
 import React, {useCallback, useContext} from 'react'
 import PropTypes from 'prop-types'
-import Router from 'next/router'
 
 import geo from '../../geo.json'
 
@@ -43,18 +42,11 @@ const getDROMCodeDep = nom => {
 }
 
 const Drom = ({map, disableClick}) => {
-  const {selectedLayout} = useContext(AppContext)
+  const {setSelectedLocation} = useContext(AppContext)
 
   const selectDROM = useCallback(code => {
-    Router.push({
-      pathname: '/',
-      query: {
-        ...Router.query,
-        layout: selectedLayout.id,
-        location: code
-      }
-    }, `/${selectedLayout.name}?location=${code}`)
-  }, [selectedLayout])
+    setSelectedLocation(code)
+  }, [setSelectedLocation])
 
   return (
     <div className='drom-grid'>

@@ -1,6 +1,5 @@
 import React, {useState, useCallback, useContext} from 'react'
 import PropTypes from 'prop-types'
-import Router from 'next/router'
 import {Popup} from 'react-map-gl'
 
 import {AppContext} from '../../pages'
@@ -9,7 +8,7 @@ import Map from './map'
 import SumUp from './sumup'
 
 const MapContext = ({code, map, hidePopup, hideAttribution, disableClick}) => {
-  const {selectedLayout, isMobileDevice} = useContext(AppContext)
+  const {setSelectedLocation, isMobileDevice} = useContext(AppContext)
   const MapType = map.type
 
   const [hovered, setHovered] = useState(null)
@@ -34,26 +33,15 @@ const MapContext = ({code, map, hidePopup, hideAttribution, disableClick}) => {
   const onClick = useCallback(event => {
     event.stopPropagation()
     const feature = event.features && event.features[0]
-    let location
-    let as = `/${selectedLayout.name}`
+    let selectedLocation = 'FRA'
 
     if (feature) {
-      const properties = map.onClick ? map.onClick(feature) : feature.properties
-      location = properties.code
-      as += `?location=${location}`
+      selectedLocation = map.onSelect ? map.onSelect(feature) : feature.properties.code
     }
 
-    Router.push({
-      pathname: '/',
-      query: {
-        ...Router.query,
-        layout: selectedLayout.id,
-        location
-      }
-    }, as)
-
+    setSelectedLocation(selectedLocation)
     setHovered(null)
-  }, [map, selectedLayout])
+  }, [map, setSelectedLocation])
 
   return (
     <div className='map-container'>
