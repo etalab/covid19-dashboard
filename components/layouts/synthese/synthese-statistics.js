@@ -19,19 +19,22 @@ const SyntheseStatistics = () => {
   const data = [
     {
       label: 'vert',
-      value: indicateurVert
+      value: indicateurVert,
+      color: colors.green
     },
     {
       label: 'orange',
-      value: indicateurOrange
+      value: indicateurOrange,
+      color: colors.orange
     },
     {
       label: 'rouge',
-      value: indicateurRouge
+      value: indicateurRouge,
+      color: colors.red
     }
-  ]
+  ].filter(i => i.value > 0)
 
-  const pieColors = [colors.green, colors.orange, colors.red]
+  const pieColors = data.map(i => i.color)
 
   return (
     <div className='statistics-container'>
