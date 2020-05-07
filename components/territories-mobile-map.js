@@ -36,7 +36,12 @@ const TerritoriesMobileMap = ({maps, context, children, disableClick}) => {
           {showDrom ? (
             <Drom map={selectedMap} disableClick={disableClick} />
           ) : (
-            <MapContext code={selectedLocation} map={selectedMap} disableClick={disableClick} />
+            <MapContext
+              code={selectedLocation}
+              map={selectedMap}
+              disableClick={disableClick}
+              disableFitbound={selectedMap.disableFitbound}
+            />
           )}
         </div>
       </div>

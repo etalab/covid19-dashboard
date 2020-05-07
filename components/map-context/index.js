@@ -7,7 +7,7 @@ import {AppContext} from '../../pages'
 import Map from './map'
 import SumUp from './sumup'
 
-const MapContext = ({code, map, hidePopup, hideAttribution, disableClick}) => {
+const MapContext = ({code, map, hidePopup, hideAttribution, disableClick, disableFitbound}) => {
   const {setSelectedLocation, isMobileDevice} = useContext(AppContext)
   const MapType = map.type
 
@@ -46,7 +46,7 @@ const MapContext = ({code, map, hidePopup, hideAttribution, disableClick}) => {
   return (
     <div className='map-container'>
       <Map
-        code={code}
+        code={disableFitbound ? 'FRA' : code}
         interactiveLayerIds={map.interactiveLayersIds}
         hideAttribution={hideAttribution}
         onHover={isMobileDevice ? null : onHover}
@@ -92,7 +92,8 @@ const MapContext = ({code, map, hidePopup, hideAttribution, disableClick}) => {
 MapContext.defaultProps = {
   hidePopup: false,
   hideAttribution: false,
-  disableClick: false
+  disableClick: false,
+  disableFitbound: false
 }
 
 MapContext.propTypes = {
@@ -100,7 +101,8 @@ MapContext.propTypes = {
   map: PropTypes.object.isRequired,
   hidePopup: PropTypes.bool,
   hideAttribution: PropTypes.bool,
-  disableClick: PropTypes.bool
+  disableClick: PropTypes.bool,
+  disableFitbound: PropTypes.bool
 }
 
 export default MapContext

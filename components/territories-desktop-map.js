@@ -21,7 +21,7 @@ const TerritoriesDesktopMap = ({maps, context, disableClick}) => {
             <MapSelector selectedMapId={selectedMapId} maps={maps} selectMap={setSelectedMapId} />
           </div>
         )}
-        <MapContext code={selectedLocation} map={selectedMap} disableClick={disableClick} />
+        <MapContext code={selectedLocation} map={selectedMap} disableFitbound={selectedMap.disableFitbound} disableClick={disableClick} />
       </div>
       <div className='drom-container'>
         <Drom map={selectedMap} disableClick={disableClick} />
