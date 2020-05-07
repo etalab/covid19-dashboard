@@ -1,7 +1,10 @@
-import React from 'react'
+import React, {useCallback, useContext} from 'react'
 import PropTypes from 'prop-types'
+import Router from 'next/router'
 
 import geo from '../../geo.json'
+
+import {AppContext} from '../../pages'
 
 import MapContext from '.'
 
@@ -40,6 +43,19 @@ const getDROMCodeDep = nom => {
 }
 
 const Drom = ({map, disableClick}) => {
+  const {selectedLayout} = useContext(AppContext)
+
+  const selectDROM = useCallback(code => {
+    Router.push({
+      pathname: '/',
+      query: {
+        ...Router.query,
+        layout: selectedLayout.id,
+        location: code
+      }
+    }, `/${selectedLayout.name}?location=${code}`)
+  }, [selectedLayout])
+
   return (
     <div className='drom-grid'>
 
@@ -48,7 +64,11 @@ const Drom = ({map, disableClick}) => {
         return (
           <div key={code} className='drom'>
             <div className='drom-name'>{name}</div>
-            {map.hovered && <div className='hovered'>{map.hovered({properties: {code: codeDepartement, name}})}</div>}
+            {map.hovered && (
+              <div className='hovered' onClick={() => selectDROM(code)}>
+                {map.hovered({properties: {code: codeDepartement, name}})}
+              </div>
+            )}
             <MapContext code={code} map={map} hidePopup hideAttribution disableClick={disableClick} />
           </div>
         )
