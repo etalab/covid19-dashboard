@@ -1,9 +1,10 @@
-import React, {useContext, useMemo} from 'react'
+import React, {useContext, useCallback} from 'react'
 import PropTypes from 'prop-types'
 import {Source, Layer} from 'react-map-gl'
 
 import colors from '../../../styles/colors'
 import {SyntheseContext} from '.'
+import {AppContext} from '../../../pages'
 
 const COLORS = {
   vert: colors.green,
@@ -14,39 +15,45 @@ const COLORS = {
 const defaultColor = 'rgba(0,0,0,0)'
 
 export const SyntheseMap = ({hovered}) => {
+  const {selectedLocation} = useContext(AppContext)
   const {synthese} = useContext(SyntheseContext)
   const {code = ''} = hovered && hovered.feature ? hovered.feature.properties : {}
 
-  const expression = useMemo(() => {
-    const expression = ['match', ['get', 'code']]
+  const getColors = useCallback(() => {
+    const colors = ['match', ['get', 'code']]
 
     synthese.forEach(({code, indicateurSynthese}) => {
-      expression.push(code, COLORS[indicateurSynthese])
+      colors.push(code, COLORS[indicateurSynthese])
     })
 
-    expression.push(defaultColor)
+    colors.push(defaultColor)
 
-    return expression
+    return colors.length > 3 ? colors : defaultColor
   }, [synthese])
 
-  const indicateurSyntheseLayer = useMemo(() => {
-    if (synthese) {
-      return {
-        id: 'indicateur',
-        'source-layer': 'departements',
-        type: 'fill',
-        paint: {
-          'fill-color': expression.length > 3 ? expression : defaultColor,
-          'fill-opacity': ['match', ['get', 'code'], code, 1, 0.5],
-          'fill-outline-color': '#ffffff'
-        }
-      }
+  const getOpacity = useCallback(() => {
+    const opacity = ['match', ['get', 'code'], code, 1]
+    const locationCode = selectedLocation && selectedLocation.includes('DEP') ? selectedLocation.split('-')[1] : null
+
+    if (locationCode && locationCode !== code) {
+      opacity.push(locationCode, 1)
     }
 
-    return null
-  }, [synthese, code, expression])
+    opacity.push(0.5)
+    return opacity
+  }, [code, selectedLocation])
 
   if (synthese) {
+    const indicateurSynthese = {
+      id: 'indicateur',
+      'source-layer': 'departements',
+      type: 'fill',
+      paint: {
+        'fill-color': getColors(),
+        'fill-opacity': getOpacity(),
+        'fill-outline-color': '#ffffff'
+      }
+    }
     return (
       <Source
         id='decoupage-administratif'
@@ -54,7 +61,7 @@ export const SyntheseMap = ({hovered}) => {
         attribution='Données Ministère des Solidarités et de la Santé'
         url='https://etalab-tiles.fr/data/decoupage-administratif.json'
       >
-        <Layer {...indicateurSyntheseLayer} />
+        <Layer {...indicateurSynthese} />
       </Source>
     )
   }
