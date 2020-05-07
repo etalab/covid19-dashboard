@@ -19,13 +19,12 @@ const Map = ({code, interactiveLayerIds, hideAttribution, onHover, onClick, chil
     if (mapRef && mapRef.current) {
       const {width, height} = mapRef.current.getBoundingClientRect()
 
-      if (width > 50 && height > 50) {
-        const {bbox} = geo[code]
-        const viewport = new WebMercatorViewport({width, height})
-          .fitBounds([[bbox[0], bbox[1]], [bbox[2], bbox[3]]], {padding: 20})
+      const {bbox} = geo[code]
+      const padding = width > 50 && height > 50 ? 20 : 0
+      const viewport = new WebMercatorViewport({width, height})
+        .fitBounds([[bbox[0], bbox[1]], [bbox[2], bbox[3]]], {padding})
 
-        setViewport(viewport)
-      }
+      setViewport(viewport)
     }
   }, [mapRef, code])
 
