@@ -26,7 +26,9 @@ const SyntheseMobile = () => {
 
   const views = {
     map: (
-      <TerritoriesMobileMap maps={maps} context={SyntheseContext} />
+      <TerritoriesMobileMap maps={maps} context={SyntheseContext}>
+        <SyntheseStatistics />
+      </TerritoriesMobileMap>
     ),
     stats: (
       <Scrollable>
