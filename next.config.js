@@ -12,7 +12,7 @@ module.exports = {
       '/': {page: '/'},
       '/vue-d-ensemble': {page: '/', query: {layout: 'big-picture'}},
       '/suivi-des-tests': {page: '/', query: {layout: 'tests'}},
-      '/transferts-de-patients': {page: '/', query: {layout: 'transferts'}},
+      '/transferts-de-patients': {page: '/', query: {layout: 'transfert'}},
       '/activite-epidemique': {page: '/', query: {layout: 'synthese'}},
       '/aides-entreprises': {page: '/', query: {layout: 'entreprises'}}
     }
