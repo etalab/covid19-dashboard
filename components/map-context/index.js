@@ -7,7 +7,7 @@ import {AppContext} from '../../pages'
 import Map from './map'
 import SumUp from './sumup'
 
-const MapContext = ({code, map, hidePopup, hideAttribution, disableClick, disableFitbound}) => {
+const MapContext = ({code, map, hidePopup, hideAttribution, disableClick, disableFitbound, isDROM}) => {
   const {setSelectedLocation, isMobileDevice} = useContext(AppContext)
   const MapType = map.type
 
@@ -52,7 +52,7 @@ const MapContext = ({code, map, hidePopup, hideAttribution, disableClick, disabl
         onHover={isMobileDevice ? null : onHover}
         onClick={disableClick ? null : onClick}
       >
-        <MapType code={code} map={map} hovered={hovered} />
+        <MapType code={code} map={map} hovered={hovered} isDROM={isDROM} />
 
         {hovered && !hidePopup && (
           <Popup
@@ -91,6 +91,7 @@ const MapContext = ({code, map, hidePopup, hideAttribution, disableClick, disabl
 
 MapContext.defaultProps = {
   hidePopup: false,
+  isDROM: false,
   hideAttribution: false,
   disableClick: false,
   disableFitbound: false
@@ -99,6 +100,7 @@ MapContext.defaultProps = {
 MapContext.propTypes = {
   code: PropTypes.string.isRequired,
   map: PropTypes.object.isRequired,
+  isDROM: PropTypes.bool,
   hidePopup: PropTypes.bool,
   hideAttribution: PropTypes.bool,
   disableClick: PropTypes.bool,

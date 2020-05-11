@@ -61,7 +61,13 @@ const Drom = ({map, disableClick}) => {
                 {map.hovered({properties: {code: codeDepartement, name}})}
               </div>
             )}
-            <MapContext code={code} map={map} hidePopup hideAttribution disableClick={disableClick} />
+            <MapContext
+              code={code}
+              map={map}
+              hidePopup
+              hideAttribution
+              isDROM
+              disableClick={disableClick} />
           </div>
         )
       })}

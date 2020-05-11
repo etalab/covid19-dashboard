@@ -1,12 +1,11 @@
 import React from 'react'
-import {SyntheseMap, HoveredInfos, interactiveLayersIds} from './synthese-map'
+import {SyntheseMap, HoveredInfos, onSelect, interactiveLayersIds} from './synthese-map'
 
 const maps = [
   {
     name: 'Carte d’activité épidémique',
     type: SyntheseMap,
-    disableFitbound: true,
-    onSelect: ({properties}) => `DEP-${properties.code}`,
+    onSelect,
     hovered: feature => <HoveredInfos feature={feature} />,
     interactiveLayersIds
   }
