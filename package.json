@@ -32,6 +32,7 @@
     "csv-parser": "^2.3.2",
     "deck.gl": "^8.1.1",
     "dotenv": "^8.2.0",
+    "form-data": "^3.0.0",
     "fs-extra": "^8.1.0",
     "got": "^10.6.0",
     "isomorphic-unfetch": "^3.0.0",

@@ -5,10 +5,14 @@ const {join} = require('path')
 const {createReadStream} = require('fs')
 const {Transform} = require('stream')
 const got = require('got')
-const {outputJson, readJson} = require('fs-extra')
+const {outputJson, readJson, outputFile} = require('fs-extra')
 const getStream = require('get-stream')
 const csvParse = require('csv-parser')
 const {groupBy, sortBy, defaults, pick, keyBy, chain, sumBy, uniq} = require('lodash')
+
+const {replaceResourceFile} = require('./datagouv')
+
+const rootPath = join(__dirname, '..')
 
 const departements = require('@etalab/decoupage-administratif/data/departements.json')
 const regions = require('@etalab/decoupage-administratif/data/regions.json')
@@ -172,7 +176,7 @@ async function loadTests(url) {
 
 async function loadIndicateurs() {
   const rows = await getStream.array(
-    createReadStream(join(__dirname, 'data', 'donnees_carte_synthese_tricolore.csv'))
+    createReadStream(join(rootPath, 'data', 'donnees_carte_synthese_tricolore.csv'))
       .pipe(csvParse())
   )
   return rows.map(row => {
@@ -216,7 +220,7 @@ async function main() {
 
   const latest = dates[dates.length - 1]
 
-  const dataDirectory = join(__dirname, 'public', 'data')
+  const dataDirectory = join(rootPath, 'public', 'data')
 
   await Promise.all(dates.map(async date => {
     await outputJson(join(dataDirectory, `date-${date}.json`), data.filter(r => r.date === date))
@@ -228,9 +232,16 @@ async function main() {
     await outputJson(join(dataDirectory, `code-${code}.json`), data.filter(r => r.code === code))
   }))
 
-  await outputJson(join(dataDirectory, 'fra-latest.json'), data.find(r => r.date === latest && r.code === 'FRA'))
+  const buffer = Buffer.from(
+    JSON.stringify(data.find(r => r.date === latest && r.code === 'FRA'))
+  )
+  await outputFile(join(dataDirectory, 'fra-latest.json'), buffer)
 
-  await outputJson(join(__dirname, 'dates.json'), dates)
+  if (process.env.DATAGOUV_PUBLISH === '1') {
+    await replaceResourceFile('5eb55e49899a159c2e0053c2', 'e13851d0-0228-4252-91b9-cf091a0452a4', 'fra-latest.json', buffer)
+  }
+
+  await outputJson(join(rootPath, 'dates.json'), dates)
 }
 
 main().catch(error => {
