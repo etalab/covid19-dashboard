@@ -237,7 +237,7 @@ async function main() {
   )
   await outputFile(join(dataDirectory, 'fra-latest.json'), buffer)
 
-  if (process.env.DATAGOUV_PUBLISH === '1') {
+  if (process.env.DATAGOUV_PUBLISH === '1' || process.env.CONTEXT === 'production') {
     await replaceResourceFile('5eb55e49899a159c2e0053c2', 'e13851d0-0228-4252-91b9-cf091a0452a4', 'fra-latest.json', buffer)
   }
 
