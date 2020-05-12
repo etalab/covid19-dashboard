@@ -10,23 +10,23 @@ import MapContext from '.'
 export const droms = [
   {
     name: 'Guadeloupe',
-    code: 'REG-01'
+    code: 'DEP-971'
   },
   {
     name: 'Martinique',
-    code: 'REG-02'
+    code: 'DEP-972'
   },
   {
     name: 'Guyane',
-    code: 'REG-03'
+    code: 'DEP-973'
   },
   {
     name: 'La Réunion',
-    code: 'REG-04'
+    code: 'DEP-974'
   },
   {
     name: 'Mayotte',
-    code: 'REG-06'
+    code: 'DEP-976'
   }
 ]
 
