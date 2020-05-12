@@ -13,7 +13,7 @@ const SHOW_STATS_HEIGHT = 38
 
 const TerritoriesMobileMap = ({maps, context, children, disableClick}) => {
   const themeContext = useContext(ThemeContext)
-  const {selectedLocation} = useContext(AppContext)
+  const {selectedLocation, setSelectedLocation} = useContext(AppContext)
   const {selectedMapId, setSelectedMapId} = useContext(context)
 
   const [showStats, setShowStats] = useState(false)
@@ -21,9 +21,17 @@ const TerritoriesMobileMap = ({maps, context, children, disableClick}) => {
 
   const selectedMap = maps.find(m => m.name === selectedMapId)
 
+  const onClick = () => {
+    setShowDrom(!showDrom)
+
+    if (showDrom) {
+      setSelectedLocation('FRA')
+    }
+  }
+
   return (
     <div className='mobile-map-container'>
-      <div className='map-switch clickable' onClick={() => setShowDrom(!showDrom)}>
+      <div className='map-switch clickable' onClick={() => onClick()}>
         Voir la France {showDrom ? 'métropolitaine' : 'd’outremer'}
       </div>
       {maps.length > 1 && (
@@ -46,7 +54,7 @@ const TerritoriesMobileMap = ({maps, context, children, disableClick}) => {
         </div>
       </div>
 
-      {children && selectedLocation && !showDrom && (
+      {children && selectedLocation && (
         <div className={`mobile-sumup ${showStats ? 'show' : 'hide'}`}>
           <div className='show-stats clickable' onClick={() => setShowStats(!showStats)}>
             {showStats ? 'Masquer' : 'Afficher'} les données {geo[selectedLocation].nom} {showStats ? <ChevronDown /> : <ChevronUp />}
