@@ -36,7 +36,7 @@ const SyntheseDepartement = () => {
 
         <h4>Informations complémentaires</h4>
         <p>
-          <a href={getPrefectureWebsite(selectedLocation)}>Consulter le site de la préfécture</a>
+          <a href={getPrefectureWebsite(selectedLocation)}>Consulter le site de la préfecture</a>
         </p>
         <p>
           <a href={getARSWebsite(getCodeRegion(code))}>Site de l’ARS (Agende Régionale de Santé)</a>
@@ -89,7 +89,7 @@ const DepartementList = departement => {
             <div>{nom} ({code})</div>
             <div className='indicateur-synthese'>{indicateurSynthese}</div>
           </div>
-          <a href={getPrefectureWebsite(`DEP-${code}`)}>Consulter le site de la préfécture</a>
+          <a href={getPrefectureWebsite(`DEP-${code}`)}>Consulter le site de la préfecture</a>
         </div>
         <style jsx>{`
           .departements-list-container {
