@@ -7,7 +7,7 @@ import {AppContext} from '../../pages'
 import Map from './map'
 import SumUp from './sumup'
 
-const MapContext = ({code, map, hidePopup, hideAttribution, disableClick, disableFitbound, isDROM}) => {
+const MapContext = ({code, map, isDROM, hidePopup, hideAttribution, disableClick, disableFitbound}) => {
   const {setSelectedLocation, isMobileDevice} = useContext(AppContext)
   const MapType = map.type
 
@@ -90,8 +90,8 @@ const MapContext = ({code, map, hidePopup, hideAttribution, disableClick, disabl
 }
 
 MapContext.defaultProps = {
-  hidePopup: false,
   isDROM: false,
+  hidePopup: false,
   hideAttribution: false,
   disableClick: false,
   disableFitbound: false
