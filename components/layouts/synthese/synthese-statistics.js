@@ -17,12 +17,14 @@ const SyntheseDepartement = () => {
   const {selectedLocation} = useContext(AppContext)
   const {synthese} = useContext(SyntheseContext)
 
+  const locationCode = selectedLocation.split('-')[1]
+
   const getCodeRegion = codeDepartement => {
-    const region = departements.find(({code}) => code === codeDepartement)
-    return 'REG-' + region.region
+    const {region} = departements.find(({code}) => code === codeDepartement)
+    return region
   }
 
-  const indicateurDepartement = synthese.find((({code}) => code === selectedLocation.split('-')[1]))
+  const indicateurDepartement = synthese.find((({code}) => code === locationCode))
 
   if (indicateurDepartement && indicateurDepartement.indicateurSynthese) {
     const {nom, code, indicateurSynthese} = indicateurDepartement
@@ -36,10 +38,10 @@ const SyntheseDepartement = () => {
 
         <h4>Informations complémentaires</h4>
         <p>
-          <a href={getPrefectureWebsite(selectedLocation)}>Consulter le site de la préfecture</a>
+          <a href={getPrefectureWebsite(locationCode)} target='_top'>Consulter le site de la préfecture</a>
         </p>
         <p>
-          <a href={getARSWebsite(getCodeRegion(code))}>Site de l’ARS (Agende Régionale de Santé)</a>
+          <a href={getARSWebsite(getCodeRegion(code))} target='_top'>Site de l’ARS (Agende Régionale de Santé)</a>
         </p>
         <style jsx>{`
           .indicateurs {
@@ -89,7 +91,7 @@ const DepartementList = departement => {
             <div>{nom} ({code})</div>
             <div className='indicateur-synthese'>{indicateurSynthese}</div>
           </div>
-          <a href={getPrefectureWebsite(`DEP-${code}`)}>Consulter le site de la préfecture</a>
+          <a href={getPrefectureWebsite(code)} target='_top'>Consulter le site de la préfecture</a>
         </div>
         <style jsx>{`
           .departements-list-container {
@@ -137,7 +139,7 @@ const SyntheseRegion = () => {
         return <DepartementList key={departement.code} {...dep} />
       })}
       <div className='infos-link'>
-        <a href={getARSWebsite(`REG-${region.code}`)}>Site de l’ARS (Agende Régionale de Santé)</a>
+        <a href={getARSWebsite(region.code)}>Site de l’ARS (Agende Régionale de Santé)</a>
       </div>
       <style jsx>{`
         .departements-container {
