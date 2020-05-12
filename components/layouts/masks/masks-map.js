@@ -36,7 +36,7 @@ const Markers = ({data, onHover, onClick}) => {
     })
 }
 
-export const MasksMap = ({hovered}) => {
+export const MasksMap = ({hovered, isDROM}) => {
   const themeContext = useContext(ThemeContext)
   const {isMobileDevice, selectedLocation, setSelectedLocation} = useContext(AppContext)
   const {masksCommunes, setSelectedCommune} = useContext(MasksContext)
@@ -91,7 +91,7 @@ export const MasksMap = ({hovered}) => {
 
   return (
     <>
-      {selectedRegion && (
+      {!isDROM && selectedRegion && (
         <div className='back' onClick={reset}>
           <span><ArrowLeft /></span> Retour
         </div>
@@ -161,11 +161,13 @@ export const MasksMap = ({hovered}) => {
 }
 
 MasksMap.defaultProps = {
-  hovered: null
+  hovered: null,
+  isDROM: false
 }
 
 MasksMap.propTypes = {
-  hovered: PropTypes.object
+  hovered: PropTypes.object,
+  isDROM: PropTypes.bool
 }
 
 export const interactiveLayersIds = ['regions-fill']
