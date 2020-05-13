@@ -1,4 +1,4 @@
-import React, {useState, useContext} from 'react'
+import React, {useState, useContext, useEffect} from 'react'
 import {FileText, Map, BarChart2} from 'react-feather'
 
 import masksCommunes from '../../../public/data/masks.json'
@@ -124,12 +124,16 @@ const DesktopMasks = () => {
 }
 
 const Masks = props => {
-  const {isMobileDevice} = useContext(AppContext)
+  const {selectedLocation, isMobileDevice} = useContext(AppContext)
 
   const [selectedMapId, setSelectedMapId] = useState('Entreprises productice de masques')
   const [selectedCommune, setSelectedCommune] = useState(null)
 
   const Component = isMobileDevice ? MobileMasks : DesktopMasks
+
+  useEffect(() => {
+    setSelectedCommune(null)
+  }, [selectedLocation])
 
   return (
     <MasksContext.Provider value={{
