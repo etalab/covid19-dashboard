@@ -16,7 +16,7 @@ function useBounds(mapRef, code) {
     if (mapRef && mapRef.current) {
       const {width, height} = mapRef.current.getBoundingClientRect()
 
-      const {bbox} = geo[code]
+      const {bbox} = geo[code || 'FRA']
       const padding = width > 50 && height > 50 ? 20 : 0
       const viewport = new WebMercatorViewport({width, height})
         .fitBounds([[bbox[0], bbox[1]], [bbox[2], bbox[3]]], {padding})
