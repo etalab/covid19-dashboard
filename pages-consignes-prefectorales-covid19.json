@@ -93,7 +93,7 @@
     "codeDepartement": "16",
     "nomDepartement": "Charente",
     "nomRegion": "Nouvelle-Aquitaine",
-    "pagePrefecture": "www.charente.gouv.fr/deconfinement"
+    "pagePrefecture": "http://www.charente.gouv.fr/deconfinement"
   },
   {
     "codeDepartement": "17",
@@ -189,7 +189,7 @@
     "codeDepartement": "31",
     "nomDepartement": "Haute-Garonne",
     "nomRegion": "Occitanie",
-    "pagePrefecture": "www.haute-garonne.gouv.fr/Deconfinement"
+    "pagePrefecture": "http://www.haute-garonne.gouv.fr/Deconfinement"
   },
   {
     "codeDepartement": "32",
@@ -201,7 +201,7 @@
     "codeDepartement": "33",
     "nomDepartement": "Gironde",
     "nomRegion": "Nouvelle-Aquitaine",
-    "pagePrefecture": "http://www.gironde.gouv.fr/Actualites/Breves/Strategie-locale-de-deconfinement."
+    "pagePrefecture": "http://www.gironde.gouv.fr/Actualites/Breves/Strategie-locale-de-deconfinement"
   },
   {
     "codeDepartement": "34",
@@ -213,7 +213,7 @@
     "codeDepartement": "35",
     "nomDepartement": "Ille-et-Vilaine",
     "nomRegion": "Bretagne",
-    "pagePrefecture": "www.ille-et-vilaine.gouv.fr/deconfinement"
+    "pagePrefecture": "http://www.ille-et-vilaine.gouv.fr/deconfinement"
   },
   {
     "codeDepartement": "36",
@@ -345,7 +345,7 @@
     "codeDepartement": "57",
     "nomDepartement": "Moselle",
     "nomRegion": "Grand Est",
-    "pagePrefecture": "http://www.seine-et-marne.gouv.fr/Actualites/Actualite-du-prefet/Presentation-des-grands-axes-du-plan-de-deconfinement-a-compter-du-11-mai-2020"
+    "pagePrefecture": "http://www.moselle.gouv.fr/Actualites/Strategie-locale-de-deconfinement"
   },
   {
     "codeDepartement": "58",
@@ -405,13 +405,13 @@
     "codeDepartement": "67",
     "nomDepartement": "Bas-Rhin",
     "nomRegion": "Grand Est",
-    "pagePrefecture": "www.bas-rhin.gouv.fr/Actualites/Sante/Strategie-locale-de-deconfinement"
+    "pagePrefecture": "http://www.bas-rhin.gouv.fr/Actualites/Sante/Strategie-locale-de-deconfinement"
   },
   {
     "codeDepartement": "68",
     "nomDepartement": "Haut-Rhin",
     "nomRegion": "Grand Est",
-    "pagePrefecture": "http://www.haut-rhin.gouv.fr/Actualites/Actualites-du-Prefet-et-des-Sous-Prefets/Strategie-locale-de-deconfinement"
+    "pagePrefecture": "http://www.haut-rhin.gouv.fr/Actualites/Actualites-du-Prefet-et-des-Sous-Prefets/Coronavirus-COVID-19/Declinaison-departementale-du-deconfinement-dans-le-Haut-Rhin"
   },
   {
     "codeDepartement": "69",
@@ -429,7 +429,7 @@
     "codeDepartement": "71",
     "nomDepartement": "Saône-et-Loire",
     "nomRegion": "Bourgogne-Franche-Comté",
-    "pagePrefecture": "http://www.saone-et-loire.gouv.fr/strategie-locale-de-deconfinement-a12500.html"
+    "pagePrefecture": "http://www.saone-et-loire.gouv.fr/strategie-locale-de-deconfinement-a-partir-du-11-r3037.html"
   },
   {
     "codeDepartement": "72",
@@ -447,7 +447,7 @@
     "codeDepartement": "74",
     "nomDepartement": "Haute-Savoie",
     "nomRegion": "Auvergne-Rhône-Alpes",
-    "pagePrefecture": "http://www.haute-savoie.gouv.fr/Actualites/Actualites/Coronavirus-Covid-19/Strategie-nationale-locale-du-plan-de-deconfinement"
+    "pagePrefecture": "http://www.haute-savoie.gouv.fr/Actualites/Actualites/Coronavirus-Covid-19/Strategie-locale-de-deconfinement"
   },
   {
     "codeDepartement": "75",
@@ -549,7 +549,7 @@
     "codeDepartement": "90",
     "nomDepartement": "Territoire de Belfort",
     "nomRegion": "Bourgogne-Franche-Comté",
-    "pagePrefecture": "http://www.territoire-de-belfort.gouv.fr/Politiques-publiques/Sante-Solidarites-et-cohesion-sociale/Coronavirus-COVID-19/Deconfinement/Strategie-locale-de-deconfinemen"
+    "pagePrefecture": "http://www.territoire-de-belfort.gouv.fr/Politiques-publiques/Sante-Solidarites-et-cohesion-sociale/Coronavirus-COVID-19/Deconfinement/Strategie-locale-de-deconfinement"
   },
   {
     "codeDepartement": "91",
@@ -588,18 +588,6 @@
     "pagePrefecture": "http://www.guadeloupe.gouv.fr/Politiques-publiques/Risques-naturels-technologiques-et-sanitaires/Securite-sanitaire/Informations-coronavirus/La-strategie-de-deconfinement-en-Guadeloupe"
   },
   {
-    "codeDepartement": "971",
-    "nomDepartement": "Guadeloupe",
-    "nomRegion": "Guadeloupe",
-    "pagePrefecture": "http://www.saint-barth-saint-martin.gouv.fr/Actualites/LA-UNE/Actualites/Strategie-locale-de-deconfinement"
-  },
-  {
-    "codeDepartement": "971",
-    "nomDepartement": "Guadeloupe",
-    "nomRegion": "Guadeloupe",
-    "pagePrefecture": "http://www.saint-barth-saint-martin.gouv.fr/Actualites/LA-UNE/Actualites/Strategie-locale-de-deconfinement"
-  },
-  {
     "codeDepartement": "972",
     "nomDepartement": "Martinique",
     "nomRegion": "Martinique",
@@ -627,5 +615,15 @@
     "nomDepartement": "Mayotte",
     "nomRegion": "Mayotte",
     "pagePrefecture": "http://www.mayotte.gouv.fr/Politiques-publiques/Sante/CORONAVIRUS-COVID-19/Strategie-locale-de-deconfinement/Informations-sur-la-strategie-de-fin-de-confinement-a-Mayotte"
+  },
+  {
+    "codeDepartement": "977",
+    "nomDepartement": "Saint-Barthelemy",
+    "pagePrefecture": "http://www.saint-barth-saint-martin.gouv.fr/Actualites/LA-UNE/Actualites/Strategie-locale-de-deconfinement"
+  },
+  {
+    "codeDepartement": "978",
+    "nomDepartement": "Saint-Martin",
+    "pagePrefecture": "http://www.saint-barth-saint-martin.gouv.fr/Actualites/LA-UNE/Actualites/Strategie-locale-de-deconfinement"
   }
 ]
