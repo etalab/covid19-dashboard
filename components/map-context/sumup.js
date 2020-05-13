@@ -1,10 +1,15 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 
-const SumUp = ({nom}) => {
+const SumUp = ({nom, children}) => {
   return (
     <div className='sumup-container'>
       <div className='title'>{nom}</div>
+
+      {children && (
+        <div>{children}</div>
+      )}
+
       <div className='footer'>Cliquer pour plus d’informations</div>
 
       <style jsx>{`
@@ -26,8 +31,13 @@ const SumUp = ({nom}) => {
   )
 }
 
+SumUp.defaultProps = {
+  children: null
+}
+
 SumUp.propTypes = {
-  nom: PropTypes.string.isRequired
+  nom: PropTypes.string.isRequired,
+  children: PropTypes.node
 }
 
 export default SumUp

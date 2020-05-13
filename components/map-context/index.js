@@ -1,6 +1,5 @@
-import React, {useState, useContext} from 'react'
+import React, {useState, useCallback, useContext} from 'react'
 import PropTypes from 'prop-types'
-import Router from 'next/router'
 import {Popup} from 'react-map-gl'
 
 import {AppContext} from '../../pages'
@@ -8,8 +7,8 @@ import {AppContext} from '../../pages'
 import Map from './map'
 import SumUp from './sumup'
 
-const MapContext = ({code, map, hidePopup, hideAttribution, disableClick}) => {
-  const {selectedLayout, isMobileDevice} = useContext(AppContext)
+const MapContext = ({code, map, hidePopup, hideAttribution, disableClick, disableFitbound, isDROM}) => {
+  const {setSelectedLocation, isMobileDevice} = useContext(AppContext)
   const MapType = map.type
 
   const [hovered, setHovered] = useState(null)
@@ -31,39 +30,29 @@ const MapContext = ({code, map, hidePopup, hideAttribution, disableClick}) => {
     setHovered(hoverInfo)
   }
 
-  const onClick = event => {
+  const onClick = useCallback(event => {
     event.stopPropagation()
     const feature = event.features && event.features[0]
-    let location
-    let as = `/${selectedLayout.name}`
+    let selectedLocation = 'FRA'
 
     if (feature) {
-      location = feature.properties.code
-      as += `?location=${location}`
+      selectedLocation = map.onSelect ? map.onSelect(feature) : feature.properties.code
     }
 
-    Router.push({
-      pathname: '/',
-      query: {
-        ...Router.query,
-        layout: selectedLayout.id,
-        location
-      }
-    }, as)
-
+    setSelectedLocation(selectedLocation)
     setHovered(null)
-  }
+  }, [map, setSelectedLocation])
 
   return (
     <div className='map-container'>
       <Map
-        code={code}
+        code={disableFitbound ? 'FRA' : code}
         interactiveLayerIds={map.interactiveLayersIds}
         hideAttribution={hideAttribution}
         onHover={isMobileDevice ? null : onHover}
         onClick={disableClick ? null : onClick}
       >
-        <MapType code={code} map={map} />
+        <MapType code={code} map={map} hovered={hovered} isDROM={isDROM} />
 
         {hovered && !hidePopup && (
           <Popup
@@ -74,7 +63,9 @@ const MapContext = ({code, map, hidePopup, hideAttribution, disableClick}) => {
             onClose={() => setHovered(null)}
             anchor='bottom-left'
           >
-            <SumUp nom={hovered.feature.properties.nom} />
+            <SumUp nom={hovered.feature.properties.nom}>
+              {map.hovered && map.hovered(hovered.feature)}
+            </SumUp>
           </Popup>
         )}
       </Map>
@@ -100,16 +91,20 @@ const MapContext = ({code, map, hidePopup, hideAttribution, disableClick}) => {
 
 MapContext.defaultProps = {
   hidePopup: false,
+  isDROM: false,
   hideAttribution: false,
-  disableClick: false
+  disableClick: false,
+  disableFitbound: false
 }
 
 MapContext.propTypes = {
   code: PropTypes.string.isRequired,
   map: PropTypes.object.isRequired,
+  isDROM: PropTypes.bool,
   hidePopup: PropTypes.bool,
   hideAttribution: PropTypes.bool,
-  disableClick: PropTypes.bool
+  disableClick: PropTypes.bool,
+  disableFitbound: PropTypes.bool
 }
 
 export default MapContext

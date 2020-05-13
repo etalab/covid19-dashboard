@@ -1,5 +1,5 @@
 import React, {useState, useEffect} from 'react'
-import {useRouter} from 'next/router'
+import Router from 'next/router'
 
 import dates from '../dates.json'
 
@@ -63,8 +63,6 @@ function hasLayout(layoutId) {
 }
 
 const MainPage = () => {
-  const router = useRouter()
-
   const [isIframe, setIsIframe] = useState(false)
   const [isMobileDevice, setIsMobileDevice] = useState(false)
   const [isTouchScreenDevice, setIsTouchScreenDevice] = useState(false)
@@ -78,7 +76,24 @@ const MainPage = () => {
   }
 
   useEffect(() => {
-    const {iframe, location, layout} = router.query
+    let as = `/${selectedLayout.name}`
+
+    if (selectedLocation) {
+      as += `?location=${selectedLocation}`
+    }
+
+    Router.push({
+      pathname: '/',
+      query: {
+        ...Router.query,
+        layout: selectedLayout.id,
+        location: selectedLocation
+      }
+    }, as)
+  }, [selectedLayout, selectedLocation])
+
+  useEffect(() => {
+    const {iframe, location, layout} = Router.query
     setIsIframe(Boolean(iframe === '1'))
     setSelectedLocation(location || 'FRA')
 
@@ -87,7 +102,7 @@ const MainPage = () => {
     } else {
       setSelectedLayout(getLayout('big-picture'))
     }
-  }, [router])
+  }, [])
 
   useEffect(() => {
     if (window.innerWidth < MOBILE_WIDTH) {
