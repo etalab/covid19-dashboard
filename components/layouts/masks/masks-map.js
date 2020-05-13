@@ -3,6 +3,8 @@ import PropTypes from 'prop-types'
 import {Marker, Popup, Source, Layer} from 'react-map-gl'
 import {MapPin, ArrowLeft} from 'react-feather'
 
+import {getTerritoryFromLocation} from '../../../lib/location'
+
 import {ThemeContext, AppContext} from '../../../pages'
 import {MasksContext} from '.'
 import MasksCommunePopup from './mask-commune-popup'
@@ -44,7 +46,8 @@ export const MasksMap = ({hovered, isDROM}) => {
   const hoveredRegion = hovered ? hovered.feature.properties.code : ''
   const [hoveredMarker, setHoveredMarker] = useState()
 
-  const selectedRegion = selectedLocation.includes('REG') ? selectedLocation.split('-')[1] : null
+  const {type, code} = getTerritoryFromLocation(selectedLocation)
+  const selectedRegion = type === 'REG' ? code : null
 
   const regionsFillLayer = {
     id: 'regions-fill',
@@ -62,11 +65,9 @@ export const MasksMap = ({hovered, isDROM}) => {
     }
   }
 
-  const reset = event => {
+  const handleClick = event => {
     event.stopPropagation()
-    setSelectedLocation(null)
-    setSelectedCommune(null)
-    setHoveredMarker(null)
+    setSelectedLocation('FRA')
   }
 
   const onClick = commune => {
@@ -92,7 +93,7 @@ export const MasksMap = ({hovered, isDROM}) => {
   return (
     <>
       {!isDROM && selectedRegion && (
-        <div className='back' onClick={reset}>
+        <div className='back' onClick={handleClick}>
           <span><ArrowLeft /></span> Retour
         </div>
       )}

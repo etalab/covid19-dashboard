@@ -5,11 +5,14 @@ import {sumBy, groupBy, flatten} from 'lodash'
 import departements from '@etalab/decoupage-administratif/data/departements.json'
 import regions from '@etalab/decoupage-administratif/data/regions.json'
 
-import colors from '../../../styles/colors'
-import Counter from '../../counter'
-import {MasksContext} from '.'
+import {getTerritoryFromLocation} from '../../../lib/location'
 
 import {ThemeContext, AppContext} from '../../../pages'
+
+import colors from '../../../styles/colors'
+import Counter from '../../counter'
+
+import {MasksContext} from '.'
 
 const CompaniesList = ({title, companies}) => {
   const themeContext = useContext(ThemeContext)
@@ -127,7 +130,8 @@ const MasksStatistics = () => {
   const {selectedLocation} = useContext(AppContext)
   const {masksCommunes, selectedCommune} = useContext(MasksContext)
 
-  const selectedRegion = selectedLocation.includes('REG') ? selectedLocation.split('-')[1] : null
+  const {type, code} = getTerritoryFromLocation(selectedLocation)
+  const selectedRegion = type === 'REG' ? code : null
 
   const getCompaniesByRegion = useCallback(() => {
     const regionGroup = groupBy(masksCommunes, 'codeRegion')
