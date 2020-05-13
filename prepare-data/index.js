@@ -8,7 +8,8 @@ const got = require('got')
 const {outputJson, readJson, outputFile} = require('fs-extra')
 const getStream = require('get-stream')
 const csvParse = require('csv-parser')
-const {groupBy, sortBy, defaults, pick, keyBy, chain, sumBy, uniq} = require('lodash')
+const {groupBy, sortBy, defaults, pick, keyBy, chain, sumBy, uniq, deburr, trimEnd, toLower} = require('lodash')
+const xlsx = require('node-xlsx')
 
 const {replaceResourceFile} = require('./datagouv')
 
@@ -25,6 +26,10 @@ const DATA_SOURCE = process.env.DATA_SOURCE || 'https://raw.githubusercontent.co
 const TESTS_SOURCE = 'https://www.data.gouv.fr/fr/datasets/r/b4ea7b4b-b7d1-4885-a099-71852291ff20'
 
 const PRELEVEMENT_SOURCE = 'sites-prelevement-latest.csv'
+
+const MASKS_SOURCE = 'masques.xlsx'
+
+const INTERNATIONAL_CENTER = [-3.779, 45.782]
 
 async function fetchCsv(url, options = {}) {
   const rows = await getStream.array(
@@ -117,6 +122,69 @@ async function loadPrelevements(file) {
     type: 'FeatureCollection',
     features: rows
   }
+}
+
+function prepareMasksData(masksSource) {
+  const parseXlsx = xlsx.parse(masksSource)
+  const {data} = parseXlsx[0]
+
+  const cleanedData = data.slice(4, -10) // Enlève les 4 headers et 10 lignes de légende
+
+  const entreprises = cleanedData.map(r => {
+    return {
+      nom: r[0],
+      commune: r[2],
+      codeDepartement: r[3],
+      nomRegion: r[4],
+      lavable: r[10]
+    }
+  })
+
+  const entreprisesNationales = entreprises.filter(({commune, codeDepartement}) => {
+    if (commune && codeDepartement) {
+      return departements.find(({code}) => code === `${codeDepartement}`)
+    }
+
+    return false
+  }).map(entreprise => {
+    return {
+      ...entreprise,
+      commune: toLower(trimEnd(deburr(entreprise.commune).replace(/-/g, ' ')))
+    }
+  })
+
+  const entreprisesInternationale = entreprises.filter(({commune, codeDepartement, nomRegion}) => {
+    return !codeDepartement && !nomRegion && commune
+  }).map(entreprise => {
+    return {...entreprise, commune: 'international'}
+  })
+
+  return [...entreprisesNationales, ...entreprisesInternationale]
+}
+
+async function loadMasks(masksSource) {
+  const masksCompanies = prepareMasksData(masksSource)
+  const communes = groupBy(masksCompanies, 'commune')
+  const companies = await Promise.all(Object.keys(communes).map(async commune => {
+    const nomCommune = communes[commune][0].commune
+
+    if (commune === 'international') {
+      return {
+        nom: 'international',
+        centre: {type: 'Point', coordinates: INTERNATIONAL_CENTER},
+        companies: communes[commune]
+      }
+    }
+
+    const url = `https://geo.api.gouv.fr/communes?nom=${nomCommune}&fields=centre,codeDepartement,codeRegion&boost=population`
+    const results = await got(url, {responseType: 'json'})
+    return {
+      ...results.body[0],
+      companies: communes[commune]
+    }
+  }))
+
+  return companies
 }
 
 async function loadTests(url) {
@@ -281,7 +349,10 @@ async function main() {
 
   const dataDirectory = join(rootPath, 'public', 'data')
 
+  const masks = await loadMasks(MASKS_SOURCE)
+
   await outputJson(join(dataDirectory, 'prelevements.json'), prelevements)
+  await outputJson(join(dataDirectory, 'masks.json'), [...masks])
 
   await Promise.all(dates.map(async date => {
     await outputJson(join(dataDirectory, `date-${date}.json`), data.filter(r => r.date === date))
