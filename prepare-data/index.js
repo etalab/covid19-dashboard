@@ -88,7 +88,8 @@ function prepareMasksData(masksSource) {
   const parseXlsx = xlsx.parse(masksSource)
   const {data} = parseXlsx[0]
 
-  const cleanedData = data.slice(4, -10) // Enlève les 4 headers et 10 lignes de légende
+  const lastIndex = findIndex(data, l => l.length === 0)
+  const cleanedData = data.slice(4, lastIndex) // Remove headers and captions
 
   const entreprises = cleanedData.map(r => {
     return {
