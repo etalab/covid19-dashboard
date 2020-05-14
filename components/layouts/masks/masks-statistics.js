@@ -1,6 +1,6 @@
 import React, {useContext, useCallback, useMemo} from 'react'
 import PropTypes from 'prop-types'
-import {sumBy, groupBy, flatten} from 'lodash'
+import {groupBy, flatten} from 'lodash'
 
 import departements from '@etalab/decoupage-administratif/data/departements.json'
 import regions from '@etalab/decoupage-administratif/data/regions.json'
@@ -10,8 +10,8 @@ import {getTerritoryFromLocation} from '../../../lib/location'
 import {ThemeContext, AppContext} from '../../../pages'
 
 import colors from '../../../styles/colors'
-import Counter from '../../counter'
 
+import MasksCounters from './masks-counters'
 import {MasksContext} from '.'
 
 const CompaniesList = ({title, companies}) => {
@@ -88,44 +88,6 @@ CompaniesList.propTypes = {
   companies: PropTypes.array.isRequired
 }
 
-const NationalStatistics = () => {
-  const {masksCommunes} = useContext(MasksContext)
-  const companiesNb = sumBy(masksCommunes, ({companies}) => companies.length)
-
-  return (
-    <div>
-      <div className='header'>
-        <h3>France</h3>
-      </div>
-      <div className='counters'>
-        <Counter
-          value={0}
-          label='Nombre total de masque estimés'
-          color='darkBlue'
-          details='Estimation totale de la production de masque'
-        />
-        <Counter
-          value={companiesNb}
-          label='Nombre d’entreprises productrices'
-          color='darkBlue'
-          details='Entreprises françaises productrices'
-        />
-      </div>
-      <style jsx>{`
-        .header {
-          text-align: center;
-        }
-
-        .counters {
-          display: grid;
-          grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
-          border-bottom: 1px solid ${colors.white};
-        }
-      `}</style>
-    </div>
-  )
-}
-
 const MasksStatistics = () => {
   const {selectedLocation} = useContext(AppContext)
   const {masksCommunes, selectedCommune} = useContext(MasksContext)
@@ -182,7 +144,7 @@ const MasksStatistics = () => {
     <div className='masks-statistics'>
       <div >
         <h3>Production des masques</h3>
-        <NationalStatistics />
+        <MasksCounters />
         {!selectedCommune && (
           <h4>{selectedRegion ? regions.find(r => r.code === selectedRegion).nom : 'Par régions'}</h4>
         )}
