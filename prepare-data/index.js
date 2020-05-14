@@ -8,7 +8,7 @@ const got = require('got')
 const {outputJson, readJson, outputFile} = require('fs-extra')
 const getStream = require('get-stream')
 const csvParse = require('csv-parser')
-const {groupBy, sortBy, defaults, pick, keyBy, chain, sumBy, uniq, deburr, trimEnd, toLower, max} = require('lodash')
+const {groupBy, sortBy, defaults, pick, keyBy, chain, sumBy, uniq, deburr, trimStart, trimEnd, toLower, findIndex, max} = require('lodash')
 const xlsx = require('node-xlsx')
 
 const {replaceResourceFile} = require('./datagouv')
@@ -91,6 +91,11 @@ function prepareMasksData(masksSource) {
   const lastIndex = findIndex(data, l => l.length === 0)
   const cleanedData = data.slice(4, lastIndex) // Remove headers and captions
 
+  const cleanDepCode = code => {
+    const trimmed = trimStart(trimEnd(code))
+    return trimmed.length === 1 ? `0${trimmed}` : trimmed
+  }
+
   const entreprises = cleanedData.map(r => {
     return {
       nom: r[0],
@@ -103,14 +108,17 @@ function prepareMasksData(masksSource) {
 
   const entreprisesNationales = entreprises.filter(({commune, codeDepartement}) => {
     if (commune && codeDepartement) {
-      return departements.find(({code}) => code === `${codeDepartement}`)
+      const dep = cleanDepCode(codeDepartement)
+      return departements.find(({code}) => code === dep)
     }
 
     return false
   }).map(entreprise => {
+    const dep = cleanDepCode(entreprise.codeDepartement)
     return {
       ...entreprise,
-      commune: toLower(trimEnd(deburr(entreprise.commune).replace(/-/g, ' ')))
+      codeDepartement: dep,
+      commune: toLower(trimEnd(deburr(entreprise.commune).replace(/[\n, -]/g, ' ')))
     }
   })
 
@@ -127,6 +135,7 @@ async function loadMasks(masksSource) {
   const masksCompanies = prepareMasksData(masksSource)
   const communes = groupBy(masksCompanies, 'commune')
   const companies = await Promise.all(Object.keys(communes).map(async commune => {
+    const {codeDepartement} = communes[commune][0]
     const nomCommune = communes[commune][0].commune
 
     if (commune === 'international') {
@@ -137,8 +146,9 @@ async function loadMasks(masksSource) {
       }
     }
 
-    const url = `https://geo.api.gouv.fr/communes?nom=${nomCommune}&fields=centre,codeDepartement,codeRegion&boost=population`
+    const url = `https://geo.api.gouv.fr/communes?nom=${nomCommune}&codeDepartement=${codeDepartement}&fields=centre,codeDepartement,codeRegion&boost=population`
     const results = await got(url, {responseType: 'json'})
+
     return {
       ...results.body[0],
       companies: communes[commune]
