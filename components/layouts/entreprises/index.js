@@ -1,6 +1,6 @@
 import React from 'react'
 
-export const AIDES_ENTREPRISES_URL = 'https://aides-entreprises.data.gouv.fr/'
+export const AIDES_ENTREPRISES_URL = 'https://aides-entreprises.data.gouv.fr/?nomapscroll=true'
 
 const Entreprises = () => {
   return (
