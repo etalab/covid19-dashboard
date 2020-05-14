@@ -16,12 +16,13 @@ const MasksCounters = () => {
         <div className='counters'>
           <Counter
             value={43000000}
-            label='livraisons hebdomadaires de masques grand public'
+            label='Masques grand public'
             color='darkBlue'
+            details='Nombre de masques grand public livrés de manière hebdomadaire'
           />
           <Counter
             value={companiesNb}
-            label='entreprises productrices'
+            label='Entreprises productrices'
             color='darkBlue'
             details='Nombre d’entreprises productrices de masques'
           />
@@ -29,20 +30,22 @@ const MasksCounters = () => {
         <h3>Prototypes</h3>
         <div className='counters'>
           <Counter
-            value={1815}
-            label='protoypes testés'
+            value={430}
+            label='Entreprises candidates'
             color='darkBlue'
+            details='Nombre d’entreprises ayant proposé des prototypes testés comme répondant aux spécifications de l’Etat'
+          />
+          <Counter
+            value={1815}
+            label='Protoypes testés'
+            color='darkBlue'
+            details='Nombre de prototypes de masque testés'
           />
           <Counter
             value={1207}
-            label='prototypes testés comme répondant aux spécifications de l’État'
+            label='Prototypes acceptés'
             color='darkBlue'
-          />
-          <Counter
-            value={430}
-            label='proposition protoypes testés'
-            color='darkBlue'
-            details='Nombre d’entreprises ayant proposé des prototypes testés comme répondant aux spécifications de l’Etat'
+            details='Nombre de prototypes de masque testés comme répondant aux spécifications de l’État'
           />
         </div>
       </div>
