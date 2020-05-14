@@ -13,8 +13,8 @@ import {AppContext} from '../../../pages'
 const EUROPE_CENTER = [11.9531, 50.2331]
 
 const getRegionCenter = name => {
-  const {code} = regions.find(({nom}) => nom === name)
-  return geo[code].center
+  const {code} = regions.find(({nom}) => nom === name.replace('’', '\'')) // eslint-disable-line unicorn/string-content
+  return geo[`REG-${code}`].center
 }
 
 const TransfertMap = () => {
