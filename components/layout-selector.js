@@ -106,7 +106,7 @@ const DesktopLayoutSelector = ({selected, layouts, handleSelect}) => {
           border-radius: 4px;
         }
 
-        @media (max-width: 1120px) {
+        @media (max-width: 1300px) {
           .layout {
             font-size: small;
           }
