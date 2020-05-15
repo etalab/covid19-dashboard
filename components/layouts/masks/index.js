@@ -9,9 +9,9 @@ import colors from '../../../styles/colors'
 import {AppContext, ThemeContext} from '../../../pages'
 
 import Scrollable from '../../scrollable'
-import MasksInformations from '../big-picture/big-picture-informations'
 import TerritoriesDesktopMap from '../../territories-desktop-map'
 
+import MasksInformations from './masks-informations'
 import MasksMaps from './masks-maps'
 import MasksStatistics from './masks-statistics'
 import TerritoriesMobileMap from '../../territories-mobile-map'
