@@ -23,13 +23,13 @@ const CompaniesList = ({title, companies}) => {
       </div>
       <div className='subheader'>
         <div>Entreprises</div>
-        <div>Lavable</div>
+        <div>Durabilité des masques</div>
       </div>
       <div className='list'>
         {companies.map(({nom, lavable}) => (
           <div key={nom} className='company'>
             <div>{nom}</div>
-            <div>{lavable}</div>
+            <div>{lavable ? lavable : 'non renseigné'}</div>
           </div>
         ))}
       </div>
@@ -60,11 +60,7 @@ const CompaniesList = ({title, companies}) => {
             justify-content: space-between;
             align-items: center;
             line-height: 1.2em;
-            padding: 0.2em 0.1em;
-          }
-
-          .company > div {
-            flex: 1;
+            padding: 0.2em 0.2em;
           }
 
           .company:nth-child(even) {
@@ -143,7 +139,7 @@ const MasksStatistics = () => {
   return (
     <div className='masks-statistics'>
       <div >
-        <h3>Production des masques</h3>
+        <h3>Production des masques grand public</h3>
         <MasksCounters />
         {!selectedCommune && (
           <h4>{selectedRegion ? regions.find(r => r.code === selectedRegion).nom : 'Par régions'}</h4>
