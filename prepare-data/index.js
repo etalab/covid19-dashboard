@@ -8,7 +8,7 @@ const got = require('got')
 const {outputJson, readJson, outputFile} = require('fs-extra')
 const getStream = require('get-stream')
 const csvParse = require('csv-parser')
-const {groupBy, sortBy, defaults, pick, keyBy, chain, sumBy, uniq} = require('lodash')
+const {groupBy, sortBy, defaults, pick, keyBy, chain, sumBy, uniq, max} = require('lodash')
 
 const {replaceResourceFile} = require('./datagouv')
 
@@ -174,12 +174,14 @@ async function loadTests(url) {
   return [...departementsReports, ...regionsReports, ...franceReports]
 }
 
-async function loadIndicateurs() {
-  const rows = await getStream.array(
+async function loadIndicateurs(records) {
+  const dates = uniq(records.map(r => r.date))
+
+  const inputRows = await getStream.array(
     createReadStream(join(rootPath, 'data', 'donnees_carte_synthese_tricolore.csv'))
       .pipe(csvParse())
   )
-  return rows.map(row => {
+  const rows = inputRows.map(row => {
     return {
       date: row.extract_date,
       code: `DEP-${row.departement}`,
@@ -188,6 +190,19 @@ async function loadIndicateurs() {
       sourceType: 'ministere-sante'
     }
   })
+
+  const maxDate = max(rows.map(r => r.date))
+  const moreRecentDates = dates.filter(d => d > maxDate)
+
+  const maxDateRows = rows.filter(r => r.date === maxDate)
+
+  moreRecentDates.forEach(moreRecentDate => {
+    maxDateRows.forEach(row => {
+      rows.push({...row, date: moreRecentDate})
+    })
+  })
+
+  return rows
 }
 
 function filterRecords(records) {
@@ -212,7 +227,7 @@ function filterRecords(records) {
 async function main() {
   const records = await loadJson(DATA_SOURCE)
   const tests = await loadTests(TESTS_SOURCE)
-  const indicateurs = await loadIndicateurs()
+  const indicateurs = await loadIndicateurs(records)
   const data = consolidate(filterRecords([...records, ...tests, ...indicateurs]))
 
   const dates = uniq(data.map(r => r.date)).sort()
