@@ -1,4 +1,4 @@
-import React, {useContext, useCallback} from 'react'
+import React, {useContext, useMemo} from 'react'
 import PropTypes from 'prop-types'
 import {Source, Layer} from 'react-map-gl'
 import {ChevronLeft} from 'react-feather'
@@ -23,7 +23,7 @@ export const SyntheseMap = ({hovered, isDROM}) => {
 
   const selectedRegion = selectedLocation.includes('REG') ? selectedLocation.split('-')[1] : null
 
-  const getColors = useCallback(() => {
+  const getColors = useMemo(() => {
     const colors = ['match', ['get', 'code']]
 
     synthese.forEach(({code, indicateurSynthese}) => {
@@ -35,21 +35,9 @@ export const SyntheseMap = ({hovered, isDROM}) => {
     return colors.length > 3 ? colors : defaultColor
   }, [synthese])
 
-  const getOpacity = useCallback(() => {
-    if (!region) {
-      return ['match', ['get', 'region'], code, 1, 0.5]
-    }
-
-    const opacity = ['match', ['get', 'code'], code, 1]
-    const locationCode = selectedLocation && selectedLocation.includes('DEP') ? selectedLocation.split('-')[1] : null
-
-    if (locationCode && locationCode !== code) {
-      opacity.push(locationCode, 1)
-    }
-
-    opacity.push(0.5)
-    return opacity
-  }, [code, region, selectedLocation])
+  const getOpacity = useMemo(() => {
+    return ['case', ['==', ['get', 'code'], region || code], 0, 0.5]
+  }, [code, region])
 
   if (synthese) {
     const indicateurSynthese = {
@@ -57,8 +45,7 @@ export const SyntheseMap = ({hovered, isDROM}) => {
       'source-layer': 'departements',
       type: 'fill',
       paint: {
-        'fill-color': getColors(),
-        'fill-opacity': getOpacity(),
+        'fill-color': getColors,
         'fill-outline-color': '#ffffff'
       }
     }
@@ -69,8 +56,8 @@ export const SyntheseMap = ({hovered, isDROM}) => {
       type: 'fill',
       filter: selectedRegion ? ['!=', ['get', 'code'], selectedRegion] : ['has', 'code'],
       paint: {
-        'fill-opacity': 1,
-        'fill-color': 'rgba(0, 0, 0, 0)',
+        'fill-opacity': getOpacity,
+        'fill-color': '#fff',
         'fill-outline-color': colors.darkBlue
       }
     }
