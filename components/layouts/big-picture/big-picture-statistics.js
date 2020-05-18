@@ -62,6 +62,33 @@ const charts = {
       metricName: 'gueris',
       color: 'green'
     }
+  },
+  casEhpad: {
+    name: 'Cas total en EHPAD et EMS',
+    type: 'indicateur',
+    options: {
+      label: 'Cas total en EHPAD et EMS',
+      metricName: 'casEhpad',
+      color: 'orange'
+    }
+  },
+  casConfirmesEhpad: {
+    name: 'Cas confirmés en EHPAD et EMS',
+    type: 'indicateur',
+    options: {
+      label: 'Cas confirmés en EHPAD et EMS',
+      metricName: 'casConfirmesEhpad',
+      color: 'darkOrange'
+    }
+  },
+  decesEhpad: {
+    name: 'Décès en EHPAD et EMS',
+    type: 'indicateur',
+    options: {
+      label: 'Décès en EHPAD et EMS',
+      metricName: 'decesEhpad',
+      color: 'darkRed'
+    }
   }
 }
 
