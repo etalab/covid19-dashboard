@@ -1,12 +1,20 @@
-import React from 'react'
+import React, {useContext} from 'react'
 import PropTypes from 'prop-types'
+import {keyBy} from 'lodash'
 
 import colors from '../../../styles/colors'
 
 import Counter from '../../counter'
 
+import map from './big-picture-maps'
+
+import {BigPictureChartContext} from './big-picture-statistics'
+import {BigPictureContext} from '.'
+
 const Counters = props => {
   const {casConfirmes, hospitalises, reanimation, deces, decesEhpad, gueris, casEhpad, casConfirmesEhpad} = props.report || {}
+  const {selectedChart, setSelectedChart} = useContext(BigPictureChartContext)
+  const {setSelectedMapId} = useContext(BigPictureContext)
 
   const totalDeces = (deces || 0) + (decesEhpad || 0)
   const previousReport = props.previousReport || {}
@@ -23,24 +31,113 @@ const Counters = props => {
     casEhpad: 'Nombre total de cas en EHPAD et EMS'
   }
 
+  const mapProperties = keyBy(map, 'property')
+
+  const handleClick = chartName => {
+    if (chartName === selectedChart) {
+      setSelectedChart('mixed')
+      setSelectedMapId(mapProperties.hospitalises.name)
+    } else {
+      setSelectedChart(chartName)
+
+      if (mapProperties[chartName]) {
+        setSelectedMapId(mapProperties[chartName].name)
+      }
+    }
+  }
+
   return (
     <div className='stats'>
       <div className='counters'>
-        {casConfirmes && <Counter value={casConfirmes} previousValue={previousReport.casConfirmes} label='cas confirmés' details={details.casConfirmes} color='orange' isBig />}
-        {decesEhpad && <Counter value={totalDeces} previousValue={previousTotalDeces} label='cumul des décès' details='Cumul des décés' color='red' isBig />}
+        {casConfirmes && <Counter
+          isSelected={selectedChart === 'confirmed'}
+          onClick={() => handleClick('confirmed')}
+          value={casConfirmes}
+          previousValue={previousReport.casConfirmes}
+          label='cas confirmés'
+          details={details.casConfirmes}
+          color='orange'
+          isBig
+        />}
+        {decesEhpad && <Counter
+          isSelected={selectedChart === 'deces'}
+          onClick={() => handleClick('deces')}
+          value={totalDeces}
+          previousValue={previousTotalDeces}
+          label='cumul des décès'
+          details='Cumul des décés'
+          color='red'
+          isBig
+        />}
       </div>
       <div className='title'>Données hospitalières</div>
       <div className='counters'>
-        <Counter value={hospitalises} previousValue={previousReport.hospitalises} label='hospitalisations' details={details.hospitalises} color='darkGrey' />
-        <Counter value={gueris} previousValue={previousReport.gueris} label='retours à domicile' details={details.gueris} color='green' />
-        <Counter value={reanimation} previousValue={previousReport.reanimation} label='en réanimation' details={details.reanimation} color='darkerGrey' />
-        <Counter value={deces} previousValue={previousReport.deces} label='décès à l’hôpital' details={details.deces} color='red' />
+        <Counter
+          isSelected={selectedChart === 'hospitalises'}
+          onClick={() => handleClick('hospitalises')}
+          value={hospitalises}
+          previousValue={previousReport.hospitalises}
+          label='hospitalisations'
+          details={details.hospitalises}
+          color='darkGrey'
+        />
+        <Counter
+          isSelected={selectedChart === 'gueris'}
+          onClick={() => handleClick('gueris')}
+          value={gueris}
+          previousValue={previousReport.gueris}
+          label='retours à domicile'
+          details={details.gueris}
+          color='green'
+        />
+        <Counter
+          isSelected={selectedChart === 'reanimation'}
+          onClick={() => handleClick('reanimation')}
+          value={reanimation}
+          previousValue={previousReport.reanimation}
+          label='en réanimation'
+          details={details.reanimation}
+          color='darkerGrey'
+        />
+        <Counter
+          isSelected={selectedChart === 'deces'}
+          onClick={() => handleClick('deces')}
+          value={deces}
+          previousValue={previousReport.deces}
+          label='décès à l’hôpital'
+          details={details.deces}
+          color='red'
+        />
       </div>
       <div className='title'>Données EHPAD et EMS</div>
       {decesEhpad && <div className='counters'>
-        <Counter value={casEhpad} previousValue={previousReport.casEhpad} label='cas total en EHPAD et EMS' details={details.casEhpad} color='orange' />
-        <Counter value={casConfirmesEhpad} previousValue={previousReport.casConfirmesEhpad} label='cas confirmés en EHPAD et EMS' details={details.casConfirmesEhpad} color='darkOrange' />
-        <Counter value={decesEhpad} previousValue={previousReport.decesEhpad} label='décès en EHPAD et EMS' details={details.decesEhpad} color='darkRed' />
+        <Counter
+          isSelected={selectedChart === 'casEhpad'}
+          onClick={() => handleClick('casEhpad')}
+          value={casEhpad}
+          previousValue={previousReport.casEhpad}
+          label='cas total en EHPAD et EMS'
+          details={details.casEhpad}
+          color='orange'
+        />
+        <Counter
+          isSelected={selectedChart === 'casConfirmesEhpad'}
+          onClick={() => handleClick('casConfirmesEhpad')}
+          value={casConfirmesEhpad}
+          previousValue={previousReport.casConfirmesEhpad}
+          label='cas confirmés en EHPAD et EMS'
+          details={details.casConfirmesEhpad}
+          color='darkOrange'
+        />
+        <Counter
+          isSelected={selectedChart === 'decesEhpad'}
+          onClick={() => handleClick('decesEhpad')}
+          value={decesEhpad}
+          previousValue={previousReport.decesEhpad}
+          label='décès en EHPAD et EMS'
+          details={details.decesEhpad}
+          color='darkRed'
+        />
       </div>}
 
       <style jsx>{`

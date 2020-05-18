@@ -13,6 +13,8 @@ import MixedChart from '../../charts/mixed-chart'
 import IndicateurCumulChart from '../../charts/indicateur-cumul'
 import IndicateurVariationChart from '../../charts/indicateur-variation'
 
+export const BigPictureChartContext = React.createContext()
+
 const charts = {
   mixed: {
     name: 'Tout afficher',
@@ -148,8 +150,11 @@ const BigPictureStatistics = () => {
         <h3>COVID-19 - {report ? report.nom : 'France'}</h3>
       </div>
 
-      {report && <Counters report={report} previousReport={previousReport} />}
-
+      {report && (
+        <BigPictureChartContext.Provider value={{selectedChart, setSelectedChart}} >
+          <Counters report={report} previousReport={previousReport} />
+        </BigPictureChartContext.Provider>
+      )}
       {report && report.history && (
         <>
           {toggleable && <a className='toggle' onClick={() => setShowVariations(!showVariations)}>{showVariations ? 'Afficher les valeurs cumulées' : 'Afficher les variations quotidiennes'}</a>}
