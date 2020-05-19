@@ -65,7 +65,39 @@ const charts = {
   }
 }
 
-function getChart(chartName, showVariations) {
+const ehpadCharts = {
+  casEhpad: {
+    name: 'Cas total',
+    type: 'indicateur',
+    options: {
+      label: 'Cas total',
+      metricName: 'casEhpad',
+      color: 'orange'
+    }
+  },
+  casConfirmesEhpad: {
+    name: 'Cas confirmés',
+    type: 'indicateur',
+    options: {
+      label: 'Cas confirmés',
+      metricName: 'casConfirmesEhpad',
+      color: 'darkOrange'
+    }
+  },
+  decesEhpad: {
+    name: 'Décès',
+    type: 'indicateur',
+    options: {
+      label: 'Décès',
+      metricName: 'decesEhpad',
+      color: 'darkRed'
+    }
+  }
+}
+
+const mixedCharts = {...charts, ...ehpadCharts}
+
+function getChart(charts, chartName, showVariations) {
   if (charts[chartName].chart) {
     return charts[chartName].chart
   }
@@ -102,10 +134,10 @@ const BigPictureStatistics = () => {
   const [selectedChart, setSelectedChart] = useState('mixed')
   const [showVariations, setShowVariations] = useState(false)
 
-  const toggleable = charts[selectedChart].type === 'indicateur'
+  const toggleable = mixedCharts[selectedChart].type === 'indicateur'
 
-  const Chart = getChart(selectedChart, showVariations)
-  const chartOptions = charts[selectedChart].options || {}
+  const Chart = getChart({...charts, ...ehpadCharts}, selectedChart, showVariations)
+  const chartOptions = mixedCharts[selectedChart].options || {}
 
   return (
     <>
@@ -133,6 +165,19 @@ const BigPictureStatistics = () => {
                     onClick={() => setSelectedChart(chart)}
                   >
                     {charts[chart].name}
+                  </div>
+                </div>
+              ))}
+            </div>
+            <h3 className='ehpad-title'>EHPAD et EMS</h3>
+            <div className='charts-list'>
+              {Object.keys(ehpadCharts).map(chart => (
+                <div key={chart} className='button-container'>
+                  <div
+                    className={`chart-name ${chart === selectedChart ? 'selected' : ''}`}
+                    onClick={() => setSelectedChart(chart)}
+                  >
+                    {ehpadCharts[chart].name}
                   </div>
                 </div>
               ))}
@@ -237,6 +282,10 @@ const BigPictureStatistics = () => {
           text-align: right;
           font-size: 0.8em;
           cursor: pointer;
+        }
+
+        .ehpad-title {
+          text-align: center;
         }
         `}</style>
     </>
