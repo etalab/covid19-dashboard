@@ -92,9 +92,9 @@ async function loadTests(url) {
         date: rows[0].jour,
         code: `DEP-${rows[0].dep}`,
         nom: departementsIndex[rows[0].dep].nom,
-        testsRealises: sumBy(rows, r => Number.parseInt(r.nb_test, 10)),
+        testsRealises: sumBy(rows.filter(r => r.clage_covid === '0'), r => Number.parseInt(r.nb_test, 10)),
         testsRealisesDetails: [],
-        testsPositifs: sumBy(rows, r => Number.parseInt(r.nb_pos, 10)),
+        testsPositifs: sumBy(rows.filter(r => r.clage_covid === '0'), r => Number.parseInt(r.nb_pos, 10)),
         testsPositifsDetails: [],
         sourceType: 'sante-publique-france'
       }
