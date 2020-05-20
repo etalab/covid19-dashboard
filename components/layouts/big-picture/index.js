@@ -1,5 +1,6 @@
-import React, {useState, useContext} from 'react'
+import React, {useState, useContext, useEffect} from 'react'
 import {FileText, Map, BarChart2} from 'react-feather'
+import {keyBy} from 'lodash'
 
 import theme from '../../../styles/theme'
 import colors from '../../../styles/colors'
@@ -132,6 +133,16 @@ const BigPicture = props => {
   const [selectedStat, setSelectedStat] = useState('mixed')
 
   const Component = isMobileDevice ? MobileBigPicture : DesktopBigPicture
+
+  useEffect(() => {
+    const mapProperties = keyBy(bigPictureMaps, 'property')
+
+    if (mapProperties[selectedStat]) {
+      setSelectedMapId(mapProperties[selectedStat].name)
+    } else if (selectedStat === 'mixed') {
+      setSelectedMapId(mapProperties.hospitalises.name)
+    }
+  }, [selectedStat])
 
   return (
     <BigPictureContext.Provider value={{selectedMapId, setSelectedMapId, selectedStat, setSelectedStat}}>

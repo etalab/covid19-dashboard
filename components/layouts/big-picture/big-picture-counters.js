@@ -1,18 +1,15 @@
 import React, {useContext} from 'react'
 import PropTypes from 'prop-types'
-import {keyBy} from 'lodash'
 
 import colors from '../../../styles/colors'
 
 import Counter from '../../counter'
 
-import map from './big-picture-maps'
-
 import {BigPictureContext} from '.'
 
 const Counters = props => {
   const {casConfirmes, hospitalises, reanimation, deces, decesEhpad, gueris, casEhpad, casConfirmesEhpad} = props.report || {}
-  const {selectedStat, setSelectedStat, setSelectedMapId} = useContext(BigPictureContext)
+  const {selectedStat, setSelectedStat} = useContext(BigPictureContext)
 
   const totalDeces = (deces || 0) + (decesEhpad || 0)
   const previousReport = props.previousReport || {}
@@ -29,20 +26,8 @@ const Counters = props => {
     casEhpad: 'Nombre total de cas en EHPAD et EMS'
   }
 
-  const mapProperties = keyBy(map, 'property')
-
   const handleClick = chartName => {
-    setSelectedStat(chartName)
-    if (chartName === selectedStat) {
-      setSelectedStat('mixed')
-      setSelectedMapId(mapProperties.hospitalises.name)
-    } else {
-      setSelectedStat(chartName)
-
-      if (mapProperties[chartName]) {
-        setSelectedMapId(mapProperties[chartName].name)
-      }
-    }
+    setSelectedStat(chartName === selectedStat ? 'mixed' : chartName)
   }
 
   return (
