@@ -129,11 +129,12 @@ const BigPicture = props => {
   const {isMobileDevice} = useContext(AppContext)
 
   const [selectedMapId, setSelectedMapId] = useState('Carte des hospitalisations')
+  const [selectedStat, setSelectedStat] = useState('mixed')
 
   const Component = isMobileDevice ? MobileBigPicture : DesktopBigPicture
 
   return (
-    <BigPictureContext.Provider value={{selectedMapId, setSelectedMapId}}>
+    <BigPictureContext.Provider value={{selectedMapId, setSelectedMapId, selectedStat, setSelectedStat}}>
       <Component {...props} />
     </BigPictureContext.Provider>
   )

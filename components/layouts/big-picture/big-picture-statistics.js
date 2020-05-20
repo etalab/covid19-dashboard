@@ -13,7 +13,7 @@ import MixedChart from '../../charts/mixed-chart'
 import IndicateurCumulChart from '../../charts/indicateur-cumul'
 import IndicateurVariationChart from '../../charts/indicateur-variation'
 
-export const BigPictureChartContext = React.createContext()
+import {BigPictureContext} from '.'
 
 const charts = {
   mixed: {
@@ -128,13 +128,13 @@ const BigPictureStatistics = () => {
     }
   }, [report])
 
-  const [selectedChart, setSelectedChart] = useState('mixed')
+  const {selectedStat} = useContext(BigPictureContext)
   const [showVariations, setShowVariations] = useState(false)
 
-  const toggleable = charts[selectedChart].type === 'indicateur'
+  const toggleable = charts[selectedStat].type === 'indicateur'
 
-  const Chart = getChart(selectedChart, showVariations)
-  const chartOptions = charts[selectedChart].options || {}
+  const Chart = getChart(selectedStat, showVariations)
+  const chartOptions = charts[selectedStat].options || {}
 
   return (
     <>
@@ -146,9 +146,7 @@ const BigPictureStatistics = () => {
       </div>
 
       {report && (
-        <BigPictureChartContext.Provider value={{selectedChart, setSelectedChart}} >
-          <Counters report={report} previousReport={previousReport} />
-        </BigPictureChartContext.Provider>
+        <Counters report={report} previousReport={previousReport} />
       )}
       {report && report.history && (
         <>

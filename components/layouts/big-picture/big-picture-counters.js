@@ -8,13 +8,11 @@ import Counter from '../../counter'
 
 import map from './big-picture-maps'
 
-import {BigPictureChartContext} from './big-picture-statistics'
 import {BigPictureContext} from '.'
 
 const Counters = props => {
   const {casConfirmes, hospitalises, reanimation, deces, decesEhpad, gueris, casEhpad, casConfirmesEhpad} = props.report || {}
-  const {selectedChart, setSelectedChart} = useContext(BigPictureChartContext)
-  const {setSelectedMapId} = useContext(BigPictureContext)
+  const {selectedStat, setSelectedStat, setSelectedMapId} = useContext(BigPictureContext)
 
   const totalDeces = (deces || 0) + (decesEhpad || 0)
   const previousReport = props.previousReport || {}
@@ -34,11 +32,12 @@ const Counters = props => {
   const mapProperties = keyBy(map, 'property')
 
   const handleClick = chartName => {
-    if (chartName === selectedChart) {
-      setSelectedChart('mixed')
+    setSelectedStat(chartName)
+    if (chartName === selectedStat) {
+      setSelectedStat('mixed')
       setSelectedMapId(mapProperties.hospitalises.name)
     } else {
-      setSelectedChart(chartName)
+      setSelectedStat(chartName)
 
       if (mapProperties[chartName]) {
         setSelectedMapId(mapProperties[chartName].name)
@@ -50,7 +49,7 @@ const Counters = props => {
     <div className='stats'>
       <div className='counters'>
         {casConfirmes && <Counter
-          isSelected={selectedChart === 'confirmed'}
+          isSelected={selectedStat === 'confirmed'}
           onClick={() => handleClick('confirmed')}
           value={casConfirmes}
           previousValue={previousReport.casConfirmes}
@@ -60,7 +59,7 @@ const Counters = props => {
           isBig
         />}
         {decesEhpad && <Counter
-          isSelected={selectedChart === 'deces'}
+          isSelected={selectedStat === 'deces'}
           onClick={() => handleClick('deces')}
           value={totalDeces}
           previousValue={previousTotalDeces}
@@ -73,7 +72,7 @@ const Counters = props => {
       <div className='title'>Données hospitalières</div>
       <div className='counters'>
         <Counter
-          isSelected={selectedChart === 'hospitalises'}
+          isSelected={selectedStat === 'hospitalises'}
           onClick={() => handleClick('hospitalises')}
           value={hospitalises}
           previousValue={previousReport.hospitalises}
@@ -82,7 +81,7 @@ const Counters = props => {
           color='darkGrey'
         />
         <Counter
-          isSelected={selectedChart === 'gueris'}
+          isSelected={selectedStat === 'gueris'}
           onClick={() => handleClick('gueris')}
           value={gueris}
           previousValue={previousReport.gueris}
@@ -91,7 +90,7 @@ const Counters = props => {
           color='green'
         />
         <Counter
-          isSelected={selectedChart === 'reanimation'}
+          isSelected={selectedStat === 'reanimation'}
           onClick={() => handleClick('reanimation')}
           value={reanimation}
           previousValue={previousReport.reanimation}
@@ -100,7 +99,7 @@ const Counters = props => {
           color='darkerGrey'
         />
         <Counter
-          isSelected={selectedChart === 'deces'}
+          isSelected={selectedStat === 'deces'}
           onClick={() => handleClick('deces')}
           value={deces}
           previousValue={previousReport.deces}
@@ -112,7 +111,7 @@ const Counters = props => {
       <div className='title'>Données EHPAD et EMS</div>
       {decesEhpad && <div className='counters'>
         <Counter
-          isSelected={selectedChart === 'casEhpad'}
+          isSelected={selectedStat === 'casEhpad'}
           onClick={() => handleClick('casEhpad')}
           value={casEhpad}
           previousValue={previousReport.casEhpad}
@@ -121,7 +120,7 @@ const Counters = props => {
           color='orange'
         />
         <Counter
-          isSelected={selectedChart === 'casConfirmesEhpad'}
+          isSelected={selectedStat === 'casConfirmesEhpad'}
           onClick={() => handleClick('casConfirmesEhpad')}
           value={casConfirmesEhpad}
           previousValue={previousReport.casConfirmesEhpad}
@@ -130,7 +129,7 @@ const Counters = props => {
           color='darkOrange'
         />
         <Counter
-          isSelected={selectedChart === 'decesEhpad'}
+          isSelected={selectedStat === 'decesEhpad'}
           onClick={() => handleClick('decesEhpad')}
           value={decesEhpad}
           previousValue={previousReport.decesEhpad}
