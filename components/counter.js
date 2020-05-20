@@ -90,7 +90,7 @@ const Counter = ({value, label, color, previousValue, details, warningLabel, onC
         }
 
         .counter:hover {
-          border: ${onClick ? '1px solid ' + colors.blue : ''};
+          border: 1px solid ${colors.blue};
         }
 
         .counter.selected {
