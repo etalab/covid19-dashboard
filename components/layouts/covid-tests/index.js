@@ -130,6 +130,7 @@ const CovidTests = props => {
   const {date, setForcedDate, selectedLocation, isMobileDevice} = useContext(AppContext)
 
   const [selectedMapId, setSelectedMapId] = useState('Tests positifs en laboratoires de ville - ce jour')
+  const [selectedStat, setSelectedStat] = useState('mixed')
 
   const Component = isMobileDevice ? MobileCovidTests : DesktopCovidTests
 
@@ -153,7 +154,7 @@ const CovidTests = props => {
   }, [date, selectedLocation, setForcedDate])
 
   return (
-    <CovidTestsContext.Provider value={{selectedMapId, setSelectedMapId}}>
+    <CovidTestsContext.Provider value={{selectedMapId, setSelectedMapId, selectedStat, setSelectedStat}}>
       <Component {...props} />
     </CovidTestsContext.Provider>
   )

@@ -8,21 +8,19 @@ import colors from '../../../styles/colors'
 
 import map from './covid-tests-maps'
 
-import {CovidTestsChartContext} from './covid-tests-statistics'
 import {CovidTestsContext} from '.'
 
 const CovidTestsCounters = ({testsPositifs, testsRealises}) => {
-  const {selectedChart, setSelectedChart} = useContext(CovidTestsChartContext)
-  const {setSelectedMapId} = useContext(CovidTestsContext)
+  const {setSelectedMapId, selectedStat, setSelectedStat} = useContext(CovidTestsContext)
 
   const mapProperties = keyBy(map, 'property')
 
   const handleClick = chartName => {
-    if (chartName === selectedChart) {
-      setSelectedChart('mixed')
+    if (chartName === selectedStat) {
+      setSelectedStat('mixed')
       setSelectedMapId(mapProperties.testsPositifs.name)
     } else {
-      setSelectedChart(chartName)
+      setSelectedStat(chartName)
 
       if (mapProperties[chartName]) {
         setSelectedMapId(mapProperties[chartName].name)
@@ -35,7 +33,7 @@ const CovidTestsCounters = ({testsPositifs, testsRealises}) => {
       <div className='title'>Tests PCR en laboratoires de ville</div>
       <div className='counters'>
         <Counter
-          isSelected={selectedChart === 'testsRealises'}
+          isSelected={selectedStat === 'testsRealises'}
           onClick={() => handleClick('testsRealises')}
           value={testsRealises}
           label='Tests réalisés'
@@ -43,7 +41,7 @@ const CovidTestsCounters = ({testsPositifs, testsRealises}) => {
           color='darkGrey'
         />
         <Counter
-          isSelected={selectedChart === 'testsPositifs'}
+          isSelected={selectedStat === 'testsPositifs'}
           onClick={() => handleClick('testsPositifs')}
           value={testsPositifs}
           label='Tests positifs'

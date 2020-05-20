@@ -16,7 +16,7 @@ import IndicateurCumulChart from '../../charts/indicateur-cumul'
 import IndicateurVariationChart from '../../charts/indicateur-variation'
 import CovidTestsMixedChart from '../../charts/covid-tests-mixed-chart'
 
-export const CovidTestsChartContext = React.createContext()
+import {CovidTestsContext} from '.'
 
 const charts = {
   mixed: {
@@ -55,17 +55,17 @@ function getChart(chartName, showVariations) {
 
 const CovidTestsStatistics = () => {
   const {date, forcedDate, selectedLocation, isMobileDevice} = useContext(AppContext)
+  const {selectedStat} = useContext(CovidTestsContext)
   const selectedDate = date || forcedDate
 
   const [report, setReport] = useState(null)
   const [statistics, setStatistics] = useState(null)
-  const [selectedChart, setSelectedChart] = useState('mixed')
   const [showVariations, setShowVariations] = useState(false)
 
-  const toggleable = charts[selectedChart].type === 'indicateur'
+  const toggleable = charts[selectedStat].type === 'indicateur'
 
-  const Chart = getChart(selectedChart, showVariations)
-  const chartOptions = charts[selectedChart].options || {}
+  const Chart = getChart(selectedStat, showVariations)
+  const chartOptions = charts[selectedStat].options || {}
 
   useEffect(() => {
     async function fetchReport() {
@@ -106,9 +106,7 @@ const CovidTestsStatistics = () => {
         <h3>COVID-19 - {report ? report.nom : 'France'}</h3>
       </div>
       {statistics && (
-        <CovidTestsChartContext.Provider value={{selectedChart, setSelectedChart}}>
-          <CovidTestsCounters testsPositifs={statistics.testsPositifs} testsRealises={statistics.testsRealises} />
-        </CovidTestsChartContext.Provider>
+        <CovidTestsCounters testsPositifs={statistics.testsPositifs} testsRealises={statistics.testsRealises} />
       )}
       {statistics && <PieChartPercent data={statistics.pieChartData} labels={pieLabels} colors={pieColors} height={isMobileDevice ? 150 : 130} />}
       {report && report.history && (
