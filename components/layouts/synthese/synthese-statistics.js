@@ -1,5 +1,5 @@
-import React, {useContext} from 'react'
-import {isEmpty} from 'lodash'
+import React, {useContext, useState, useEffect} from 'react'
+import {isEmpty, countBy} from 'lodash'
 
 import departements from '@etalab/decoupage-administratif/data/departements.json'
 import regions from '@etalab/decoupage-administratif/data/regions.json'
@@ -12,6 +12,12 @@ import colors from '../../../styles/colors'
 import theme from '../../../styles/theme'
 import PieChartValues from '../../pie-chart-values'
 import {SyntheseContext} from '.'
+
+const indicateurColors = {
+  vert: colors.green,
+  orange: colors.orange,
+  rouge: colors.red
+}
 
 const SyntheseDepartement = () => {
   const {selectedLocation} = useContext(AppContext)
@@ -159,41 +165,34 @@ const SyntheseStatistics = () => {
   const {isMobileDevice, selectedLocation} = useContext(AppContext)
   const {synthese} = useContext(SyntheseContext)
 
+  const [datasets, setDatasets] = useState([])
+
   const isDepartement = selectedLocation.split('-')[0] === 'DEP'
 
   const title = 'Répartition des départements selon leur couleur'
 
-  const indicateurVert = synthese.filter((({indicateurSynthese}) => indicateurSynthese === 'vert')).length
-  const indicateurOrange = synthese.filter((({indicateurSynthese}) => indicateurSynthese === 'orange')).length
-  const indicateurRouge = synthese.filter((({indicateurSynthese}) => indicateurSynthese === 'rouge')).length
+  useEffect(() => {
+    if (synthese) {
+      const indicateurs = countBy(synthese, 'indicateurSynthese')
 
-  const data = [
-    {
-      label: 'vert',
-      value: indicateurVert,
-      color: colors.green
-    },
-    {
-      label: 'orange',
-      value: indicateurOrange,
-      color: colors.orange
-    },
-    {
-      label: 'rouge',
-      value: indicateurRouge,
-      color: colors.red
+      const datasets = Object.keys(indicateurs).map(indicateur => {
+        return {
+          label: indicateur,
+          value: indicateurs[indicateur],
+          color: indicateurColors[indicateur]
+        }
+      })
+
+      setDatasets(datasets)
     }
-  ].filter(i => i.value > 0)
-
-  const pieColors = data.map(i => i.color)
+  }, [synthese])
 
   return (
     <div className='statistics-container'>
       {selectedLocation === 'FRA' ? (
         <PieChartValues
           title={title}
-          data={data}
-          colors={pieColors}
+          data={datasets}
           height={isMobileDevice ? 200 : 130} />
       ) : (
         <>
