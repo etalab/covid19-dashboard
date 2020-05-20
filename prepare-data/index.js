@@ -88,18 +88,21 @@ async function loadPrelevements(file) {
   )
 
   const rows = inputRows.map(row => {
-    const {rs, adresse, longitude, latitude, horaire} = row
+    const {ID, rs, longitude, latitude} = row
     return {
       type: 'Feature',
+      id: ID,
       properties: {
+        ...row,
+        id: ID,
         name: rs,
-        adresse,
         complementAdresse: row.cpl_loc,
-        modePrelevement: row.mod_prel,
+        modePrelevement: row.mod_prel.split('/'),
         capacitePrelevement: row.capa_prel,
-        horaire,
         audience: row.public,
-        rdv: row.check_rdv,
+        isPublic: row.public.includes('Tout public'),
+        appointment: row.check_rdv,
+        appointmentOnly: row.check_rdv === 'Sur rendez-vous uniquement',
         tel: row.tel_rdv,
         mail: row.web_rdv
       },

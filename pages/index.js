@@ -14,6 +14,7 @@ import BigPicture from '../components/layouts/big-picture'
 import CovidTests from '../components/layouts/covid-tests'
 import Transfert from '../components/layouts/transfert'
 import Synthese from '../components/layouts/synthese'
+import Prelevements from '../components/layouts/prelevements'
 import Entreprises from '../components/layouts/entreprises'
 
 export const AppContext = React.createContext()
@@ -45,6 +46,12 @@ const LAYOUTS = [
     name: 'activite-epidemique',
     label: 'Carte synthèse',
     component: <Synthese />
+  },
+  {
+    id: 'prelevements',
+    name: 'sites-prelevements',
+    label: 'Sites de prélèvements',
+    component: <Prelevements />
   },
   {
     id: 'entreprises',

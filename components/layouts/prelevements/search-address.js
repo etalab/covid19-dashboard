@@ -1,5 +1,4 @@
-import React, {useState, useCallback, useEffect} from 'react'
-import PropTypes from 'prop-types'
+import React, {useState, useCallback, useEffect, useContext} from 'react'
 import {debounce} from 'lodash'
 
 import {searchAddress} from '../../../lib/api-addresses'
@@ -7,14 +6,18 @@ import {searchAddress} from '../../../lib/api-addresses'
 import SearchInput from '../../search-input'
 import renderAddok from '../../search-input/render-addok'
 
-const SearchAddress = ({selectAddress}) => {
+import {PrelevementsContext} from '.'
+
+const SearchAddress = () => {
+  const {setAddress} = useContext(PrelevementsContext)
+
   const [input, setInput] = useState('')
   const [results, setResults] = useState([])
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState(null)
 
   const handleSelect = feature => {
-    selectAddress(feature)
+    setAddress(feature)
   }
 
   const handleSearch = useCallback(debounce(async input => {
@@ -44,7 +47,7 @@ const SearchAddress = ({selectAddress}) => {
       <SearchInput
         value={input}
         results={results}
-        loading={loading}
+        isLoading={loading}
         placeholder='Recherchez une adresse'
         onSelect={handleSelect}
         onSearch={setInput}
@@ -68,10 +71,6 @@ const SearchAddress = ({selectAddress}) => {
       `}</style>
     </div>
   )
-}
-
-SearchAddress.propTypes = {
-  selectAddress: PropTypes.func
 }
 
 export default SearchAddress

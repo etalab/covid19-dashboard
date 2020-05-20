@@ -15,6 +15,7 @@ module.exports = {
       '/suivi-des-tests': {page: '/', query: {layout: 'tests'}},
       '/transferts-de-patients': {page: '/', query: {layout: 'transfert'}},
       '/activite-epidemique': {page: '/', query: {layout: 'synthese'}},
+      '/sites-prelevements': {page: '/', query: {layout: 'prelevements'}},
       '/aides-entreprises': {page: '/', query: {layout: 'entreprises'}}
     }
   }

@@ -1,7 +1,6 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 
-import theme from '../styles/theme'
 import colors from '../styles/colors'
 
 const Loader = ({size}) => (
@@ -14,7 +13,7 @@ const Loader = ({size}) => (
 
       .small {
         border: 2px solid ${colors.white};
-        border-top: 2px solid ${theme.primary};
+        border-top: 2px solid ${colors.blue};
         width: 20px;
         min-width: 20px;
         height: 20px;
@@ -22,7 +21,7 @@ const Loader = ({size}) => (
 
       .regular {
         border: 4px solid ${colors.white};
-        border-top: 4px solid ${theme.primary};
+        border-top: 4px solid ${colors.blue};
         width: 40px;
         height: 40px;
       }
@@ -30,7 +29,7 @@ const Loader = ({size}) => (
 
       .big {
         border: 5px solid ${colors.white};
-        border-top: 5px solid ${theme.primary};
+        border-top: 5px solid ${colors.blue};
         width: 60px;
         height: 60px;
       }
