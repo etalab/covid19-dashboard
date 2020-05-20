@@ -64,10 +64,7 @@ const charts = {
       metricName: 'gueris',
       color: 'green'
     }
-  }
-}
-
-const ehpadCharts = {
+  },
   casEhpad: {
     name: 'Cas total',
     type: 'indicateur',
@@ -97,9 +94,7 @@ const ehpadCharts = {
   }
 }
 
-const mixedCharts = {...charts, ...ehpadCharts}
-
-function getChart(charts, chartName, showVariations) {
+function getChart(chartName, showVariations) {
   if (charts[chartName].chart) {
     return charts[chartName].chart
   }
@@ -136,10 +131,10 @@ const BigPictureStatistics = () => {
   const [selectedChart, setSelectedChart] = useState('mixed')
   const [showVariations, setShowVariations] = useState(false)
 
-  const toggleable = mixedCharts[selectedChart].type === 'indicateur'
+  const toggleable = charts[selectedChart].type === 'indicateur'
 
-  const Chart = getChart({...charts, ...ehpadCharts}, selectedChart, showVariations)
-  const chartOptions = mixedCharts[selectedChart].options || {}
+  const Chart = getChart(selectedChart, showVariations)
+  const chartOptions = charts[selectedChart].options || {}
 
   return (
     <>
@@ -158,35 +153,8 @@ const BigPictureStatistics = () => {
       {report && report.history && (
         <>
           {toggleable && <a className='toggle' onClick={() => setShowVariations(!showVariations)}>{showVariations ? 'Afficher les valeurs cumulées' : 'Afficher les variations quotidiennes'}</a>}
-
           <div className='chart-container'>
             <Chart reports={report.history.filter(r => date >= r.date)} {...chartOptions} />
-
-            <div className='charts-list'>
-              {Object.keys(charts).map(chart => (
-                <div key={chart} className='button-container'>
-                  <div
-                    className={`chart-name ${chart === selectedChart ? 'selected' : ''}`}
-                    onClick={() => setSelectedChart(chart)}
-                  >
-                    {charts[chart].name}
-                  </div>
-                </div>
-              ))}
-            </div>
-            <h3 className='ehpad-title'>EHPAD et EMS</h3>
-            <div className='charts-list'>
-              {Object.keys(ehpadCharts).map(chart => (
-                <div key={chart} className='button-container'>
-                  <div
-                    className={`chart-name ${chart === selectedChart ? 'selected' : ''}`}
-                    onClick={() => setSelectedChart(chart)}
-                  >
-                    {ehpadCharts[chart].name}
-                  </div>
-                </div>
-              ))}
-            </div>
           </div>
         </>
       )}
@@ -216,12 +184,6 @@ const BigPictureStatistics = () => {
           font-size: larger;
         }
 
-        .close {
-          position: absolute;
-          top: 0;
-          right: 0.5em;
-        }
-
         .back span {
           margin: 0 0.5em;
         }
@@ -235,62 +197,11 @@ const BigPictureStatistics = () => {
           margin: ${isMobileDevice ? '0 0.2em' : '0 1em'};
         }
 
-        .charts-list {
-          display: grid;
-          grid-template-columns: repeat(auto-fit, minmax(170px, 1fr));
-          grid-gap: 0.2em;
-          margin: 0.3em;
-          background: #FFF;
-        }
-
-        .chart-name {
-          display: block;
-          font-weight: bold;
-          height: 100%;
-          text-align: center;
-          background-color: ${colors.white};
-          color: ${colors.darkBlue};
-          padding: 0.4em;
-          font-size: .7em;
-          letter-spacing: .1em;
-          border: 1px solid ${colors.darkBlue};
-          text-transform: uppercase;
-          transform: translate(-.1em, -.1em);
-          transition: transform .1s ease-out;
-        }
-
-        .chart-name:hover {
-          cursor: pointer;
-          color: ${colors.white};
-          background-color: ${colors.darkBlue};
-          transform: translate(0px, 0px);
-        }
-
-        .chart-name.selected {
-          color: #FFF;
-          background-color: ${colors.darkBlue};
-        }
-
-        .button-container {
-          background-color: ${colors.white};
-          border-bottom: 1px solid ${colors.darkBlue};
-          border-right: 1px solid ${colors.darkBlue};
-          margin: .3em;
-        }
-
-        .button-container.selected {
-          background-color: red;
-        }
-
         .toggle {
           padding: 2px 20px;
           text-align: right;
           font-size: 0.8em;
           cursor: pointer;
-        }
-
-        .ehpad-title {
-          text-align: center;
         }
         `}</style>
     </>
