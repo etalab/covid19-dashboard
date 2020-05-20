@@ -1,5 +1,6 @@
 import React, {useState, useContext, useEffect} from 'react'
 import {FileText, Map, BarChart2} from 'react-feather'
+import {keyBy} from 'lodash'
 
 import theme from '../../../styles/theme'
 import colors from '../../../styles/colors'
@@ -152,6 +153,16 @@ const CovidTests = props => {
       setForcedDate(null)
     }
   }, [date, selectedLocation, setForcedDate])
+
+  useEffect(() => {
+    const mapProperties = keyBy(CovidTestsMaps, 'property')
+
+    if (mapProperties[selectedStat]) {
+      setSelectedMapId(mapProperties[selectedStat].name)
+    } else if (selectedStat === 'mixed') {
+      setSelectedMapId(mapProperties.testsPositifs.name)
+    }
+  }, [selectedStat])
 
   return (
     <CovidTestsContext.Provider value={{selectedMapId, setSelectedMapId, selectedStat, setSelectedStat}}>

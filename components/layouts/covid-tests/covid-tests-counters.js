@@ -1,31 +1,17 @@
 import React, {useContext} from 'react'
 import PropTypes from 'prop-types'
-import {keyBy} from 'lodash'
 
 import Counter from '../../counter'
 
 import colors from '../../../styles/colors'
 
-import map from './covid-tests-maps'
-
 import {CovidTestsContext} from '.'
 
 const CovidTestsCounters = ({testsPositifs, testsRealises}) => {
-  const {setSelectedMapId, selectedStat, setSelectedStat} = useContext(CovidTestsContext)
-
-  const mapProperties = keyBy(map, 'property')
+  const {selectedStat, setSelectedStat} = useContext(CovidTestsContext)
 
   const handleClick = chartName => {
-    if (chartName === selectedStat) {
-      setSelectedStat('mixed')
-      setSelectedMapId(mapProperties.testsPositifs.name)
-    } else {
-      setSelectedStat(chartName)
-
-      if (mapProperties[chartName]) {
-        setSelectedMapId(mapProperties[chartName].name)
-      }
-    }
+    setSelectedStat(chartName === selectedStat ? 'mixed' : chartName)
   }
 
   return (
