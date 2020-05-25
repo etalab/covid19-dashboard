@@ -95,12 +95,14 @@ const charts = {
 }
 
 function getChart(chartName, showVariations) {
-  if (charts[chartName].chart) {
-    return charts[chartName].chart
-  }
+  if (chartName) {
+    if (charts[chartName].chart) {
+      return charts[chartName].chart
+    }
 
-  if (charts[chartName].type === 'indicateur') {
-    return showVariations ? IndicateurVariationChart : IndicateurCumulChart
+    if (charts[chartName].type === 'indicateur') {
+      return showVariations ? IndicateurVariationChart : IndicateurCumulChart
+    }
   }
 }
 
@@ -128,13 +130,28 @@ const BigPictureStatistics = () => {
     }
   }, [report])
 
-  const {selectedStat} = useContext(BigPictureContext)
+  const {selectedStat, setSelectedStat} = useContext(BigPictureContext)
   const [showVariations, setShowVariations] = useState(false)
 
-  const toggleable = charts[selectedStat].type === 'indicateur'
-
   const Chart = getChart(selectedStat, showVariations)
-  const chartOptions = charts[selectedStat].options || {}
+
+  useEffect(() => {
+    setSelectedStat(selectedStat ? selectedStat : 'mixed')
+  }, [selectedStat, setSelectedStat])
+
+  const toggleable = chartName => {
+    if (chartName) {
+      return charts[selectedStat].type === 'indicateur'
+    }
+
+    return false
+  }
+
+  const chartOptions = chartName => {
+    if (chartName) {
+      return charts[selectedStat].options || {}
+    }
+  }
 
   return (
     <>
@@ -148,11 +165,11 @@ const BigPictureStatistics = () => {
       {report && (
         <Counters report={report} previousReport={previousReport} />
       )}
-      {report && report.history && (
+      {report && report.history && selectedStat && (
         <>
-          {toggleable && <a className='toggle' onClick={() => setShowVariations(!showVariations)}>{showVariations ? 'Afficher les valeurs cumulées' : 'Afficher les variations quotidiennes'}</a>}
+          {toggleable(selectedStat) && <a className='toggle' onClick={() => setShowVariations(!showVariations)}>{showVariations ? 'Afficher les valeurs cumulées' : 'Afficher les variations quotidiennes'}</a>}
           <div className='chart-container'>
-            <Chart reports={report.history.filter(r => date >= r.date)} {...chartOptions} />
+            <Chart reports={report.history.filter(r => date >= r.date)} {...chartOptions(selectedStat)} />
           </div>
         </>
       )}

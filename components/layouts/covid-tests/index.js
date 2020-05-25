@@ -131,7 +131,7 @@ const CovidTests = props => {
   const {date, setForcedDate, selectedLocation, isMobileDevice} = useContext(AppContext)
 
   const [selectedMapId, setSelectedMapId] = useState('Tests positifs en laboratoires de ville - ce jour')
-  const [selectedStat, setSelectedStat] = useState('mixed')
+  const [selectedStat, setSelectedStat] = useState(null)
 
   const Component = isMobileDevice ? MobileCovidTests : DesktopCovidTests
 

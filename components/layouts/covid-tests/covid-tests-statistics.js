@@ -44,28 +44,45 @@ const charts = {
 }
 
 function getChart(chartName, showVariations) {
-  if (charts[chartName].chart) {
-    return charts[chartName].chart
-  }
+  if (chartName) {
+    if (charts[chartName].chart) {
+      return charts[chartName].chart
+    }
 
-  if (charts[chartName].type === 'indicateur') {
-    return showVariations ? IndicateurVariationChart : IndicateurCumulChart
+    if (charts[chartName].type === 'indicateur') {
+      return showVariations ? IndicateurVariationChart : IndicateurCumulChart
+    }
   }
 }
 
 const CovidTestsStatistics = () => {
   const {date, forcedDate, selectedLocation, isMobileDevice} = useContext(AppContext)
-  const {selectedStat} = useContext(CovidTestsContext)
+  const {selectedStat, setSelectedStat} = useContext(CovidTestsContext)
   const selectedDate = date || forcedDate
 
   const [report, setReport] = useState(null)
   const [statistics, setStatistics] = useState(null)
   const [showVariations, setShowVariations] = useState(false)
 
-  const toggleable = charts[selectedStat].type === 'indicateur'
-
   const Chart = getChart(selectedStat, showVariations)
-  const chartOptions = charts[selectedStat].options || {}
+
+  useEffect(() => {
+    setSelectedStat(selectedStat ? selectedStat : 'mixed')
+  }, [selectedStat, setSelectedStat])
+
+  const toggleable = chartName => {
+    if (chartName) {
+      return charts[selectedStat].type === 'indicateur'
+    }
+
+    return false
+  }
+
+  const chartOptions = chartName => {
+    if (chartName) {
+      return charts[selectedStat].options || {}
+    }
+  }
 
   useEffect(() => {
     async function fetchReport() {
@@ -109,11 +126,11 @@ const CovidTestsStatistics = () => {
         <CovidTestsCounters testsPositifs={statistics.testsPositifs} testsRealises={statistics.testsRealises} />
       )}
       {statistics && <PieChartPercent data={statistics.pieChartData} labels={pieLabels} colors={pieColors} height={isMobileDevice ? 150 : 130} />}
-      {report && report.history && (
+      {report && report.history && selectedStat && (
         <>
-          {toggleable && <a className='toggle' onClick={() => setShowVariations(!showVariations)}>{showVariations ? 'Afficher les valeurs cumulées' : 'Afficher les variations quotidiennes'}</a>}
+          {toggleable(toggleable) && <a className='toggle' onClick={() => setShowVariations(!showVariations)}>{showVariations ? 'Afficher les valeurs cumulées' : 'Afficher les variations quotidiennes'}</a>}
           <div className='chart-container'>
-            <Chart reports={report.history.filter(r => selectedDate >= r.date)} {...chartOptions} />
+            <Chart reports={report.history.filter(r => selectedDate >= r.date)} {...chartOptions(selectedStat)} />
           </div>
         </>
       )}
