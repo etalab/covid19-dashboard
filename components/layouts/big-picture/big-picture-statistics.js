@@ -1,4 +1,4 @@
-import React, {useContext, useState, useEffect} from 'react'
+import React, {useContext, useState, useEffect, useCallback} from 'react'
 import {BarChart2} from 'react-feather'
 import Link from 'next/link'
 
@@ -136,22 +136,25 @@ const BigPictureStatistics = () => {
   const Chart = getChart(selectedStat, showVariations)
 
   useEffect(() => {
-    setSelectedStat(selectedStat ? selectedStat : 'mixed')
-  }, [selectedStat, setSelectedStat])
+    setSelectedStat('mixed')
+  }, [setSelectedStat])
 
-  const toggleable = chartName => {
+  const toggleable = useCallback(chartName => {
     if (chartName) {
       return charts[selectedStat].type === 'indicateur'
     }
 
     return false
-  }
+  }, [selectedStat])
 
-  const chartOptions = chartName => {
+  const chartOptions = useCallback(chartName => {
     if (chartName) {
       return charts[selectedStat].options || {}
     }
-  }
+  }, [selectedStat])
+
+  const isToggleable = toggleable(selectedStat)
+  const selectedChartOptions = chartOptions(selectedStat)
 
   return (
     <>
@@ -167,9 +170,9 @@ const BigPictureStatistics = () => {
       )}
       {report && report.history && selectedStat && (
         <>
-          {toggleable(selectedStat) && <a className='toggle' onClick={() => setShowVariations(!showVariations)}>{showVariations ? 'Afficher les valeurs cumulées' : 'Afficher les variations quotidiennes'}</a>}
+          {isToggleable && <a className='toggle' onClick={() => setShowVariations(!showVariations)}>{showVariations ? 'Afficher les valeurs cumulées' : 'Afficher les variations quotidiennes'}</a>}
           <div className='chart-container'>
-            <Chart reports={report.history.filter(r => date >= r.date)} {...chartOptions(selectedStat)} />
+            <Chart reports={report.history.filter(r => date >= r.date)} {...selectedChartOptions} />
           </div>
           {selectedStat !== 'mixed' &&
             <div className='mixed-chart-container'>
