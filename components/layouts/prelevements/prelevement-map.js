@@ -28,7 +28,7 @@ const PrelevementsMap = () => {
   const mapRef = useRef()
 
   const {isMobileDevice} = useContext(AppContext)
-  const {prelevementsSites, address, selectedPlace, hoveredPlace, setPlaces, setSelectedPlace} = useContext(PrelevementsContext)
+  const {prelevementsSites, address, selectedPlace, hoveredPlace, setPlaces, setSelectedPlace, setHoveredPlace} = useContext(PrelevementsContext)
 
   const defaultViewport = {
     latitude: 46.9,
@@ -79,17 +79,19 @@ const PrelevementsMap = () => {
     event.stopPropagation()
     const feature = event.features && event.features[0]
     const [longitude, latitude] = event.lngLat
-    let hoverInfo
 
     if (feature) {
-      hoverInfo = {
+      const place = prelevementsSites.features.find(({properties}) => properties.id === feature.properties.id)
+      setHoveredPlace(place.properties)
+      setHovered({
         longitude,
         latitude,
         feature
-      }
+      })
+    } else {
+      setHovered(null)
+      setHoveredPlace(null)
     }
-
-    setHovered(hoverInfo)
   }
 
   const onClick = event => {
