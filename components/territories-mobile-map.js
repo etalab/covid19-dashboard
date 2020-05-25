@@ -14,7 +14,7 @@ const SHOW_STATS_HEIGHT = 38
 const TerritoriesMobileMap = ({maps, context, children, disableClick}) => {
   const themeContext = useContext(ThemeContext)
   const {selectedLocation, setSelectedLocation} = useContext(AppContext)
-  const {selectedMapId, setSelectedMapId} = useContext(context)
+  const {selectedMapId, setSelectedMapId, setSelectedStat} = useContext(context)
 
   const [showStats, setShowStats] = useState(false)
   const [showDrom, setShowDrom] = useState(selectedLocation && droms.find(({code}) => selectedLocation === code))
@@ -36,7 +36,7 @@ const TerritoriesMobileMap = ({maps, context, children, disableClick}) => {
       </div>
       {maps.length > 1 && (
         <div className='map-selector clickable'>
-          <MapSelector selectedMapId={selectedMapId} maps={maps} selectMap={setSelectedMapId} />
+          <MapSelector selectedMapId={selectedMapId} maps={maps} selectMap={setSelectedMapId} selectStat={setSelectedStat} />
         </div>
       )}
       <div className='map-content'>

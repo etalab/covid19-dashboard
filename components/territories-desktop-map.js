@@ -9,7 +9,7 @@ import MapSelector from './map-selector'
 
 const TerritoriesDesktopMap = ({maps, context, disableClick}) => {
   const {selectedLocation} = useContext(AppContext)
-  const {selectedMapId, setSelectedMapId} = useContext(context)
+  const {selectedMapId, setSelectedMapId, setSelectedStat} = useContext(context)
 
   const selectedMap = maps.find(m => m.name === selectedMapId)
 
@@ -18,7 +18,7 @@ const TerritoriesDesktopMap = ({maps, context, disableClick}) => {
       <div className='metropole'>
         {maps.length > 1 && (
           <div className='map-selector'>
-            <MapSelector selectedMapId={selectedMapId} maps={maps} selectMap={setSelectedMapId} />
+            <MapSelector selectedMapId={selectedMapId} maps={maps} selectMap={setSelectedMapId} selectStat={setSelectedStat} />
           </div>
         )}
         <MapContext code={selectedLocation} map={selectedMap} disableFitbound={selectedMap.disableFitbound} disableClick={disableClick} />
