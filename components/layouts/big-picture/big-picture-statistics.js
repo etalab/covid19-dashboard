@@ -133,29 +133,26 @@ const BigPictureStatistics = () => {
 
   const {selectedStat, setSelectedStat} = useContext(BigPictureContext)
   const [showVariations, setShowVariations] = useState(false)
+  const stat = selectedStat || 'mixed'
 
-  const Chart = getChart(selectedStat, showVariations)
-
-  useEffect(() => {
-    setSelectedStat('mixed')
-  }, [setSelectedStat])
+  const Chart = getChart(stat, showVariations)
 
   const toggleable = useCallback(chartName => {
     if (chartName) {
-      return charts[selectedStat].type === 'indicateur'
+      return charts[stat].type === 'indicateur'
     }
 
     return false
-  }, [selectedStat])
+  }, [stat])
 
   const chartOptions = useCallback(chartName => {
     if (chartName) {
-      return charts[selectedStat].options || {}
+      return charts[stat].options || {}
     }
-  }, [selectedStat])
+  }, [stat])
 
-  const isToggleable = toggleable(selectedStat)
-  const selectedChartOptions = chartOptions(selectedStat)
+  const isToggleable = toggleable(stat)
+  const selectedChartOptions = chartOptions(stat)
 
   return (
     <>
@@ -169,13 +166,13 @@ const BigPictureStatistics = () => {
       {report && (
         <Counters report={report} previousReport={previousReport} />
       )}
-      {report && report.history && selectedStat && (
+      {report && report.history && stat && (
         <>
           {isToggleable && <a className='toggle' onClick={() => setShowVariations(!showVariations)}>{showVariations ? 'Afficher les valeurs cumulées' : 'Afficher les variations quotidiennes'}</a>}
           <div className='chart-container'>
             <Chart reports={report.history.filter(r => date >= r.date)} {...selectedChartOptions} />
           </div>
-          {selectedStat !== 'mixed' &&
+          {stat !== 'mixed' &&
             <Button title='Afficher le cumul' onClick={() => setSelectedStat('mixed')} isMobileDevice={isMobileDevice} />}
         </>
       )}

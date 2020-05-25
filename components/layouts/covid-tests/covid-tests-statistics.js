@@ -60,33 +60,30 @@ const CovidTestsStatistics = () => {
   const {date, forcedDate, selectedLocation, isMobileDevice} = useContext(AppContext)
   const {selectedStat, setSelectedStat} = useContext(CovidTestsContext)
   const selectedDate = date || forcedDate
+  const stat = selectedStat || 'mixed'
 
   const [report, setReport] = useState(null)
   const [statistics, setStatistics] = useState(null)
   const [showVariations, setShowVariations] = useState(false)
 
-  const Chart = getChart(selectedStat, showVariations)
-
-  useEffect(() => {
-    setSelectedStat('mixed')
-  }, [setSelectedStat])
+  const Chart = getChart(stat, showVariations)
 
   const toggleable = useCallback(chartName => {
     if (chartName) {
-      return charts[selectedStat].type === 'indicateur'
+      return charts[stat].type === 'indicateur'
     }
 
     return false
-  }, [selectedStat])
+  }, [stat])
 
   const chartOptions = useCallback(chartName => {
     if (chartName) {
-      return charts[selectedStat].options || {}
+      return charts[stat].options || {}
     }
-  }, [selectedStat])
+  }, [stat])
 
-  const isToggleable = toggleable(selectedStat)
-  const selectedChartOptions = chartOptions(selectedStat)
+  const isToggleable = toggleable(stat)
+  const selectedChartOptions = chartOptions(stat)
 
   useEffect(() => {
     async function fetchReport() {
@@ -130,13 +127,13 @@ const CovidTestsStatistics = () => {
         <CovidTestsCounters testsPositifs={statistics.testsPositifs} testsRealises={statistics.testsRealises} />
       )}
       {statistics && <PieChartPercent data={statistics.pieChartData} labels={pieLabels} colors={pieColors} height={isMobileDevice ? 150 : 130} />}
-      {report && report.history && selectedStat && (
+      {report && report.history && stat && (
         <>
           {isToggleable && <a className='toggle' onClick={() => setShowVariations(!showVariations)}>{showVariations ? 'Afficher les valeurs cumulées' : 'Afficher les variations quotidiennes'}</a>}
           <div className='chart-container'>
             <Chart reports={report.history.filter(r => selectedDate >= r.date)} {...selectedChartOptions} />
           </div>
-          {selectedStat !== 'mixed' &&
+          {stat !== 'mixed' &&
             <Button title='Afficher le cumul' onClick={() => setSelectedStat('mixed')} isMobileDevice={isMobileDevice} />}
         </>
       )}
