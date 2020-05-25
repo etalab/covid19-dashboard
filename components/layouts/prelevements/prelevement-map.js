@@ -8,12 +8,6 @@ import {AppContext} from '../../../pages'
 import PlaceSumup from './place-sumup'
 import {PrelevementsContext} from '.'
 
-const defaultViewport = {
-  latitude: 46.9,
-  longitude: 1.7,
-  zoom: 5
-}
-
 const zoomLevel = {
   housenumber: 18,
   street: 16,
@@ -35,6 +29,12 @@ const PrelevementsMap = () => {
 
   const {isMobileDevice} = useContext(AppContext)
   const {prelevementsSites, address, selectedPlace, hoveredPlace, setPlaces, setSelectedPlace} = useContext(PrelevementsContext)
+
+  const defaultViewport = {
+    latitude: 46.9,
+    longitude: 1.7,
+    zoom: isMobileDevice ? 4 : 5
+  }
 
   const [viewport, setViewport] = useState(defaultViewport)
   const [hovered, setHovered] = useState(null)

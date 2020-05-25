@@ -163,6 +163,11 @@ const Place = ({place, isSelected, isHovered}) => {
   )
 }
 
+Place.defaultProps = {
+  isSelected: false,
+  isHovered: false
+}
+
 Place.propTypes = {
   place: PropTypes.shape({
     id: PropTypes.string.isRequired,
@@ -177,8 +182,8 @@ Place.propTypes = {
     tel: PropTypes.string,
     mail: PropTypes.string
   }).isRequired,
-  isSelected: PropTypes.bool.isRequired,
-  isHovered: PropTypes.bool.isRequired
+  isSelected: PropTypes.bool,
+  isHovered: PropTypes.bool
 }
 
 export default Place

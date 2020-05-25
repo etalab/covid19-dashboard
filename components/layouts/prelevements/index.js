@@ -1,4 +1,5 @@
 import React, {useState, useEffect, useContext} from 'react'
+import {X} from 'react-feather'
 
 import prelevementsSites from '../../../public/data/prelevements.json'
 
@@ -12,17 +13,62 @@ import Scrollable from '../../scrollable'
 import PrelevementsMap from './prelevement-map'
 import SearchAddress from './search-address'
 import PlacesList from './places-list'
+import Place from './place'
 
 export const PrelevementsContext = React.createContext()
 
 const MobilePrelevements = () => {
+  const {selectedPlace, setSelectedPlace} = useContext(PrelevementsContext)
   return (
     <>
-      <SearchAddress />
-      <PrelevementsMap />
+      <div className='search-bar'>
+        <SearchAddress />
+      </div>
+
+      <div className='map-container'>
+        <Scrollable>
+
+          <PrelevementsMap />
+
+          <div className={`place ${selectedPlace ? 'show' : 'hide'}`}>
+            {selectedPlace && (
+              <>
+                <div className='close'><X onClick={() => setSelectedPlace(null)} /></div>
+                <Place place={selectedPlace} isSelected />
+              </>
+            )}
+          </div>
+        </Scrollable>
+      </div>
 
       <style jsx>{`
+        .search-bar {
+          width: 100%;
+        }
 
+        .map-container {
+          display: flex;
+          height: 100%;
+          flex-direction: column;
+        }
+
+        .place {
+          position: relative;
+          transition: 0.5s;
+        }
+
+        .show {
+          height: 100%;
+        }
+
+        .hide {
+          height: 0;
+        }
+
+        .close {
+          position: absolute;
+          right: 0;
+        }
       `}</style>
     </>
   )

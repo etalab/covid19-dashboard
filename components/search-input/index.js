@@ -141,29 +141,18 @@ class SearchInput extends React.Component {
     const {value, results, renderItem, getItemValue, wrapperStyle} = this.props
 
     return (
-      <div className='wrap'>
-        <Autocomplete
-          inputProps={{onFocus: this.onFocus}}
-          value={value}
-          wrapperStyle={wrapperStyle}
-          items={results}
-          getItemValue={getItemValue}
-          isItemSelectable={item => !item.header}
-          onSelect={this.handleSelect}
-          onChange={this.handleSearch}
-          renderItem={renderItem}
-          renderInput={this.renderInput}
-          renderMenu={this.renderMenu} />
-
-        <style jsx>{`
-          @media (max-width: 550px) {
-            .wrap {
-              width: 100%;
-              top: 98px;
-            }
-          }
-          `}</style>
-      </div>
+      <Autocomplete
+        inputProps={{onFocus: this.onFocus}}
+        value={value}
+        wrapperStyle={wrapperStyle}
+        items={results}
+        getItemValue={getItemValue}
+        isItemSelectable={item => !item.header}
+        onSelect={this.handleSelect}
+        onChange={this.handleSearch}
+        renderItem={renderItem}
+        renderInput={this.renderInput}
+        renderMenu={this.renderMenu} />
     )
   }
 }
