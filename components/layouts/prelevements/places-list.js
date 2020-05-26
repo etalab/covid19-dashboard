@@ -50,10 +50,10 @@ const PlacesList = () => {
 
       <style jsx>{`
         .places-list-container {
+          padding: 0.5em;
           display: grid;
           grid-row-gap: 1em;
           margin: 1em 0;
-          width: 99%;
         }
 
         .counters {

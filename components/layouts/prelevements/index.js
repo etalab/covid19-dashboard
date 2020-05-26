@@ -1,73 +1,87 @@
 import React, {useState, useEffect, useContext} from 'react'
-import {X} from 'react-feather'
+import {FileText, Map, List} from 'react-feather'
 
 import prelevementsSites from '../../../public/data/prelevements.json'
 
 import theme from '../../../styles/theme'
 import colors from '../../../styles/colors'
 
-import {AppContext} from '../../../pages'
+import {AppContext, ThemeContext} from '../../../pages'
 
 import Scrollable from '../../scrollable'
 
 import PrelevementsMap from './prelevement-map'
+import PrelevementsInformations from './prelevements-informations'
 import SearchAddress from './search-address'
 import PlacesList from './places-list'
-import Place from './place'
+import PrelevementsMobileMap from './prelevements-mobile-map'
 
 export const PrelevementsContext = React.createContext()
 
 const MobilePrelevements = () => {
-  const {selectedPlace, setSelectedPlace} = useContext(PrelevementsContext)
+  const [selectedView, setSelectedView] = useState('map')
+
+  const app = useContext(AppContext)
+  const theme = useContext(ThemeContext)
+
+  const views = {
+    map: (
+      <PrelevementsMobileMap />
+    ),
+    stats: (
+      <Scrollable>
+        <PlacesList />
+      </Scrollable>
+    ),
+    informations: (
+      <Scrollable>
+        <PrelevementsInformations />
+      </Scrollable>
+    )
+  }
+
+  const handleClick = view => {
+    app.setSelectedLocation('FRA')
+    setSelectedView(view)
+  }
+
   return (
     <>
-      <div className='search-bar'>
-        <SearchAddress />
-      </div>
+      <Scrollable>
+        {views[selectedView]}
+      </Scrollable>
 
-      <div className='map-container'>
-        <Scrollable>
-
-          <PrelevementsMap />
-
-          <div className={`place ${selectedPlace ? 'show' : 'hide'}`}>
-            {selectedPlace && (
-              <>
-                <div className='close'><X onClick={() => setSelectedPlace(null)} /></div>
-                <Place place={selectedPlace} isSelected />
-              </>
-            )}
-          </div>
-        </Scrollable>
+      <div className='view-selector'>
+        <div className={`${selectedView === 'stats' ? 'selected' : ''}`} onClick={() => handleClick('stats')}>
+          <List size={32} color={selectedView === 'stats' ? theme.primary : colors.black} />
+        </div>
+        <div className={`${selectedView === 'map' ? 'selected' : ''}`} onClick={() => handleClick('map')}>
+          <Map size={32} color={selectedView === 'map' ? theme.primary : colors.black} />
+        </div>
+        <div className={`${selectedView === 'informations' ? 'selected' : ''}`} onClick={() => handleClick('informations')}>
+          <FileText size={32} color={selectedView === 'informations' ? theme.primary : colors.black} />
+        </div>
       </div>
 
       <style jsx>{`
-        .search-bar {
-          width: 100%;
+        .view-selector {
+          z-index: 1;
+          display: grid;
+          grid-template-columns: 1fr 1fr 1fr;
+          justify-content: center;
+          align-items: center;
+          background-color: #fff;
+          box-shadow: 0 -1px 4px ${colors.lightGrey};
         }
 
-        .map-container {
-          display: flex;
-          height: 100%;
-          flex-direction: column;
+        .view-selector > div {
+          padding: 0.5em;
+          margin: auto;
+          margin-bottom: -4px;
         }
 
-        .place {
-          position: relative;
-          transition: 0.5s;
-        }
-
-        .show {
-          height: 100%;
-        }
-
-        .hide {
-          height: 0;
-        }
-
-        .close {
-          position: absolute;
-          right: 0;
+        .view-selector > div.selected {
+          border-top: 4px solid ${theme.primary};
         }
       `}</style>
     </>
@@ -79,8 +93,11 @@ const DesktopPrelevements = () => {
     <>
       <div className='menu'>
         <Scrollable>
-          <SearchAddress />
-          <PlacesList />
+          <div style={{padding: '1em'}}>
+            <SearchAddress />
+            <PlacesList />
+          </div>
+          <PrelevementsInformations />
         </Scrollable>
       </div>
 
@@ -96,7 +113,6 @@ const DesktopPrelevements = () => {
           max-width: ${theme.menuWidth};
           box-shadow: 0 1px 4px ${colors.lightGrey};
           width: 100%;
-          padding: 1em;
         }
 
         .map {
