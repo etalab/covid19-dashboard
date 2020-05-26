@@ -1,5 +1,6 @@
 import React, {useState, useContext, useEffect} from 'react'
 import {FileText, Map, BarChart2} from 'react-feather'
+import {keyBy} from 'lodash'
 
 import theme from '../../../styles/theme'
 import colors from '../../../styles/colors'
@@ -130,6 +131,7 @@ const CovidTests = props => {
   const {date, setForcedDate, selectedLocation, isMobileDevice} = useContext(AppContext)
 
   const [selectedMapId, setSelectedMapId] = useState('Tests positifs en laboratoires de ville - ce jour')
+  const [selectedStat, setSelectedStat] = useState(null)
 
   const Component = isMobileDevice ? MobileCovidTests : DesktopCovidTests
 
@@ -152,8 +154,18 @@ const CovidTests = props => {
     }
   }, [date, selectedLocation, setForcedDate])
 
+  useEffect(() => {
+    const mapProperties = keyBy(CovidTestsMaps, 'property')
+
+    if (mapProperties[selectedStat]) {
+      setSelectedMapId(mapProperties[selectedStat].name)
+    } else if (selectedStat === 'mixed') {
+      setSelectedMapId(mapProperties.testsPositifs.name)
+    }
+  }, [selectedStat])
+
   return (
-    <CovidTestsContext.Provider value={{selectedMapId, setSelectedMapId}}>
+    <CovidTestsContext.Provider value={{selectedMapId, setSelectedMapId, selectedStat, setSelectedStat}}>
       <Component {...props} />
     </CovidTestsContext.Provider>
   )

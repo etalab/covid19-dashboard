@@ -1,17 +1,39 @@
-import React from 'react'
+import React, {useContext} from 'react'
 import PropTypes from 'prop-types'
 
 import Counter from '../../counter'
 
 import colors from '../../../styles/colors'
 
+import {CovidTestsContext} from '.'
+
 const CovidTestsCounters = ({testsPositifs, testsRealises}) => {
+  const {selectedStat, setSelectedStat} = useContext(CovidTestsContext)
+
+  const handleClick = chartName => {
+    setSelectedStat(chartName === selectedStat ? 'mixed' : chartName)
+  }
+
   return (
     <div className='stats'>
       <div className='title'>Tests PCR en laboratoires de ville</div>
       <div className='counters'>
-        <Counter value={testsRealises} label='Tests réalisés' details='Nombre total de tests pour recherche de SARS-COV-2 ' color='darkGrey' />
-        <Counter value={testsPositifs} label='Tests positifs' details='Nombre total de tests positifs pour recherche de SARS-COV-2 à ce jour' color='red' />
+        <Counter
+          isSelected={selectedStat === 'testsRealises'}
+          onClick={() => handleClick('testsRealises')}
+          value={testsRealises}
+          label='Tests réalisés'
+          details='Nombre total de tests pour recherche de SARS-COV-2'
+          color='darkGrey'
+        />
+        <Counter
+          isSelected={selectedStat === 'testsPositifs'}
+          onClick={() => handleClick('testsPositifs')}
+          value={testsPositifs}
+          label='Tests positifs'
+          details='Nombre total de tests positifs pour recherche de SARS-COV-2 à ce jour'
+          color='red'
+        />
       </div>
 
       <style jsx>{`

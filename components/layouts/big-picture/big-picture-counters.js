@@ -1,12 +1,15 @@
-import React from 'react'
+import React, {useContext} from 'react'
 import PropTypes from 'prop-types'
 
 import colors from '../../../styles/colors'
 
 import Counter from '../../counter'
 
+import {BigPictureContext} from '.'
+
 const Counters = props => {
-  const {casConfirmes, hospitalises, reanimation, deces, decesEhpad, gueris, casEhpad, casConfirmesEhpad} = props.report || {}
+  const {casConfirmes, deces, decesEhpad} = props.report || {}
+  const {selectedStat, setSelectedStat} = useContext(BigPictureContext)
 
   const totalDeces = (deces || 0) + (decesEhpad || 0)
   const previousReport = props.previousReport || {}
@@ -23,24 +26,105 @@ const Counters = props => {
     casEhpad: 'Nombre total de cas en EHPAD et EMS'
   }
 
+  const hospitalCountersList = [
+    {
+      name: 'hospitalises',
+      label: 'hospitalisations',
+      color: 'darkGrey'
+    },
+    {
+      name: 'gueris',
+      label: 'retours à domicile',
+      color: 'green'
+    },
+    {
+      name: 'reanimation',
+      label: 'en réanimation',
+      color: 'darkerGrey'
+    },
+    {
+      name: 'deces',
+      label: 'décès à l’hôpital',
+      color: 'red'
+    }
+  ]
+
+  const ehpadCountersList = [
+    {
+      name: 'casEhpad',
+      label: 'cas total en EHPAD et EMS',
+      color: 'orange'
+    },
+    {
+      name: 'casConfirmesEhpad',
+      label: 'cas confirmés en EHPAD et EMS',
+      color: 'darkOrange'
+    },
+    {
+      name: 'decesEhpad',
+      label: 'décès en EHPAD et EMS',
+      color: 'darkRed'
+    }
+  ]
+
+  const handleClick = chartName => {
+    setSelectedStat(chartName === selectedStat ? 'mixed' : chartName)
+  }
+
   return (
     <div className='stats'>
       <div className='counters'>
-        {casConfirmes && <Counter value={casConfirmes} previousValue={previousReport.casConfirmes} label='cas confirmés' details={details.casConfirmes} color='orange' isBig />}
-        {decesEhpad && <Counter value={totalDeces} previousValue={previousTotalDeces} label='cumul des décès' details='Cumul des décés' color='red' isBig />}
+        {casConfirmes && <Counter
+          isSelected={selectedStat === 'confirmed'}
+          onClick={() => handleClick('confirmed')}
+          value={casConfirmes}
+          previousValue={previousReport.casConfirmes}
+          label='cas confirmés'
+          details={details.casConfirmes}
+          color='orange'
+          isBig
+        />}
+        {decesEhpad && <Counter
+          isSelected={selectedStat === 'deces'}
+          onClick={() => handleClick('deces')}
+          value={totalDeces}
+          previousValue={previousTotalDeces}
+          label='cumul des décès'
+          details='Cumul des décés'
+          color='red'
+          isBig
+        />}
       </div>
       <div className='title'>Données hospitalières</div>
       <div className='counters'>
-        <Counter value={hospitalises} previousValue={previousReport.hospitalises} label='hospitalisations' details={details.hospitalises} color='darkGrey' />
-        <Counter value={gueris} previousValue={previousReport.gueris} label='retours à domicile' details={details.gueris} color='green' />
-        <Counter value={reanimation} previousValue={previousReport.reanimation} label='en réanimation' details={details.reanimation} color='darkerGrey' />
-        <Counter value={deces} previousValue={previousReport.deces} label='décès à l’hôpital' details={details.deces} color='red' />
+        {hospitalCountersList.map(counter => (
+          <Counter
+            key={counter.name}
+            isSelected={selectedStat === counter.name}
+            onClick={() => handleClick(counter.name)}
+            value={props.report[counter.name]}
+            previousValue={previousReport[counter.name]}
+            label={counter.label}
+            details={details[counter.name]}
+            color={counter.color}
+          />
+        ))}
       </div>
       <div className='title'>Données EHPAD et EMS</div>
-      {decesEhpad && <div className='counters'>
-        <Counter value={casEhpad} previousValue={previousReport.casEhpad} label='cas total en EHPAD et EMS' details={details.casEhpad} color='orange' />
-        <Counter value={casConfirmesEhpad} previousValue={previousReport.casConfirmesEhpad} label='cas confirmés en EHPAD et EMS' details={details.casConfirmesEhpad} color='darkOrange' />
-        <Counter value={decesEhpad} previousValue={previousReport.decesEhpad} label='décès en EHPAD et EMS' details={details.decesEhpad} color='darkRed' />
+      {decesEhpad &&
+      <div className='counters'>
+        {ehpadCountersList.map(counter => (
+          <Counter
+            key={counter.name}
+            isSelected={selectedStat === counter.name}
+            onClick={() => handleClick(counter.name)}
+            value={props.report[counter.name]}
+            previousValue={previousReport[counter.name]}
+            label={counter.label}
+            details={details[counter.name]}
+            color={counter.color}
+          />
+        ))}
       </div>}
 
       <style jsx>{`

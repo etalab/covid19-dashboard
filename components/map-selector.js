@@ -4,15 +4,17 @@ import {ChevronDown, ChevronUp, Check} from 'react-feather'
 
 import colors from '../styles/colors'
 
-const MapSelector = ({selectedMapId, maps, selectMap}) => {
+const MapSelector = ({selectedMapId, maps, selectMap, selectStat}) => {
   const selectedMap = maps.find(m => m.name === selectedMapId)
 
   const [isOpen, setIsOpen] = useState(false)
 
-  const handleMap = useCallback(mapId => {
-    selectMap(mapId)
+  const handleMap = useCallback(map => {
+    const {name, property} = map
+    selectStat(property)
+    selectMap(name)
     setIsOpen(false)
-  }, [selectMap])
+  }, [selectMap, selectStat])
 
   return (
     <div className='switch'>
@@ -25,7 +27,7 @@ const MapSelector = ({selectedMapId, maps, selectMap}) => {
             <div
               key={map.name}
               className={`menu-item ${selectedMapId === map.name ? 'selected' : ''}`}
-              onClick={() => handleMap(map.name)}
+              onClick={() => handleMap(map)}
             >
               <span>{map.name}</span> {map.name === selectedMapId && <Check />}
             </div>
@@ -87,7 +89,8 @@ const MapSelector = ({selectedMapId, maps, selectMap}) => {
 MapSelector.propTypes = {
   selectedMapId: PropTypes.string.isRequired,
   maps: PropTypes.array.isRequired,
-  selectMap: PropTypes.func.isRequired
+  selectMap: PropTypes.func.isRequired,
+  selectStat: PropTypes.func.isRequired
 }
 
 export default MapSelector
