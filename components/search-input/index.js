@@ -122,16 +122,6 @@ class SearchInput extends React.Component {
           .hidden {
             display: none;
           }
-
-          @media (max-width: 399px) {
-            .menu {
-              width: calc(100% - 40px);
-            }
-
-            .fullscreen {
-              width: 100%;
-            }
-          }
         `}</style>
       </div>
     )
