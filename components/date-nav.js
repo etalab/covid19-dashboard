@@ -69,7 +69,7 @@ const DateNav = ({disabled}) => {
           }
         }
 
-        @media (max-width: 980px) {
+        @media (max-width: 1320px) {
           .menu-header {
             font-size: small;
           }
