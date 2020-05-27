@@ -20,6 +20,7 @@ export const AppContext = React.createContext()
 export const ThemeContext = React.createContext('theme.default')
 
 const MOBILE_WIDTH = Number.parseInt(theme.mobileDisplay.split('px')[0], 10)
+const TABLET_WIDTH = Number.parseInt(theme.tabletDisplay.split('px')[0], 10)
 
 const LAYOUTS = [
   {
@@ -65,6 +66,7 @@ function hasLayout(layoutId) {
 const MainPage = () => {
   const [isIframe, setIsIframe] = useState(false)
   const [isMobileDevice, setIsMobileDevice] = useState(false)
+  const [isTabletDevice, setIsTabletDevice] = useState(false)
   const [isTouchScreenDevice, setIsTouchScreenDevice] = useState(false)
   const [date, setDate] = useState(dates[dates.length - 1])
   const [forcedDate, setForcedDate] = useState(null)
@@ -72,6 +74,7 @@ const MainPage = () => {
   const [selectedLayout, setSelectedLayout] = useState(getLayout('big-picture'))
 
   const handleResize = () => {
+    setIsTabletDevice(window.innerWidth > MOBILE_WIDTH && window.innerWidth < TABLET_WIDTH)
     setIsMobileDevice(window.innerWidth < MOBILE_WIDTH)
   }
 
@@ -133,6 +136,7 @@ const MainPage = () => {
           setSelectedLocation,
           isIframe,
           isMobileDevice,
+          isTabletDevice,
           isTouchScreenDevice,
           selectedLayout,
           setSelectedLayout,
