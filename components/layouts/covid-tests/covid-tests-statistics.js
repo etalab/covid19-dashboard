@@ -146,6 +146,7 @@ const CovidTestsStatistics = () => {
           background-color: white;
           padding: ${isMobileDevice ? '0.2em' : 0};
           box-shadow: 0 1px 4px ${colors.lightGrey};
+          z-index: 1;
         }
 
         .header h3 {
