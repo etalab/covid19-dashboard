@@ -14,7 +14,7 @@ const Counter = ({value, label, color, previousValue, details, warningLabel, onC
 
   return (
     <div className='counter-container'>
-      <div className={`counter ${isSelected ? 'selected' : ''}`} onClick={onClick}>
+      <div className={`counter ${onClick ? 'clickable' : ''} ${isSelected ? 'selected' : ''}`} onClick={onClick}>
         {warningLabel && (
           <div className='warning-icon' data-tip={warningLabel} data-for='warningPosition'>⚠️
             <ReactTooltip
@@ -89,7 +89,7 @@ const Counter = ({value, label, color, previousValue, details, warningLabel, onC
           justify-content: space-around;
         }
 
-        .counter:hover {
+        .clickable:hover {
           border: 1px solid ${colors.blue};
         }
 
