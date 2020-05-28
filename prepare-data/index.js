@@ -270,7 +270,7 @@ async function main() {
   const indicateurs = await loadIndicateurs(records)
   const data = consolidate(filterRecords([...records, ...tests, ...indicateurs]))
 
-  const prelevements = await loadPrelevements(join(rootPath, PRELEVEMENT_SOURCE))
+  const prelevements = await loadPrelevements(join(rootPath, 'data', PRELEVEMENT_SOURCE))
 
   const dates = uniq(data.map(r => r.date)).sort()
   const codes = uniq(data.map(r => r.code))
