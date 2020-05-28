@@ -39,12 +39,30 @@ const charts = {
       color: 'darkGrey'
     }
   },
+  nouvellesHospitalisations: {
+    name: 'Nouvelles hospitalisations',
+    type: 'indicateur',
+    options: {
+      label: 'Nouvelles hospitalisations',
+      metricName: 'nouvellesHospitalisations',
+      color: 'darkGrey'
+    }
+  },
   reanimation: {
     name: 'Réanimations',
     type: 'indicateur',
     options: {
       label: 'Réanimations',
       metricName: 'reanimation',
+      color: 'darkerGrey'
+    }
+  },
+  nouvellesReanimations: {
+    name: 'Nouvelles réanimations',
+    type: 'indicateur',
+    options: {
+      label: 'Nouvelles réanimations',
+      metricName: 'nouvellesReanimations',
       color: 'darkerGrey'
     }
   },

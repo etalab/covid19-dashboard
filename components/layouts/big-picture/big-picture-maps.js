@@ -17,11 +17,25 @@ const maps = [
     color: colors.darkGrey
   },
   {
+    name: 'Carte des nouveaux patients hospitalisés',
+    type: CountMap,
+    interactiveLayersIds,
+    property: 'nouvellesHospitalisations',
+    color: colors.darkGrey
+  },
+  {
     name: 'Carte des patients en réanimation',
     type: CountMap,
     interactiveLayersIds,
     property: 'reanimation',
     color: colors.darkerGrey
+  },
+  {
+    name: 'Carte des nouveaux patients en réanimation',
+    type: CountMap,
+    interactiveLayersIds,
+    property: 'nouvellesReanimations',
+    color: colors.darkGrey
   },
   {
     name: 'Carte des retours à domicile',

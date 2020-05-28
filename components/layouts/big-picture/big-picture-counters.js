@@ -20,7 +20,9 @@ const Counters = props => {
     gueris: 'Nombre cumulé de patients ayant été hospitalisés pour COVID-19 <br />et de retour à domicile en raison de l’amélioration de leur état de santé',
     deces: 'Nombre cumulé de décès de patients hospitalisés pour COVID-19 depuis le 1er mars 2020',
     hospitalises: 'Nombre de patients actuellement hospitalisés pour COVID-19',
+    nouvellesHospitalisations: 'Nombre de nouveaux patients hospitalisés au cours des dernières 24h',
     reanimation: ' Nombre de patients actuellement en réanimation ou soins intensifs',
+    nouvellesReanimations: 'Nombre de nouveaux patients admis en réanimation au cours des dernières 24h',
     decesEhpad: 'Nombre cumulé de décès en EHPAD et EMS (établissements médico-sociaux)',
     casConfirmesEhpad: 'Nombre de cas confirmés par test PCR en EHPAD et EMS.<br />Ce chiffre est inclus dans le nombre total de cas confirmés.',
     casEhpad: 'Nombre total de cas en EHPAD et EMS'
@@ -33,6 +35,11 @@ const Counters = props => {
       color: 'darkGrey'
     },
     {
+      name: 'nouvellesHospitalisations',
+      label: 'nouveaux patients hospitalisés',
+      color: 'darkGrey'
+    },
+    {
       name: 'gueris',
       label: 'retours à domicile',
       color: 'green'
@@ -40,6 +47,11 @@ const Counters = props => {
     {
       name: 'reanimation',
       label: 'en réanimation',
+      color: 'darkerGrey'
+    },
+    {
+      name: 'nouvellesReanimations',
+      label: 'nouveaux patients en réanimation',
       color: 'darkerGrey'
     },
     {
