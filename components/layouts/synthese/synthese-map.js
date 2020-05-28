@@ -75,8 +75,8 @@ export const SyntheseMap = ({hovered, isDROM}) => {
           attribution='Données Ministère des Solidarités et de la Santé'
           url='https://etalab-tiles.fr/data/decoupage-administratif.json'
         >
-          <Layer {...indicateurSynthese} />
-          <Layer {...regionsLayer} />
+          <Layer beforeId='place-town' {...indicateurSynthese} />
+          <Layer beforeId='place-town' {...regionsLayer} />
         </Source>
 
         <style jsx>{`
