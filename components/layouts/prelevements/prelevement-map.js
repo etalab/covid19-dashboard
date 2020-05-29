@@ -2,6 +2,8 @@ import React, {useState, useContext, useEffect, useRef, useCallback} from 'react
 import ReactMapGL, {Source, Layer, Popup, Marker, WebMercatorViewport} from 'react-map-gl'
 import nearestPoint from '@turf/nearest-point'
 import bbox from '@turf/bbox'
+import distance from '@turf/distance'
+import {orderBy} from 'lodash'
 
 import colors from '../../../styles/colors'
 
@@ -122,7 +124,7 @@ const PrelevementsMap = () => {
     if (mapRef && mapRef.current) {
       const features = mapRef.current.queryRenderedFeatures(null, {layers: ['public-place', 'limited-access']})
       const visiblePlaces = features.map(f => f.properties.id)
-      return prelevementsSites.features.filter(({properties}) => visiblePlaces.includes(properties.id)).map(({properties}) => properties)
+      return prelevementsSites.features.filter(({properties}) => visiblePlaces.includes(properties.id))
     }
 
     return []
@@ -179,8 +181,10 @@ const PrelevementsMap = () => {
 
   useEffect(() => {
     if (viewport.zoom >= 9) {
-      const places = getVisiblePlaces()
-      setPlaces(places)
+      const visiblePlaces = getVisiblePlaces()
+      const orderedPlaces = address ? orderBy(visiblePlaces, place => distance(address, place)) : visiblePlaces
+
+      setPlaces(orderedPlaces.map(({properties}) => properties))
     }
   }, [address, viewport, setPlaces, prelevementsSites, getVisiblePlaces])
 

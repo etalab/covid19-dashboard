@@ -28,6 +28,7 @@
   "dependencies": {
     "@etalab/decoupage-administratif": "^0.8.0",
     "@turf/bbox": "^6.0.1",
+    "@turf/distance": "^6.0.1",
     "@turf/nearest-point": "^6.0.1",
     "chart.js": "^2.9.3",
     "csv-parser": "^2.3.2",
