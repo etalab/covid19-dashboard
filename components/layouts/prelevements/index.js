@@ -94,6 +94,7 @@ const DesktopPrelevements = () => {
       <div className='menu'>
         <Scrollable>
           <div style={{padding: '1em'}}>
+            <h4>Saisissez une adresse pour retrouver tous les points de prélèvement des tests virologiques (RT-PCR) à proximité !</h4>
             <SearchAddress />
             <PlacesList />
           </div>
