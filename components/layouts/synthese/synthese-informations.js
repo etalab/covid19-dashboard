@@ -20,7 +20,7 @@ const SyntheseInformations = () => {
           <p>Le statut de chaque département (vert/orange/rouge) est publié en open data sur <a href='https://www.data.gouv.fr/fr/datasets/indicateurs-dactivite-epidemique-covid-19-par-departement/' target='_top'>www.data.gouv.fr</a>.</p>
         </>
       )}
-      {date >= '2020-05-07' && (
+      {date >= '2020-05-07' && date < '2020-05-28' && (
         <>
           <p>Cette carte, présentée le 7 mai 2020, synthétise les 3 indicateurs suivants :</p>
           <ul>
@@ -30,6 +30,19 @@ const SyntheseInformations = () => {
           </ul>
           <p>Cette carte sert de référence pour les mesures différenciées qui seront appliquées à compter du lundi 11 mai, selon les régions. Elle sera mise à jour en fonction de l’évolution des données de suivi de l’épidémie, et non sur une fréquence quotidienne.</p>
           <p>Le statut de chaque département (vert/rouge) est publié en open data sur <a href='https://www.data.gouv.fr/fr/datasets/indicateurs-dactivite-epidemique-covid-19-par-departement/' target='_top'>www.data.gouv.fr</a>.</p>
+        </>
+      )}
+      {date >= '2020-05-28' && (
+        <>
+          <p>Cette carte, présentée le 28 mai 2020, sert de référence pour les mesures différenciées qui seront appliquées à compter du mardi 2 juin, selon les départements.</p>
+          <p>Elle est construite sur la base des 4 indicateurs suivants et est complétée par une analyse de risques :</p>
+          <ul>
+            <li><b>l’activité épidémique</b> : taux d’incidence : nombre de tests virologiques positifs pour 100 000 habitants par semaine ;</li>
+            <li><b>le taux de positivité des tests virologiques</b> ;</li>
+            <li><b>l’évolution du R0</b> : nombre de personnes contaminées par chaque malade ;</li>
+            <li><b>la tension hospitalière sur la capacité en réanimation</b> : le taux d’occupation des lits en réanimation par des patients COVID par rapport à la capacité initiale en réanimation.</li>
+          </ul>
+          <p>Le statut de chaque département est publié en open data sur <a href='https://www.data.gouv.fr/fr/datasets/indicateurs-dactivite-epidemique-covid-19-par-departement/' target='_top'>www.data.gouv.fr</a>.</p>
         </>
       )}
 

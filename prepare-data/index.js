@@ -191,15 +191,17 @@ async function loadIndicateurs(records) {
     }
   })
 
-  const maxDate = max(rows.map(r => r.date))
-  const moreRecentDates = dates.filter(d => d > maxDate)
+  const index = groupBy(rows, 'date')
+  let lastNotEmptyDate
 
-  const maxDateRows = rows.filter(r => r.date === maxDate)
-
-  moreRecentDates.forEach(moreRecentDate => {
-    maxDateRows.forEach(row => {
-      rows.push({...row, date: moreRecentDate})
-    })
+  dates.forEach(date => {
+    if (date in index) {
+      lastNotEmptyDate = date
+    } else if (lastNotEmptyDate) {
+      index[lastNotEmptyDate].forEach(row => {
+        rows.push({...row, date})
+      })
+    }
   })
 
   return rows

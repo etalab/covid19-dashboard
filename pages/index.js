@@ -43,7 +43,7 @@ const LAYOUTS = [
   {
     id: 'synthese',
     name: 'activite-epidemique',
-    label: 'Carte synthèse',
+    label: 'Carte de vigilance',
     component: <Synthese />
   },
   {
