@@ -6,15 +6,14 @@ const PrelemevementsInformations = React.memo(() => (
   <div className='informations'>
     <h3>Informations</h3>
     <p>
-      L’information officielle sur la progression de l’épidémie en France est consolidée par <a target='_top' href='https://www.santepubliquefrance.fr'>Santé publique France</a>. L’agence propose un <a target='_top' href='https://www.santepubliquefrance.fr/maladies-et-traumatismes/maladies-et-infections-respiratoires/infection-a-coronavirus/articles/infection-au-nouveau-coronavirus-sars-cov-2-covid-19-france-et-monde'>point épidémiologique quotidien</a>, qui comprend les chiffres-clés nationaux. Elle propose également des <a target='_top' href='https://www.data.gouv.fr/fr/organizations/sante-publique-france/'>données relatives à l’épidémie plus précises</a> sur la plateforme <a target='_top' href='https://www.data.gouv.fr'>www.data.gouv.fr</a>.
+      Si les délais de rendez-vous dépassent les 48 heures, n’hésitez pas à contacter plusieurs lieux de prélèvement.
     </p>
     <p>
-      Par ailleurs, les <a target='_top' href='https://www.ars.sante.fr'>Agences Régionales de Santé</a>, les <a target='_top' href='http://www.prefectures-regions.gouv.fr'>préfectures de régions</a> et les <a target='_top' href='https://www.interieur.gouv.fr/Le-ministere/Prefectures'>préfectures</a> publient des bulletins d’informations centrés sur leur territoire de compétence.
+      Les données présentées proviennent de déclarations des laboratoires et établissements de santé, auprès des Agences régionales de santé, et via une plateforme internet développée par le Ministère des Solidarités et de la Santé, sur leurs points de dépistage COVID-19. Les données sont mises à jour quotidiennement et sont disponibles sur la plateforme <a target='_top' href='https://www.data.gouv.fr/fr/'>www.data.gouv.fr</a>.
     </p>
     <p>
-      Cet outil <a target='_top' href='https://github.com/etalab/covid19-dashboard'>dont le code source est libre</a>, développé sous l’impulsion d’<a target='_top' href='https://www.etalab.gouv.fr'>Etalab</a>, au sein de la <a target='_top' href='https://www.numerique.gouv.fr/dinum/'>direction interministérielle du numérique</a>, propose une vision consolidée des données officielles disponibles.
+      <b>Point d’attention</b> : pour faire un test virologique  (RT-PCR) de dépistage du COVID-19, il est nécessaire d’avoir une  prescription.  Soit je dispose d’une ordonnance de prescription de mon médecin, soit j’ai été appelé par l’Assurance Maladie dans le cadre de  la recherche des personnes contacts. Dans ce cas, le laboratoire disposera automatiquement de la prescription. Le test sera réalisable uniquement à ces conditions.
     </p>
-    <p>Pour obtenir d’autres informations relatives à l’épidémie, il est possible de consulter <a target='_top' href='https://www.gouvernement.fr/info-coronavirus'>la page d’information du Gouvernement sur le COVID-19</a>.</p>
 
     <style jsx>{`
       .informations {
