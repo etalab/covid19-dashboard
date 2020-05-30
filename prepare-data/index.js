@@ -24,6 +24,8 @@ const DATA_SOURCE = process.env.DATA_SOURCE || 'https://raw.githubusercontent.co
 
 const TESTS_SOURCE = 'https://www.data.gouv.fr/fr/datasets/r/b4ea7b4b-b7d1-4885-a099-71852291ff20'
 
+const PRELEVEMENT_SOURCE = 'sites-prelevement-latest.csv'
+
 async function fetchCsv(url, options = {}) {
   const rows = await getStream.array(
     got.stream(url)
@@ -78,6 +80,44 @@ function consolidate(records) {
 }
 
 const TODAY = (new Date()).toISOString().slice(0, 10)
+
+async function loadPrelevements(file) {
+  const inputRows = await getStream.array(
+    createReadStream(file)
+      .pipe(csvParse())
+  )
+
+  const rows = inputRows.map(row => {
+    const {ID, rs, longitude, latitude} = row
+    return {
+      type: 'Feature',
+      id: ID,
+      properties: {
+        ...row,
+        id: ID,
+        name: rs,
+        complementAdresse: row.cpl_loc,
+        modePrelevement: row.mod_prel.split('/'),
+        capacitePrelevement: row.capa_prel,
+        audience: row.public,
+        isPublic: row.public.includes('Tout public'),
+        appointment: row.check_rdv,
+        appointmentOnly: row.check_rdv === 'Sur rendez-vous uniquement',
+        tel: row.tel_rdv,
+        mail: row.web_rdv
+      },
+      geometry: {
+        type: 'Point',
+        coordinates: [longitude, latitude]
+      }
+    }
+  })
+
+  return {
+    type: 'FeatureCollection',
+    features: rows
+  }
+}
 
 async function loadTests(url) {
   const csvOptions = {
@@ -232,12 +272,16 @@ async function main() {
   const indicateurs = await loadIndicateurs(records)
   const data = consolidate(filterRecords([...records, ...tests, ...indicateurs]))
 
+  const prelevements = await loadPrelevements(join(rootPath, 'data', PRELEVEMENT_SOURCE))
+
   const dates = uniq(data.map(r => r.date)).sort()
   const codes = uniq(data.map(r => r.code))
 
   const latest = dates[dates.length - 1]
 
   const dataDirectory = join(rootPath, 'public', 'data')
+
+  await outputJson(join(dataDirectory, 'prelevements.json'), prelevements)
 
   await Promise.all(dates.map(async date => {
     await outputJson(join(dataDirectory, `date-${date}.json`), data.filter(r => r.date === date))

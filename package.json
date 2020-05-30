@@ -28,6 +28,8 @@
   "dependencies": {
     "@etalab/decoupage-administratif": "^0.8.0",
     "@turf/bbox": "^6.0.1",
+    "@turf/distance": "^6.0.1",
+    "@turf/nearest-point": "^6.0.1",
     "chart.js": "^2.9.3",
     "csv-parser": "^2.3.2",
     "deck.gl": "^8.1.1",
@@ -39,6 +41,7 @@
     "lodash": "^4.17.15",
     "next": "^9.3.2",
     "react": "^16.13.0",
+    "react-autocomplete": "^1.8.1",
     "react-chartjs-2": "^2.9.0",
     "react-dom": "^16.13.0",
     "react-feather": "^2.0.3",

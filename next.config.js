@@ -4,7 +4,8 @@ module.exports = {
   env: {
     SITE_URL: process.env.SITE_URL,
     SITE_NAME: process.env.SITE_NAME,
-    SITE_DESCRIPTION: process.env.SITE_DESCRIPTION
+    SITE_DESCRIPTION: process.env.SITE_DESCRIPTION,
+    API_ADDRESSES_URL: process.env.API_ADDRESSES_URL
   },
 
   exportPathMap() {
@@ -14,6 +15,7 @@ module.exports = {
       '/suivi-des-tests': {page: '/', query: {layout: 'tests'}},
       '/transferts-de-patients': {page: '/', query: {layout: 'transfert'}},
       '/activite-epidemique': {page: '/', query: {layout: 'synthese'}},
+      '/sites-prelevements': {page: '/', query: {layout: 'prelevements'}},
       '/aides-entreprises': {page: '/', query: {layout: 'entreprises'}}
     }
   }
