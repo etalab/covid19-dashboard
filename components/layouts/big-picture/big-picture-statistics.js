@@ -1,6 +1,5 @@
 import React, {useContext, useState, useEffect, useCallback} from 'react'
 import {BarChart2} from 'react-feather'
-import Link from 'next/link'
 
 import colors from '../../../styles/colors'
 
@@ -117,7 +116,7 @@ function getChart(chartName, showVariations) {
 }
 
 const BigPictureStatistics = () => {
-  const {date, selectedLocation, isMobileDevice} = useContext(AppContext)
+  const {date, selectedLocation, setSelectedLocation, isMobileDevice} = useContext(AppContext)
 
   const [report, setReport] = useState(null)
   const [previousReport, setPreviousReport] = useState(null)
@@ -167,7 +166,7 @@ const BigPictureStatistics = () => {
     <>
       <div className='header'>
         {selectedLocation && !isMobileDevice && (
-          <Link href='/'><div className='back'><BarChart2 /> <span>France</span></div></Link>
+          <div onClick={() => setSelectedLocation('FRA')} className='back'><BarChart2 /> <span>France</span></div>
         )}
         <h3>COVID-19 - {report ? report.nom : 'France'}</h3>
       </div>
