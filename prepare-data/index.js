@@ -8,7 +8,7 @@ const got = require('got')
 const {outputJson, readJson, outputFile} = require('fs-extra')
 const getStream = require('get-stream')
 const csvParse = require('csv-parser')
-const {groupBy, sortBy, defaults, pick, keyBy, chain, sumBy, uniq, max} = require('lodash')
+const {groupBy, sortBy, defaults, pick, keyBy, chain, sumBy, uniq} = require('lodash')
 
 const {replaceResourceFile} = require('./datagouv')
 
