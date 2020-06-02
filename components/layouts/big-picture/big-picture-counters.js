@@ -24,8 +24,7 @@ const Counters = props => {
     reanimation: ' Nombre de patients actuellement en réanimation ou soins intensifs',
     nouvellesReanimations: 'Nombre de nouveaux patients admis en réanimation au cours des dernières 24h',
     decesEhpad: 'Nombre cumulé de décès en EHPAD et EMS (établissements médico-sociaux)',
-    casConfirmesEhpad: 'Nombre de cas confirmés par test PCR en EHPAD et EMS.<br />Ce chiffre est inclus dans le nombre total de cas confirmés.',
-    casEhpad: 'Nombre total de cas en EHPAD et EMS'
+    casConfirmesEhpad: 'Nombre de cas confirmés par test PCR en EHPAD et EMS.<br />Ce chiffre est inclus dans le nombre total de cas confirmés.'
   }
 
   const hospitalCountersList = [
@@ -62,11 +61,6 @@ const Counters = props => {
   ]
 
   const ehpadCountersList = [
-    {
-      name: 'casEhpad',
-      label: 'cas total en EHPAD et EMS',
-      color: 'orange'
-    },
     {
       name: 'casConfirmesEhpad',
       label: 'cas confirmés en EHPAD et EMS',

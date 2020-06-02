@@ -84,15 +84,6 @@ const charts = {
       color: 'green'
     }
   },
-  casEhpad: {
-    name: 'Cas total',
-    type: 'indicateur',
-    options: {
-      label: 'Cas total',
-      metricName: 'casEhpad',
-      color: 'orange'
-    }
-  },
   casConfirmesEhpad: {
     name: 'Cas confirmés',
     type: 'indicateur',
