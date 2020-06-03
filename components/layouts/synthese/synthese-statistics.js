@@ -47,7 +47,7 @@ const SyntheseDepartement = () => {
           <a href={getPrefectureWebsite(locationCode)} target='_top'>Consulter le site de la préfecture</a>
         </p>
         <p>
-          <a href={getARSWebsite(getCodeRegion(code))} target='_top'>Site de l’ARS (Agende Régionale de Santé)</a>
+          <a href={getARSWebsite(getCodeRegion(code))} target='_top'>Site de l’ARS (Agence Régionale de Santé)</a>
         </p>
         <style jsx>{`
           .indicateurs {
@@ -145,7 +145,7 @@ const SyntheseRegion = () => {
         return <DepartementList key={departement.code} {...dep} />
       })}
       <div className='infos-link'>
-        <a href={getARSWebsite(region.code)}>Site de l’ARS (Agende Régionale de Santé)</a>
+        <a href={getARSWebsite(region.code)}>Site de l’ARS (Agence Régionale de Santé)</a>
       </div>
       <style jsx>{`
         .departements-container {
