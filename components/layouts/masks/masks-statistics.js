@@ -13,6 +13,7 @@ import colors from '../../../styles/colors'
 
 import MasksCounters from './masks-counters'
 import {MasksContext} from '.'
+import MasksTypes from './masks-types'
 
 const CompaniesList = ({title, companies}) => {
   const themeContext = useContext(ThemeContext)
@@ -138,8 +139,8 @@ const MasksStatistics = () => {
 
   return (
     <div className='masks-statistics'>
-      <div >
-        <h3>Production des masques grand public</h3>
+      <div>
+        <MasksTypes />
         <MasksCounters />
         {!selectedCommune && (
           <h4>{selectedRegion ? regions.find(r => r.code === selectedRegion).nom : 'Par régions'}</h4>
