@@ -6,21 +6,34 @@ const MasksInformations = React.memo(() => (
   <div className='informations'>
     <h3>Informations</h3>
     <p>
-      À noter que l’ensemble des entreprises productrices ne figurent pas dans cette liste.
+      Les masques approvisionnés par l’Etat sont destinés :
     </p>
+    <ul>
+      <li>
+        <b>aux professionnels des secteurs sanitaires et médico-sociaux</b> exposés à la maladie COVID-19
+      </li>
+      <li>
+        <b>aux malades, aux personnes contacts et aux personnes à très haut risque médical</b>
+      </li>
+    </ul>
     <p>
-      Le processus détaillé de validation des masques, est disponible sur la <a target='_top' href='https://www.gouvernement.fr/filiere-francaise-de-masques-les-entreprises-mobilisees'>page du Gouvernement relative aux entreprises mobilisées</a>.
+      Ils sont distribués :
     </p>
-    <p>
-      Les entreprises souhaitant connaître le processus pour faire valider leurs masques, peuvent se rendre sur la <a target='_top' href='https://www.entreprises.gouv.fr/covid-19/entreprises-comment-faire-tester-masques'>page de la Direction Générale des Entreprises</a>.
-    </p>
+    <ul>
+      <li>
+        <b>via les groupements hospitaliers de territoire</b> (GHT) pour les 14 000 établissements de santé, EHPAD et établissements de la sphère médico-sociale implantés sur leur zone de responsabilité, ainsi que les services à domicile et les transporteurs sanitaires ;
+      </li>
+      <li>
+        <b>via les 21 000 pharmacies</b> pour les professionnels de santé du secteur libéral (médecins, infirmiers, sages-femmes, kinésithérapeutes, etc.) et assimilés (aides à domicile), ainsi que les malades, personnes contacts et les personnes à très haut risque médical
+      </li>
+    </ul>
     <style jsx>{`
       .informations {
         padding: 1em;
         background-color: ${colors.sand};
       }
 
-      .informations p {
+      .informations ul {
         font-size: 14px;
         line-height: 22px;
         text-align: justify;
