@@ -14,10 +14,6 @@ const MasksInformations = React.memo(() => (
     <p>
       Les entreprises souhaitant connaître le processus pour faire valider leurs masques, peuvent se rendre sur la <a target='_top' href='https://www.entreprises.gouv.fr/covid-19/entreprises-comment-faire-tester-masques'>page de la Direction Générale des Entreprises</a>.
     </p>
-    <p>
-      * Les lavages ont été réalisés sous la responsabilité du fabricant.
-    </p>
-
     <style jsx>{`
       .informations {
         padding: 1em;

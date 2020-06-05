@@ -141,8 +141,7 @@ function prepareMasksData(masksSource) {
       nom: r[0],
       commune: r[2],
       codeDepartement: r[3],
-      nomRegion: r[4],
-      lavable: r[10]
+      nomRegion: r[4]
     }
   })
 

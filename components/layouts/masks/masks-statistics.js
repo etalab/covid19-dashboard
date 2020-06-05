@@ -24,13 +24,11 @@ const CompaniesList = ({title, companies}) => {
       </div>
       <div className='subheader'>
         <div>Entreprises</div>
-        <div>Durabilité des masques</div>
       </div>
       <div className='list'>
-        {companies.map(({nom, lavable}) => (
+        {companies.map(({nom}) => (
           <div key={nom} className='company'>
             <div>{nom}</div>
-            <div>{lavable ? lavable : 'non renseigné'}</div>
           </div>
         ))}
       </div>
