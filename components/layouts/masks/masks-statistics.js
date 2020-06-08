@@ -138,18 +138,26 @@ const MasksStatistics = () => {
   return (
     <div className='masks-statistics'>
       <div>
-        <MasksTypes />
-        <MasksCounters />
-        {!selectedCommune && (
-          <h4>{selectedRegion ? regions.find(r => r.code === selectedRegion).nom : 'Par régions'}</h4>
+        {selectedLocation === 'FRA' && (
+          <>
+            <MasksTypes />
+            <MasksCounters />
+          </>
         )}
-        {companiesBy.map(({code, nom, companies}) => (
-          <CompaniesList
-            key={code}
-            title={nom}
-            companies={companies}
-          />
-        ))}
+        {selectedLocation !== 'FRA' && (
+          <>
+            <h3>Production des masques grand public</h3>
+            {!selectedCommune && (
+              <h4>{selectedRegion ? regions.find(r => r.code === selectedRegion).nom : null}</h4>
+            )}
+            {companiesBy.map(({code, nom, companies}) => (
+              <CompaniesList
+                key={code}
+                title={nom}
+                companies={companies}
+              />
+            ))}
+          </>)}
       </div>
       <style jsx>{`
         h3 {
