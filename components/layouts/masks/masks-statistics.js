@@ -1,18 +1,10 @@
-import React, {useContext, useCallback, useMemo} from 'react'
+import React, {useContext} from 'react'
 import PropTypes from 'prop-types'
-import {groupBy, flatten} from 'lodash'
 
-import departements from '@etalab/decoupage-administratif/data/departements.json'
-import regions from '@etalab/decoupage-administratif/data/regions.json'
-
-import {getTerritoryFromLocation} from '../../../lib/location'
-
-import {ThemeContext, AppContext} from '../../../pages'
+import {ThemeContext} from '../../../pages'
 
 import colors from '../../../styles/colors'
 
-import MasksCounters from './masks-counters'
-import {MasksContext} from '.'
 import MasksTypes from './masks-types'
 
 const CompaniesList = ({title, companies}) => {
@@ -83,94 +75,20 @@ CompaniesList.propTypes = {
   companies: PropTypes.array.isRequired
 }
 
-const MasksStatistics = () => {
-  const {selectedLocation} = useContext(AppContext)
-  const {masksCommunes, selectedCommune} = useContext(MasksContext)
-
-  const {type, code} = getTerritoryFromLocation(selectedLocation)
-  const selectedRegion = type === 'REG' ? code : null
-
-  const getCompaniesByRegion = useCallback(() => {
-    const regionGroup = groupBy(masksCommunes, 'codeRegion')
-
-    return Object.keys(regionGroup).map(code => {
-      const communes = regionGroup[code]
-      const {nom} = regions.find(r => r.code === code) || {nom: 'International'}
-      return {
-        code,
-        nom,
-        companies: flatten(communes.map(c => c.companies))
+const MasksStatistics = () => (
+  <div className='masks-statistics'>
+    <MasksTypes />
+    <style jsx>{`
+      h3 {
+        display: flex;
+        justify-content: center;
       }
-    })
-  }, [masksCommunes])
 
-  const getCompaniesByDepartement = useCallback(() => {
-    const filteredCommunes = masksCommunes.filter(({codeRegion}) => codeRegion === selectedRegion)
-    const departementGroup = groupBy(filteredCommunes, 'codeDepartement')
-
-    return Object.keys(departementGroup).map(code => {
-      const communes = departementGroup[code]
-      const {nom} = departements.find(d => d.code === code)
-      return {
-        code,
-        nom,
-        companies: flatten(communes.map(c => c.companies))
+      .masks-statistics {
+        margin: 0 0.5em;
       }
-    })
-  }, [masksCommunes, selectedRegion])
-
-  const companiesBy = useMemo(() => {
-    if (selectedCommune) {
-      return [{
-        code: selectedCommune.commune,
-        nom: selectedCommune.commune,
-        ...selectedCommune
-      }]
-    }
-
-    if (selectedRegion) {
-      return getCompaniesByDepartement()
-    }
-
-    return getCompaniesByRegion()
-  }, [selectedCommune, selectedRegion, getCompaniesByDepartement, getCompaniesByRegion])
-
-  return (
-    <div className='masks-statistics'>
-      <div>
-        {selectedLocation === 'FRA' && (
-          <>
-            <MasksTypes />
-            <MasksCounters />
-          </>
-        )}
-        {selectedLocation !== 'FRA' && (
-          <>
-            <h3>Production des masques grand public</h3>
-            {!selectedCommune && (
-              <h4>{selectedRegion ? regions.find(r => r.code === selectedRegion).nom : null}</h4>
-            )}
-            {companiesBy.map(({code, nom, companies}) => (
-              <CompaniesList
-                key={code}
-                title={nom}
-                companies={companies}
-              />
-            ))}
-          </>)}
-      </div>
-      <style jsx>{`
-        h3 {
-          display: flex;
-          justify-content: center;
-        }
-
-        .masks-statistics {
-          margin: 0 0.5em;
-        }
-      `}</style>
-    </div>
-  )
-}
+    `}</style>
+  </div>
+)
 
 export default MasksStatistics

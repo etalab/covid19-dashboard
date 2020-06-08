@@ -60,15 +60,20 @@ const formatData = (data, type) => {
   }
 }
 
-const MasksProductionChart = ({data, type}) => {
+const MasksProductionChart = ({data, type, height}) => {
   return (
-    <Bar data={formatData(data, type)} options={options} />
+    <Bar data={formatData(data, type)} options={options} height={height} />
   )
+}
+
+MasksProductionChart.defaultProps = {
+  height: null
 }
 
 MasksProductionChart.propTypes = {
   data: PropTypes.array.isRequired,
-  type: PropTypes.string.isRequired
+  type: PropTypes.string.isRequired,
+  height: PropTypes.number
 }
 
 export default MasksProductionChart
