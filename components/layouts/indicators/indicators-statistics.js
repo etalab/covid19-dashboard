@@ -8,15 +8,32 @@ import {AppContext} from '../../../pages'
 import {getPreviousReport, getReport} from '../../../lib/data'
 
 import Counter from '../../counter'
-import IndicateurVariationChart from '../../charts/indicateur-variation'
+import IndicateurChart from '../../charts/indicateurs-chart'
 
 import {IndicatorsContext} from '.'
 
 const INDICATORS = {
-  tauxIncidence: 'Taux d’incidence',
-  tauxReproductionEffectif: 'Taux de reproduction effectif',
-  tauxOccupationRea: 'Taux d’occupation des lits en réa/SI/SC par des patients COVID par rapport à la capacité initiale en réa',
-  tauxPositiviteTests: 'Taux de positivité des tests RT-PCR'
+  tauxIncidence: {
+    label: 'Taux d’incidence',
+    min: 1,
+    max: 10
+  },
+  tauxReproductionEffectif: {
+    label: 'Taux de reproduction effectif',
+    min: 0,
+    max: 1.5
+  },
+  tauxOccupationRea: {
+    label: 'Taux d’occupation des lits en réanimation',
+    details: 'Taux d’occupation des lits en réa/SI/SC par des patients COVID par rapport à la capacité initiale en réa',
+    min: 40,
+    max: 60
+  },
+  tauxPositiviteTests: {
+    label: 'Taux de positivité des tests RT-PCR',
+    min: 5,
+    max: 10
+  }
 }
 
 const IndicatorsStatistics = () => {
@@ -43,7 +60,7 @@ const IndicatorsStatistics = () => {
     }
   }, [report])
 
-  const {selectedIndicator, setSelectedIndicator} = useContext(IndicatorsContext)
+  const {selectedStat, setSelectedStat} = useContext(IndicatorsContext)
 
   return (
     <>
@@ -54,24 +71,31 @@ const IndicatorsStatistics = () => {
         <h3>COVID-19 - {report ? report.nom : 'France'}</h3>
       </div>
 
-      {report && (
-        Object.keys(INDICATORS).map(indicator => (
-          <div key={indicator}>
-            <Counter
-              value={report[indicator]}
-              label={INDICATORS[indicator]}
-              previousValue={previousReport[indicator]}
-              onClick={() => setSelectedIndicator(indicator)}
-              isSelected={selectedIndicator === indicator}
-            />
-            <IndicateurVariationChart
-              label={INDICATORS[indicator]}
-              metricName={indicator}
-              reports={report.history.filter(r => date >= r.date)}
-            />
-          </div>
-        ))
-      )}
+      <div className='indicators-container'>
+        {report && (
+          Object.keys(INDICATORS).map(indicator => {
+            const {label, min, max} = INDICATORS[indicator]
+            return (
+              <div className={`indicators ${selectedStat === indicator ? 'selected' : ''}`} key={indicator} onClick={() => setSelectedStat(indicator)}>
+                <Counter
+                  value={report[indicator]}
+                  label={label}
+                  previousValue={previousReport && previousReport[indicator]}
+                  onClick={() => setSelectedStat(indicator)}
+                  isSelected={selectedStat === indicator}
+                />
+                <IndicateurChart
+                  label={label}
+                  metricName={indicator}
+                  min={min}
+                  max={max}
+                  reports={report.history.filter(r => date >= r.date)}
+                />
+              </div>
+            )
+          })
+        )}
+      </div>
 
       <style jsx>{`
         .header {

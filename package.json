@@ -32,6 +32,7 @@
     "@turf/nearest-point": "^6.0.1",
     "airtable": "^0.8.1",
     "chart.js": "^2.9.3",
+    "chartjs-plugin-annotation": "^0.5.7",
     "csv-parser": "^2.3.2",
     "deck.gl": "^8.1.1",
     "dotenv": "^8.2.0",
