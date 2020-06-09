@@ -27,6 +27,7 @@ const DATA_SOURCE = process.env.DATA_SOURCE || 'https://raw.githubusercontent.co
 const TESTS_SOURCE = 'https://www.data.gouv.fr/fr/datasets/r/b4ea7b4b-b7d1-4885-a099-71852291ff20'
 
 const PRELEVEMENT_SOURCE = 'sites-prelevement-latest.csv'
+const INDICATEURS_SOURCE = 'table_indicateurs_open_data_dep.csv'
 
 async function fetchCsv(url, options = {}) {
   const rows = await getStream.array(
@@ -61,12 +62,13 @@ async function loadJson(dataSource) {
 
 const SOURCE_PRIORITIES = {
   'ministere-sante': 1,
-  'sante-publique-france': 2,
-  'sante-publique-france-data': 3,
-  'agences-regionales-sante': 4,
-  prefectures: 5,
-  'opencovid19-fr': 6,
-  'lperez-historical-data': 7
+  'centre-crise-sanitaire': 2,
+  'sante-publique-france': 3,
+  'sante-publique-france-data': 4,
+  'agences-regionales-sante': 5,
+  prefectures: 6,
+  'opencovid19-fr': 7,
+  'lperez-historical-data': 8
 }
 
 function consolidate(records) {
@@ -77,7 +79,7 @@ function consolidate(records) {
       .reduce((acc, row) => {
         defaults(acc, row)
         return acc
-      }, {}), ['casConfirmes', 'deces', 'decesEhpad', 'casConfirmesEhpad', 'casPossiblesEhpad', 'reanimation', 'hospitalises', 'gueris', 'date', 'code', 'nom', 'testsRealises', 'testsPositifs', 'testsRealisesDetails', 'testsPositifsDetails', 'indicateurSynthese', 'nouvellesHospitalisations', 'nouvellesReanimations'])
+      }, {}), ['casConfirmes', 'deces', 'decesEhpad', 'casConfirmesEhpad', 'casPossiblesEhpad', 'reanimation', 'hospitalises', 'gueris', 'date', 'code', 'nom', 'testsRealises', 'testsPositifs', 'testsRealisesDetails', 'testsPositifsDetails', 'indicateurSynthese', 'nouvellesHospitalisations', 'nouvellesReanimations', 'tauxIncidence', 'tauxReproductionEffectif', 'tauxOccupationRea', 'tauxPositiviteTests'])
   })
 }
 
@@ -247,6 +249,66 @@ async function loadIndicateursSynthese(records) {
   return rows
 }
 
+async function loadIndicateursMap() {
+  const inputRows = await getStream.array(
+    createReadStream(join(rootPath, 'data', 'table_indicateurs_open_data_dep.csv'))
+      .pipe(csvParse())
+  )
+
+  return inputRows.map(row => {
+    return {
+      code: row.departement,
+      region: row.region,
+      nom: departementsIndex[row.departement].nom,
+      tauxIncidence: row.tx_incid,
+      tauxIncidenceColor: row.tx_incid_couleur,
+      tauxReproductionEffectif: row.R,
+      tauxReproductionEffectifColor: row.R_couleur,
+      tauxOccupationRea: row.taux_occupation_sae,
+      tauxOccupationReaColor: row.taux_occupation_sae_couleur,
+      tauxPositiviteTests: row.tx_pos,
+      tauxPositiviteTestsColor: row.tx_pos_couleur,
+      sourceType: 'centre-crise-sanitaire'
+    }
+  })
+}
+
+async function loadIndicateurs(records) {
+  const dates = uniq(records.map(r => r.date))
+
+  const inputRows = await getStream.array(
+    createReadStream(join(rootPath, 'data', 'table_indicateurs_open_data_france.csv'))
+      .pipe(csvParse())
+  )
+
+  const rows = inputRows.map(row => {
+    return {
+      date: row.extract_date,
+      code: 'FRA',
+      tauxIncidence: Number.parseFloat(row.tx_incid),
+      tauxReproductionEffectif: Number.parseFloat(row.R),
+      tauxOccupationRea: Number.parseFloat(row.taux_occupation_sae),
+      tauxPositiviteTests: Number.parseFloat(row.tx_pos),
+      sourceType: 'centre-crise-sanitaire'
+    }
+  })
+
+  const index = groupBy(rows, 'date')
+  let lastNotEmptyDate
+
+  dates.forEach(date => {
+    if (date in index) {
+      lastNotEmptyDate = date
+    } else if (lastNotEmptyDate) {
+      index[lastNotEmptyDate].forEach(row => {
+        rows.push({...row, date})
+      })
+    }
+  })
+
+  return rows
+}
+
 function filterRecords(records) {
   const {START_DATE, END_DATE, ALLOWED_SOURCES} = process.env
   const filters = []
@@ -270,9 +332,12 @@ async function main() {
   const records = await loadJson(DATA_SOURCE)
   const tests = await loadTests(TESTS_SOURCE)
   const indicateursSynthese = await loadIndicateursSynthese(records)
-  const data = consolidate(filterRecords([...records, ...tests, ...indicateursSynthese]))
+  const indicateurs = await loadIndicateurs(records)
+  const data = consolidate(filterRecords([...records, ...tests, ...indicateursSynthese, ...indicateurs]))
 
   const prelevements = await loadPrelevements(join(rootPath, 'data', PRELEVEMENT_SOURCE))
+
+  const indicateursMap = await loadIndicateursMap(join(rootPath, 'data', INDICATEURS_SOURCE))
 
   const dates = uniq(data.map(r => r.date)).sort()
   const codes = uniq(data.map(r => r.code))
@@ -282,6 +347,8 @@ async function main() {
   const dataDirectory = join(rootPath, 'public', 'data')
 
   await outputJson(join(dataDirectory, 'prelevements.json'), prelevements)
+
+  await outputJson(join(dataDirectory, 'indicateurs.json'), indicateursMap)
 
   await Promise.all(dates.map(async date => {
     await outputJson(join(dataDirectory, `date-${date}.json`), data.filter(r => r.date === date))
