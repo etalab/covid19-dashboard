@@ -2,7 +2,7 @@ import React, {useState, useCallback, useContext} from 'react'
 import PropTypes from 'prop-types'
 import {ChevronDown, ChevronUp} from 'react-feather'
 
-import {ThemeContext} from '../pages'
+import {ThemeContext, AppContext} from '../pages'
 
 import colors from '../styles/colors'
 
@@ -10,6 +10,7 @@ const SelectInput = ({selected, options, handleSelect}) => {
   const [isOpen, setIsOpen] = useState(false)
 
   const theme = useContext(ThemeContext)
+  const {isTabletDevice} = useContext(AppContext)
 
   const onSelect = useCallback(option => {
     handleSelect(option)
@@ -44,6 +45,8 @@ const SelectInput = ({selected, options, handleSelect}) => {
           position: relative;
           display: flex;
           flex-direction: column;
+          width: ${isTabletDevice ? '100%' : ''};
+          height: ${isTabletDevice ? '100%' : ''};
           background-color: ${colors.lightGrey};
         }
 
@@ -51,7 +54,7 @@ const SelectInput = ({selected, options, handleSelect}) => {
           display: flex;
           justify-content: center;
           align-items: center;
-          padding: 0.5em;
+          padding: ${isTabletDevice ? '0.8em' : '0.5em'};;
         }
 
         .custom-select,
