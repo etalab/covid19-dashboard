@@ -216,7 +216,7 @@ async function loadTests(url) {
   return [...departementsReports, ...regionsReports, ...franceReports]
 }
 
-async function loadIndicateurs(records) {
+async function loadIndicateursSynthese(records) {
   const dates = uniq(records.map(r => r.date))
 
   const inputRows = await extractData('appvqjbgBnxfnGtka', 'Activité épidémique')
@@ -269,8 +269,8 @@ function filterRecords(records) {
 async function main() {
   const records = await loadJson(DATA_SOURCE)
   const tests = await loadTests(TESTS_SOURCE)
-  const indicateurs = await loadIndicateurs(records)
-  const data = consolidate(filterRecords([...records, ...tests, ...indicateurs]))
+  const indicateursSynthese = await loadIndicateursSynthese(records)
+  const data = consolidate(filterRecords([...records, ...tests, ...indicateursSynthese]))
 
   const prelevements = await loadPrelevements(join(rootPath, 'data', PRELEVEMENT_SOURCE))
 
