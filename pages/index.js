@@ -14,6 +14,7 @@ import BigPicture from '../components/layouts/big-picture'
 import CovidTests from '../components/layouts/covid-tests'
 import Transfert from '../components/layouts/transfert'
 import Synthese from '../components/layouts/synthese'
+import Indicators from '../components/layouts/indicators'
 import Prelevements from '../components/layouts/prelevements'
 import Entreprises from '../components/layouts/entreprises'
 
@@ -47,6 +48,12 @@ const LAYOUTS = [
     name: 'activite-epidemique',
     label: 'Carte de vigilance',
     component: <Synthese />
+  },
+  {
+    id: 'indicators',
+    name: 'suivi-indicateurs',
+    label: 'Suivi des indicateurs',
+    component: <Indicators />
   },
   {
     id: 'prelevements',
