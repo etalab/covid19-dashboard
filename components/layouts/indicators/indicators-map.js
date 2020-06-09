@@ -17,7 +17,7 @@ const COLORS = {
 const defaultColor = colors.darkerGrey
 
 export const IndicatorsMap = ({hovered, isDROM}) => {
-  const {selectedLocation, setSelectedLocation} = useContext(AppContext)
+  const {selectedLocation, setSelectedLocation, isMobileDevice} = useContext(AppContext)
   const {indicators, selectedStat} = useContext(IndicatorsContext)
   const {code = '', region = ''} = hovered && hovered.feature ? hovered.feature.properties : {}
 
@@ -66,7 +66,7 @@ export const IndicatorsMap = ({hovered, isDROM}) => {
     return (
       <>
         {!isDROM && selectedLocation !== 'FRA' && (
-          <div className='back' onClick={() => setSelectedLocation('FRA')}>
+          <div className={`back ${isMobileDevice ? 'mobile' : ''}`} onClick={() => setSelectedLocation('FRA')}>
             <ChevronLeft /> Retour
           </div>
         )}
@@ -93,6 +93,10 @@ export const IndicatorsMap = ({hovered, isDROM}) => {
             border-radius: 4px;
             color: #fff;
             background-color: #000000aa;
+          }
+
+          .back.mobile {
+            left: 0;
           }
 
           .back:hover {

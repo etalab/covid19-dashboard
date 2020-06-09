@@ -16,9 +16,14 @@ const MapSelector = ({selectedMapId, maps, selectMap, selectStat}) => {
     setIsOpen(false)
   }, [selectMap, selectStat])
 
+  const handleClick = useCallback(event => {
+    event.stopPropagation()
+    setIsOpen(!isOpen)
+  }, [isOpen])
+
   return (
     <div className='switch'>
-      <div className='header' onClick={() => setIsOpen(!isOpen)}>
+      <div className='header' onClick={handleClick}>
         <span>{selectedMap.name}</span> {isOpen ? <ChevronDown /> : <ChevronUp />}
       </div>
       {isOpen && (
