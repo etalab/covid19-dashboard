@@ -131,15 +131,19 @@ const IndicatorsStatistics = () => {
           background: ${colors.lightGrey};
         }
 
-        .chart-container {
-          margin: ${isMobileDevice ? '0 0.2em' : '0 1em'};
+        .indicators-container {
+          padding: 0.5em;
         }
 
-        .toggle {
-          padding: 2px 20px;
-          text-align: right;
-          font-size: 0.8em;
-          cursor: pointer;
+        .indicators {
+          border-radius: 5px;
+          margin-bottom: 0.5em;
+          background: ${colors.lighterGrey};
+          cursor: pointer
+        }
+
+        .indicators:hover, .selected{
+          background: ${colors.lightGrey};
         }
         `}</style>
     </>
