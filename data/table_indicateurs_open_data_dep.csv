@@ -1,0 +1,102 @@
+"departement","region","libelle_reg","libelle_dep","tx_incid","R","taux_occupation_sae","tx_pos","tx_incid_couleur","R_couleur","taux_occupation_sae_couleur","tx_pos_couleur","nb_orange","nb_rouge"
+"01",84,"Auvergne Rhône Alpes","Ain",2.74,0.64,16.8,1.07655502392344,"vert","vert","vert","vert",0,0
+"03",84,"Auvergne Rhône Alpes","Allier",1.81,0.64,16.8,0.611620795107034,"vert","vert","vert","vert",0,0
+"07",84,"Auvergne Rhône Alpes","Ardèche",4.28,0.64,16.8,2.88065843621399,"vert","vert","vert","vert",0,0
+"15",84,"Auvergne Rhône Alpes","Cantal",0.7,0.64,16.8,0.323624595469256,"vert","vert","vert","vert",0,0
+"26",84,"Auvergne Rhône Alpes","Drôme",1.34,0.64,16.8,0.803673938002296,"vert","vert","vert","vert",0,0
+"38",84,"Auvergne Rhône Alpes","Isère",4.02,0.64,16.8,1.86267348429511,"vert","vert","vert","vert",0,0
+"42",84,"Auvergne Rhône Alpes","Loire",1.57,0.64,16.8,0.56710775047259,"vert","vert","vert","vert",0,0
+"43",84,"Auvergne Rhône Alpes","Haute-Loire",1.76,0.64,16.8,1.13960113960114,"vert","vert","vert","vert",0,0
+"63",84,"Auvergne Rhône Alpes","Puy-de-Dôme",0.91,0.64,16.8,0.28116213683224,"vert","vert","vert","vert",0,0
+"69",84,"Auvergne Rhône Alpes","Rhône",4.16,0.64,16.8,1.27952755905512,"vert","vert","vert","vert",0,0
+"73",84,"Auvergne Rhône Alpes","Savoie",2.55,0.64,16.8,0.83969465648855,"vert","vert","vert","vert",0,0
+"74",84,"Auvergne Rhône Alpes","Haute-Savoie",0.97,0.64,16.8,0.446677833612507,"vert","vert","vert","vert",0,0
+"21",27,"Bourgogne Franche Comté","Côte-d'Or",2.63,0.69,13.1,1.06626047220107,"vert","vert","vert","vert",0,0
+"25",27,"Bourgogne Franche Comté","Doubs",3.33,0.69,13.1,1.10091743119266,"vert","vert","vert","vert",0,0
+"39",27,"Bourgogne Franche Comté","Jura",0,0.69,13.1,0,"vert","vert","vert","vert",0,0
+"58",27,"Bourgogne Franche Comté","Nièvre",2,0.69,13.1,0.779727095516569,"vert","vert","vert","vert",0,0
+"70",27,"Bourgogne Franche Comté","Haute-Saône",2.15,0.69,13.1,0.566251415628539,"vert","vert","vert","vert",0,0
+"71",27,"Bourgogne Franche Comté","Saône-et-Loire",1.46,0.69,13.1,0.458978772231784,"vert","vert","vert","vert",0,0
+"89",27,"Bourgogne Franche Comté","Yonne",1.2,0.69,13.1,0.2636783124588,"vert","vert","vert","vert",0,0
+"90",27,"Bourgogne Franche Comté","Territoire de Belfort",8.56,0.69,13.1,1.94174757281553,"vert","vert","vert","vert",0,0
+"22",53,"Bretagne","Côtes-d'Armor",5.2,0.9,8,1.55466399197593,"vert","vert","vert","vert",0,0
+"29",53,"Bretagne","Finistère",0.55,0.9,8,0.368188512518409,"vert","vert","vert","vert",0,0
+"35",53,"Bretagne","Ille-et-Vilaine",1.57,0.9,8,0.842835894893406,"vert","vert","vert","vert",0,0
+"56",53,"Bretagne","Morbihan",1.98,0.9,8,1.10782865583456,"vert","vert","vert","vert",0,0
+"18",24,"Centre Val de Loire","Cher",1.35,0.69,19.4,0.747663551401869,"vert","vert","vert","vert",0,0
+"28",24,"Centre Val de Loire","Eure-et-Loir",4.66,0.69,19.4,2.06185567010309,"vert","vert","vert","vert",0,0
+"36",24,"Centre Val de Loire","Indre",0.92,0.69,19.4,0.56657223796034,"vert","vert","vert","vert",0,0
+"37",24,"Centre Val de Loire","Indre-et-Loire",2.31,0.69,19.4,0.711743772241993,"vert","vert","vert","vert",0,0
+"41",24,"Centre Val de Loire","Loir-et-Cher",0.91,0.69,19.4,0.530035335689046,"vert","vert","vert","vert",0,0
+"45",24,"Centre Val de Loire","Loiret",12.01,0.69,19.4,2.97640653357532,"orange","vert","vert","vert",1,0
+"2A",94,"Corse","Corse-du-Sud",3.1,0.71,33.3,0.717360114777618,"vert","vert","vert","vert",0,0
+"2B",94,"Corse","Haute-Corse",0.55,0.71,33.3,0.21978021978022,"vert","vert","vert","vert",0,0
+"08",44,"Grand Est","Ardennes",1.51,0.77,29.7,0.779727095516569,"vert","vert","vert","vert",0,0
+"10",44,"Grand Est","Aube",4.84,0.77,29.7,2.08044382801664,"vert","vert","vert","vert",0,0
+"51",44,"Grand Est","Marne",6.04,0.77,29.7,2.49084249084249,"vert","vert","vert","vert",0,0
+"52",44,"Grand Est","Haute-Marne",1.78,0.77,29.7,0.9375,"vert","vert","vert","vert",0,0
+"54",44,"Grand Est","Meurthe-et-Moselle",6.98,0.77,29.7,1.59076731129133,"vert","vert","vert","vert",0,0
+"55",44,"Grand Est","Meuse",8.26,0.77,29.7,1.434034416826,"vert","vert","vert","vert",0,0
+"57",44,"Grand Est","Moselle",6.56,0.77,29.7,1.96987253765933,"vert","vert","vert","vert",0,0
+"67",44,"Grand Est","Bas-Rhin",5.39,0.77,29.7,1.27829002514669,"vert","vert","vert","vert",0,0
+"68",44,"Grand Est","Haut-Rhin",8.38,0.77,29.7,2.21453287197232,"vert","vert","vert","vert",0,0
+"88",44,"Grand Est","Vosges",3.61,0.77,29.7,1.09983079526227,"vert","vert","vert","vert",0,0
+"971",1,"Guadeloupe","Guadeloupe ",0.27,NA,0,0.165289256198347,"vert","","vert","vert",0,0
+"973",3,"Guyane","Guyane",14.11,2.95,23.1,9.33940774487472,"orange","rouge","vert","orange",2,1
+"02",32,"Hauts de France","Aisne",5.13,0.71,25.8,2.0377358490566,"vert","vert","vert","vert",0,0
+"59",32,"Hauts de France","Nord",10.73,0.71,25.8,2.65469824293354,"orange","vert","vert","vert",1,0
+"60",32,"Hauts de France","Oise",3.15,0.71,25.8,1.69160702667534,"vert","vert","vert","vert",0,0
+"62",32,"Hauts de France","Pas-de-Calais",3.03,0.71,25.8,1.21883656509695,"vert","vert","vert","vert",0,0
+"80",32,"Hauts de France","Somme",5.79,0.71,25.8,1.22813546706364,"vert","vert","vert","vert",0,0
+"75",11,"Ile de France","Paris",7.22,0.8,45.6,1.86230926348672,"vert","vert","orange","vert",1,0
+"77",11,"Ile de France","Seine-et-Marne",5.83,0.8,45.6,1.72485453034081,"vert","vert","orange","vert",1,0
+"78",11,"Ile de France","Yvelines",7.66,0.8,45.6,2.74956650978449,"vert","vert","orange","vert",1,0
+"91",11,"Ile de France","Essonne",3.94,0.8,45.6,1.79930795847751,"vert","vert","orange","vert",1,0
+"92",11,"Ile de France","Hauts-de-Seine",7,0.8,45.6,1.97517916448173,"vert","vert","orange","vert",1,0
+"93",11,"Ile de France","Seine-Saint-Denis",7.6,0.8,45.6,2.61532125205931,"vert","vert","orange","vert",1,0
+"94",11,"Ile de France","Val-de-Marne",8.18,0.8,45.6,2.4416135881104,"vert","vert","orange","vert",1,0
+"95",11,"Ile de France","Val-d'Oise",9.21,0.8,45.6,3.53302611367128,"vert","vert","orange","vert",1,0
+"974",4,"La Réunion","La Réunion",1.4,NA,7.7,0.416088765603329,"vert","","vert","vert",0,0
+"972",2,"Martinique","Martinique ",0.84,NA,3.8,0.634249471458774,"vert","","vert","vert",0,0
+"976",6,"Mayotte","Mayotte",119.52,0.9,166.7,31.5289648622982,"rouge","vert","rouge","rouge",0,3
+"14",28,"Normandie","Calvados",1.3,0.7,7.9,0.367947669664759,"vert","vert","vert","vert",0,0
+"27",28,"Normandie","Eure",1.5,0.7,7.9,0.977198697068404,"vert","vert","vert","vert",0,0
+"50",28,"Normandie","Manche",0.41,0.7,7.9,0.183654729109275,"vert","vert","vert","vert",0,0
+"61",28,"Normandie","Orne",5.06,0.7,7.9,1.58730158730159,"vert","vert","vert","vert",0,0
+"76",28,"Normandie","Seine-Maritime",0.56,0.7,7.9,0.338000965717045,"vert","vert","vert","vert",0,0
+"16",75,"Nouvelle Aquitaine","Charente",1.44,0.71,7,0.640204865556978,"vert","vert","vert","vert",0,0
+"17",75,"Nouvelle Aquitaine","Charente-Maritime",0.47,0.71,7,0.371747211895911,"vert","vert","vert","vert",0,0
+"19",75,"Nouvelle Aquitaine","Corrèze",0.83,0.71,7,0.225733634311512,"vert","vert","vert","vert",0,0
+"23",75,"Nouvelle Aquitaine","Creuse",11.18,0.71,7,0.855826201448321,"orange","vert","vert","vert",1,0
+"24",75,"Nouvelle Aquitaine","Dordogne",0.49,0.71,7,0.232018561484919,"vert","vert","vert","vert",0,0
+"33",75,"Nouvelle Aquitaine","Gironde",1.23,0.71,7,0.487329434697856,"vert","vert","vert","vert",0,0
+"40",75,"Nouvelle Aquitaine","Landes",0.73,0.71,7,0.453857791225416,"vert","vert","vert","vert",0,0
+"47",75,"Nouvelle Aquitaine","Lot-et-Garonne",0.91,0.71,7,0.460829493087558,"vert","vert","vert","vert",0,0
+"64",75,"Nouvelle Aquitaine","Pyrénées-Atlantiques",2.79,0.71,7,0.841825431989366,"vert","vert","vert","vert",0,0
+"79",75,"Nouvelle Aquitaine","Deux-Sèvres",8.86,0.71,7,1.375,"vert","vert","vert","vert",0,0
+"86",75,"Nouvelle Aquitaine","Vienne",6.4,0.71,7,1.16959064327485,"vert","vert","vert","vert",0,0
+"87",75,"Nouvelle Aquitaine","Haute-Vienne",1.35,0.71,7,0.538213132400431,"vert","vert","vert","vert",0,0
+"09",76,"Occitanie","Ariège",0,0.72,7.4,0,"vert","vert","vert","vert",0,0
+"11",76,"Occitanie","Aude",0.27,0.72,7.4,0.105042016806723,"vert","vert","vert","vert",0,0
+"12",76,"Occitanie","Aveyron",1.08,0.72,7.4,0.56710775047259,"vert","vert","vert","vert",0,0
+"30",76,"Occitanie","Gard",4.41,0.72,7.4,1.38075313807531,"vert","vert","vert","vert",0,0
+"31",76,"Occitanie","Haute-Garonne",1.28,0.72,7.4,0.408905043162199,"vert","vert","vert","vert",0,0
+"32",76,"Occitanie","Gers",11.05,0.72,7.4,2.81501340482574,"orange","vert","vert","vert",1,0
+"34",76,"Occitanie","Hérault",0.85,0.72,7.4,0.178667143112382,"vert","vert","vert","vert",0,0
+"46",76,"Occitanie","Lot",1.16,0.72,7.4,0.677966101694915,"vert","vert","vert","vert",0,0
+"48",76,"Occitanie","Lozère",0,0.72,7.4,0,"vert","vert","vert","vert",0,0
+"65",76,"Occitanie","Hautes-Pyrénées",1.76,0.72,7.4,0.725952813067151,"vert","vert","vert","vert",0,0
+"66",76,"Occitanie","Pyrénées-Orientales",0,0.72,7.4,0,"vert","vert","vert","vert",0,0
+"81",76,"Occitanie","Tarn",0.26,0.72,7.4,0.0972762645914397,"vert","vert","vert","vert",0,0
+"82",76,"Occitanie","Tarn-et-Garonne",1.52,0.72,7.4,0.684931506849315,"vert","vert","vert","vert",0,0
+"44",52,"Pays de Loire","Loire-Atlantique",7.31,0.72,10.5,2.59323289701161,"vert","vert","vert","vert",0,0
+"49",52,"Pays de Loire","Maine-et-Loire",4.17,0.72,10.5,1.33700353912702,"vert","vert","vert","vert",0,0
+"53",52,"Pays de Loire","Mayenne",2.29,0.72,10.5,1.19453924914676,"vert","vert","vert","vert",0,0
+"72",52,"Pays de Loire","Sarthe",5.18,0.72,10.5,2.28706624605678,"vert","vert","vert","vert",0,0
+"85",52,"Pays de Loire","Vendée",5.71,0.72,10.5,1.64141414141414,"vert","vert","vert","vert",0,0
+"04",93,"Provence Alpes Côte d'Azur","Alpes-de-Haute-Provence",0,0.72,14.1,0,"vert","vert","vert","vert",0,0
+"05",93,"Provence Alpes Côte d'Azur","Hautes-Alpes",1.41,0.72,14.1,0.497512437810945,"vert","vert","vert","vert",0,0
+"06",93,"Provence Alpes Côte d'Azur","Alpes-Maritimes",2.96,0.72,14.1,0.758293838862559,"vert","vert","vert","vert",0,0
+"13",93,"Provence Alpes Côte d'Azur","Bouches-du-Rhône",5.16,0.72,14.1,1.01783637068631,"vert","vert","vert","vert",0,0
+"83",93,"Provence Alpes Côte d'Azur","Var",0.84,0.72,14.1,0.267300267300267,"vert","vert","vert","vert",0,0
+"84",93,"Provence Alpes Côte d'Azur","Vaucluse",1.78,0.72,14.1,0.978473581213307,"vert","vert","vert","vert",0,0
