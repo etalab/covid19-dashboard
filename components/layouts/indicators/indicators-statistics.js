@@ -69,8 +69,9 @@ const IndicatorsStatistics = () => {
   }, [report])
 
   const getIndicatorValue = useCallback(indicator => {
-    if (report[indicator] && !isNaN(report[indicator])) {
-      return Number.parseFloat(report[indicator].toPrecision(3))
+    const indicatorValue = report[indicator]
+    if (indicatorValue && !isNaN(indicatorValue) && typeof indicatorValue === 'number') {
+      return parseFloat(indicatorValue.toFixed(2))
     }
 
     return null
