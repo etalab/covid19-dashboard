@@ -5,7 +5,7 @@ import {keyBy} from 'lodash'
 import theme from '../../../styles/theme'
 import colors from '../../../styles/colors'
 
-import indicators from '../../../public/data/indicateurs.json'
+import {getReport} from '../../../lib/data'
 
 import {AppContext, ThemeContext} from '../../../pages'
 
@@ -129,8 +129,9 @@ const DesktopIndicators = () => {
 }
 
 const Indicators = props => {
-  const {isMobileDevice} = useContext(AppContext)
+  const {date, isMobileDevice} = useContext(AppContext)
 
+  const [indicators, setIndicators] = useState([])
   const [selectedMapId, setSelectedMapId] = useState('Taux d’incidence')
   const [selectedStat, setSelectedStat] = useState('tauxIncidence')
 
@@ -143,6 +144,20 @@ const Indicators = props => {
       setSelectedMapId(mapProperties[selectedStat].name)
     }
   }, [selectedStat])
+
+  useEffect(() => {
+    const getIndicatorsData = async () => {
+      const {history} = await getReport(date, 'DEP')
+      setIndicators(history.map(dep => {
+        return {
+          ...dep,
+          code: dep.code.split('-')[1]
+        }
+      }))
+    }
+
+    getIndicatorsData()
+  }, [date])
 
   return (
     <IndicatorsContext.Provider value={{indicators, selectedMapId, setSelectedMapId, selectedStat, setSelectedStat}}>

@@ -8,6 +8,10 @@ import {IndicatorsContext} from '.'
 const IndicatorsDepartement = ({code}) => {
   const {indicators} = useContext(IndicatorsContext)
 
+  if (indicators.length === 0) {
+    return null
+  }
+
   const {
     tauxIncidence,
     tauxIncidenceColor,

@@ -1,5 +1,7 @@
-import React, {useContext, useState, useEffect} from 'react'
+import React, {useContext, useState, useEffect, useMemo} from 'react'
 import {BarChart2} from 'react-feather'
+
+import departements from '@etalab/decoupage-administratif/data/departements.json'
 
 import colors from '../../../styles/colors'
 
@@ -41,8 +43,12 @@ const INDICATORS = {
 const IndicatorsStatistics = () => {
   const {date, selectedLocation, setSelectedLocation, isMobileDevice} = useContext(AppContext)
 
+  const {selectedStat, setSelectedStat, indicators} = useContext(IndicatorsContext)
+
   const [report, setReport] = useState(null)
   const [previousReport, setPreviousReport] = useState(null)
+
+  const [locationType, code] = selectedLocation.split('-')
 
   useEffect(() => {
     async function fetchReport() {
@@ -62,15 +68,18 @@ const IndicatorsStatistics = () => {
     }
   }, [report])
 
-  const {selectedStat, setSelectedStat, indicators} = useContext(IndicatorsContext)
-
-  const indicatorsByRegion = indicators.filter(indicator => {
-    if (selectedLocation.split('-')[0] === 'REG') {
-      return indicator.region === selectedLocation.split('-')[1]
+  const departementsRegion = useMemo(() => {
+    if (locationType === 'REG') {
+      return indicators.filter(indicator => {
+        return departements
+          .filter(d => d.region === code)
+          .map(d => d.code)
+          .includes(indicator.code)
+      })
     }
 
-    return false
-  })
+    return []
+  }, [locationType, code, indicators])
 
   return (
     <>
@@ -82,7 +91,7 @@ const IndicatorsStatistics = () => {
       </div>
 
       <div className='indicators-container'>
-        {report && selectedLocation === 'FRA' && (
+        {report && selectedLocation === 'FRA' ? (
           Object.keys(INDICATORS).map(indicator => {
             const {label, min, max} = INDICATORS[indicator]
             return (
@@ -104,19 +113,19 @@ const IndicatorsStatistics = () => {
               </div>
             )
           })
-        )}
-        {selectedLocation.split('-')[0] === 'REG' && (
-          <>
-            {indicatorsByRegion.map(r => (
-              <div key={r.code}>
-                <h3>{r.nom}</h3>
-                <IndicatorsDepartement code={r.code} />
-              </div>
-            ))}
-          </>
-        )}
-        {selectedLocation.split('-')[0] === 'DEP' && (
-          <IndicatorsDepartement code={selectedLocation.split('-')[1]} />
+        ) : (
+          locationType === 'REG' ? (
+            <>
+              {departementsRegion.map(r => (
+                <div key={r.code}>
+                  <h3>{r.nom}</h3>
+                  <IndicatorsDepartement code={r.code} />
+                </div>
+              ))}
+            </>
+          ) : (
+            <IndicatorsDepartement code={code} />
+          )
         )}
       </div>
 

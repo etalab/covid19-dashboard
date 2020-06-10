@@ -27,7 +27,6 @@ const DATA_SOURCE = process.env.DATA_SOURCE || 'https://raw.githubusercontent.co
 const TESTS_SOURCE = 'https://www.data.gouv.fr/fr/datasets/r/b4ea7b4b-b7d1-4885-a099-71852291ff20'
 
 const PRELEVEMENT_SOURCE = 'sites-prelevement-latest.csv'
-const INDICATEURS_SOURCE = 'table_indicateurs_open_data_dep.csv'
 
 async function fetchCsv(url, options = {}) {
   const rows = await getStream.array(
@@ -79,11 +78,29 @@ function consolidate(records) {
       .reduce((acc, row) => {
         defaults(acc, row)
         return acc
-      }, {}), ['casConfirmes', 'deces', 'decesEhpad', 'casConfirmesEhpad', 'casPossiblesEhpad', 'reanimation', 'hospitalises', 'gueris', 'date', 'code', 'nom', 'testsRealises', 'testsPositifs', 'testsRealisesDetails', 'testsPositifsDetails', 'indicateurSynthese', 'nouvellesHospitalisations', 'nouvellesReanimations', 'tauxIncidence', 'tauxReproductionEffectif', 'tauxOccupationRea', 'tauxPositiviteTests'])
+      }, {}), ['casConfirmes', 'deces', 'decesEhpad', 'casConfirmesEhpad', 'casPossiblesEhpad', 'reanimation', 'hospitalises', 'gueris', 'date', 'code', 'nom', 'testsRealises', 'testsPositifs', 'testsRealisesDetails', 'testsPositifsDetails', 'indicateurSynthese', 'nouvellesHospitalisations', 'nouvellesReanimations', 'tauxIncidence', 'tauxIncidenceColor', 'tauxReproductionEffectif', 'tauxReproductionEffectifColor', 'tauxOccupationRea', 'tauxOccupationReaColor', 'tauxPositiviteTests', 'tauxPositiviteTestsColor'])
   })
 }
 
 const TODAY = (new Date()).toISOString().slice(0, 10)
+
+function fillEmptyDates(records, rows) {
+  const dates = uniq(records.map(r => r.date))
+  const index = groupBy(rows, 'date')
+  let lastNotEmptyDate
+
+  dates.forEach(date => {
+    if (date in index) {
+      lastNotEmptyDate = date
+    } else if (lastNotEmptyDate) {
+      index[lastNotEmptyDate].forEach(row => {
+        rows.push({...row, date})
+      })
+    }
+  })
+
+  return rows
+}
 
 async function loadPrelevements(file) {
   const inputRows = await getStream.array(
@@ -219,9 +236,8 @@ async function loadTests(url) {
 }
 
 async function loadIndicateursSynthese(records) {
-  const dates = uniq(records.map(r => r.date))
-
   const inputRows = await extractData('appvqjbgBnxfnGtka', 'Activité épidémique')
+
   const rows = inputRows.map(row => {
     const codeDepartement = row.departement.length === 1 ? `0${row.departement}` : row.departement
     return {
@@ -233,33 +249,17 @@ async function loadIndicateursSynthese(records) {
     }
   })
 
-  const index = groupBy(rows, 'date')
-  let lastNotEmptyDate
-
-  dates.forEach(date => {
-    if (date in index) {
-      lastNotEmptyDate = date
-    } else if (lastNotEmptyDate) {
-      index[lastNotEmptyDate].forEach(row => {
-        rows.push({...row, date})
-      })
-    }
-  })
-
-  return rows
+  return fillEmptyDates(records, rows)
 }
 
-async function loadIndicateursMap() {
-  const inputRows = await getStream.array(
-    createReadStream(join(rootPath, 'data', 'table_indicateurs_open_data_dep.csv'))
-      .pipe(csvParse())
-  )
+async function loadIndicateurs(records) {
+  // Départements
+  const inputDepRows = await extractData('appvqjbgBnxfnGtka', 'table_indicateurs_open_data_dep')
 
-  return inputRows.map(row => {
+  const depRows = inputDepRows.map(row => {
     return {
-      code: row.departement,
-      region: row.region,
-      nom: departementsIndex[row.departement].nom,
+      date: '2020-06-09',
+      code: `DEP-${row.departement}`,
       tauxIncidence: row.tx_incid,
       tauxIncidenceColor: row.tx_incid_couleur,
       tauxReproductionEffectif: row.R,
@@ -271,17 +271,11 @@ async function loadIndicateursMap() {
       sourceType: 'centre-crise-sanitaire'
     }
   })
-}
 
-async function loadIndicateurs(records) {
-  const dates = uniq(records.map(r => r.date))
+  // France
+  const frInputsRows = await extractData('appvqjbgBnxfnGtka', 'table_indicateurs_open_data_france')
 
-  const inputRows = await getStream.array(
-    createReadStream(join(rootPath, 'data', 'table_indicateurs_open_data_france.csv'))
-      .pipe(csvParse())
-  )
-
-  const rows = inputRows.map(row => {
+  const frRows = frInputsRows.map(row => {
     return {
       date: row.extract_date,
       code: 'FRA',
@@ -293,20 +287,7 @@ async function loadIndicateurs(records) {
     }
   })
 
-  const index = groupBy(rows, 'date')
-  let lastNotEmptyDate
-
-  dates.forEach(date => {
-    if (date in index) {
-      lastNotEmptyDate = date
-    } else if (lastNotEmptyDate) {
-      index[lastNotEmptyDate].forEach(row => {
-        rows.push({...row, date})
-      })
-    }
-  })
-
-  return rows
+  return fillEmptyDates(records, [...frRows, ...depRows])
 }
 
 function filterRecords(records) {
@@ -337,8 +318,6 @@ async function main() {
 
   const prelevements = await loadPrelevements(join(rootPath, 'data', PRELEVEMENT_SOURCE))
 
-  const indicateursMap = await loadIndicateursMap(join(rootPath, 'data', INDICATEURS_SOURCE))
-
   const dates = uniq(data.map(r => r.date)).sort()
   const codes = uniq(data.map(r => r.code))
 
@@ -347,8 +326,6 @@ async function main() {
   const dataDirectory = join(rootPath, 'public', 'data')
 
   await outputJson(join(dataDirectory, 'prelevements.json'), prelevements)
-
-  await outputJson(join(dataDirectory, 'indicateurs.json'), indicateursMap)
 
   await Promise.all(dates.map(async date => {
     await outputJson(join(dataDirectory, `date-${date}.json`), data.filter(r => r.date === date))
