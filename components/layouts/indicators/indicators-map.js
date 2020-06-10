@@ -3,6 +3,8 @@ import PropTypes from 'prop-types'
 import {Source, Layer} from 'react-map-gl'
 import {ChevronLeft} from 'react-feather'
 
+const departements = require('@etalab/decoupage-administratif/data/departements.json')
+
 import colors from '../../../styles/colors'
 
 import {IndicatorsContext} from '.'
@@ -22,7 +24,16 @@ export const IndicatorsMap = ({hovered, isDROM}) => {
   const {indicators, selectedStat} = useContext(IndicatorsContext)
   const {code = '', region = ''} = hovered && hovered.feature ? hovered.feature.properties : {}
 
-  const selectedRegion = selectedLocation.includes('REG') ? selectedLocation.split('-')[1] : null
+  const getSelectedRegion = useCallback(() => {
+    const [locationType, code] = selectedLocation.split('-')
+    if (locationType !== 'FRA') {
+      return locationType === 'REG' ? code : departements.find(d => d.code === code).region
+    }
+
+    return null
+  }, [selectedLocation])
+
+  const selectedRegion = getSelectedRegion()
 
   const getColors = useCallback(() => {
     const colors = ['match', ['get', 'code']]
@@ -128,11 +139,13 @@ export const onSelect = ({properties}) => {
 }
 
 export const HoveredInfos = ({feature}) => {
-  const {code} = feature.properties
+  const {code, region} = feature.properties
 
-  return (
-    <IndicatorsDepartement code={code} />
-  )
+  if (region) {
+    return <IndicatorsDepartement code={code} />
+  }
+
+  return null
 }
 
 HoveredInfos.propTypes = {
