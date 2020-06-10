@@ -8,6 +8,7 @@ import colors from '../../../styles/colors'
 import {AppContext} from '../../../pages'
 
 import {getPreviousReport, getReport} from '../../../lib/data'
+import {indicatorsList} from '../../../lib/indicators'
 
 import Counter from '../../counter'
 import IndicateurChart from '../../charts/indicateurs-chart'
@@ -15,30 +16,6 @@ import IndicateurChart from '../../charts/indicateurs-chart'
 import IndicatorsDepartement from './indicators-departement'
 
 import {IndicatorsContext} from '.'
-
-const INDICATORS = {
-  tauxIncidence: {
-    label: 'Taux d’incidence',
-    min: 1,
-    max: 10
-  },
-  tauxReproductionEffectif: {
-    label: 'Taux de reproduction effectif',
-    min: 0,
-    max: 1.5
-  },
-  tauxOccupationRea: {
-    label: 'Taux d’occupation des lits en réanimation',
-    details: 'Taux d’occupation des lits en réa/SI/SC par des patients COVID par rapport à la capacité initiale en réa',
-    min: 40,
-    max: 60
-  },
-  tauxPositiviteTests: {
-    label: 'Taux de positivité des tests RT-PCR',
-    min: 5,
-    max: 10
-  }
-}
 
 const IndicatorsStatistics = () => {
   const {date, selectedLocation, setSelectedLocation, isMobileDevice} = useContext(AppContext)
@@ -52,11 +29,11 @@ const IndicatorsStatistics = () => {
 
   useEffect(() => {
     async function fetchReport() {
-      setReport(await getReport(date, selectedLocation))
+      setReport(await getReport(date, 'FRA'))
     }
 
     fetchReport()
-  }, [date, selectedLocation])
+  }, [date])
 
   useEffect(() => {
     async function fetchPreviousReport() {
@@ -101,8 +78,8 @@ const IndicatorsStatistics = () => {
 
       <div className='indicators-container'>
         {report && selectedLocation === 'FRA' ? (
-          Object.keys(INDICATORS).map(indicator => {
-            const {label, min, max} = INDICATORS[indicator]
+          Object.keys(indicatorsList).map(indicator => {
+            const {label, min, max} = indicatorsList[indicator]
             const value = getIndicatorValue(indicator)
             return (
               <div className={`indicators ${selectedStat === indicator ? 'selected' : ''}`} key={indicator} onClick={() => setSelectedStat(indicator)}>

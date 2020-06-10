@@ -1,4 +1,4 @@
-import React, {useContext, useCallback} from 'react'
+import React, {useContext, useCallback, useState, useEffect} from 'react'
 import PropTypes from 'prop-types'
 import {Source, Layer} from 'react-map-gl'
 import {ChevronLeft} from 'react-feather'
@@ -9,7 +9,9 @@ import colors from '../../../styles/colors'
 
 import {IndicatorsContext} from '.'
 import {AppContext} from '../../../pages'
-import IndicatorsDepartement from './indicators-departement'
+import IndicatorsDepartement, {Indicator} from './indicators-departement'
+import {getReport} from '../../../lib/data'
+import {indicatorsList} from '../../../lib/indicators'
 
 const COLORS = {
   vert: colors.green,
@@ -138,20 +140,28 @@ export const onSelect = ({properties}) => {
   return `${region ? 'DEP' : 'REG'}-${code}`
 }
 
-export const HoveredInfos = ({feature}) => {
+export const HoveredInfos = ({feature, options = {allIndicators: true}}) => {
   const {code, region} = feature.properties
+  const {allIndicators} = options
 
   if (region) {
-    return <IndicatorsDepartement code={code} />
+    return (
+      <IndicatorsDepartement code={code} allIndicators={allIndicators} />
+    )
   }
 
   return null
 }
 
+HoveredInfos.defaultProps = {
+  options: {}
+}
+
 HoveredInfos.propTypes = {
   feature: PropTypes.shape({
     properties: PropTypes.object.isRequired
-  }).isRequired
+  }).isRequired,
+  options: PropTypes.object
 }
 
 export const interactiveLayersIds = ['regions-fill', 'indicateur']

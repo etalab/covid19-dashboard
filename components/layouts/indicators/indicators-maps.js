@@ -7,7 +7,7 @@ const maps = [
     type: IndicatorsMap,
     property: 'tauxIncidence',
     onSelect,
-    hovered: feature => <HoveredInfos feature={feature} />,
+    hovered: (feature, options) => <HoveredInfos feature={feature} options={options} />,
     interactiveLayersIds
   },
   {
@@ -15,7 +15,7 @@ const maps = [
     type: IndicatorsMap,
     property: 'tauxReproductionEffectif',
     onSelect,
-    hovered: feature => <HoveredInfos feature={feature} />,
+    hovered: (feature, options) => <HoveredInfos feature={feature} options={options} />,
     interactiveLayersIds
   },
   {
@@ -23,7 +23,7 @@ const maps = [
     type: IndicatorsMap,
     property: 'tauxOccupationRea',
     onSelect,
-    hovered: feature => <HoveredInfos feature={feature} />,
+    hovered: (feature, options) => <HoveredInfos feature={feature} options={options} />,
     interactiveLayersIds
   },
   {
@@ -31,7 +31,7 @@ const maps = [
     type: IndicatorsMap,
     property: 'tauxPositiviteTests',
     onSelect,
-    hovered: feature => <HoveredInfos feature={feature} />,
+    hovered: (feature, options) => <HoveredInfos feature={feature} options={options} />,
     interactiveLayersIds
   }
 ]

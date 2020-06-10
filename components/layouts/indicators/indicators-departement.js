@@ -3,9 +3,10 @@ import PropTypes from 'prop-types'
 
 import colors from '../../../styles/colors'
 
+import {indicatorsList} from '../../../lib/indicators'
 import {IndicatorsContext} from '.'
 
-const Indicator = ({label, value, color}) => {
+export const Indicator = ({label, value, color}) => {
   return (
     <div className='indicator'>
       <div>{label}:</div>
@@ -62,13 +63,14 @@ Indicator.propTypes = {
   color: PropTypes.string
 }
 
-const IndicatorsDepartement = ({code}) => {
-  const {indicators} = useContext(IndicatorsContext)
+const IndicatorsDepartement = ({code, allIndicators = true}) => {
+  const {selectedStat, indicators} = useContext(IndicatorsContext)
 
   if (indicators.length === 0) {
     return null
   }
 
+  const departement = indicators.find(dep => dep.code === code)
   const {
     tauxIncidence,
     tauxIncidenceColor,
@@ -78,15 +80,20 @@ const IndicatorsDepartement = ({code}) => {
     tauxOccupationReaColor,
     tauxPositiviteTests,
     tauxPositiviteTestsColor
-  } = indicators.find(indicator => indicator.code === code)
+  } = departement
 
   return (
     <div className='indicators'>
-      <Indicator label='Taux d’incidence' value={tauxIncidence} color={tauxIncidenceColor} />
-      <Indicator label='Taux de reproduction effectif' value={tauxReproductionEffectif} color={tauxReproductionEffectifColor} />
-      <Indicator label='Taux d’occupation des lits en réa' value={tauxOccupationRea} color={tauxOccupationReaColor} />
-      <Indicator label='Taux de positivité des tests RT-PCR' value={tauxPositiviteTests} color={tauxPositiviteTestsColor} />
-
+      {allIndicators ? (
+        <>
+          <Indicator label='Taux d’incidence' value={tauxIncidence} color={tauxIncidenceColor} />
+          <Indicator label='Taux de reproduction effectif' value={tauxReproductionEffectif} color={tauxReproductionEffectifColor} />
+          <Indicator label='Taux d’occupation des lits en réa' value={tauxOccupationRea} color={tauxOccupationReaColor} />
+          <Indicator label='Taux de positivité des tests RT-PCR' value={tauxPositiviteTests} color={tauxPositiviteTestsColor} />
+        </>
+      ) : (
+        <Indicator label={indicatorsList[selectedStat].label} value={departement[selectedStat]} color={departement[`${selectedStat}Color`]} />
+      )}
       <style jsx>{`
         .indicators {
           font-size: medium;
@@ -98,8 +105,13 @@ const IndicatorsDepartement = ({code}) => {
   )
 }
 
+IndicatorsDepartement.defaultProps = {
+  allIndicators: true
+}
+
 IndicatorsDepartement.propTypes = {
-  code: PropTypes.string.isRequired
+  code: PropTypes.object.isRequired,
+  allIndicators: PropTypes.bool
 }
 
 export default IndicatorsDepartement

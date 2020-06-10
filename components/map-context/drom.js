@@ -10,23 +10,28 @@ import MapContext from '.'
 export const droms = [
   {
     name: 'Guadeloupe',
-    code: 'DEP-971'
+    code: 'DEP-971',
+    region: '01'
   },
   {
     name: 'Martinique',
-    code: 'DEP-972'
+    code: 'DEP-972',
+    region: '02'
   },
   {
     name: 'Guyane',
-    code: 'DEP-973'
+    code: 'DEP-973',
+    region: '03'
   },
   {
     name: 'La Réunion',
-    code: 'DEP-974'
+    code: 'DEP-974',
+    region: '04'
   },
   {
     name: 'Mayotte',
-    code: 'DEP-976'
+    code: 'DEP-976',
+    region: '05'
   }
 ]
 
@@ -51,14 +56,14 @@ const Drom = ({map, disableClick}) => {
   return (
     <div className='drom-grid'>
 
-      {droms.map(({code, name}) => {
+      {droms.map(({code, name, region}) => {
         const codeDepartement = getDROMCodeDep(name)
         return (
           <div key={code} className='drom'>
             <div className='drom-name'>{name}</div>
             {map.hovered && (
               <div className='hovered' onClick={() => selectDROM(code)}>
-                {map.hovered({properties: {code: codeDepartement, name}})}
+                {map.hovered({properties: {code: codeDepartement, region}}, {allIndicators: false})}
               </div>
             )}
             <MapContext
