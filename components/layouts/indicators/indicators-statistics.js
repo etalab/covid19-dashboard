@@ -10,6 +10,8 @@ import {getPreviousReport, getReport} from '../../../lib/data'
 import Counter from '../../counter'
 import IndicateurChart from '../../charts/indicateurs-chart'
 
+import IndicatorsDepartement from './indicators-departement'
+
 import {IndicatorsContext} from '.'
 
 const INDICATORS = {
@@ -60,7 +62,15 @@ const IndicatorsStatistics = () => {
     }
   }, [report])
 
-  const {selectedStat, setSelectedStat} = useContext(IndicatorsContext)
+  const {selectedStat, setSelectedStat, indicators} = useContext(IndicatorsContext)
+
+  const indicatorsByRegion = indicators.filter(indicator => {
+    if (selectedLocation.split('-')[0] === 'REG') {
+      return indicator.region === selectedLocation.split('-')[1]
+    }
+
+    return false
+  })
 
   return (
     <>
@@ -72,7 +82,7 @@ const IndicatorsStatistics = () => {
       </div>
 
       <div className='indicators-container'>
-        {report && (
+        {report && selectedLocation === 'FRA' && (
           Object.keys(INDICATORS).map(indicator => {
             const {label, min, max} = INDICATORS[indicator]
             return (
@@ -94,6 +104,19 @@ const IndicatorsStatistics = () => {
               </div>
             )
           })
+        )}
+        {selectedLocation.split('-')[0] === 'REG' && (
+          <>
+            {indicatorsByRegion.map(r => (
+              <div key={r.code}>
+                <h3>{r.nom}</h3>
+                <IndicatorsDepartement code={r.code} />
+              </div>
+            ))}
+          </>
+        )}
+        {selectedLocation.split('-')[0] === 'DEP' && (
+          <IndicatorsDepartement code={selectedLocation.split('-')[1]} />
         )}
       </div>
 
