@@ -1,4 +1,4 @@
-import React, {useContext, useState, useEffect, useMemo} from 'react'
+import React, {useContext, useState, useEffect, useMemo, useCallback} from 'react'
 import {BarChart2} from 'react-feather'
 
 import departements from '@etalab/decoupage-administratif/data/departements.json'
@@ -68,6 +68,14 @@ const IndicatorsStatistics = () => {
     }
   }, [report])
 
+  const getIndicatorValue = useCallback(indicator => {
+    if (report[indicator] && !isNaN(report[indicator])) {
+      return Number.parseFloat(report[indicator].toPrecision(3))
+    }
+
+    return null
+  }, [report])
+
   const departementsRegion = useMemo(() => {
     if (locationType === 'REG') {
       return indicators.filter(indicator => {
@@ -94,10 +102,11 @@ const IndicatorsStatistics = () => {
         {report && selectedLocation === 'FRA' ? (
           Object.keys(INDICATORS).map(indicator => {
             const {label, min, max} = INDICATORS[indicator]
+            const value = getIndicatorValue(indicator)
             return (
               <div className={`indicators ${selectedStat === indicator ? 'selected' : ''}`} key={indicator} onClick={() => setSelectedStat(indicator)}>
                 <Counter
-                  value={report[indicator]}
+                  value={value}
                   label={label}
                   previousValue={previousReport && previousReport[indicator]}
                   onClick={() => setSelectedStat(indicator)}
