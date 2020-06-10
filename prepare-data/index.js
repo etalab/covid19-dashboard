@@ -254,11 +254,11 @@ async function loadIndicateursSynthese(records) {
 
 async function loadIndicateurs(records) {
   // Départements
-  const inputDepRows = await extractData('appvqjbgBnxfnGtka', 'table_indicateurs_open_data_dep')
+  const inputDepRows = await extractData('appvqjbgBnxfnGtka', 'VF_table_indicateurs')
 
   const depRows = inputDepRows.map(row => {
     return {
-      date: '2020-06-09',
+      date: row.extract_date,
       code: `DEP-${row.departement}`,
       tauxIncidence: row.tx_incid,
       tauxIncidenceColor: row.tx_incid_couleur,
