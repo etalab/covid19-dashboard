@@ -1,4 +1,4 @@
-import React, {useContext, useCallback, useState, useEffect} from 'react'
+import React, {useContext, useCallback} from 'react'
 import PropTypes from 'prop-types'
 import {Source, Layer} from 'react-map-gl'
 import {ChevronLeft} from 'react-feather'
@@ -9,9 +9,7 @@ import colors from '../../../styles/colors'
 
 import {IndicatorsContext} from '.'
 import {AppContext} from '../../../pages'
-import IndicatorsDepartement, {Indicator} from './indicators-departement'
-import {getReport} from '../../../lib/data'
-import {indicatorsList} from '../../../lib/indicators'
+import IndicatorsDepartement from './indicators-departement'
 
 const COLORS = {
   vert: colors.green,
