@@ -5,7 +5,7 @@ import {AppContext} from '../../../pages'
 
 import colors from '../../../styles/colors'
 
-import masksProduction from '../../../public/data/masks-production.json'
+import masksProduction from '../../../public/data/masques-soignants.json'
 
 import theme from '../../../styles/theme'
 import MasksProductionChart from '../../charts/masks-production-chart'

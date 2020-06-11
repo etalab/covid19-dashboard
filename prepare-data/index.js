@@ -77,7 +77,7 @@ function consolidate(records) {
       .reduce((acc, row) => {
         defaults(acc, row)
         return acc
-      }, {}), ['casConfirmes', 'deces', 'decesEhpad', 'casConfirmesEhpad', 'casPossiblesEhpad', 'reanimation', 'hospitalises', 'gueris', 'date', 'code', 'nom', 'testsRealises', 'testsPositifs', 'testsRealisesDetails', 'testsPositifsDetails', 'indicateurSynthese', 'nouvellesHospitalisations', 'nouvellesReanimations', 'tauxIncidence', 'tauxIncidenceColor', 'tauxReproductionEffectif', 'tauxReproductionEffectifColor', 'tauxOccupationRea', 'tauxOccupationReaColor', 'tauxPositiviteTests', 'tauxPositiviteTestsColor'])
+      }, {}), ['casConfirmes', 'deces', 'decesEhpad', 'casConfirmesEhpad', 'casPossiblesEhpad', 'reanimation', 'hospitalises', 'gueris', 'date', 'code', 'nom', 'testsRealises', 'testsPositifs', 'testsRealisesDetails', 'testsPositifsDetails', 'indicateurSynthese', 'nouvellesHospitalisations', 'nouvellesReanimations', 'tauxIncidence', 'tauxIncidenceColor', 'tauxReproductionEffectif', 'tauxReproductionEffectifColor', 'tauxOccupationRea', 'tauxOccupationReaColor', 'tauxPositiviteTests', 'tauxPositiviteTestsColor', 'productionFR', 'productionFRMasquesChirurgicaux', 'productionFRFFP2', 'import', 'importChineMasquesChirugicaux', 'importChineFFP2', 'distribution', 'distributionMasquesChirurgicaux', 'distributionFFP2'])
   })
 }
 
@@ -289,6 +289,28 @@ async function loadIndicateurs() {
   return [...frRows, ...depRows]
 }
 
+async function loadMasquesSoignants() {
+  const inputRows = await extractData('appvqjbgBnxfnGtka', 'Masques soignants')
+  const rows = inputRows.map(row => {
+    return {
+      week: Number.parseInt(row.Semaine.split(' ')[1], 10),
+      code: 'FRA',
+      productionFR: Number.parseFloat(row.productionFR.replace(',', '.')),
+      productionFRMasquesChirurgicaux: Number.parseFloat(row.productionFR_masques_chirurgicaux.replace(',', '.')),
+      productionFRFFP2: Number.parseFloat(row.productionFR_FFP2.replace(',', '.')),
+      import: Number.parseFloat(row.import.replace(',', '.')),
+      importChineMasquesChirurgicaux: Number.parseFloat(row.import_chine_masques_chirugicaux.replace(',', '.')),
+      importChineFFP2: Number.parseFloat(row.import_chine_FFP2.replace(',', '.')),
+      distribution: Number.parseFloat(row.distribution.replace(',', '.')),
+      distributionMasquesChirurgicaux: Number.parseFloat(row.distribution_masques_chirurgicaux.replace(',', '.')),
+      distributionFFP2: Number.parseFloat(row.distribution_FFP2.replace(',', '.')),
+      sourceType: 'ministere-sante'
+    }
+  })
+
+  return rows
+}
+
 function filterRecords(records) {
   const {START_DATE, END_DATE, ALLOWED_SOURCES} = process.env
   const filters = []
@@ -315,6 +337,7 @@ async function main() {
   const indicateurs = await loadIndicateurs()
   const data = consolidate(filterRecords([...records, ...tests, ...indicateursSynthese, ...indicateurs]))
 
+  const masquesSoignants = await loadMasquesSoignants()
   const prelevements = await loadPrelevements(join(rootPath, 'data', PRELEVEMENT_SOURCE))
 
   const dates = uniq(data.map(r => r.date)).sort()
@@ -327,6 +350,7 @@ async function main() {
   const dataDirectory = join(rootPath, 'public', 'data')
 
   await outputJson(join(dataDirectory, 'prelevements.json'), prelevements)
+  await outputJson(join(dataDirectory, 'masques-soignants.json'), masquesSoignants)
 
   await Promise.all(dates.map(async date => {
     await outputJson(join(dataDirectory, `date-${date}.json`), data.filter(r => r.date === date))
