@@ -61,13 +61,12 @@ async function loadJson(dataSource) {
 
 const SOURCE_PRIORITIES = {
   'ministere-sante': 1,
-  'centre-crise-sanitaire': 2,
-  'sante-publique-france': 3,
-  'sante-publique-france-data': 4,
-  'agences-regionales-sante': 5,
-  prefectures: 6,
-  'opencovid19-fr': 7,
-  'lperez-historical-data': 8
+  'sante-publique-france': 2,
+  'sante-publique-france-data': 3,
+  'agences-regionales-sante': 4,
+  prefectures: 5,
+  'opencovid19-fr': 6,
+  'lperez-historical-data': 7
 }
 
 function consolidate(records) {
@@ -268,7 +267,7 @@ async function loadIndicateurs(records) {
       tauxOccupationReaColor: row.taux_occupation_sae_couleur,
       tauxPositiviteTests: row.tx_pos,
       tauxPositiviteTestsColor: row.tx_pos_couleur,
-      sourceType: 'centre-crise-sanitaire'
+      sourceType: 'ministere-sante'
     }
   })
 
@@ -283,7 +282,7 @@ async function loadIndicateurs(records) {
       tauxReproductionEffectif: Number.parseFloat(row.R),
       tauxOccupationRea: Number.parseFloat(row.taux_occupation_sae),
       tauxPositiviteTests: Number.parseFloat(row.tx_pos),
-      sourceType: 'centre-crise-sanitaire'
+      sourceType: 'ministere-sante'
     }
   })
 

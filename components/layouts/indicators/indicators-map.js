@@ -85,7 +85,7 @@ export const IndicatorsMap = ({hovered, isDROM}) => {
         <Source
           id='decoupage-administratif'
           type='vector'
-          attribution='Centre de crise sanitaire'
+          attribution='Donnéees Ministère des Solidarités et de la santé'
           url='https://etalab-tiles.fr/data/decoupage-administratif.json'
         >
           <Layer beforeId='place-town' {...indicateurSynthese} />
