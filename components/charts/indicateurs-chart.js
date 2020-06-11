@@ -76,7 +76,7 @@ const IndicateursChart = ({metricName, reports, label, min, max}) => {
 IndicateursChart.propTypes = {
   metricName: PropTypes.string.isRequired,
   reports: PropTypes.array.isRequired,
-  label: PropTypes.array.isRequired,
+  label: PropTypes.string.isRequired,
   min: PropTypes.number.isRequired,
   max: PropTypes.number.isRequired
 }

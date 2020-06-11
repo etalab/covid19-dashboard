@@ -110,7 +110,7 @@ IndicatorsDepartement.defaultProps = {
 }
 
 IndicatorsDepartement.propTypes = {
-  code: PropTypes.object.isRequired,
+  code: PropTypes.string.isRequired,
   allIndicators: PropTypes.bool
 }
 
