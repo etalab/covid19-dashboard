@@ -77,8 +77,17 @@ const IndicatorsStatistics = () => {
       </div>
 
       <div className='indicators-container'>
-        {report && selectedLocation === 'FRA' ? (
-          Object.keys(indicatorsList).map(indicator => {
+        {selectedLocation.split('-')[0] === 'REG' ? (
+          <>
+            {departementsRegion.map(r => (
+              <div key={r.code}>
+                <h3>{r.nom}</h3>
+                <IndicatorsDepartement code={r.code} />
+              </div>
+            ))}
+          </>
+        ) : (
+          report && Object.keys(indicatorsList).map(indicator => {
             const {label, min, max} = indicatorsList[indicator]
             const value = getIndicatorValue(indicator)
             return (
@@ -100,19 +109,6 @@ const IndicatorsStatistics = () => {
               </div>
             )
           })
-        ) : (
-          locationType === 'REG' ? (
-            <>
-              {departementsRegion.map(r => (
-                <div key={r.code}>
-                  <h3>{r.nom}</h3>
-                  <IndicatorsDepartement code={r.code} />
-                </div>
-              ))}
-            </>
-          ) : (
-            <IndicatorsDepartement code={code} />
-          )
         )}
       </div>
 
