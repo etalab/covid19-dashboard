@@ -29,11 +29,11 @@ const IndicatorsStatistics = () => {
 
   useEffect(() => {
     async function fetchReport() {
-      setReport(await getReport(date, 'FRA'))
+      setReport(await getReport(date, selectedLocation))
     }
 
     fetchReport()
-  }, [date])
+  }, [date, selectedLocation])
 
   useEffect(() => {
     async function fetchPreviousReport() {
