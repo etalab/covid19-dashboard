@@ -17,7 +17,8 @@ module.exports = {
       '/activite-epidemique': {page: '/', query: {layout: 'synthese'}},
       '/suivi-indicateurs': {page: '/', query: {layout: 'indicators'}},
       '/sites-prelevements': {page: '/', query: {layout: 'prelevements'}},
-      '/aides-entreprises': {page: '/', query: {layout: 'entreprises'}}
+      '/aides-entreprises': {page: '/', query: {layout: 'entreprises'}},
+      '/production-masques': {page: '/', query: {layout: 'masks'}}
     }
   }
 }

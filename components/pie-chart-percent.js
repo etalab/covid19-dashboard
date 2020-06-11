@@ -15,6 +15,7 @@ const PieChartPercent = ({data, labels, colors, height}) => {
   }
 
   const options = {
+    maintainAspectRatio: false,
     responsive: true,
     events: false,
     animation: {

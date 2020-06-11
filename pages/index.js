@@ -17,6 +17,7 @@ import Synthese from '../components/layouts/synthese'
 import Indicators from '../components/layouts/indicators'
 import Prelevements from '../components/layouts/prelevements'
 import Entreprises from '../components/layouts/entreprises'
+import Masks from '../components/layouts/masks'
 
 export const AppContext = React.createContext()
 export const ThemeContext = React.createContext('theme.default')
@@ -54,6 +55,12 @@ const LAYOUTS = [
     name: 'suivi-des-tests',
     label: 'Suivi des tests',
     component: <CovidTests />
+  },
+  {
+    id: 'masks',
+    name: 'production-masques',
+    label: 'Production des masques',
+    component: <Masks />
   },
   {
     id: 'entreprises',
