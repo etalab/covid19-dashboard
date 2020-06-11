@@ -66,7 +66,7 @@ Indicator.propTypes = {
 const IndicatorsDepartement = ({code, allIndicators = true}) => {
   const {selectedStat, indicators} = useContext(IndicatorsContext)
 
-  if (indicators.length === 0) {
+  if (indicators.length === 0 || !code) {
     return null
   }
 
@@ -106,11 +106,12 @@ const IndicatorsDepartement = ({code, allIndicators = true}) => {
 }
 
 IndicatorsDepartement.defaultProps = {
+  code: null,
   allIndicators: true
 }
 
 IndicatorsDepartement.propTypes = {
-  code: PropTypes.string.isRequired,
+  code: PropTypes.string,
   allIndicators: PropTypes.bool
 }
 
