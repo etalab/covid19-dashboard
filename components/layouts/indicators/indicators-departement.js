@@ -1,7 +1,9 @@
-import React, {useContext} from 'react'
+import React, {useState, useEffect, useContext} from 'react'
 import PropTypes from 'prop-types'
 
 import colors from '../../../styles/colors'
+
+import {getReport} from '../../../lib/data'
 
 import {indicatorsList} from '../../../lib/indicators'
 import {IndicatorsContext} from '.'
@@ -12,7 +14,7 @@ export const Indicator = ({label, value, color}) => {
       <div>{label}:</div>
       <div className={color}>
         <span>{value && !isNaN(value) ? (
-          <><b>{value.slice(0, 4)}</b> ({color})</>
+          <><b>{value.toPrecision(2)}</b> ({color})</>
         ) : (
           <b>Non renseigné</b>
         )}</span>
@@ -64,13 +66,9 @@ Indicator.propTypes = {
 }
 
 const IndicatorsDepartement = ({code, allIndicators = true}) => {
-  const {selectedStat, indicators} = useContext(IndicatorsContext)
+  const {selectedStat, selectedDate} = useContext(IndicatorsContext)
+  const [departement, setDepartement] = useState(null)
 
-  if (indicators.length === 0 || !code) {
-    return null
-  }
-
-  const departement = indicators.find(dep => dep.code === code)
   const {
     tauxIncidence,
     tauxIncidenceColor,
@@ -80,27 +78,39 @@ const IndicatorsDepartement = ({code, allIndicators = true}) => {
     tauxOccupationReaColor,
     tauxPositiviteTests,
     tauxPositiviteTestsColor
-  } = departement
+  } = departement || {}
+
+  useEffect(() => {
+    async function fetchReport() {
+      setDepartement(await getReport(selectedDate, `DEP-${code}`))
+    }
+
+    if (code) {
+      fetchReport()
+    }
+  }, [code, selectedDate])
 
   return (
-    <div className='indicators'>
-      {allIndicators ? (
-        <>
-          <Indicator label='Activité épidémique' value={tauxIncidence} color={tauxIncidenceColor} />
-          <Indicator label='Nombre de reproduction effectif' value={tauxReproductionEffectif} color={tauxReproductionEffectifColor} />
-          <Indicator label='Taux d’occupation des lits en réa' value={tauxOccupationRea} color={tauxOccupationReaColor} />
-          <Indicator label='Taux de positivité des tests RT-PCR' value={tauxPositiviteTests} color={tauxPositiviteTestsColor} />
-        </>
-      ) : (
-        <Indicator label={indicatorsList[selectedStat].label} value={departement[selectedStat]} color={departement[`${selectedStat}Color`]} />
-      )}
-      <style jsx>{`
+    departement && (
+      <div className='indicators'>
+        {allIndicators ? (
+          <>
+            <Indicator label='Activité épidémique' value={tauxIncidence} color={tauxIncidenceColor} />
+            <Indicator label='Nombre de reproduction effectif' value={tauxReproductionEffectif} color={tauxReproductionEffectifColor} />
+            <Indicator label='Taux d’occupation des lits en réa' value={tauxOccupationRea} color={tauxOccupationReaColor} />
+            <Indicator label='Taux de positivité des tests RT-PCR' value={tauxPositiviteTests} color={tauxPositiviteTestsColor} />
+          </>
+        ) : (
+          <Indicator label={indicatorsList[selectedStat].label} value={departement[selectedStat]} color={departement[`${selectedStat}Color`]} />
+        )}
+        <style jsx>{`
         .indicators {
           font-size: medium;
           margin: 0.5em 0;
         }
         `}</style>
-    </div>
+      </div>
+    )
 
   )
 }

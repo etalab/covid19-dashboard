@@ -1,4 +1,4 @@
-import React, {useContext, useState, useEffect, useMemo, useCallback} from 'react'
+import React, {useContext, useMemo, useCallback} from 'react'
 import {BarChart2} from 'react-feather'
 
 import departements from '@etalab/decoupage-administratif/data/departements.json'
@@ -7,7 +7,6 @@ import colors from '../../../styles/colors'
 
 import {AppContext} from '../../../pages'
 
-import {getPreviousReport, getReport} from '../../../lib/data'
 import {indicatorsList} from '../../../lib/indicators'
 
 import Counter from '../../counter'
@@ -18,32 +17,12 @@ import IndicatorsDepartement from './indicators-departement'
 import {IndicatorsContext} from '.'
 
 const IndicatorsStatistics = () => {
-  const {date, selectedLocation, setSelectedLocation, isMobileDevice} = useContext(AppContext)
+  const {selectedLocation, setSelectedLocation, isMobileDevice} = useContext(AppContext)
+  const {selectedDate} = useContext(IndicatorsContext)
 
-  const {selectedStat, setSelectedStat, indicators} = useContext(IndicatorsContext)
-
-  const [report, setReport] = useState(null)
-  const [previousReport, setPreviousReport] = useState(null)
+  const {report, selectedStat, setSelectedStat} = useContext(IndicatorsContext)
 
   const [locationType, code] = selectedLocation.split('-')
-
-  useEffect(() => {
-    async function fetchReport() {
-      setReport(await getReport(date, selectedLocation))
-    }
-
-    fetchReport()
-  }, [date, selectedLocation])
-
-  useEffect(() => {
-    async function fetchPreviousReport() {
-      setPreviousReport(await getPreviousReport(report))
-    }
-
-    if (report) {
-      fetchPreviousReport()
-    }
-  }, [report])
 
   const getIndicatorValue = useCallback(indicator => {
     const indicatorValue = report[indicator]
@@ -55,17 +34,12 @@ const IndicatorsStatistics = () => {
   }, [report])
 
   const departementsRegion = useMemo(() => {
-    if (locationType === 'REG') {
-      return indicators.filter(indicator => {
-        return departements
-          .filter(d => d.region === code)
-          .map(d => d.code)
-          .includes(indicator.code)
-      })
+    if (report && locationType === 'REG') {
+      return departements.filter(d => d.region === code)
     }
 
     return []
-  }, [locationType, code, indicators])
+  }, [locationType, code, report])
 
   return (
     <>
@@ -96,7 +70,6 @@ const IndicatorsStatistics = () => {
                   value={value}
                   label={label}
                   details={details}
-                  previousValue={previousReport && previousReport[indicator]}
                   onClick={() => setSelectedStat(indicator)}
                   isSelected={selectedStat === indicator}
                 />
@@ -105,7 +78,7 @@ const IndicatorsStatistics = () => {
                   metricName={indicator}
                   min={min}
                   max={max}
-                  reports={report.history.filter(r => date >= r.date)}
+                  reports={report.history.filter(r => selectedDate >= r.date)}
                 />
               </div>
             )

@@ -1,4 +1,4 @@
-import React, {useContext, useCallback} from 'react'
+import React, {useState, useCallback, useEffect, useContext} from 'react'
 import PropTypes from 'prop-types'
 import {Source, Layer} from 'react-map-gl'
 import {ChevronLeft} from 'react-feather'
@@ -6,6 +6,8 @@ import {ChevronLeft} from 'react-feather'
 const departements = require('@etalab/decoupage-administratif/data/departements.json')
 
 import colors from '../../../styles/colors'
+
+import {getReport} from '../../../lib/data'
 
 import {IndicatorsContext} from '.'
 import {AppContext} from '../../../pages'
@@ -21,8 +23,10 @@ const defaultColor = colors.darkerGrey
 
 export const IndicatorsMap = ({hovered, isDROM}) => {
   const {selectedLocation, setSelectedLocation, isMobileDevice} = useContext(AppContext)
-  const {indicators, selectedStat} = useContext(IndicatorsContext)
+  const {selectedDate, selectedStat} = useContext(IndicatorsContext)
   const {code = '', region = ''} = hovered && hovered.feature ? hovered.feature.properties : {}
+
+  const [indicators, setIndicators] = useState([])
 
   const getSelectedRegion = useCallback(() => {
     const [locationType, code] = selectedLocation.split('-')
@@ -34,6 +38,20 @@ export const IndicatorsMap = ({hovered, isDROM}) => {
   }, [selectedLocation])
 
   const selectedRegion = getSelectedRegion()
+
+  useEffect(() => {
+    const getIndicatorsData = async () => {
+      const {history} = await getReport(selectedDate, 'DEP')
+      setIndicators(history.filter(({date}) => selectedDate === date).map(dep => {
+        return {
+          ...dep,
+          code: dep.code.split('-')[1]
+        }
+      }))
+    }
+
+    getIndicatorsData()
+  }, [selectedDate])
 
   const getColors = useCallback(() => {
     const colors = ['match', ['get', 'code']]

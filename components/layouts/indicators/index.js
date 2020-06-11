@@ -5,7 +5,7 @@ import {keyBy} from 'lodash'
 import theme from '../../../styles/theme'
 import colors from '../../../styles/colors'
 
-import {getReport} from '../../../lib/data'
+import {findMostRecentDateForData, getReport} from '../../../lib/data'
 
 import {AppContext, ThemeContext} from '../../../pages'
 
@@ -129,13 +129,33 @@ const DesktopIndicators = () => {
 }
 
 const Indicators = props => {
-  const {date, isMobileDevice} = useContext(AppContext)
+  const {date, forcedDate, selectedLocation, isMobileDevice, setForcedDate} = useContext(AppContext)
+  const selectedDate = forcedDate || date
 
-  const [indicators, setIndicators] = useState([])
   const [selectedMapId, setSelectedMapId] = useState('Activité épidémique')
   const [selectedStat, setSelectedStat] = useState('tauxIncidence')
+  const [report, setReport] = useState(null)
 
   const Component = isMobileDevice ? MobileIndicators : DesktopIndicators
+
+  useEffect(() => {
+    let isCancelled = false
+
+    async function fetchMostRecentDateForData() {
+      const report = await getReport(date, selectedLocation)
+      const mostRecentDate = findMostRecentDateForData(report, selectedStat)
+      if (!isCancelled) {
+        setForcedDate(mostRecentDate === date ? null : mostRecentDate)
+      }
+    }
+
+    fetchMostRecentDateForData()
+
+    return () => {
+      isCancelled = true
+      setForcedDate(null)
+    }
+  }, [date, selectedLocation, selectedStat, setForcedDate])
 
   useEffect(() => {
     const mapProperties = keyBy(IndicatorsMaps, 'property')
@@ -146,21 +166,15 @@ const Indicators = props => {
   }, [selectedStat])
 
   useEffect(() => {
-    const getIndicatorsData = async () => {
-      const {history} = await getReport(date, 'DEP')
-      setIndicators(history.map(dep => {
-        return {
-          ...dep,
-          code: dep.code.split('-')[1]
-        }
-      }))
+    async function fetchReport() {
+      setReport(await getReport(selectedDate, selectedLocation))
     }
 
-    getIndicatorsData()
-  }, [date])
+    fetchReport()
+  }, [selectedDate, selectedLocation])
 
   return (
-    <IndicatorsContext.Provider value={{indicators, selectedMapId, setSelectedMapId, selectedStat, setSelectedStat}}>
+    <IndicatorsContext.Provider value={{report, selectedDate, selectedMapId, setSelectedMapId, selectedStat, setSelectedStat}}>
       <Component {...props} />
     </IndicatorsContext.Provider>
   )
