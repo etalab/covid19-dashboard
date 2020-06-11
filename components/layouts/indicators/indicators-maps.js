@@ -3,7 +3,7 @@ import {IndicatorsMap, HoveredInfos, onSelect, interactiveLayersIds} from './ind
 
 const maps = [
   {
-    name: 'Taux d’incidence',
+    name: 'Activité épidémique',
     type: IndicatorsMap,
     property: 'tauxIncidence',
     onSelect,
@@ -11,7 +11,7 @@ const maps = [
     interactiveLayersIds
   },
   {
-    name: 'Taux de reproduction effectif',
+    name: 'Nombre de reproduction effectif',
     type: IndicatorsMap,
     property: 'tauxReproductionEffectif',
     onSelect,

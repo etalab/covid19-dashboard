@@ -88,13 +88,14 @@ const IndicatorsStatistics = () => {
           </>
         ) : (
           report && Object.keys(indicatorsList).map(indicator => {
-            const {label, min, max} = indicatorsList[indicator]
+            const {label, details, min, max} = indicatorsList[indicator]
             const value = getIndicatorValue(indicator)
             return (
               <div className={`indicators ${selectedStat === indicator ? 'selected' : ''}`} key={indicator} onClick={() => setSelectedStat(indicator)}>
                 <Counter
                   value={value}
                   label={label}
+                  details={details}
                   previousValue={previousReport && previousReport[indicator]}
                   onClick={() => setSelectedStat(indicator)}
                   isSelected={selectedStat === indicator}

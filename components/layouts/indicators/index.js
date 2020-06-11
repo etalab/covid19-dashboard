@@ -132,7 +132,7 @@ const Indicators = props => {
   const {date, isMobileDevice} = useContext(AppContext)
 
   const [indicators, setIndicators] = useState([])
-  const [selectedMapId, setSelectedMapId] = useState('Taux d’incidence')
+  const [selectedMapId, setSelectedMapId] = useState('Activité épidémique')
   const [selectedStat, setSelectedStat] = useState('tauxIncidence')
 
   const Component = isMobileDevice ? MobileIndicators : DesktopIndicators
