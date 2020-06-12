@@ -8,7 +8,7 @@ import ReactTooltip from 'react-tooltip'
 import colors from '../styles/colors'
 import {formatInteger} from '../lib/numbers'
 
-const Counter = ({value, label, color, previousValue, details, warningLabel, onClick, isSelected, isBig}) => {
+const Counter = ({value, label, color, previousValue, details, warningLabel, onClick, isPercent, isSelected, isBig}) => {
   const difference = (Number.isInteger(value) && Number.isInteger(previousValue) && value - previousValue !== 0) ? value - previousValue : null
   const {isMobileDevice} = useContext(AppContext)
 
@@ -34,7 +34,7 @@ const Counter = ({value, label, color, previousValue, details, warningLabel, onC
           </div>
         )}
         <div className='value'>
-          {typeof value === 'number' ? formatInteger(value) : '-'}
+          {typeof value === 'number' ? formatInteger(value) : '-'} {isPercent && '%'}
           <div className='hover'>
             {details && <Info size={12} data-tip={details} data-for='overridePosition' />}
             <ReactTooltip
@@ -130,6 +130,7 @@ Counter.defaultProps = {
   details: null,
   warningLabel: null,
   onClick: null,
+  isPercent: false,
   isSelected: false,
   isBig: false
 }
@@ -142,6 +143,7 @@ Counter.propTypes = {
   details: PropTypes.string,
   warningLabel: PropTypes.string,
   onClick: PropTypes.func,
+  isPercent: PropTypes.bool,
   isSelected: PropTypes.bool,
   isBig: PropTypes.bool
 }

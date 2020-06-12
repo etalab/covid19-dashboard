@@ -71,6 +71,7 @@ const IndicatorsStatistics = () => {
                   label={label}
                   details={details}
                   onClick={() => setSelectedStat(indicator)}
+                  isPercent={['tauxOccupationRea', 'tauxPositiviteTests'].includes(indicator)}
                   isSelected={selectedStat === indicator}
                 />
                 <IndicateurChart
