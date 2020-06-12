@@ -132,7 +132,7 @@ const Indicators = props => {
   const {date, forcedDate, selectedLocation, isMobileDevice, setForcedDate} = useContext(AppContext)
   const selectedDate = forcedDate || date
 
-  const [selectedMapId, setSelectedMapId] = useState('Activité épidémique')
+  const [selectedMapId, setSelectedMapId] = useState('Taux d’incidence')
   const [selectedStat, setSelectedStat] = useState('tauxIncidence')
   const [report, setReport] = useState(null)
 

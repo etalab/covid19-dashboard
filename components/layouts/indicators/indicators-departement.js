@@ -95,9 +95,9 @@ const IndicatorsDepartement = ({code, allIndicators = true}) => {
       <div className='indicators'>
         {allIndicators ? (
           <>
-            <Indicator label='Activité épidémique' value={tauxIncidence} color={tauxIncidenceColor} />
-            <Indicator label='Nombre de reproduction effectif' value={tauxReproductionEffectif} color={tauxReproductionEffectifColor} />
-            <Indicator label='Taux d’occupation des lits en réa' value={tauxOccupationRea} color={tauxOccupationReaColor} />
+            <Indicator label='Taux d’incidence' value={tauxIncidence} color={tauxIncidenceColor} />
+            <Indicator label='R - Nombre de reproduction effectif' value={tauxReproductionEffectif} color={tauxReproductionEffectifColor} />
+            <Indicator label='Taux d’occupation des lits en réanimation' value={tauxOccupationRea} color={tauxOccupationReaColor} />
             <Indicator label='Taux de positivité des tests RT-PCR' value={tauxPositiviteTests} color={tauxPositiviteTestsColor} />
           </>
         ) : (
