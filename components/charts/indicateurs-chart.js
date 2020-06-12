@@ -51,7 +51,7 @@ const IndicateursChart = ({metricName, reports, label, min, max}) => {
     if (reports) {
       datasets.push({
         label,
-        data: reports.map(report => report[metricName]),
+        data: reports.map(report => report[metricName] ? report[metricName].toPrecision(3) : null),
         backgroundColor: colors.blue,
         borderColor: colors.blue,
         fill: false,
