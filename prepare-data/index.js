@@ -10,6 +10,8 @@ const getStream = require('get-stream')
 const csvParse = require('csv-parser')
 const {groupBy, sortBy, defaults, pick, keyBy, chain, sumBy, uniq} = require('lodash')
 
+const {extractData} = require('../lib/airtable')
+
 const {replaceResourceFile} = require('./datagouv')
 
 const rootPath = join(__dirname, '..')
@@ -217,15 +219,13 @@ async function loadTests(url) {
 async function loadIndicateurs(records) {
   const dates = uniq(records.map(r => r.date))
 
-  const inputRows = await getStream.array(
-    createReadStream(join(rootPath, 'data', 'donnees_carte_synthese_tricolore.csv'))
-      .pipe(csvParse())
-  )
+  const inputRows = await extractData('appvqjbgBnxfnGtka', 'Activité épidémique')
   const rows = inputRows.map(row => {
+    const codeDepartement = row.departement.length === 1 ? `0${row.departement}` : row.departement
     return {
       date: row.extract_date,
-      code: `DEP-${row.departement}`,
-      nom: departementsIndex[row.departement].nom,
+      code: `DEP-${codeDepartement}`,
+      nom: departementsIndex[codeDepartement].nom,
       indicateurSynthese: row.indic_synthese,
       sourceType: 'ministere-sante'
     }
