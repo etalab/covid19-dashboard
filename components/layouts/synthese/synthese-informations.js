@@ -32,9 +32,23 @@ const SyntheseInformations = () => {
           <p>Le statut de chaque département (vert/rouge) est publié en open data sur <a href='https://www.data.gouv.fr/fr/datasets/indicateurs-dactivite-epidemique-covid-19-par-departement/' target='_top'>www.data.gouv.fr</a>.</p>
         </>
       )}
-      {date >= '2020-05-28' && (
+      {date >= '2020-05-28' && date < '2020-06-15' && (
         <>
           <p>Cette carte, présentée le 28 mai 2020, sert de référence pour les mesures différenciées qui seront appliquées à compter du mardi 2 juin, selon les départements.</p>
+          <p>Elle est construite sur la base des 4 indicateurs suivants et est complétée par une analyse de risques :</p>
+          <ul>
+            <li><b>l’activité épidémique</b> : taux d’incidence : nombre de tests virologiques positifs pour 100 000 habitants par semaine ;</li>
+            <li><b>le taux de positivité des tests virologiques</b> ;</li>
+            <li><b>l’évolution du R0</b> : nombre de personnes contaminées par chaque malade ;</li>
+            <li><b>la tension hospitalière sur la capacité en réanimation</b> : le taux d’occupation des lits en réanimation par des patients COVID par rapport à la capacité initiale en réanimation.</li>
+          </ul>
+          <p>Le statut de chaque département est publié en open data sur <a href='https://www.data.gouv.fr/fr/datasets/indicateurs-dactivite-epidemique-covid-19-par-departement/' target='_top'>www.data.gouv.fr</a>.</p>
+        </>
+      )}
+      {date >= '2020-06-15' && (
+        <>
+          <p>Cette carte, présentée le 28 mai 2020 et mise à jour le 15 juin 2020, sert de référence pour les mesures différenciées qui sont appliquées depuis le mardi 2 juin, selon les départements.</p>
+          <p>Découvrez ce qui change, ce qui est conseillé, les mesures prises pour vous aider et ce qui est autorisé ou pas en fonction de votre lieu de résidence : <a href='https://www.gouvernement.fr/info-coronavirus'>https://www.gouvernement.fr/info-coronavirus</a></p>
           <p>Elle est construite sur la base des 4 indicateurs suivants et est complétée par une analyse de risques :</p>
           <ul>
             <li><b>l’activité épidémique</b> : taux d’incidence : nombre de tests virologiques positifs pour 100 000 habitants par semaine ;</li>
