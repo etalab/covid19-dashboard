@@ -23,19 +23,19 @@ const MaskStatistics = () => {
       total: round(sum(masksProduction.map(r => r.productionFRMasquesChirurgicaux)), 2),
       label: 'Production Française',
       color: 'darkBlue',
-      details: 'Nombre total de masque produit en France (exprimé en million)'
+      details: 'Nombre total de masques produits en France (exprimé en million)'
     },
     {
       total: round(sum(masksProduction.map(r => r.importChineMasquesChirurgicaux)), 2),
       label: 'Import Chine',
       color: 'lightBlue',
-      details: 'Nombre total de masque importé de Chine (exprimé en million)'
+      details: 'Nombre total de masques importés de Chine (exprimé en million)'
     },
     {
       total: round(sum(masksProduction.map(r => r.distributionMasquesChirurgicaux)), 2),
       label: 'Distribution',
       color: 'lighterBlue',
-      details: 'Nombre total de masque distribués aux GHT et pharmacies (exprimé en million)'
+      details: 'Nombre total de masques distribués aux GHT et pharmacies (exprimé en million)'
     }
   ]
 
@@ -44,19 +44,19 @@ const MaskStatistics = () => {
       total: round(sum(masksProduction.map(r => r.productionFRFFP2)), 2),
       label: 'Production Française',
       color: 'darkBlue',
-      details: 'Nombre total de masque produit en France (exprimé en million)'
+      details: 'Nombre total de masques produits en France (exprimé en million)'
     },
     {
       total: round(sum(masksProduction.map(r => r.importChineFFP2)), 2),
       label: 'Import Chine',
       color: 'lightBlue',
-      details: 'Nombre total de masque importé de Chine (exprimé en million)'
+      details: 'Nombre total de masques importés de Chine (exprimé en million)'
     },
     {
       total: round(sum(masksProduction.map(r => r.distributionFFP2)), 2),
       label: 'Distribution',
       color: 'lighterBlue',
-      details: 'Nombre total de masque distribués aux GHT et pharmacies (exprimé en million)'
+      details: 'Nombre total de masques distribués aux GHT et pharmacies (exprimé en million)'
     }
   ]
 
