@@ -3,7 +3,7 @@ import colors from './colors'
 export default ({
   menuWidth: '550px',
   mobileDisplay: '820px',
-  tabletDisplay: '1140px',
+  tabletDisplay: '1240px',
 
   default: {
     primary: colors.darkerGrey,
