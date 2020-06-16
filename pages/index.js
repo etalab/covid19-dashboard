@@ -14,6 +14,7 @@ import BigPicture from '../components/layouts/big-picture'
 import CovidTests from '../components/layouts/covid-tests'
 import Transfert from '../components/layouts/transfert'
 import Synthese from '../components/layouts/synthese'
+import Indicators from '../components/layouts/indicators'
 import Prelevements from '../components/layouts/prelevements'
 import Entreprises from '../components/layouts/entreprises'
 
@@ -31,22 +32,16 @@ const LAYOUTS = [
     component: <BigPicture />
   },
   {
-    id: 'tests',
-    name: 'suivi-des-tests',
-    label: 'Suivi des tests',
-    component: <CovidTests />
-  },
-  {
-    id: 'transfert',
-    name: 'transferts-de-patients',
-    label: 'Transferts de patients',
-    component: <Transfert />
-  },
-  {
     id: 'synthese',
     name: 'activite-epidemique',
     label: 'Carte de vigilance',
     component: <Synthese />
+  },
+  {
+    id: 'indicators',
+    name: 'suivi-indicateurs',
+    label: 'Indicateurs',
+    component: <Indicators />
   },
   {
     id: 'prelevements',
@@ -55,10 +50,22 @@ const LAYOUTS = [
     component: <Prelevements />
   },
   {
+    id: 'tests',
+    name: 'suivi-des-tests',
+    label: 'Suivi des tests',
+    component: <CovidTests />
+  },
+  {
     id: 'entreprises',
     name: 'aides-entreprises',
     label: 'Aides entreprises',
     component: <Entreprises />
+  },
+  {
+    id: 'transfert',
+    name: 'transferts-de-patients',
+    label: 'Transferts de patients',
+    component: <Transfert />
   }
 ]
 

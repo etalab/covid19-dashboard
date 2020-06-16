@@ -45,6 +45,7 @@ const TerritoriesDesktopMap = ({maps, context, disableClick}) => {
           color: #fff;
           border-radius: 4px;
           margin: 0.5em;
+          width: 240px;
         }
 
         @media (max-width: 1000px) {
