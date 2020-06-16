@@ -24,5 +24,7 @@ jobs:
     - run: yarn
     - run: yarn lint
     - run: yarn prepare-data
+      env:
+        AIRTABLE_API_KEY: ${{ secrets.AIRTABLE_API_KEY }}
     - run: yarn build
     - run: yarn export
