@@ -251,7 +251,7 @@ async function loadIndicateursSynthese(records) {
   return fillEmptyDates(records, rows)
 }
 
-async function loadIndicateurs(records) {
+async function loadIndicateurs() {
   // Départements
   const inputDepRows = await extractData('appvqjbgBnxfnGtka', 'VF_table_indicateurs')
 
@@ -286,7 +286,7 @@ async function loadIndicateurs(records) {
     }
   })
 
-  return fillEmptyDates(records, [...frRows, ...depRows])
+  return [...frRows, ...depRows]
 }
 
 function filterRecords(records) {
@@ -312,7 +312,7 @@ async function main() {
   const records = await loadJson(DATA_SOURCE)
   const tests = await loadTests(TESTS_SOURCE)
   const indicateursSynthese = await loadIndicateursSynthese(records)
-  const indicateurs = await loadIndicateurs(records)
+  const indicateurs = await loadIndicateurs()
   const data = consolidate(filterRecords([...records, ...tests, ...indicateursSynthese, ...indicateurs]))
 
   const prelevements = await loadPrelevements(join(rootPath, 'data', PRELEVEMENT_SOURCE))
