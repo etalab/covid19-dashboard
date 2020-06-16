@@ -23,6 +23,7 @@ const DateWarning = ({date}) => {
         color: #fff;
         justify-content: center;
         align-items: center;
+        text-align: center;
         padding: 0.4em;
         background-color: ${themeContext.secondary};
         box-shadow: 0 1px 4px ${colors.lightGrey};
@@ -39,7 +40,7 @@ const DateWarning = ({date}) => {
       @media (max-width: ${theme.mobileDisplay}) {
         .date-warning {
           font-size: 0.8em;
-          box-shadow: ’’;
+          box-shadow: none;
         }
       }
     `}</style>

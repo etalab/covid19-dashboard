@@ -99,7 +99,7 @@ const DesktopLayoutSelector = ({selected, layouts, handleSelect}) => {
       <style jsx>{`
         .layout-selector-container {
           display: flex;
-          padding: 0 1em;
+          padding: 0.2em 1em;
           flex: 1;
           background-color: ${themeContext.primary};
           justify-content: center;
