@@ -3,6 +3,7 @@ require('dotenv').config()
 
 const {join} = require('path')
 const {createReadStream} = require('fs')
+const stripBomStream = require('strip-bom-stream')
 const {Transform} = require('stream')
 const got = require('got')
 const {outputJson, readJson, outputFile} = require('fs-extra')
@@ -25,12 +26,15 @@ const regionsIndex = keyBy(regions, 'code')
 const DATA_SOURCE = process.env.DATA_SOURCE || 'https://raw.githubusercontent.com/opencovid19-fr/data/master/dist/chiffres-cles.json'
 
 const TESTS_SOURCE = 'https://www.data.gouv.fr/fr/datasets/r/b4ea7b4b-b7d1-4885-a099-71852291ff20'
+const INDICATEURS_DEP_SOURCE = 'https://www.data.gouv.fr/fr/datasets/r/4acad602-d8b1-4516-bc71-7d5574d5f33e'
+const INDICATEURS_FR_SOURCE = 'https://www.data.gouv.fr/fr/datasets/r/d86f11b0-0a62-41c1-bf6e-dc9a408cf7b5'
 
 const PRELEVEMENT_SOURCE = 'sites-prelevement-latest.csv'
 
 async function fetchCsv(url, options = {}) {
   const rows = await getStream.array(
     got.stream(url)
+      .pipe(stripBomStream())
       .pipe(csvParse(options))
       .pipe(new Transform({
         transform(row, enc, cb) {
@@ -251,42 +255,42 @@ async function loadIndicateursSynthese(records) {
   return fillEmptyDates(records, rows)
 }
 
-async function loadIndicateurs() {
-  // Départements
-  const inputDepRows = await extractData('appvqjbgBnxfnGtka', 'VF_table_indicateurs')
+async function loadIndicateurs(depUrl, franceUrl) {
+  const csvOptions = {
+    filter: row => row.extract_date === TODAY || row.extract_date < TODAY
+  }
 
-  const depRows = inputDepRows.map(row => {
-    return {
-      date: row.extract_date,
-      code: `DEP-${row.departement}`,
-      tauxIncidence: Number.parseFloat(row.tx_incid),
-      tauxIncidenceColor: row.tx_incid_couleur,
-      tauxReproductionEffectif: Number.parseFloat(row.R),
-      tauxReproductionEffectifColor: row.R_couleur,
-      tauxOccupationRea: Number.parseFloat(row.taux_occupation_sae),
-      tauxOccupationReaColor: row.taux_occupation_sae_couleur,
-      tauxPositiviteTests: Number.parseFloat(row.tx_pos),
-      tauxPositiviteTestsColor: row.tx_pos_couleur,
-      sourceType: 'ministere-sante'
-    }
-  })
+  const departementsReports = chain(await fetchCsv(depUrl, csvOptions))
+    .map(row => {
+      return {
+        date: row.extract_date,
+        code: `DEP-${row.departement}`,
+        tauxIncidence: Number.parseFloat(row.tx_incid),
+        tauxIncidenceColor: row.tx_incid_couleur,
+        tauxReproductionEffectif: Number.parseFloat(row.R),
+        tauxReproductionEffectifColor: row.R_couleur,
+        tauxOccupationRea: Number.parseFloat(row.taux_occupation_sae),
+        tauxOccupationReaColor: row.taux_occupation_sae_couleur,
+        tauxPositiviteTests: Number.parseFloat(row.tx_pos),
+        tauxPositiviteTestsColor: row.tx_pos_couleur,
+        sourceType: 'ministere-sante'
+      }
+    }).value()
 
-  // France
-  const frInputsRows = await extractData('appvqjbgBnxfnGtka', 'table_indicateurs_open_data_france')
+  const franceReports = chain(await fetchCsv(franceUrl, csvOptions))
+    .map(row => {
+      return {
+        date: row.extract_date,
+        code: 'FRA',
+        tauxIncidence: Number.parseFloat(row.tx_incid),
+        tauxReproductionEffectif: Number.parseFloat(row.R),
+        tauxOccupationRea: Number.parseFloat(row.taux_occupation_sae),
+        tauxPositiviteTests: Number.parseFloat(row.tx_pos),
+        sourceType: 'ministere-sante'
+      }
+    }).value()
 
-  const frRows = frInputsRows.map(row => {
-    return {
-      date: row.extract_date,
-      code: 'FRA',
-      tauxIncidence: Number.parseFloat(row.tx_incid),
-      tauxReproductionEffectif: Number.parseFloat(row.R),
-      tauxOccupationRea: Number.parseFloat(row.taux_occupation_sae),
-      tauxPositiviteTests: Number.parseFloat(row.tx_pos),
-      sourceType: 'ministere-sante'
-    }
-  })
-
-  return [...frRows, ...depRows]
+  return [...franceReports, ...departementsReports]
 }
 
 function filterRecords(records) {
@@ -312,7 +316,7 @@ async function main() {
   const records = await loadJson(DATA_SOURCE)
   const tests = await loadTests(TESTS_SOURCE)
   const indicateursSynthese = await loadIndicateursSynthese(records)
-  const indicateurs = await loadIndicateurs()
+  const indicateurs = await loadIndicateurs(INDICATEURS_DEP_SOURCE, INDICATEURS_FR_SOURCE)
   const data = consolidate(filterRecords([...records, ...tests, ...indicateursSynthese, ...indicateurs]))
 
   const prelevements = await loadPrelevements(join(rootPath, 'data', PRELEVEMENT_SOURCE))
