@@ -101,7 +101,7 @@ const Counters = props => {
           isBig
         />}
       </div>
-      <p className='info'>⚠️ Baisse des cas confirmés due à un changement de méthode de calcul.<br />Depuis le 2 juin, les patients testés positifs ne sont plus comptés qu’une seule fois.</p>
+
       <div className='title'>Données hospitalières</div>
       <div className='counters'>
         {hospitalCountersList.map(counter => (
