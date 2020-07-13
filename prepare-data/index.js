@@ -25,7 +25,6 @@ const regionsIndex = keyBy(regions, 'code')
 
 const DATA_SOURCE = process.env.DATA_SOURCE || 'https://raw.githubusercontent.com/opencovid19-fr/data/master/dist/chiffres-cles.json'
 
-const TESTS_SOURCE = 'https://www.data.gouv.fr/fr/datasets/r/b4ea7b4b-b7d1-4885-a099-71852291ff20'
 const INDICATEURS_DEP_SOURCE = 'https://www.data.gouv.fr/fr/datasets/r/4acad602-d8b1-4516-bc71-7d5574d5f33e'
 const INDICATEURS_FR_SOURCE = 'https://www.data.gouv.fr/fr/datasets/r/d86f11b0-0a62-41c1-bf6e-dc9a408cf7b5'
 
@@ -143,13 +142,110 @@ async function loadPrelevements(file) {
   }
 }
 
-async function loadTests(url) {
+async function loadSidepTest() {
+  const SIDEP_DEP_DATA = 'https://www.data.gouv.fr/fr/datasets/r/406c6a23-e283-4300-9484-54e78c8ae675'
+  const SIDEP_REG_DATA = 'https://www.data.gouv.fr/fr/datasets/r/001aca18-df6a-45c8-89e6-f82d689e6c01'
+  const SIDEP_FRA_DATA = 'https://www.data.gouv.fr/fr/datasets/r/dd0de5d9-b5a5-4503-930a-7b08dc0adc7c'
+
   const csvOptions = {
-    separator: ';',
-    filter: row => row.jour === TODAY || row.jour < TODAY
+    separator: ';'
   }
 
-  const departementsReports = chain(await fetchCsv(url, csvOptions))
+  const departementsReports = chain(await fetchCsv(SIDEP_DEP_DATA, csvOptions))
+    .filter(r => r.dep in departementsIndex)
+    .groupBy(r => `${r.jour}-${r.dep}`)
+    .map(rows => {
+      const report = {
+        date: rows[0].jour,
+        code: `DEP-${rows[0].dep}`,
+        nom: departementsIndex[rows[0].dep].nom,
+        testsRealises: sumBy(rows.filter(r => r.cl_age90 === '0'), r => Number.parseInt(r.T, 10)),
+        testsRealisesDetails: [],
+        testsPositifs: sumBy(rows.filter(r => r.cl_age90 === '0'), r => Number.parseInt(r.P, 10)),
+        testsPositifsDetails: [],
+        sourceType: 'sante-publique-france'
+      }
+
+      rows.forEach(r => {
+        report.testsRealisesDetails.push({age: r.cl_age90, sexe: '0', value: Number.parseInt(r.T, 10)})
+        report.testsPositifsDetails.push({age: r.cl_age90, sexe: '0', value: Number.parseInt(r.P, 10)})
+      })
+
+      return report
+    })
+    .filter(r => r.testsRealises > 0 || r.testsPositifs > 0)
+    .value()
+
+  const regionsReports = chain(await fetchCsv(SIDEP_REG_DATA, csvOptions))
+    .filter(r => r.reg.padStart(2, '0') in regionsIndex)
+    .groupBy(r => `${r.jour}-${r.reg}`)
+    .map(rows => {
+      const regCode = rows[0].reg.padStart(2, '0')
+      const report = {
+        date: rows[0].jour,
+        code: `REG-${regCode}`,
+        nom: regionsIndex[regCode].nom,
+        testsRealises: sumBy(rows.filter(r => r.cl_age90 === '0'), r => Number.parseInt(r.T, 10)),
+        testsRealisesDetails: [],
+        testsPositifs: sumBy(rows.filter(r => r.cl_age90 === '0'), r => Number.parseInt(r.P, 10)),
+        testsPositifsDetails: [],
+        sourceType: 'sante-publique-france'
+      }
+
+      rows.forEach(r => {
+        report.testsRealisesDetails.push({age: r.cl_age90, sexe: '0', value: Number.parseInt(r.T, 10)})
+        report.testsRealisesDetails.push({age: r.cl_age90, sexe: 'h', value: Number.parseInt(r.T_h, 10)})
+        report.testsRealisesDetails.push({age: r.cl_age90, sexe: 'f', value: Number.parseInt(r.T_f, 10)})
+        report.testsPositifsDetails.push({age: r.cl_age90, sexe: '0', value: Number.parseInt(r.P, 10)})
+        report.testsPositifsDetails.push({age: r.cl_age90, sexe: 'h', value: Number.parseInt(r.P_h, 10)})
+        report.testsPositifsDetails.push({age: r.cl_age90, sexe: 'f', value: Number.parseInt(r.P_f, 10)})
+      })
+
+      return report
+    })
+    .filter(r => r.testsRealises > 0 || r.testsPositifs > 0)
+    .value()
+
+  const franceReports = chain(await fetchCsv(SIDEP_FRA_DATA, csvOptions))
+    .groupBy(r => r.jour)
+    .map(rows => {
+      const report = {
+        date: rows[0].jour,
+        code: 'FRA',
+        nom: 'France',
+        testsRealises: sumBy(rows.filter(r => r.cl_age90 === '0'), r => Number.parseInt(r.T, 10)),
+        testsRealisesDetails: [],
+        testsPositifs: sumBy(rows.filter(r => r.cl_age90 === '0'), r => Number.parseInt(r.P, 10)),
+        testsPositifsDetails: [],
+        sourceType: 'sante-publique-france'
+      }
+
+      rows.forEach(r => {
+        report.testsRealisesDetails.push({age: r.cl_age90, sexe: '0', value: Number.parseInt(r.T, 10)})
+        report.testsRealisesDetails.push({age: r.cl_age90, sexe: 'h', value: Number.parseInt(r.T_h, 10)})
+        report.testsRealisesDetails.push({age: r.cl_age90, sexe: 'f', value: Number.parseInt(r.T_f, 10)})
+        report.testsPositifsDetails.push({age: r.cl_age90, sexe: '0', value: Number.parseInt(r.P, 10)})
+        report.testsPositifsDetails.push({age: r.cl_age90, sexe: 'h', value: Number.parseInt(r.P_h, 10)})
+        report.testsPositifsDetails.push({age: r.cl_age90, sexe: 'f', value: Number.parseInt(r.P_f, 10)})
+      })
+
+      return report
+    })
+    .filter(r => r.testsRealises > 0 || r.testsPositifs > 0)
+    .value()
+
+  return [...departementsReports, ...regionsReports, ...franceReports]
+}
+
+async function loadTroisLabosTests() {
+  const TROISLABOS_TESTS_DATA = 'https://www.data.gouv.fr/fr/datasets/r/b4ea7b4b-b7d1-4885-a099-71852291ff20'
+
+  const csvOptions = {
+    separator: ';',
+    filter: row => row.jour < '2020-05-13'
+  }
+
+  const departementsReports = chain(await fetchCsv(TROISLABOS_TESTS_DATA, csvOptions))
     .groupBy(r => `${r.jour}-${r.dep}`)
     .map(rows => {
       const report = {
@@ -314,10 +410,11 @@ function filterRecords(records) {
 
 async function main() {
   const records = await loadJson(DATA_SOURCE)
-  const tests = await loadTests(TESTS_SOURCE)
+  const troisLabosTests = await loadTroisLabosTests()
+  const sidepTests = await loadSidepTest()
   const indicateursSynthese = await loadIndicateursSynthese(records)
   const indicateurs = await loadIndicateurs(INDICATEURS_DEP_SOURCE, INDICATEURS_FR_SOURCE)
-  const data = consolidate(filterRecords([...records, ...tests, ...indicateursSynthese, ...indicateurs]))
+  const data = consolidate(filterRecords([...records, ...troisLabosTests, ...sidepTests, ...indicateursSynthese, ...indicateurs]))
 
   const prelevements = await loadPrelevements(join(rootPath, 'data', PRELEVEMENT_SOURCE))
 

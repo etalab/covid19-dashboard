@@ -1,11 +1,23 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import {sumBy} from 'lodash'
 import {HorizontalBar} from 'react-chartjs-2'
 
 import colors from '../../../styles/colors'
 
-const classesAge = {
+const sidepClassesAge = {
+  90: 'plus de 90 ans',
+  89: '80-89 ans',
+  79: '70-79 ans',
+  69: '60-69 ans',
+  59: '50-59 ans',
+  49: '40-40 ans',
+  39: '30-39 ans',
+  29: '20-29 ans',
+  19: '10-19 ans',
+  '09': '0-9 ans'
+}
+
+const troisLabosClassesAge = {
   E: '75 et plus',
   D: '65-74 ans',
   C: '45-64 ans',
@@ -24,21 +36,28 @@ const options = {
   }
 }
 
-const getSumOfByAge = (array, index, age) => {
-  return sumBy(array.map(item => item[index]), r => r ? r.find(entry => entry.age === age).value : 0)
+function getValue(report, key, classeAge) {
+  if (!report[key]) {
+    return 0
+  }
+
+  const item = report[key].find(i => i.age === classeAge)
+  return item ? item.value : 0
 }
 
-const formatData = data => {
+const formatData = report => {
+  const classesAge = report.date < '2020-05-13' ? troisLabosClassesAge : sidepClassesAge
+
   const datasets = [
     {
       label: 'testés positifs',
-      data: Object.keys(classesAge).map(classe => getSumOfByAge(data, 'testsPositifsDetails', classe)),
+      data: Object.keys(classesAge).map(classe => getValue(report, 'testsPositifsDetails', classe)),
       backgroundColor: colors.red,
       stack: 'main'
     },
     {
       label: 'testés négatifs',
-      data: Object.keys(classesAge).map(classe => getSumOfByAge(data, 'testsRealisesDetails', classe) - getSumOfByAge(data, 'testsPositifsDetails', classe)),
+      data: Object.keys(classesAge).map(classe => getValue(report, 'RealisesDetails', classe) - getValue(report, 'testsPositifsDetails', classe)),
       backgroundColor: colors.lightGrey,
       stack: 'main'
     }
@@ -50,14 +69,14 @@ const formatData = data => {
   }
 }
 
-const CovidTestsAgeChart = ({reports}) => {
+const CovidTestsAgeChart = ({report}) => {
   return (
-    <HorizontalBar data={formatData(reports)} opitions={options} />
+    <HorizontalBar data={formatData(report)} options={options} />
   )
 }
 
 CovidTestsAgeChart.propTypes = {
-  reports: PropTypes.array.isRequired
+  report: PropTypes.object.isRequired
 }
 
 export default CovidTestsAgeChart

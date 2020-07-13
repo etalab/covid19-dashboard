@@ -58,7 +58,7 @@ function getChart(chartName, showVariations) {
 const CovidTestsStatistics = () => {
   const {date, forcedDate, selectedLocation, setSelectedLocation, isMobileDevice} = useContext(AppContext)
   const {selectedStat, setSelectedStat} = useContext(CovidTestsContext)
-  const selectedDate = date || forcedDate
+  const selectedDate = forcedDate || date
   const stat = selectedStat || 'mixed'
 
   const [report, setReport] = useState(null)
@@ -107,10 +107,6 @@ const CovidTestsStatistics = () => {
     fetchReport()
   }, [selectedDate, selectedLocation])
 
-  useEffect(() => {
-
-  }, [report])
-
   const pieLabels = ['Tests négatifs', 'Tests positifs']
   const pieColors = [colors.grey, colors.red]
 
@@ -136,7 +132,7 @@ const CovidTestsStatistics = () => {
             <Button title='Afficher le cumul' onClick={() => setSelectedStat('mixed')} isMobileDevice={isMobileDevice} />}
         </>
       )}
-      {report && <CovidTestsAgeChart reports={report.history.filter(r => selectedDate >= r.date)} />}
+      {report && <CovidTestsAgeChart report={report} />}
       <style jsx>{`
         .header {
           text-align: center;
