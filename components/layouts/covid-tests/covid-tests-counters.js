@@ -16,7 +16,7 @@ const CovidTestsCounters = ({testsPositifs, testsRealises}) => {
 
   return (
     <div className='stats'>
-      <div className='title'>Tests PCR en laboratoires de ville</div>
+      <div className='title'>Tests virologiques (PCR)</div>
       <div className='counters'>
         <Counter
           isSelected={selectedStat === 'testsRealises'}

@@ -15,6 +15,7 @@ import BigPictureInformations from '../big-picture/big-picture-informations'
 import CovidTestsMaps from './covid-tests-maps'
 
 import CovidTestsStatistics from './covid-tests-statistics'
+import CovidTestsInformations from './covid-tests-informations'
 import TerritoriesMobileMap from '../../territories-mobile-map'
 import TerritoriesDesktopMap from '../../territories-desktop-map'
 
@@ -42,7 +43,7 @@ const MobileCovidTests = () => {
     ),
     informations: (
       <Scrollable>
-        <BigPictureInformations />
+        <CovidTestsInformations />
       </Scrollable>
     )
   }
@@ -99,6 +100,7 @@ const DesktopCovidTests = () => {
       <div className='menu'>
         <Scrollable>
           <CovidTestsStatistics />
+          <CovidTestsInformations />
         </Scrollable>
       </div>
 
@@ -130,7 +132,7 @@ const DesktopCovidTests = () => {
 const CovidTests = props => {
   const {date, setForcedDate, selectedLocation, isMobileDevice} = useContext(AppContext)
 
-  const [selectedMapId, setSelectedMapId] = useState('Tests positifs en laboratoires de ville - ce jour')
+  const [selectedMapId, setSelectedMapId] = useState('Tests positifs - ce jour')
   const [selectedStat, setSelectedStat] = useState(null)
 
   const Component = isMobileDevice ? MobileCovidTests : DesktopCovidTests
