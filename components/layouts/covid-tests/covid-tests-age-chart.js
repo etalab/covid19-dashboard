@@ -57,7 +57,7 @@ const formatData = report => {
     },
     {
       label: 'testés négatifs',
-      data: Object.keys(classesAge).map(classe => getValue(report, 'RealisesDetails', classe) - getValue(report, 'testsPositifsDetails', classe)),
+      data: Object.keys(classesAge).map(classe => getValue(report, 'testsRealisesDetails', classe) - getValue(report, 'testsPositifsDetails', classe)),
       backgroundColor: colors.lightGrey,
       stack: 'main'
     }
