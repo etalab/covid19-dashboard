@@ -418,12 +418,10 @@ async function main() {
 
   const prelevements = await loadPrelevements(join(rootPath, 'data', PRELEVEMENT_SOURCE))
 
-  const dates = uniq(data.map(r => r.date)).sort()
-  const datesFR = uniq(data.filter(r => r.code === 'FRA').map(r => r.date)).sort()
+  const dates = uniq(data.filter(r => r.code === 'FRA').map(r => r.date)).sort()
   const codes = uniq(data.map(r => r.code))
 
   const latest = dates[dates.length - 1]
-  const latestFR = datesFR[dates.length - 1]
 
   const dataDirectory = join(rootPath, 'public', 'data')
 
@@ -440,7 +438,7 @@ async function main() {
   }))
 
   const buffer = Buffer.from(
-    JSON.stringify(data.find(r => r.date === latestFR && r.code === 'FRA'))
+    JSON.stringify(data.find(r => r.date === latest && r.code === 'FRA'))
   )
   await outputFile(join(dataDirectory, 'fra-latest.json'), buffer)
 
