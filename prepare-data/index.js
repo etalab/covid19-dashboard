@@ -405,7 +405,7 @@ function filterRecords(records) {
     filters.push(r => ALLOWED_SOURCES.split(',').includes(r.sourceType))
   }
 
-  filters.push(r => r.date < '2020-06-01' || r.code !== 'FRA' || r.sourceType === 'ministere-sante')
+  filters.push(r => r.date < '2020-06-01' || r.code !== 'FRA' || ['ministere-sante', 'sante-publique-france'].includes(r.sourceType))
 
   return records.filter(r => filters.every(filter => filter(r)))
 }
