@@ -13,7 +13,7 @@ const Counters = props => {
 
   const totalDeces = (deces || 0) + (decesEhpad || 0)
   const previousReport = props.previousReport || {}
-  const previousTotalDeces = (previousReport.deces || 0) + (previousReport.decesEhpad || 0)
+  const previousTotalDeces = previousReport.deces && previousReport.decesEhpad && deces && decesEhpad ? (previousReport.deces || 0) + (previousReport.decesEhpad || 0) : null
 
   const details = {
     casConfirmes: 'Nombre cumulé de cas de COVID-19 confirmés par un test positif. <br />',
