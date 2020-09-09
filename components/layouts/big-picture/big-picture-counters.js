@@ -90,7 +90,7 @@ const Counters = props => {
           color='orange'
           isBig
         />}
-        {decesEhpad && <Counter
+        {decesEhpad && deces && <Counter
           isSelected={selectedStat === 'deces'}
           onClick={() => handleClick('deces')}
           value={totalDeces}
@@ -117,22 +117,24 @@ const Counters = props => {
           />
         ))}
       </div>
-      <div className='title'>Données EHPAD et EMS</div>
       {decesEhpad &&
-      <div className='counters'>
-        {ehpadCountersList.map(counter => (
-          <Counter
-            key={counter.name}
-            isSelected={selectedStat === counter.name}
-            onClick={() => handleClick(counter.name)}
-            value={props.report[counter.name]}
-            previousValue={previousReport[counter.name]}
-            label={counter.label}
-            details={details[counter.name]}
-            color={counter.color}
-          />
-        ))}
-      </div>}
+      <>
+        <div className='title'>Données EHPAD et EMS</div>
+        <div className='counters'>
+          {ehpadCountersList.map(counter => (
+            <Counter
+              key={counter.name}
+              isSelected={selectedStat === counter.name}
+              onClick={() => handleClick(counter.name)}
+              value={props.report[counter.name]}
+              previousValue={previousReport[counter.name]}
+              label={counter.label}
+              details={details[counter.name]}
+              color={counter.color}
+            />
+          ))}
+        </div>
+      </>}
 
       <style jsx>{`
         .stats {
