@@ -51,7 +51,7 @@ const formatData = report => {
   const datasets = [
     {
       label: 'testés positifs',
-      data: Object.keys(classesAge).sort().map(classe => getValue(report, 'testsPositifsDetails', classe).toString()),
+      data: Object.keys(classesAge).sort().map(classe => getValue(report, 'testsPositifsDetails', classe)),
       backgroundColor: colors.red,
       stack: 'main'
     },
