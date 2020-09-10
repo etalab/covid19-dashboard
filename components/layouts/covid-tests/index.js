@@ -10,7 +10,6 @@ import {AppContext, ThemeContext} from '../../../pages'
 import {findMostRecentDateForData, getReport} from '../../../lib/data'
 
 import Scrollable from '../../scrollable'
-import BigPictureInformations from '../big-picture/big-picture-informations'
 
 import CovidTestsMaps from './covid-tests-maps'
 
