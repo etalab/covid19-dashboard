@@ -157,16 +157,12 @@ export const onSelect = ({properties}) => {
 }
 
 export const HoveredInfos = ({feature, options = {allIndicators: true}}) => {
-  const {code, region} = feature.properties
+  const {code} = feature.properties
   const {allIndicators} = options
 
-  if (region) {
-    return (
-      <IndicatorsDepartement code={code} allIndicators={allIndicators} />
-    )
-  }
-
-  return null
+  return (
+    <IndicatorsDepartement code={code} allIndicators={allIndicators} />
+  )
 }
 
 HoveredInfos.defaultProps = {

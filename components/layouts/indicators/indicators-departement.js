@@ -61,7 +61,7 @@ Indicator.defaultProps = {
 
 Indicator.propTypes = {
   label: PropTypes.string.isRequired,
-  value: PropTypes.string,
+  value: PropTypes.number,
   color: PropTypes.string
 }
 

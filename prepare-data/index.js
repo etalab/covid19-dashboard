@@ -386,7 +386,24 @@ async function loadIndicateurs(depUrl, franceUrl) {
       }
     }).value()
 
-  return [...franceReports, ...departementsReports]
+  const regionsReports = chain(await fetchCsv(depUrl, csvOptions))
+    .map(row => {
+      return {
+        date: row.extract_date,
+        code: `REG-${row.region}`,
+        tauxIncidence: Number.parseFloat(row.tx_incid),
+        tauxIncidenceColor: row.tx_incid_couleur,
+        tauxReproductionEffectif: Number.parseFloat(row.R),
+        tauxReproductionEffectifColor: row.R_couleur,
+        tauxOccupationRea: Number.parseFloat(row.taux_occupation_sae),
+        tauxOccupationReaColor: row.taux_occupation_sae_couleur,
+        tauxPositiviteTests: Number.parseFloat(row.tx_pos),
+        tauxPositiviteTestsColor: row.tx_pos_couleur,
+        sourceType: 'ministere-sante'
+      }
+    }).value()
+
+  return [...franceReports, ...regionsReports, ...departementsReports]
 }
 
 function filterRecords(records) {
