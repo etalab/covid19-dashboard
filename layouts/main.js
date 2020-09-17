@@ -5,23 +5,19 @@ import Meta from '../components/meta'
 
 class Layout extends React.Component {
   static propTypes = {
-    children: PropTypes.node,
-    title: PropTypes.string,
-    description: PropTypes.string
+    children: PropTypes.node
   }
 
   static defaultProps = {
-    children: null,
-    title: 'veille-coronavirus.fr',
-    description: 'Chiffres-clés sur la progression de l’épidémie de coronavirus en France'
+    children: null
   }
 
   render() {
-    const {title, description, children} = this.props
+    const {children} = this.props
 
     return (
       <div>
-        <Meta title={title} description={description} />
+        <Meta />
         <main>
           {children}
         </main>

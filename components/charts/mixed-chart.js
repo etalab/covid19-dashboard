@@ -31,7 +31,10 @@ const options = {
       offset: true
     }],
     yAxes: [{
-      stacked: true
+      stacked: true,
+      ticks: {
+        beginAtZero: true
+      }
     }]
   }
 }
@@ -39,9 +42,17 @@ const options = {
 const formatData = data => {
   const datasets = []
 
+  if (data.some(h => h.decesEhpad)) {
+    datasets.push({
+      label: 'Décès en EHPAD et EMS',
+      data: data.map(h => h.decesEhpad || null),
+      backgroundColor: colors.darkRed
+    })
+  }
+
   if (data.some(h => h.deces)) {
     datasets.push({
-      label: 'Décès',
+      label: 'Décès à l’hôpital',
       data: data.map(h => h.deces || null),
       backgroundColor: colors.red
     })
@@ -81,7 +92,7 @@ const formatData = data => {
     datasets.push({
       label: 'Autre',
       data: data.map(h => {
-        return h.casConfirmes - ((h.gueris || 0) + (h.deces || 0) + (h.hospitalises || h.reanimation || 0))
+        return h.casConfirmes - ((h.gueris || 0) + (h.deces || 0) + (h.decesEhpad || 0) + (h.hospitalises || h.reanimation || 0))
       }),
       backgroundColor: colors.orange
     })
@@ -93,10 +104,8 @@ const formatData = data => {
   }
 }
 
-const MixedChart = ({data, height}) => (
-  <div style={{padding: '1em'}}>
-    <Bar data={formatData(data)} options={options} height={height} />
-  </div>
+const MixedChart = ({reports, height}) => (
+  <Bar data={formatData(reports)} options={options} height={height} />
 )
 
 MixedChart.defaultProps = {
@@ -104,7 +113,7 @@ MixedChart.defaultProps = {
 }
 
 MixedChart.propTypes = {
-  data: PropTypes.array.isRequired,
+  reports: PropTypes.array.isRequired,
   height: PropTypes.number
 }
 

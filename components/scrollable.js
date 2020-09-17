@@ -12,6 +12,7 @@ const Scrollable = ({children}) => {
           flex-direction: column;
           flex: 1;
           overflow-y: auto;
+          overflow-x: hidden;
           background-color: #fff;
         }
     `}</style>

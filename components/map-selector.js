@@ -1,47 +1,40 @@
-import React, {useState, useCallback, useContext} from 'react'
+import React, {useState, useCallback} from 'react'
 import PropTypes from 'prop-types'
-import {indexOf, uniq} from 'lodash'
 import {ChevronDown, ChevronUp, Check} from 'react-feather'
 
 import colors from '../styles/colors'
 
-import {AppContext} from '../pages'
-
-const MapSelector = ({mapIdx, selectMap}) => {
-  const {maps} = useContext(AppContext)
-  const selectedMap = maps[mapIdx]
+const MapSelector = ({selectedMapId, maps, selectMap, selectStat}) => {
+  const selectedMap = maps.find(m => m.name === selectedMapId)
 
   const [isOpen, setIsOpen] = useState(false)
 
   const handleMap = useCallback(map => {
-    selectMap(map)
+    const {name, property} = map
+    selectStat(property)
+    selectMap(name)
     setIsOpen(false)
-  }, [selectMap])
+  }, [selectMap, selectStat])
 
-  const categories = uniq(maps.map(map => map.category))
+  const handleClick = useCallback(event => {
+    event.stopPropagation()
+    setIsOpen(!isOpen)
+  }, [isOpen])
 
   return (
     <div className='switch'>
-      <div className='header' onClick={() => setIsOpen(!isOpen)}>
-        <span>{selectedMap.name} - maille {selectedMap.category}</span> {isOpen ? <ChevronDown /> : <ChevronUp />}
+      <div className='header' onClick={handleClick}>
+        <span>{selectedMap.name}</span> {isOpen ? <ChevronDown /> : <ChevronUp />}
       </div>
       {isOpen && (
         <div className='menu'>
-          {categories.map(cat => (
-            <div key={cat} className='sub-cat'>
-              <div className='sub-title'>{cat}</div>
-              {maps.filter(({category}) => category === cat).map(map => {
-                const index = indexOf(maps, map)
-                return (
-                  <div
-                    key={map.name}
-                    className={`menu-item ${index === mapIdx ? 'selected' : ''}`}
-                    onClick={() => handleMap(index)}
-                  >
-                    <span>{map.name}</span> {index === mapIdx && <Check />}
-                  </div>
-                )
-              })}
+          {maps.map(map => (
+            <div
+              key={map.name}
+              className={`menu-item ${selectedMapId === map.name ? 'selected' : ''}`}
+              onClick={() => handleMap(map)}
+            >
+              <span>{map.name}</span> {map.name === selectedMapId && <Check />}
             </div>
           ))}
         </div>
@@ -51,6 +44,7 @@ const MapSelector = ({mapIdx, selectMap}) => {
         .switch {
           display: flex;
           flex-direction: column;
+          position: relative;
         }
 
         .header {
@@ -65,8 +59,12 @@ const MapSelector = ({mapIdx, selectMap}) => {
         }
 
         .menu {
+          position: absolute;
           display: flex;
           flex-direction: column;
+          width: 100%;
+          top: 100%;
+          background-color: #000000aa;
         }
 
         .menu-item {
@@ -81,19 +79,8 @@ const MapSelector = ({mapIdx, selectMap}) => {
         }
 
         .menu-item.selected:hover {
-          background-color: none;
+          background-color: transparent;
           cursor: initial;
-        }
-
-        .sub-cat {
-          padding-bottom: 0.2em;
-        }
-
-        .sub-title {
-          font-size: larger;
-          text-transform: capitalize;
-          padding: 0.5em 0.4em;
-          background-color: #00000066;
         }
 
         span {
@@ -105,8 +92,10 @@ const MapSelector = ({mapIdx, selectMap}) => {
 }
 
 MapSelector.propTypes = {
-  mapIdx: PropTypes.number.isRequired,
-  selectMap: PropTypes.func.isRequired
+  selectedMapId: PropTypes.string.isRequired,
+  maps: PropTypes.array.isRequired,
+  selectMap: PropTypes.func.isRequired,
+  selectStat: PropTypes.func.isRequired
 }
 
 export default MapSelector

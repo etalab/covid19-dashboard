@@ -35,3 +35,8 @@ node_modules
 /out
 
 .now
+
+/dates.json
+deploy.sh
+
+/public/data
