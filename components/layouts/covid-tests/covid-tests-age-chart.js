@@ -10,7 +10,7 @@ const sidepClassesAge = {
   79: '70-79 ans',
   69: '60-69 ans',
   59: '50-59 ans',
-  49: '40-40 ans',
+  49: '40-49 ans',
   39: '30-39 ans',
   29: '20-29 ans',
   19: '10-19 ans',
@@ -51,20 +51,20 @@ const formatData = report => {
   const datasets = [
     {
       label: 'testés positifs',
-      data: Object.keys(classesAge).map(classe => getValue(report, 'testsPositifsDetails', classe)),
+      data: Object.keys(classesAge).sort().map(classe => getValue(report, 'testsPositifsDetails', classe)),
       backgroundColor: colors.red,
       stack: 'main'
     },
     {
       label: 'testés négatifs',
-      data: Object.keys(classesAge).map(classe => getValue(report, 'testsRealisesDetails', classe) - getValue(report, 'testsPositifsDetails', classe)),
+      data: Object.keys(classesAge).sort().map(classe => getValue(report, 'testsRealisesDetails', classe) - getValue(report, 'testsPositifsDetails', classe)),
       backgroundColor: colors.lightGrey,
       stack: 'main'
     }
   ]
 
   return {
-    labels: Object.keys(classesAge).map(classe => classesAge[classe]),
+    labels: Object.keys(classesAge).sort().map(classe => classesAge[classe]),
     datasets
   }
 }
