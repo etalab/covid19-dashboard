@@ -33,8 +33,6 @@ export const IndicatorsMap = ({hovered, isDROM}) => {
     if (locationType !== 'FRA') {
       return locationType === 'REG' ? code : departements.find(d => d.code === code).region
     }
-
-    return null
   }, [selectedLocation])
 
   const selectedRegion = getSelectedRegion()
