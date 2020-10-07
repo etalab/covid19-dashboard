@@ -17,11 +17,16 @@ const COLORS = {
 const defaultColor = 'rgba(0,0,0,0)'
 
 export const SyntheseMap = ({hovered, isDROM}) => {
-  const {selectedLocation, setSelectedLocation} = useContext(AppContext)
+  const {selectedLocation, setSelectedLocation, isMobileDevice} = useContext(AppContext)
   const {synthese} = useContext(SyntheseContext)
   const {code = '', region = ''} = hovered && hovered.feature ? hovered.feature.properties : {}
 
   const selectedRegion = selectedLocation.includes('REG') ? selectedLocation.split('-')[1] : null
+
+  const handleBack = event => {
+    event.stopPropagation()
+    setSelectedLocation('FRA')
+  }
 
   const getColors = useMemo(() => {
     const colors = ['match', ['get', 'code']]
@@ -65,7 +70,7 @@ export const SyntheseMap = ({hovered, isDROM}) => {
     return (
       <>
         {!isDROM && selectedLocation !== 'FRA' && (
-          <div className='back' onClick={() => setSelectedLocation('FRA')}>
+          <div className={`back ${isMobileDevice ? 'mobile' : ''}`} onClick={handleBack}>
             <ChevronLeft /> Retour
           </div>
         )}

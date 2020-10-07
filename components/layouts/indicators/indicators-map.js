@@ -28,6 +28,11 @@ export const IndicatorsMap = ({hovered, isDROM}) => {
 
   const [indicators, setIndicators] = useState([])
 
+  const handleBack = event => {
+    event.stopPropagation()
+    setSelectedLocation('FRA')
+  }
+
   const getSelectedRegion = useCallback(() => {
     const [locationType, code] = selectedLocation.split('-')
     if (locationType !== 'FRA') {
@@ -96,7 +101,7 @@ export const IndicatorsMap = ({hovered, isDROM}) => {
     return (
       <>
         {!isDROM && selectedLocation !== 'FRA' && (
-          <div className={`back ${isMobileDevice ? 'mobile' : ''}`} onClick={() => setSelectedLocation('FRA')}>
+          <div className={`back ${isMobileDevice ? 'mobile' : ''}`} onClick={handleBack}>
             <ChevronLeft /> Retour
           </div>
         )}
