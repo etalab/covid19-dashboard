@@ -151,7 +151,6 @@ const CovidTests = props => {
 
     return () => {
       isCancelled = true
-      setForcedDate(null)
     }
   }, [date, selectedLocation, setForcedDate])
 
