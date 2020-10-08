@@ -24,7 +24,7 @@ const MapSelector = ({selectedMapId, maps, selectMap, selectStat}) => {
   return (
     <div className='switch'>
       <div className='header' onClick={handleClick}>
-        <span>{selectedMap.name}</span> {isOpen ? <ChevronDown /> : <ChevronUp />}
+        <span>{selectedMap.name}</span> {isOpen ? <ChevronUp /> : <ChevronDown />}
       </div>
       {isOpen && (
         <div className='menu'>
