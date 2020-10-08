@@ -30,6 +30,13 @@ const INDICATEURS_FR_SOURCE = 'https://www.data.gouv.fr/fr/datasets/r/d86f11b0-0
 
 const PRELEVEMENT_SOURCE = 'sites-prelevement-latest.csv'
 
+const hasIndicatorValue = (departements, indicateur) => {
+  const indicateurs = departements.map(departement => departement[indicateur])
+  const indicateursWithValue = indicateurs.filter(i => !isNaN(i))
+
+  return indicateursWithValue.length > 0 ? true : null
+}
+
 async function fetchCsv(url, options = {}) {
   const rows = await getStream.array(
     got.stream(url)
@@ -373,6 +380,30 @@ async function loadIndicateurs(depUrl, franceUrl) {
       }
     }).value()
 
+  /*
+    Les données concernant les indicateurs à la maille régionale ne sont pas disponibles.
+    Le rapport doit cependant contenir une valeur différent de `null` pour chaque taux
+    si au moins un des départements de la région dispose d’une valeur pour ces taux.
+    Ceci afin que les données ne soient pas filtrées par la méthode `findMostRecentDateForData` et permettre l’affichage des données départemental.
+  */
+  const regionsReports = chain(departementsReports)
+    .filter(r => r.code.slice(4) in departementsIndex)
+    .groupBy(r => `${r.date}-${departementsIndex[r.code.slice(4)].region}`)
+    .map(regionRows => {
+      const firstRow = regionRows[0]
+      const region = regionsIndex[departementsIndex[firstRow.code.slice(4)].region]
+      return {
+        date: firstRow.date,
+        code: `REG-${region.code}`,
+        nom: region.nom,
+        tauxIncidence: hasIndicatorValue(regionRows, 'tauxIncidence'),
+        tauxReproductionEffectif: hasIndicatorValue(regionRows, 'tauxReproductionEffectif'),
+        tauxOccupationRea: hasIndicatorValue(regionRows, 'tauxOccupationRea'),
+        tauxPositiviteTests: hasIndicatorValue(regionRows, 'tauxPositiviteTests'),
+        sourceType: 'sante-publique-france'
+      }
+    }).value()
+
   const franceReports = chain(await fetchCsv(franceUrl, csvOptions))
     .map(row => {
       return {
@@ -386,7 +417,7 @@ async function loadIndicateurs(depUrl, franceUrl) {
       }
     }).value()
 
-  return [...franceReports, ...departementsReports]
+  return [...franceReports, ...regionsReports, ...departementsReports]
 }
 
 function filterRecords(records) {
