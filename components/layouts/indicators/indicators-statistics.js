@@ -18,9 +18,8 @@ import {IndicatorsContext} from '.'
 
 const IndicatorsStatistics = () => {
   const {selectedLocation, setSelectedLocation, isMobileDevice} = useContext(AppContext)
-  const {selectedDate} = useContext(IndicatorsContext)
 
-  const {report, selectedStat, setSelectedStat} = useContext(IndicatorsContext)
+  const {report, selectedDate, selectedStat, setSelectedStat} = useContext(IndicatorsContext)
 
   const [locationType, code] = selectedLocation.split('-')
 
@@ -51,7 +50,7 @@ const IndicatorsStatistics = () => {
       </div>
 
       <div className='indicators-container'>
-        {selectedLocation.split('-')[0] === 'REG' ? (
+        {locationType === 'REG' ? (
           <>
             {departementsRegion.map(r => (
               <div key={r.code}>
@@ -61,7 +60,9 @@ const IndicatorsStatistics = () => {
             ))}
           </>
         ) : (
-          report && Object.keys(indicatorsList).map(indicator => {
+          report &&
+          !report.code.includes('REG') && // `locationType` peut être désynchronisé de `report`
+          Object.keys(indicatorsList).map(indicator => {
             const {label, details, min, max} = indicatorsList[indicator]
             const value = getIndicatorValue(indicator)
             return (

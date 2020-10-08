@@ -153,7 +153,6 @@ const Indicators = props => {
 
     return () => {
       isCancelled = true
-      setForcedDate(null)
     }
   }, [date, selectedLocation, selectedStat, setForcedDate])
 
