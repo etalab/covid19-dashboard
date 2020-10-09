@@ -14,7 +14,7 @@ export const Indicator = ({label, value, color}) => {
       <div>{label}:</div>
       <div className={color}>
         <span>{value && !isNaN(value) ? (
-          <><b>{value.toPrecision(2)}</b> ({color})</>
+          <><b>{Number((value).toFixed(1))}</b> ({color})</>
         ) : (
           <b>Non renseigné</b>
         )}</span>
