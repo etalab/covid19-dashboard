@@ -3,6 +3,14 @@ import {IndicatorsMap, HoveredInfos, onSelect, interactiveLayersIds} from './ind
 
 const maps = [
   {
+    name: 'Taux d’occupation des lits en réanimation',
+    type: IndicatorsMap,
+    property: 'tauxOccupationRea',
+    onSelect,
+    hovered: (feature, options) => <HoveredInfos feature={feature} options={options} />,
+    interactiveLayersIds
+  },
+  {
     name: 'Taux d’incidence',
     type: IndicatorsMap,
     property: 'tauxIncidence',
@@ -14,14 +22,6 @@ const maps = [
     name: 'R - Nombre de reproduction effectif',
     type: IndicatorsMap,
     property: 'tauxReproductionEffectif',
-    onSelect,
-    hovered: (feature, options) => <HoveredInfos feature={feature} options={options} />,
-    interactiveLayersIds
-  },
-  {
-    name: 'Taux d’occupation des lits en réanimation',
-    type: IndicatorsMap,
-    property: 'tauxOccupationRea',
     onSelect,
     hovered: (feature, options) => <HoveredInfos feature={feature} options={options} />,
     interactiveLayersIds
