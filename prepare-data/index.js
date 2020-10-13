@@ -487,9 +487,9 @@ async function main() {
 
   await outputFile(join(dataDirectory, 'synthese-FRA.json'), frData)
 
-  // if (process.env.DATAGOUV_PUBLISH === '1' || process.env.CONTEXT === 'production') {
+  if (process.env.DATAGOUV_PUBLISH === '1' || process.env.CONTEXT === 'production') {
     await replaceResourceFile('5f69ecb155c43420918410b8', 'd2671c6c-c0eb-4e12-b69a-8e8f87fc224c', 'synthese-fra.json', frData)
-  //}
+  }
 
   await outputJson(join(rootPath, 'dates.json'), dates)
 }
