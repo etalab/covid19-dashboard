@@ -9,7 +9,7 @@ const got = require('got')
 const {outputJson, readJson, outputFile} = require('fs-extra')
 const getStream = require('get-stream')
 const csvParse = require('csv-parser')
-const {groupBy, sortBy, defaults, pick, keyBy, chain, sumBy, uniq} = require('lodash')
+const {groupBy, sortBy, defaults, pick, keyBy, chain, sumBy, uniq, omit} = require('lodash')
 
 const {extractData} = require('../lib/airtable')
 
@@ -478,6 +478,18 @@ async function main() {
   if (process.env.DATAGOUV_PUBLISH === '1' || process.env.CONTEXT === 'production') {
     await replaceResourceFile('5eb55e49899a159c2e0053c2', 'e13851d0-0228-4252-91b9-cf091a0452a4', 'fra-latest.json', buffer)
   }
+
+  /* Données nationales - onglet Synthèse */
+
+  const frData = Buffer.from(
+    JSON.stringify(data.filter(r => r.code === 'FRA').map(r => omit(r, 'testsRealisesDetails', 'testsPositifsDetails', 'code', 'nom', 'tauxIncidence', 'tauxReproductionEffectif', 'tauxOccupationRea', 'tauxPositiviteTests')), null, 2)
+  )
+
+  await outputFile(join(dataDirectory, 'synthese-FRA.json'), frData)
+
+  // if (process.env.DATAGOUV_PUBLISH === '1' || process.env.CONTEXT === 'production') {
+    await replaceResourceFile('5f69ecb155c43420918410b8', 'd2671c6c-c0eb-4e12-b69a-8e8f87fc224c', 'synthese-fra.json', frData)
+  //}
 
   await outputJson(join(rootPath, 'dates.json'), dates)
 }
