@@ -14,6 +14,7 @@ const {extractData} = require('../lib/airtable')
 
 const {loadJson, fetchCsv} = require('./util')
 const {replaceResourceFile} = require('./datagouv')
+const {buildIndicateursTerritoires} = require('./indicateurs-territoires')
 
 const rootPath = join(__dirname, '..')
 
@@ -478,6 +479,8 @@ async function main() {
   }
 
   await outputJson(join(rootPath, 'dates.json'), dates)
+
+  await buildIndicateursTerritoires()
 }
 
 main().catch(error => {
