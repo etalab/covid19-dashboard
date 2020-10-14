@@ -4,10 +4,7 @@ require('dotenv').config()
 
 const {join} = require('path')
 const {createReadStream} = require('fs')
-const stripBomStream = require('strip-bom-stream')
-const {Transform} = require('stream')
-const got = require('got')
-const {outputJson, readJson, outputFile} = require('fs-extra')
+const {outputJson, outputFile} = require('fs-extra')
 const getStream = require('get-stream')
 const csvParse = require('csv-parser')
 const {groupBy, sortBy, defaults, pick, keyBy, chain, sumBy, uniq, omit} = require('lodash')
@@ -15,6 +12,7 @@ const Papa = require('papaparse')
 
 const {extractData} = require('../lib/airtable')
 
+const {loadJson, fetchCsv} = require('./util')
 const {replaceResourceFile} = require('./datagouv')
 
 const rootPath = join(__dirname, '..')
@@ -37,38 +35,6 @@ const hasIndicatorValue = (departements, indicateur) => {
   const indicateursWithValue = indicateurs.filter(i => !isNaN(i))
 
   return indicateursWithValue.length > 0 ? true : null
-}
-
-async function fetchCsv(url, options = {}) {
-  const rows = await getStream.array(
-    got.stream(url)
-      .pipe(stripBomStream())
-      .pipe(csvParse(options))
-      .pipe(new Transform({
-        transform(row, enc, cb) {
-          if (!options.filter || options.filter(row)) {
-            return cb(null, row)
-          }
-
-          cb()
-        },
-        objectMode: true
-      }))
-  )
-  return rows
-}
-
-async function fetchJson(url) {
-  const response = await got(url, {responseType: 'json'})
-  return response.body
-}
-
-async function loadJson(dataSource) {
-  if (dataSource.startsWith('http')) {
-    return fetchJson(dataSource)
-  }
-
-  return readJson(dataSource)
 }
 
 const SOURCE_PRIORITIES = {
