@@ -3,10 +3,7 @@
 require('dotenv').config()
 
 const {join} = require('path')
-const {createReadStream} = require('fs')
 const {outputJson, outputFile} = require('fs-extra')
-const getStream = require('get-stream')
-const csvParse = require('csv-parser')
 const {groupBy, sortBy, defaults, pick, keyBy, chain, sumBy, uniq, omit} = require('lodash')
 const Papa = require('papaparse')
 
@@ -15,6 +12,7 @@ const {extractData} = require('../lib/airtable')
 const {loadJson, fetchCsv} = require('./util')
 const {replaceResourceFile} = require('./datagouv')
 const {buildIndicateursTerritoires} = require('./indicateurs-territoires')
+const {buildSitesPrelevements} = require('./sites-prelevements')
 
 const rootPath = join(__dirname, '..')
 
@@ -28,8 +26,6 @@ const DATA_SOURCE = process.env.DATA_SOURCE || 'https://raw.githubusercontent.co
 
 const INDICATEURS_DEP_SOURCE = 'https://www.data.gouv.fr/fr/datasets/r/4acad602-d8b1-4516-bc71-7d5574d5f33e'
 const INDICATEURS_FR_SOURCE = 'https://www.data.gouv.fr/fr/datasets/r/d86f11b0-0a62-41c1-bf6e-dc9a408cf7b5'
-
-const PRELEVEMENT_SOURCE = 'sites-prelevement-latest.csv'
 
 const hasIndicatorValue = (departements, indicateur) => {
   const indicateurs = departements.map(departement => departement[indicateur])
@@ -78,44 +74,6 @@ function fillEmptyDates(records, rows) {
   })
 
   return rows
-}
-
-async function loadPrelevements(file) {
-  const inputRows = await getStream.array(
-    createReadStream(file)
-      .pipe(csvParse())
-  )
-
-  const rows = inputRows.map(row => {
-    const {ID, rs, longitude, latitude} = row
-    return {
-      type: 'Feature',
-      id: ID,
-      properties: {
-        ...row,
-        id: ID,
-        name: rs,
-        complementAdresse: row.cpl_loc,
-        modePrelevement: row.mod_prel.split('/'),
-        capacitePrelevement: row.capa_prel,
-        audience: row.public,
-        isPublic: row.public.includes('Tout public'),
-        appointment: row.check_rdv,
-        appointmentOnly: row.check_rdv === 'Sur rendez-vous uniquement',
-        tel: row.tel_rdv,
-        mail: row.web_rdv
-      },
-      geometry: {
-        type: 'Point',
-        coordinates: [longitude, latitude]
-      }
-    }
-  })
-
-  return {
-    type: 'FeatureCollection',
-    features: rows
-  }
 }
 
 async function loadSidepTest() {
@@ -418,16 +376,12 @@ async function main() {
   const indicateurs = await loadIndicateurs(INDICATEURS_DEP_SOURCE, INDICATEURS_FR_SOURCE)
   const data = consolidate(filterRecords([...records, ...troisLabosTests, ...sidepTests, ...indicateursSynthese, ...indicateurs]))
 
-  const prelevements = await loadPrelevements(join(rootPath, 'data', PRELEVEMENT_SOURCE))
-
   const dates = uniq(data.filter(r => r.code === 'FRA').map(r => r.date)).sort()
   const codes = uniq(data.map(r => r.code))
 
   const latest = dates[dates.length - 1]
 
   const dataDirectory = join(rootPath, 'public', 'data')
-
-  await outputJson(join(dataDirectory, 'prelevements.json'), prelevements)
 
   await Promise.all(dates.map(async date => {
     await outputJson(join(dataDirectory, `date-${date}.json`), data.filter(r => r.date === date))
@@ -480,6 +434,7 @@ async function main() {
 
   await outputJson(join(rootPath, 'dates.json'), dates)
 
+  await buildSitesPrelevements(dataDirectory)
   await buildIndicateursTerritoires()
 }
 
