@@ -12,7 +12,6 @@ import MobilePage from '../layouts/mobile'
 
 import BigPicture from '../components/layouts/big-picture'
 import CovidTests from '../components/layouts/covid-tests'
-import Transfert from '../components/layouts/transfert'
 // Temporary : import Synthese from '../components/layouts/synthese'
 import Indicators from '../components/layouts/indicators'
 import Prelevements from '../components/layouts/prelevements'
@@ -60,12 +59,6 @@ const LAYOUTS = [
     name: 'aides-entreprises',
     label: 'Aides entreprises',
     component: <Entreprises />
-  },
-  {
-    id: 'transfert',
-    name: 'transferts-de-patients',
-    label: 'Transferts de patients',
-    component: <Transfert />
   }
 ]
 
