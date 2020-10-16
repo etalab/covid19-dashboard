@@ -4,6 +4,7 @@ const Papa = require('papaparse')
 const {outputFile} = require('fs-extra')
 const {fetchCsv} = require('./util')
 const {replaceResourceFile} = require('./datagouv')
+const {extractData} = require('../lib/airtable')
 
 const epciIndex = keyBy(epci, 'code')
 
@@ -55,6 +56,15 @@ async function buildTauxIncidence() {
     .value()
 }
 
+async function buildCouvreFeux() {
+  const inputRows = await extractData('appvqjbgBnxfnGtka', 'classement_couvre_feu')
+  return inputRows.map(row => ({
+    siren: row.EPCI,
+    etatCouvreFeu: row.couvre_feu.trim().toLowerCase() === 'oui',
+    dateEtatCouvreFeu: row.date_maj
+  }))
+}
+
 function mergeRecords(records) {
   return chain(records)
     .groupBy('siren')
@@ -78,7 +88,8 @@ async function buildIndicateursTerritoires() {
   const rows = decorateRecords(
     mergeRecords([
       ...(await buildTauxOccupation()),
-      ...(await buildTauxIncidence())
+      ...(await buildTauxIncidence()),
+      ...(await buildCouvreFeux())
     ])
   )
 
