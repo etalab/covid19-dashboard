@@ -1,5 +1,6 @@
 const epci = require('@etalab/decoupage-administratif/data/epci.json')
-const {chain, keyBy, sortBy, assign, mapKeys, snakeCase} = require('lodash')
+const communes = require('@etalab/decoupage-administratif/data/communes.json')
+const {chain, keyBy, sortBy, assign, mapKeys, snakeCase, maxBy} = require('lodash')
 const Papa = require('papaparse')
 const {outputFile} = require('fs-extra')
 const {fetchCsv} = require('./util')
@@ -7,6 +8,7 @@ const {replaceResourceFile} = require('./datagouv')
 const {extractData} = require('../lib/airtable')
 
 const epciIndex = keyBy(epci, 'code')
+const communesIndex = keyBy(communes, 'code')
 
 function parseFloatPrecision(string, precision) {
   const number = parseFloat(string)
@@ -14,11 +16,11 @@ function parseFloatPrecision(string, precision) {
   return Math.round(number * pow) / pow
 }
 
-async function buildTauxOccupation() {
-  const rows = await fetchCsv('https://www.data.gouv.fr/fr/datasets/r/62ec32ae-6b3e-4e4a-b81f-eeb4e8759a4d', {separator: ','})
+async function buildTauxOccupationDepartements() {
+  const rows = await fetchCsv('https://www.data.gouv.fr/fr/datasets/r/5cc79ccf-3df8-4e48-a41c-28839a1498d2', {separator: ','})
 
   return rows.map(row => ({
-    siren: row.epci,
+    codeDepartement: row.dep,
     tauxOccupation: parseFloatPrecision(row.to, 1),
     dateTauxOccupation: row.date
   }))
@@ -74,23 +76,38 @@ function mergeRecords(records) {
     .value()
 }
 
-function decorateRecords(records) {
+function getDepartementRattachement(siren) {
+  const epci = epciIndex[siren]
+  const membres = epci.membres.map(m => communesIndex[m.code])
+  const communeCentre = maxBy(membres, 'population')
+  return communeCentre.departement
+}
+
+function decorateRecords(records, tauxOccupationDepartements) {
   return records.map(record => {
     const {siren} = record
+    const codeDepartement = getDepartementRattachement(siren)
+    const {tauxOccupation, dateTauxOccupation} = tauxOccupationDepartements.find(to => to.codeDepartement === codeDepartement)
     return {
       nom: epciIndex[siren].nom,
-      ...record
+      ...record,
+      tauxOccupation,
+      dateTauxOccupation
     }
   })
 }
 
 async function buildIndicateursTerritoires() {
+  const tauxOccupationDepartements = await buildTauxOccupationDepartements()
+
   const rows = decorateRecords(
-    mergeRecords([
-      ...(await buildTauxOccupation()),
-      ...(await buildTauxIncidence()),
-      ...(await buildCouvreFeux())
-    ])
+    mergeRecords(
+      [
+        ...(await buildTauxIncidence()),
+        ...(await buildCouvreFeux())
+      ]
+    ),
+    tauxOccupationDepartements
   )
 
   const jsonFile = Buffer.from(
