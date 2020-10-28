@@ -25,7 +25,7 @@ export default function MyApp({Component, pageProps}) {
 
         @font-face {
           font-family: "Marianne";
-          src: url(’/fonts/Marianne-Regular.woff2’);
+          src: url("/fonts/Marianne-Regular.woff2");
         }
 
         body {
