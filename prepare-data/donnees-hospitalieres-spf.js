@@ -32,7 +32,7 @@ function normalizeDate(date) {
   }
 }
 
-async function buildHospi() {
+async function buildHospiSpf() {
   const covidHospitRows = await getCovidHospit()
   const covidHospitNouveauxRows = await getCovidHospitNouveaux()
 
@@ -136,4 +136,4 @@ async function buildHospi() {
   return concatRows
 }
 
-module.exports = {buildHospi}
+module.exports = {buildHospiSpf}
