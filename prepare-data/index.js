@@ -13,6 +13,7 @@ const {loadJson, fetchCsv} = require('./util')
 const {replaceResourceFile} = require('./datagouv')
 const {buildIndicateursTerritoires} = require('./indicateurs-territoires')
 const {buildSitesPrelevements} = require('./sites-prelevements')
+const {buildHospi} = require('./donnees-hospitalieres')
 
 const rootPath = join(__dirname, '..')
 
@@ -22,7 +23,7 @@ const regions = require('@etalab/decoupage-administratif/data/regions.json')
 const departementsIndex = keyBy(departements, 'code')
 const regionsIndex = keyBy(regions, 'code')
 
-const DATA_SOURCE = process.env.DATA_SOURCE || 'https://raw.githubusercontent.com/opencovid19-fr/data/master/dist/chiffres-cles.json'
+const HISTORICAL_DATA_URL = 'https://raw.githubusercontent.com/opencovid19-fr/data/master/dist/chiffres-cles.json'
 
 const INDICATEURS_DEP_SOURCE = 'https://www.data.gouv.fr/fr/datasets/r/4acad602-d8b1-4516-bc71-7d5574d5f33e'
 const INDICATEURS_FR_SOURCE = 'https://www.data.gouv.fr/fr/datasets/r/d86f11b0-0a62-41c1-bf6e-dc9a408cf7b5'
@@ -37,11 +38,7 @@ const hasIndicatorValue = (departements, indicateur) => {
 const SOURCE_PRIORITIES = {
   'ministere-sante': 1,
   'sante-publique-france': 2,
-  'sante-publique-france-data': 3,
-  'agences-regionales-sante': 4,
-  prefectures: 5,
-  'opencovid19-fr': 6,
-  'lperez-historical-data': 7
+  etalab: 3
 }
 
 function consolidate(records) {
@@ -347,13 +344,6 @@ async function loadIndicateurs(depUrl, franceUrl) {
   return [...franceReports, ...regionsReports, ...departementsReports]
 }
 
-const ALLOWED_SOURCES = [
-  'ministere-sante',
-  'sante-publique-france',
-  'sante-publique-france-data',
-  'opencovid19-fr'
-]
-
 function filterRecords(records) {
   const {START_DATE, END_DATE} = process.env
   const filters = []
@@ -366,20 +356,22 @@ function filterRecords(records) {
     filters.push(r => r.date <= END_DATE)
   }
 
-  filters.push(r => ALLOWED_SOURCES.includes(r.sourceType))
-
-  filters.push(r => r.date < '2020-06-01' || r.code !== 'FRA' || ['ministere-sante', 'sante-publique-france'].includes(r.sourceType))
-
   return records.filter(r => filters.every(filter => filter(r)))
 }
 
+async function loadHistoricalData() {
+  const records = await loadJson(HISTORICAL_DATA_URL)
+  return records.filter(r => ['ministere-sante', 'sante-publique-france'].includes(r.sourceType))
+}
+
 async function main() {
-  const records = await loadJson(DATA_SOURCE)
+  const records = await loadHistoricalData()
+  const hospi = await buildHospi()
   const troisLabosTests = await loadTroisLabosTests()
   const sidepTests = await loadSidepTest()
   const indicateursSynthese = await loadIndicateursSynthese(records)
   const indicateurs = await loadIndicateurs(INDICATEURS_DEP_SOURCE, INDICATEURS_FR_SOURCE)
-  const data = consolidate(filterRecords([...records, ...troisLabosTests, ...sidepTests, ...indicateursSynthese, ...indicateurs]))
+  const data = consolidate(filterRecords([...records, ...hospi, ...troisLabosTests, ...sidepTests, ...indicateursSynthese, ...indicateurs]))
 
   const dates = uniq(data.filter(r => r.code === 'FRA').map(r => r.date)).sort()
   const codes = uniq(data.map(r => r.code))
