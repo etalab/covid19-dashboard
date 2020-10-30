@@ -125,8 +125,6 @@ async function buildIndicateursTerritoires() {
   if (process.env.DATAGOUV_PUBLISH === '1' || process.env.CONTEXT === 'production') {
     await replaceResourceFile('5f86e6e7ae50b079c80a964c', 'bdb43ecc-6e99-4f53-ad22-3903b84661de', 'indicateurs-territoires.csv', csvFile)
   }
-
-  await outputFile('indicateurs.csv', csvFile)
 }
 
 module.exports = {buildIndicateursTerritoires}
