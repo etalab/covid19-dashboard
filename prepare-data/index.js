@@ -347,8 +347,15 @@ async function loadIndicateurs(depUrl, franceUrl) {
   return [...franceReports, ...regionsReports, ...departementsReports]
 }
 
+const ALLOWED_SOURCES = [
+  'ministere-sante',
+  'sante-publique-france',
+  'sante-publique-france-data',
+  'opencovid19-fr'
+]
+
 function filterRecords(records) {
-  const {START_DATE, END_DATE, ALLOWED_SOURCES} = process.env
+  const {START_DATE, END_DATE} = process.env
   const filters = []
 
   if (START_DATE) {
@@ -359,9 +366,7 @@ function filterRecords(records) {
     filters.push(r => r.date <= END_DATE)
   }
 
-  if (ALLOWED_SOURCES) {
-    filters.push(r => ALLOWED_SOURCES.split(',').includes(r.sourceType))
-  }
+  filters.push(r => ALLOWED_SOURCES.includes(r.sourceType))
 
   filters.push(r => r.date < '2020-06-01' || r.code !== 'FRA' || ['ministere-sante', 'sante-publique-france'].includes(r.sourceType))
 
