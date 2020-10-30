@@ -13,7 +13,7 @@ const {loadJson, fetchCsv} = require('./util')
 const {replaceResourceFile} = require('./datagouv')
 const {buildIndicateursTerritoires} = require('./indicateurs-territoires')
 const {buildSitesPrelevements} = require('./sites-prelevements')
-const {buildHospi} = require('./donnees-hospitalieres')
+const {buildHospiSpf} = require('./donnees-hospitalieres-spf')
 
 const rootPath = join(__dirname, '..')
 
@@ -366,12 +366,12 @@ async function loadHistoricalData() {
 
 async function main() {
   const records = await loadHistoricalData()
-  const hospi = await buildHospi()
+  const hospiSpf = await buildHospiSpf()
   const troisLabosTests = await loadTroisLabosTests()
   const sidepTests = await loadSidepTest()
   const indicateursSynthese = await loadIndicateursSynthese(records)
   const indicateurs = await loadIndicateurs(INDICATEURS_DEP_SOURCE, INDICATEURS_FR_SOURCE)
-  const data = consolidate(filterRecords([...records, ...hospi, ...troisLabosTests, ...sidepTests, ...indicateursSynthese, ...indicateurs]))
+  const data = consolidate(filterRecords([...records, ...hospiSpf, ...troisLabosTests, ...sidepTests, ...indicateursSynthese, ...indicateurs]))
 
   const dates = uniq(data.filter(r => r.code === 'FRA').map(r => r.date)).sort()
   const codes = uniq(data.map(r => r.code))
