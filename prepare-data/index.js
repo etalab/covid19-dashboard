@@ -14,6 +14,7 @@ const {replaceResourceFile} = require('./datagouv')
 const {buildIndicateursTerritoires} = require('./indicateurs-territoires')
 const {buildSitesPrelevements} = require('./sites-prelevements')
 const {buildHospiSpf} = require('./donnees-hospitalieres-spf')
+const {buildHospiCc} = require('./donnees-hospitalieres-cc')
 
 const rootPath = join(__dirname, '..')
 
@@ -361,17 +362,29 @@ function filterRecords(records) {
 
 async function loadHistoricalData() {
   const records = await loadJson(HISTORICAL_DATA_URL)
-  return records.filter(r => ['ministere-sante', 'sante-publique-france'].includes(r.sourceType))
+  return records
+    .filter(r => {
+      if (r.sourceType === 'sante-publique-france') {
+        return true
+      }
+
+      if (r.sourceType === 'ministere-sante' && r.date < '2020-05-04') {
+        return true
+      }
+
+      return false
+    })
 }
 
 async function main() {
   const records = await loadHistoricalData()
   const hospiSpf = await buildHospiSpf()
+  const hospiCc = await buildHospiCc()
   const troisLabosTests = await loadTroisLabosTests()
   const sidepTests = await loadSidepTest()
   const indicateursSynthese = await loadIndicateursSynthese(records)
   const indicateurs = await loadIndicateurs(INDICATEURS_DEP_SOURCE, INDICATEURS_FR_SOURCE)
-  const data = consolidate(filterRecords([...records, ...hospiSpf, ...troisLabosTests, ...sidepTests, ...indicateursSynthese, ...indicateurs]))
+  const data = consolidate(filterRecords([...records, ...hospiSpf, ...hospiCc, ...troisLabosTests, ...sidepTests, ...indicateursSynthese, ...indicateurs]))
 
   const dates = uniq(data.filter(r => r.code === 'FRA').map(r => r.date)).sort()
   const codes = uniq(data.map(r => r.code))
