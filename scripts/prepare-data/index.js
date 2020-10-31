@@ -7,7 +7,7 @@ const {outputJson, outputFile} = require('fs-extra')
 const {groupBy, sortBy, defaults, pick, keyBy, chain, sumBy, uniq, omit} = require('lodash')
 const Papa = require('papaparse')
 
-const {loadJson, fetchCsv, extractFromAirtable} = require('./util')
+const {fetchCsv, extractFromAirtable} = require('./util')
 const {replaceResourceFile} = require('./datagouv')
 const {buildIndicateursTerritoires} = require('./indicateurs-territoires')
 const {buildSitesPrelevements} = require('./sites-prelevements')
@@ -21,8 +21,6 @@ const regions = require('@etalab/decoupage-administratif/data/regions.json')
 
 const departementsIndex = keyBy(departements, 'code')
 const regionsIndex = keyBy(regions, 'code')
-
-const HISTORICAL_DATA_URL = 'https://raw.githubusercontent.com/opencovid19-fr/data/master/dist/chiffres-cles.json'
 
 const INDICATEURS_DEP_SOURCE = 'https://www.data.gouv.fr/fr/datasets/r/4acad602-d8b1-4516-bc71-7d5574d5f33e'
 const INDICATEURS_FR_SOURCE = 'https://www.data.gouv.fr/fr/datasets/r/d86f11b0-0a62-41c1-bf6e-dc9a408cf7b5'
@@ -358,31 +356,19 @@ function filterRecords(records) {
   return records.filter(r => filters.every(filter => filter(r)))
 }
 
-async function loadHistoricalData() {
-  const records = await loadJson(HISTORICAL_DATA_URL)
-  return records
-    .filter(r => {
-      if (r.sourceType === 'sante-publique-france') {
-        return true
-      }
-
-      if (r.sourceType === 'ministere-sante' && r.date < '2020-05-04') {
-        return true
-      }
-
-      return false
-    })
+async function loadContribData() {
+  return require('../../data/contrib-data.json')
 }
 
 async function main() {
-  const records = await loadHistoricalData()
+  const contribData = await loadContribData()
   const hospiSpf = await buildHospiSpf()
   const hospiCc = await buildHospiCc()
   const troisLabosTests = await loadTroisLabosTests()
   const sidepTests = await loadSidepTest()
-  const indicateursSynthese = await loadIndicateursSynthese(records)
+  const indicateursSynthese = await loadIndicateursSynthese([...contribData, ...hospiSpf, ...hospiCc])
   const indicateurs = await loadIndicateurs(INDICATEURS_DEP_SOURCE, INDICATEURS_FR_SOURCE)
-  const data = consolidate(filterRecords([...records, ...hospiSpf, ...hospiCc, ...troisLabosTests, ...sidepTests, ...indicateursSynthese, ...indicateurs]))
+  const data = consolidate(filterRecords([...contribData, ...hospiSpf, ...hospiCc, ...troisLabosTests, ...sidepTests, ...indicateursSynthese, ...indicateurs]))
 
   const dates = uniq(data.filter(r => r.code === 'FRA').map(r => r.date)).sort()
   const codes = uniq(data.map(r => r.code))

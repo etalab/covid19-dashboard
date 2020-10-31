@@ -12,7 +12,8 @@
     "start": "serve out",
     "lint": "xo",
     "prepare-data": "node scripts/prepare-data",
-    "build:geo": "node scripts/build-geo"
+    "build:geo": "node scripts/build-geo",
+    "download-contrib-data": "node scripts/download-contrib-data"
   },
   "devDependencies": {
     "@turf/center": "^6.0.1",
