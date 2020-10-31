@@ -7,7 +7,7 @@ const {outputJson, outputFile} = require('fs-extra')
 const {groupBy, sortBy, defaults, pick, keyBy, chain, sumBy, uniq, omit} = require('lodash')
 const Papa = require('papaparse')
 
-const {extractData} = require('../lib/airtable')
+const {extractData} = require('../../lib/airtable')
 
 const {loadJson, fetchCsv} = require('./util')
 const {replaceResourceFile} = require('./datagouv')
@@ -16,7 +16,7 @@ const {buildSitesPrelevements} = require('./sites-prelevements')
 const {buildHospiSpf} = require('./donnees-hospitalieres-spf')
 const {buildHospiCc} = require('./donnees-hospitalieres-cc')
 
-const rootPath = join(__dirname, '..')
+const rootPath = join(__dirname, '..', '..')
 
 const departements = require('@etalab/decoupage-administratif/data/departements.json')
 const regions = require('@etalab/decoupage-administratif/data/regions.json')

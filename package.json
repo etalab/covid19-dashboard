@@ -11,7 +11,7 @@
     "export": "next export",
     "start": "serve out",
     "lint": "xo",
-    "prepare-data": "node prepare-data",
+    "prepare-data": "node scripts/prepare-data",
     "build:geo": "node build-geo"
   },
   "devDependencies": {

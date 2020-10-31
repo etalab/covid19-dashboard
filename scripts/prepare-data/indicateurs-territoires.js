@@ -4,7 +4,7 @@ const {chain, keyBy, sortBy, assign, mapKeys, snakeCase, maxBy} = require('lodas
 const Papa = require('papaparse')
 const {fetchCsv} = require('./util')
 const {replaceResourceFile} = require('./datagouv')
-const {extractData} = require('../lib/airtable')
+const {extractData} = require('../../lib/airtable')
 
 const epciIndex = keyBy(epci, 'code')
 const communesIndex = keyBy(communes, 'code')

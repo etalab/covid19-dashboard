@@ -1,5 +1,5 @@
 /* eslint unicorn/string-content: off */
-const {extractData} = require('../lib/airtable')
+const {extractData} = require('../../lib/airtable')
 
 function parseValue(string) {
   return parseInt(string.replace(/\s/g, ''), 10)
