@@ -7,7 +7,7 @@ const {outputJson, outputFile} = require('fs-extra')
 const {groupBy, sortBy, defaults, pick, keyBy, chain, sumBy, uniq, omit} = require('lodash')
 const Papa = require('papaparse')
 
-const {fetchCsv, extractFromAirtable} = require('./util')
+const {fetchCsv} = require('./util')
 const {replaceResourceFile} = require('./datagouv')
 const {buildIndicateursTerritoires} = require('./indicateurs-territoires')
 const {buildSitesPrelevements} = require('./sites-prelevements')
@@ -46,29 +46,11 @@ function consolidate(records) {
       .reduce((acc, row) => {
         defaults(acc, row)
         return acc
-      }, {}), ['casConfirmes', 'deces', 'decesEhpad', 'casConfirmesEhpad', 'casPossiblesEhpad', 'reanimation', 'hospitalises', 'gueris', 'date', 'code', 'nom', 'testsRealises', 'testsPositifs', 'testsRealisesDetails', 'testsPositifsDetails', 'indicateurSynthese', 'nouvellesHospitalisations', 'nouvellesReanimations', 'tauxIncidence', 'tauxIncidenceColor', 'tauxReproductionEffectif', 'tauxReproductionEffectifColor', 'tauxOccupationRea', 'tauxOccupationReaColor', 'tauxPositiviteTests', 'tauxPositiviteTestsColor'])
+      }, {}), ['casConfirmes', 'deces', 'decesEhpad', 'casConfirmesEhpad', 'casPossiblesEhpad', 'reanimation', 'hospitalises', 'gueris', 'date', 'code', 'nom', 'testsRealises', 'testsPositifs', 'testsRealisesDetails', 'testsPositifsDetails', 'nouvellesHospitalisations', 'nouvellesReanimations', 'tauxIncidence', 'tauxIncidenceColor', 'tauxReproductionEffectif', 'tauxReproductionEffectifColor', 'tauxOccupationRea', 'tauxOccupationReaColor', 'tauxPositiviteTests', 'tauxPositiviteTestsColor'])
   })
 }
 
 const TODAY = (new Date()).toISOString().slice(0, 10)
-
-function fillEmptyDates(records, rows) {
-  const dates = uniq(records.map(r => r.date))
-  const index = groupBy(rows, 'date')
-  let lastNotEmptyDate
-
-  dates.forEach(date => {
-    if (date in index) {
-      lastNotEmptyDate = date
-    } else if (lastNotEmptyDate) {
-      index[lastNotEmptyDate].forEach(row => {
-        rows.push({...row, date})
-      })
-    }
-  })
-
-  return rows
-}
 
 async function loadSidepTest() {
   const SIDEP_DEP_DATA = 'https://www.data.gouv.fr/fr/datasets/r/406c6a23-e283-4300-9484-54e78c8ae675'
@@ -262,23 +244,6 @@ async function loadTroisLabosTests() {
   return [...departementsReports, ...regionsReports, ...franceReports]
 }
 
-async function loadIndicateursSynthese(records) {
-  const inputRows = await extractFromAirtable('appvqjbgBnxfnGtka', 'Activité épidémique')
-
-  const rows = inputRows.map(row => {
-    const codeDepartement = row.departement.length === 1 ? `0${row.departement}` : row.departement
-    return {
-      date: row.extract_date,
-      code: `DEP-${codeDepartement}`,
-      nom: departementsIndex[codeDepartement].nom,
-      indicateurSynthese: row.indic_synthese,
-      sourceType: 'ministere-sante'
-    }
-  })
-
-  return fillEmptyDates(records, rows)
-}
-
 async function loadIndicateurs(depUrl, franceUrl) {
   const csvOptions = {
     filter: row => row.extract_date === TODAY || row.extract_date < TODAY
@@ -366,9 +331,8 @@ async function main() {
   const hospiCc = await buildHospiCc()
   const troisLabosTests = await loadTroisLabosTests()
   const sidepTests = await loadSidepTest()
-  const indicateursSynthese = await loadIndicateursSynthese([...contribData, ...hospiSpf, ...hospiCc])
   const indicateurs = await loadIndicateurs(INDICATEURS_DEP_SOURCE, INDICATEURS_FR_SOURCE)
-  const data = consolidate(filterRecords([...contribData, ...hospiSpf, ...hospiCc, ...troisLabosTests, ...sidepTests, ...indicateursSynthese, ...indicateurs]))
+  const data = consolidate(filterRecords([...contribData, ...hospiSpf, ...hospiCc, ...troisLabosTests, ...sidepTests, ...indicateurs]))
 
   const dates = uniq(data.filter(r => r.code === 'FRA').map(r => r.date)).sort()
   const codes = uniq(data.map(r => r.code))
