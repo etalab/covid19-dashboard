@@ -66,7 +66,7 @@ async function main() {
     return acc
   }, {})
 
-  await outputJson(join(__dirname, 'geo.json'), index)
+  await outputJson(join(__dirname, '..', 'geo.json'), index)
 }
 
 main().catch(error => {
