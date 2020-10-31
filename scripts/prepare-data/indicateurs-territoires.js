@@ -2,9 +2,8 @@ const epci = require('@etalab/decoupage-administratif/data/epci.json')
 const communes = require('@etalab/decoupage-administratif/data/communes.json')
 const {chain, keyBy, sortBy, assign, mapKeys, snakeCase, maxBy} = require('lodash')
 const Papa = require('papaparse')
-const {fetchCsv} = require('./util')
+const {fetchCsv, extractFromAirtable} = require('./util')
 const {replaceResourceFile} = require('./datagouv')
-const {extractData} = require('../../lib/airtable')
 
 const epciIndex = keyBy(epci, 'code')
 const communesIndex = keyBy(communes, 'code')
@@ -58,7 +57,7 @@ async function buildTauxIncidence() {
 }
 
 async function buildCouvreFeux() {
-  const inputRows = await extractData('appvqjbgBnxfnGtka', 'classement_couvre_feu')
+  const inputRows = await extractFromAirtable('appvqjbgBnxfnGtka', 'classement_couvre_feu')
   return inputRows.map(row => ({
     siren: row.EPCI,
     etatCouvreFeu: row.couvre_feu.trim().toLowerCase() === 'oui',

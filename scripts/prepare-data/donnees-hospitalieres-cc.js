@@ -1,5 +1,5 @@
 /* eslint unicorn/string-content: off */
-const {extractData} = require('../../lib/airtable')
+const {extractFromAirtable} = require('./util')
 
 function parseValue(string) {
   return parseInt(string.replace(/\s/g, ''), 10)
@@ -36,7 +36,7 @@ function convertRow(row) {
 }
 
 async function buildHospiCc() {
-  const rows = await extractData('appvqjbgBnxfnGtka', 'Onglet vue d\'ensemble')
+  const rows = await extractFromAirtable('appvqjbgBnxfnGtka', 'Onglet vue d\'ensemble')
   return rows.map(row => convertRow(row))
 }
 

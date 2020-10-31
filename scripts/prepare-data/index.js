@@ -7,9 +7,7 @@ const {outputJson, outputFile} = require('fs-extra')
 const {groupBy, sortBy, defaults, pick, keyBy, chain, sumBy, uniq, omit} = require('lodash')
 const Papa = require('papaparse')
 
-const {extractData} = require('../../lib/airtable')
-
-const {loadJson, fetchCsv} = require('./util')
+const {loadJson, fetchCsv, extractFromAirtable} = require('./util')
 const {replaceResourceFile} = require('./datagouv')
 const {buildIndicateursTerritoires} = require('./indicateurs-territoires')
 const {buildSitesPrelevements} = require('./sites-prelevements')
@@ -267,7 +265,7 @@ async function loadTroisLabosTests() {
 }
 
 async function loadIndicateursSynthese(records) {
-  const inputRows = await extractData('appvqjbgBnxfnGtka', 'Activité épidémique')
+  const inputRows = await extractFromAirtable('appvqjbgBnxfnGtka', 'Activité épidémique')
 
   const rows = inputRows.map(row => {
     const codeDepartement = row.departement.length === 1 ? `0${row.departement}` : row.departement
