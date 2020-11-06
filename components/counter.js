@@ -9,6 +9,7 @@ import {AppContext} from '../pages'
 
 import Tooltip from './tooltip'
 
+const Counter = ({value, label, color, previousValue, details, diffDetail, warningLabel, onClick, isPercent, isSelected, isBig}) => {
   const difference = (Number.isInteger(value) && Number.isInteger(previousValue) && value - previousValue !== 0) ? value - previousValue : null
   const {isMobileDevice} = useContext(AppContext)
 
@@ -28,6 +29,12 @@ import Tooltip from './tooltip'
         {difference && (
           <div className='difference'>
             ( {formatInteger(difference, true)} )
+            {diffDetail && (
+              <Tooltip
+                id='diffDetail'
+                tip={diffDetail}
+              />
+            )}
           </div>
         )}
         <div>{label}</div>
@@ -94,6 +101,7 @@ Counter.defaultProps = {
   color: 'almostBlack',
   previousValue: null,
   details: null,
+  diffDetail: null,
   warningLabel: null,
   onClick: null,
   isPercent: false,
@@ -107,6 +115,7 @@ Counter.propTypes = {
   color: PropTypes.string,
   previousValue: PropTypes.number,
   details: PropTypes.string,
+  diffDetail: PropTypes.string,
   warningLabel: PropTypes.string,
   onClick: PropTypes.func,
   isPercent: PropTypes.bool,

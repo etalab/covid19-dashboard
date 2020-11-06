@@ -87,6 +87,7 @@ const Counters = props => {
           previousValue={previousReport.casConfirmes}
           label='cas confirmés'
           details={details.casConfirmes}
+          diffDetail='Chiffre minimal et non consolidé en raison de difficultés identifiées dans la remontée des résultats de tests vers Santé publique France'
           color='orange'
           isBig
         />}
