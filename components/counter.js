@@ -1,73 +1,46 @@
 import React, {useContext} from 'react'
 import PropTypes from 'prop-types'
 
-import {AppContext} from '../pages'
-
-import {Info} from 'react-feather'
-import ReactTooltip from 'react-tooltip'
 import colors from '../styles/colors'
+
 import {formatInteger} from '../lib/numbers'
 
-const Counter = ({value, label, color, previousValue, details, warningLabel, onClick, isPercent, isSelected, isBig}) => {
+import {AppContext} from '../pages'
+
+import Tooltip from './tooltip'
+
+const Counter = ({value, label, color, previousValue, details, diffDetail, warningLabel, onClick, isPercent, isSelected, isBig}) => {
   const difference = (Number.isInteger(value) && Number.isInteger(previousValue) && value - previousValue !== 0) ? value - previousValue : null
   const {isMobileDevice} = useContext(AppContext)
 
   return (
     <div className='counter-container'>
       <div className={`counter ${onClick ? 'clickable' : ''} ${isSelected ? 'selected' : ''}`} onClick={onClick}>
-        {warningLabel && (
-          <div className='warning-icon' data-tip={warningLabel} data-for='warningPosition'>⚠️
-            <ReactTooltip
-              id='warningPosition'
-              backgroundColor='rgba(0, 0, 0)'
-              arrowColor='rgba(0, 0, 0, 0)'
-              multiline
-              overridePosition={(
-                {left, top}, currentEvent, currentTarget, node) => {
-                const d = document.documentElement
-                left = Math.min(d.clientWidth - node.clientWidth, left)
-                top = Math.min(d.clientHeight - node.clientHeight, top)
-                left = Math.max(0, left)
-                top = Math.max(0, top)
-                return {top, left}
-              }} />
-          </div>
-        )}
+        <div className='warning-icon'>
+          {warningLabel && <Tooltip tip={warningLabel} id='warningPosition' icon='⚠️' />}
+        </div>
+
         <div className='value'>
           {typeof value === 'number' ? formatInteger(value) : '-'} {isPercent && '%'}
-          <div className='hover'>
-            {details && <Info size={12} data-tip={details} data-for='overridePosition' />}
-            <ReactTooltip
-              id='overridePosition'
-              backgroundColor='rgba(0, 0, 0, .3)'
-              arrowColor='rgba(0, 0, 0, 0)'
-              multiline
-              overridePosition={(
-                {left, top}, currentEvent, currentTarget, node) => {
-                const d = document.documentElement
-                left = Math.min(d.clientWidth - node.clientWidth, left)
-                top = Math.min(d.clientHeight - node.clientHeight, top)
-                left = Math.max(0, left)
-                top = Math.max(0, top)
-                return {top, left}
-              }} />
+          <div className=''>
+            {details && <Tooltip tip={details} id='overridePosition' />}
           </div>
         </div>
         {difference && (
           <div className='difference'>
             ( {formatInteger(difference, true)} )
+            {diffDetail && (
+              <Tooltip
+                id='diffDetail'
+                tip={diffDetail}
+              />
+            )}
           </div>
         )}
         <div>{label}</div>
       </div>
 
       <style jsx>{`
-        .hover {
-          display: flex;
-          flex-direction: column;
-          font-weight: lighter;
-        }
-
         .counter {
           position: relative;
           display: flex;
@@ -128,6 +101,7 @@ Counter.defaultProps = {
   color: 'almostBlack',
   previousValue: null,
   details: null,
+  diffDetail: null,
   warningLabel: null,
   onClick: null,
   isPercent: false,
@@ -141,6 +115,7 @@ Counter.propTypes = {
   color: PropTypes.string,
   previousValue: PropTypes.number,
   details: PropTypes.string,
+  diffDetail: PropTypes.string,
   warningLabel: PropTypes.string,
   onClick: PropTypes.func,
   isPercent: PropTypes.bool,
