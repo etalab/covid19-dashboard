@@ -18,6 +18,15 @@ const Tooltip = ({tip, id, icon}) => (
         backgroundColor={colors.black}
         arrowColor='rgba(0, 0, 0, 0)'
         multiline
+        overridePosition={(
+          {left, top}, currentEvent, currentTarget, node) => {
+          const d = document.documentElement
+          left = Math.min(d.clientWidth - node.clientWidth, left)
+          top = Math.min(d.clientHeight - node.clientHeight, top)
+          left = Math.max(0, left)
+          top = Math.max(0, top)
+          return {top, left}
+        }}
       />
     </span>
     <style jsx>{`
