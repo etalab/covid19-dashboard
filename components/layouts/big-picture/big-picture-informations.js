@@ -5,7 +5,7 @@ import colors from '../../../styles/colors'
 const BigPictureInformations = React.memo(() => (
   <div className='informations'>
     <p>
-      <b>Attention :</b> Un établissement hospitalier de l’Essonne (91) a transmis ce jour (18/09/2020) près de 240 dossiers concernant des patients hospitalisés au cours des derniers mois. De ce fait, les indicateurs hospitaliers du 18 septembre 2020, présentés par date de déclaration, présentent une augmentation soudaine dans ce département. Cet impact est également visible à un niveau régional (région Ile-de-France) et national. Cette augmentation du nombre de personnes hospitalisées, déclarées le 18 septembre par cet établissement ne reflète pas des nouvelles hospitalisations mais des nouvelles déclarations.
+      Les difficultés de remontée des résultats de tests vers Santé publique France ont été progressivement résolues entre le 5 et le 7 novembre. À ce jour, l’ensemble des résultats sont disponibles selon les délais de consolidation habituels.
     </p>
     <h3>Informations</h3>
     <p>
