@@ -1,10 +1,6 @@
 /* eslint unicorn/string-content: off */
 const {extractFromAirtable} = require('./util')
 
-function parseValue(string) {
-  return parseInt(string.replace(/\s/g, ''), 10)
-}
-
 const valuesMap = {
   casConfirmes: 'Cas confirmés',
   deces: 'Décès à l’hôpital',
@@ -27,8 +23,8 @@ function convertRow(row) {
   }
 
   Object.keys(valuesMap).forEach(key => {
-    if (valuesMap[key] in row && Number.isInteger(parseValue(row[valuesMap[key]]))) {
-      convertedRow[key] = parseValue(row[valuesMap[key]])
+    if (valuesMap[key] in row && Number.isInteger(row[valuesMap[key]])) {
+      convertedRow[key] = row[valuesMap[key]]
     }
   })
 
