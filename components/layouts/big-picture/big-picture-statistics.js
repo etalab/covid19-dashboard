@@ -30,37 +30,37 @@ const charts = {
     }
   },
   hospitalises: {
-    name: 'Hospitalisations',
+    name: 'Patients hospitalisés',
     type: 'indicateur',
     options: {
-      label: 'Hospitalisés',
+      label: 'Patients hospitalisés',
       metricName: 'hospitalises',
       color: 'darkGrey'
     }
   },
   nouvellesHospitalisations: {
-    name: 'Nouvelles hospitalisations',
+    name: 'Nouveaux patients hospitalisés',
     type: 'indicateur',
     options: {
-      label: 'Nouvelles hospitalisations',
+      label: 'Nouveaux patients hospitalisés',
       metricName: 'nouvellesHospitalisations',
       color: 'darkGrey'
     }
   },
   reanimation: {
-    name: 'Réanimations',
+    name: 'Patients en réanimation',
     type: 'indicateur',
     options: {
-      label: 'Réanimations',
+      label: 'Patients en réanimation',
       metricName: 'reanimation',
       color: 'darkerGrey'
     }
   },
   nouvellesReanimations: {
-    name: 'Nouvelles réanimations',
+    name: 'Nouveaux patients en réanimation',
     type: 'indicateur',
     options: {
-      label: 'Nouvelles réanimations',
+      label: 'Nouveaux patients en réanimation',
       metricName: 'nouvellesReanimations',
       color: 'darkerGrey'
     }
