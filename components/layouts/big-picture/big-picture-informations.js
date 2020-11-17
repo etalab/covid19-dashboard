@@ -1,8 +1,9 @@
 import React from 'react'
+import PropTypes from 'prop-types'
 
 import colors from '../../../styles/colors'
 
-const BigPictureInformations = React.memo(() => (
+const BigPictureInformations = React.memo(({children}) => (
   <div className='informations'>
     <p>
       <b>Point d’attention :</b> depuis le 17/10/2020, le nombre de cas confirmés inclut le nombre de cas confirmés par tests RT-PCR issus de la base de données SI-DEP et le nombre de cas confirmés par test antigénique issus de Contact Covid.
@@ -11,6 +12,11 @@ const BigPictureInformations = React.memo(() => (
     <p>
       Les données officielles sur la progression de l’épidémie en France sont consolidées par le Ministère des Solidarités et de la <a target='_top' href='https://www.santepubliquefrance.fr'>Santé et Santé publique France</a>. L’ensemble des données publiées sur ce tableau de bord peuvent être téléchargées sur la plateforme des données publiques <a href='www.data.gouv.fr'>www.data.gouv.fr</a>.
     </p>
+    {children && (
+      <p>
+        {children}
+      </p>
+    )}
     <p>
       Cet outil, <a target='_top' href='https://github.com/etalab/covid19-dashboard'>dont le code source est libre</a>, est développé sous l’impulsion d’<a target='_top' href='https://www.etalab.gouv.fr'>Etalab</a>, au sein de la direction interministérielle du numérique.
     </p>
@@ -30,5 +36,13 @@ const BigPictureInformations = React.memo(() => (
     `}</style>
   </div>
 ))
+
+BigPictureInformations.defaultProps = {
+  children: null
+}
+
+BigPictureInformations.propTypes = {
+  children: PropTypes.node
+}
 
 export default BigPictureInformations
