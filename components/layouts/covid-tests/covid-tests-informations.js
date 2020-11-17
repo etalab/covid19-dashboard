@@ -1,30 +1,11 @@
 import React from 'react'
 
-import colors from '../../../styles/colors'
+import BigPictureInformations from '../big-picture/big-picture-informations'
 
 const TestsInformations = React.memo(() => (
-  <div className='informations'>
-    <p>
-      Les difficultés de remontée des résultats de tests vers Santé publique France ont été progressivement résolues entre le 5 et le 7 novembre. À ce jour, l’ensemble des résultats sont disponibles selon les délais de consolidation habituels.
-    </p>
-    <h3>Informations</h3>
-    <p>
-      Jusqu’au 13 mai 2020, les données exposées sont issues des <a href='https://www.data.gouv.fr/fr/datasets/donnees-relatives-aux-tests-de-depistage-de-covid-19-realises-en-laboratoire-de-ville/' target='_top'>données de dépistages réalisés en laboratoire de ville</a>. Depuis le 13 mai 2020, les <a href='https://www.data.gouv.fr/fr/datasets/donnees-relatives-aux-resultats-des-tests-virologiques-covid-19/' target='_top'>données exposées sont issues du système SI-DEP</a>, qui permet une évaluation plus précise du suivi des tests virologiques COVID-19.
-    </p>
-
-    <style jsx>{`
-      .informations {
-        padding: 1em;
-        background-color: ${colors.sand};
-      }
-
-      .informations p {
-        font-size: 14px;
-        line-height: 22px;
-        text-align: justify;
-      }
-    `}</style>
-  </div>
+  <BigPictureInformations>
+    Les données de suivi des tests sont issues du système d’information de dépistage (SI-DEP), dont l’objectif est de remonter les données de tests (RT-PCR) réalisés par l’ensemble des laboratoires de ville et établissements hospitaliers concernant le SARS-COV2. Compte-tenu du temps d’analyse des tests et de collecte des résultats, les données reflètent la situation à J-3. Elles sont généralement sous-estimées, car l’ensemble des résultats de tests à J-3 ne sont pas remontés à la date J.
+  </BigPictureInformations>
 ))
 
 export default TestsInformations
