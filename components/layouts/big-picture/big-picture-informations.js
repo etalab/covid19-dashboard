@@ -5,7 +5,7 @@ import colors from '../../../styles/colors'
 const BigPictureInformations = React.memo(() => (
   <div className='informations'>
     <p>
-      Les difficultés de remontée des résultats de tests vers Santé publique France ont été progressivement résolues entre le 5 et le 7 novembre. À ce jour, l’ensemble des résultats sont disponibles selon les délais de consolidation habituels.
+      <b>Point d’attention :</b> depuis le 17/10/2020, le nombre de cas confirmés inclut le nombre de cas confirmés par tests RT-PCR issus de la base de données SI-DEP et le nombre de cas confirmés par test antigénique issus de Contact Covid.
     </p>
     <h3>Informations</h3>
     <p>
