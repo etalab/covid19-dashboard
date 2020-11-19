@@ -16,7 +16,7 @@ const Counters = props => {
   const previousTotalDeces = previousReport.deces && previousReport.decesEhpad && deces && decesEhpad ? (previousReport.deces || 0) + (previousReport.decesEhpad || 0) : null
 
   const details = {
-    casConfirmes: 'Nombre de nouveaux cas confirmés par un test positif en J-1.<br /> Les données peuvent être très variables en fonction des activités de dépistage (diminution des activités le week-end par exemple) et des délais de rendu des résultats.',
+    casConfirmes: 'Nombre de cas confirmés par un test positif RT-PCR ou par un test positif antigénique. Les données peuvent être très variables en fonction des activités de dépistage (diminution des activités le week-end par exemple) et des délais de rendu des résultats.',
     gueris: 'Nombre cumulé de patients ayant été hospitalisés pour COVID-19 <br />et de retour à domicile en raison de l’amélioration de leur état de santé',
     hospitalises: 'Nombre de patients atteints de COVID-19 actuellement hospitalisés.',
     nouvellesHospitalisations: 'Nombre de nouveaux patients atteints de COVID-19 hospitalisés au cours des dernières 24h.',
