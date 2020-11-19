@@ -12,6 +12,7 @@ const {replaceResourceFile} = require('./datagouv')
 const {buildSitesPrelevements} = require('./sites-prelevements')
 const {buildHospiSpf} = require('./donnees-hospitalieres-spf')
 const {buildHospiCc} = require('./donnees-hospitalieres-cc')
+const {buildGouvFr} = require('./gouv-fr')
 
 const rootPath = join(__dirname, '..', '..')
 
@@ -360,6 +361,8 @@ async function main() {
     JSON.stringify(data.find(r => r.date === latest && r.code === 'FRA'))
   )
   await outputFile(join(dataDirectory, 'fra-latest.json'), buffer)
+
+  await buildGouvFr(data)
 
   if (process.env.DATAGOUV_PUBLISH === '1' || process.env.CONTEXT === 'production') {
     await replaceResourceFile('5eb55e49899a159c2e0053c2', 'e13851d0-0228-4252-91b9-cf091a0452a4', 'fra-latest.json', buffer)
