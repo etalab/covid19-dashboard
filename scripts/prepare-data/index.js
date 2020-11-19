@@ -333,7 +333,7 @@ async function main() {
   const indicateurs = await loadIndicateurs(INDICATEURS_DEP_SOURCE, INDICATEURS_FR_SOURCE)
   const data = consolidate(filterRecords([...contribData, ...hospiSpf, ...hospiCc, ...troisLabosTests, ...sidepTests, ...indicateurs]))
 
-  const dates = uniq(data.filter(r => r.code === 'FRA').map(r => r.date)).sort()
+  const dates = uniq(data.filter(r => r.code === 'FRA' && r.deces).map(r => r.date)).sort()
   const codes = uniq(data.map(r => r.code))
 
   const latest = dates[dates.length - 1]
