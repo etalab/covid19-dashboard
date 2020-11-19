@@ -10,7 +10,7 @@ const BigPictureInformations = React.memo(({children}) => (
     </p>
     <h3>Informations</h3>
     <p>
-      Les données officielles sur la progression de l’épidémie en France sont consolidées par le Ministère des Solidarités et de la <a target='_top' href='https://www.santepubliquefrance.fr'>Santé et Santé publique France</a>. L’ensemble des données publiées sur ce tableau de bord peuvent être téléchargées sur la plateforme des données publiques <a href='www.data.gouv.fr'>www.data.gouv.fr</a>.
+      Les données officielles sur la progression de l’épidémie en France sont consolidées par le Ministère des Solidarités et de la <a target='_top' href='https://www.santepubliquefrance.fr'>Santé et Santé publique France</a>. L’ensemble des données publiées sur ce tableau de bord peuvent être téléchargées sur la plateforme des données publiques <a href='https://www.data.gouv.fr'>www.data.gouv.fr</a>.
     </p>
     {children && (
       <p>
