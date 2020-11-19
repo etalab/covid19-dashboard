@@ -11,12 +11,12 @@ import {AppContext, ThemeContext} from '../../../pages'
 
 import Scrollable from '../../scrollable'
 
-import IndicatorsMaps from './indicators-maps'
-
-import BigPictureInformations from '../big-picture/big-picture-informations'
-import IndicatorsStatistics from './indicators-statistics'
 import TerritoriesMobileMap from '../../territories-mobile-map'
 import TerritoriesDesktopMap from '../../territories-desktop-map'
+
+import IndicatorsMaps from './indicators-maps'
+import IndicatorsStatistics from './indicators-statistics'
+import IndicatorsInformations from './indicators-informations'
 
 export const IndicatorsContext = React.createContext()
 
@@ -39,7 +39,7 @@ const MobileIndicators = () => {
     ),
     informations: (
       <Scrollable>
-        <BigPictureInformations />
+        <indicatorsInformations />
       </Scrollable>
     )
   }
@@ -99,7 +99,7 @@ const DesktopIndicators = () => {
         <Scrollable>
           <>
             <IndicatorsStatistics />
-            <BigPictureInformations />
+            <IndicatorsInformations />
           </>
         </Scrollable>
       </div>

@@ -16,13 +16,12 @@ const Counters = props => {
   const previousTotalDeces = previousReport.deces && previousReport.decesEhpad && deces && decesEhpad ? (previousReport.deces || 0) + (previousReport.decesEhpad || 0) : null
 
   const details = {
-    casConfirmes: 'Nombre cumulé de cas de COVID-19 confirmés par un test positif. <br />',
+    casConfirmes: 'Nombre de cas confirmés par un test positif RT-PCR ou par un test positif antigénique. Les données peuvent être très variables en fonction des activités de dépistage (diminution des activités le week-end par exemple) et des délais de rendu des résultats.',
     gueris: 'Nombre cumulé de patients ayant été hospitalisés pour COVID-19 <br />et de retour à domicile en raison de l’amélioration de leur état de santé',
-    deces: 'Nombre cumulé de décès de patients hospitalisés pour COVID-19 depuis le 1er mars 2020',
-    hospitalises: 'Nombre de patients actuellement hospitalisés pour COVID-19',
-    nouvellesHospitalisations: 'Nombre de nouveaux patients hospitalisés au cours des dernières 24h',
-    reanimation: ' Nombre de patients actuellement en réanimation ou soins intensifs',
-    nouvellesReanimations: 'Nombre de nouveaux patients admis en réanimation au cours des dernières 24h',
+    hospitalises: 'Nombre de patients atteints de COVID-19 actuellement hospitalisés.',
+    nouvellesHospitalisations: 'Nombre de nouveaux patients atteints de COVID-19 hospitalisés au cours des dernières 24h.',
+    reanimation: 'Nombre de patients atteints de COVID-19 actuellement en réanimation, en soins intensifs, ou en unité de surveillance continue.',
+    nouvellesReanimations: 'Nombre de nouveaux patients atteints de COVID-19 admis en réanimation, en soins intensifs, ou en unité de surveillance continue au cours des dernières 24h.',
     decesEhpad: 'Nombre cumulé de décès en EHPAD et EMS (établissements médico-sociaux)',
     casConfirmesEhpad: 'Nombre de cas confirmés par test PCR en EHPAD et EMS.<br />Ce chiffre est inclus dans le nombre total de cas confirmés.'
   }
@@ -30,7 +29,7 @@ const Counters = props => {
   const hospitalCountersList = [
     {
       name: 'hospitalises',
-      label: 'hospitalisations',
+      label: 'patients hospitalisés',
       color: 'darkGrey'
     },
     {
@@ -45,7 +44,7 @@ const Counters = props => {
     },
     {
       name: 'reanimation',
-      label: 'en réanimation',
+      label: 'patients en réanimation',
       color: 'darkerGrey'
     },
     {
@@ -97,7 +96,6 @@ const Counters = props => {
           value={totalDeces}
           previousValue={previousTotalDeces}
           label='cumul des décès'
-          details='Cumul des décés'
           color='red'
           isBig
         />}
