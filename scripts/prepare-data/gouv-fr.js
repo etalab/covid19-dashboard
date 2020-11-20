@@ -38,6 +38,8 @@ async function buildGouvFr(records) {
     decesEhpad: computeIndicator(recordsFrance, 'decesEhpad'),
     reanimation: computeIndicator(recordsFrance, 'reanimation'),
     hospitalises: computeIndicator(recordsFrance, 'hospitalises'),
+    nouvellesHospitalisations: computeIndicator(recordsFrance, 'nouvellesHospitalisations'),
+    nouvellesReanimations: computeIndicator(recordsFrance, 'nouvellesReanimations'),
     gueris: computeIndicator(recordsFrance, 'gueris'),
     tauxIncidence: computeIndicator(recordsFrance, 'tauxIncidence'),
     tauxReproductionEffectif: computeIndicator(recordsFrance, 'tauxReproductionEffectif'),
