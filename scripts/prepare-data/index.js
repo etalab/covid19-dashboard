@@ -4,7 +4,7 @@ require('dotenv').config()
 
 const {join} = require('path')
 const {outputJson, outputFile} = require('fs-extra')
-const {groupBy, sortBy, defaults, pick, keyBy, chain, sumBy, uniq, omit} = require('lodash')
+const {groupBy, sortBy, defaults, pick, keyBy, chain, sumBy, uniq, omit, isUndefined} = require('lodash')
 const Papa = require('papaparse')
 
 const {fetchCsv} = require('./util')
@@ -340,7 +340,7 @@ async function main() {
   const indicateurs = await loadIndicateurs(INDICATEURS_DEP_SOURCE, INDICATEURS_FR_SOURCE)
   const data = consolidate(filterRecords([...contribData, ...hospiSpf, ...hospiCc, ...troisLabosTests, ...sidepTests, ...indicateurs]))
 
-  const dates = uniq(data.filter(r => r.code === 'FRA' && r.deces).map(r => r.date)).sort()
+  const dates = uniq(data.filter(r => r.code === 'FRA' && !isUndefined(r.deces)).map(r => r.date)).sort()
   const codes = uniq(data.map(r => r.code))
 
   const latest = dates[dates.length - 1]
@@ -371,7 +371,7 @@ async function main() {
   /* Données nationales - onglet Synthèse */
 
   const frDataJson = Buffer.from(
-    JSON.stringify(data.filter(r => r.code === 'FRA').map(r => omit(r, 'testsRealisesDetails', 'testsPositifsDetails', 'code', 'nom', 'tauxIncidence', 'tauxReproductionEffectif', 'tauxOccupationRea', 'tauxPositiviteTests')), null, 2)
+    JSON.stringify(data.filter(r => r.code === 'FRA' && !isUndefined(r.deces)).map(r => omit(r, 'testsRealisesDetails', 'testsPositifsDetails', 'code', 'nom', 'tauxIncidence', 'tauxReproductionEffectif', 'tauxOccupationRea', 'tauxPositiviteTests')), null, 2)
   )
 
   if (process.env.DATAGOUV_PUBLISH === '1' || process.env.CONTEXT === 'production') {
@@ -379,7 +379,7 @@ async function main() {
   }
 
   const frDataCsv = Buffer.from(
-    Papa.unparse(data.filter(r => r.code === 'FRA').map(r => ({
+    Papa.unparse(data.filter(r => r.code === 'FRA' && !isUndefined(r.deces)).map(r => ({
       date: r.date,
       total_cas_confirmes: 'casConfirmes' in r ? r.casConfirmes : '',
       total_deces_hopital: 'deces' in r ? r.deces : '',
