@@ -23,6 +23,7 @@ function computeIndicator(records, name) {
     date: latestDate,
     totalDate: pickValue(records, name, latestDate, 0),
     total24h: pickValue(records, name, latestDate, 1),
+    total48h: pickValue(records, name, latestDate, 2),
     total7j: pickValue(records, name, latestDate, 7)
   }
 }
