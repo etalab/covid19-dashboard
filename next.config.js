@@ -8,6 +8,13 @@ module.exports = {
     API_ADDRESSES_URL: process.env.API_ADDRESSES_URL
   },
 
+  webpack(config, {webpack}) {
+    config.plugins.push(
+      new webpack.ContextReplacementPlugin(/moment[/\\]locale$/, /fr/)
+    )
+    return config
+  },
+
   exportPathMap() {
     return {
       '/': {page: '/'},
