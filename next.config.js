@@ -1,6 +1,10 @@
 require('dotenv').config()
 
-module.exports = {
+const withBundleAnalyzer = require('@next/bundle-analyzer')({
+  enabled: process.env.ANALYZE === 'true'
+})
+
+module.exports = withBundleAnalyzer({
   env: {
     SITE_URL: process.env.SITE_URL,
     SITE_NAME: process.env.SITE_NAME,
@@ -26,4 +30,4 @@ module.exports = {
       '/aides-entreprises': {page: '/', query: {layout: 'entreprises'}}
     }
   }
-}
+})

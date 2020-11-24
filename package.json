@@ -16,6 +16,7 @@
     "download-contrib-data": "node scripts/download-contrib-data"
   },
   "devDependencies": {
+    "@next/bundle-analyzer": "^10.0.3",
     "@turf/center": "^6.0.1",
     "babel-eslint": "^10.1.0",
     "babel-plugin-inline-import": "^3.0.0",
