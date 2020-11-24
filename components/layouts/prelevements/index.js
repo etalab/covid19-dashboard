@@ -1,8 +1,6 @@
 import React, {useState, useEffect, useContext} from 'react'
 import {FileText, Map, List} from 'react-feather'
 
-import prelevementsSites from '../../../public/data/prelevements.json'
-
 import theme from '../../../styles/theme'
 import colors from '../../../styles/colors'
 
@@ -134,8 +132,22 @@ const Prelevements = props => {
   const [hoveredPlace, setHoveredPlace] = useState(null)
   const [places, setPlaces] = useState([])
   const [address, setAddress] = useState(null)
+  const [sitesPrelevement, setSitesPrelevement] = useState({
+    type: 'FeatureCollection',
+    features: []
+  })
 
   const Component = isMobileDevice ? MobilePrelevements : DesktopPrelevements
+
+  useEffect(() => {
+    async function fetchPrelevements() {
+      const response = await fetch('/data/prelevements.json')
+      const sitesPrelevement = await response.json()
+      setSitesPrelevement(sitesPrelevement)
+    }
+
+    fetchPrelevements()
+  }, [])
 
   useEffect(() => {
     if (address) {
@@ -145,7 +157,7 @@ const Prelevements = props => {
 
   return (
     <PrelevementsContext.Provider value={{
-      prelevementsSites,
+      prelevementsSites: sitesPrelevement,
       address,
       setAddress,
       selectedPlace,
