@@ -8,7 +8,7 @@ import SelectInput from './select-input'
 
 import {AIDES_ENTREPRISES_URL} from './layouts/entreprises'
 
-const SITE_URL = process.env.SITE_URL
+const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL
 
 const MobileLayoutSelector = ({selected, layouts, handleSelect}) => {
   const {isIframe} = useContext(AppContext)

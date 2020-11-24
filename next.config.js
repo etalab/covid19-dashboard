@@ -5,13 +5,6 @@ const withBundleAnalyzer = require('@next/bundle-analyzer')({
 })
 
 module.exports = withBundleAnalyzer({
-  env: {
-    SITE_URL: process.env.SITE_URL,
-    SITE_NAME: process.env.SITE_NAME,
-    SITE_DESCRIPTION: process.env.SITE_DESCRIPTION,
-    API_ADRESSE_URL: process.env.API_ADRESSE_URL
-  },
-
   webpack(config, {webpack}) {
     config.plugins.push(
       new webpack.ContextReplacementPlugin(/moment[/\\]locale$/, /fr/)

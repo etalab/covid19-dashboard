@@ -1,9 +1,9 @@
 import React from 'react'
 import Head from 'next/head'
 
-const SITE_URL = process.env.SITE_URL
-const SITE_NAME = process.env.SITE_NAME || 'Tableau de bord COVID-19'
-const SITE_DESCRIPTION = process.env.SITE_DESCRIPTION || 'Suivi de l’épidémie de COVID-19 en France'
+const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL
+const SITE_NAME = process.env.NEXT_PUBLIC_SITE_NAME || 'Tableau de bord COVID-19'
+const SITE_DESCRIPTION = process.env.NEXT_PUBLIC_SITE_DESCRIPTION || 'Suivi de l’épidémie de COVID-19 en France'
 
 const Meta = () => {
   return (
