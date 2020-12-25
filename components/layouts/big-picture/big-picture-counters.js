@@ -86,7 +86,6 @@ const Counters = props => {
           previousValue={previousReport.casConfirmes}
           label='cas confirmés'
           details={details.casConfirmes}
-          diffDetail=''
           color='orange'
           isBig
         />}
