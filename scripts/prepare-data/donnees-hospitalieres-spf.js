@@ -27,8 +27,16 @@ function normalizeDate(date) {
     return date
   }
 
+  if (date.startsWith('2021-')) {
+    return date
+  }
+
   if (date.endsWith('/2020')) {
     return `2020-${date.slice(3, 5)}-${date.slice(0, 2)}`
+  }
+
+  if (date.endsWith('/2021')) {
+    return `2021-${date.slice(3, 5)}-${date.slice(0, 2)}`
   }
 }
 
