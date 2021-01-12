@@ -2,8 +2,9 @@ const {Transform} = require('stream')
 const stripBomStream = require('strip-bom-stream')
 const getStream = require('get-stream')
 const csvParse = require('csv-parser')
-const {readJson} = require('fs-extra')
+const {readJson, readFile} = require('fs-extra')
 const got = require('got')
+const Papa = require('papaparse')
 const Airtable = require('airtable')
 
 async function fetchCsv(url, options = {}) {
@@ -23,6 +24,19 @@ async function fetchCsv(url, options = {}) {
       }))
   )
   return rows
+}
+
+async function readCsv(filePath) {
+  const file = await readFile(filePath, {encoding: 'utf8'})
+  return new Promise(resolve => {
+    Papa.parse(file, {
+      header: true,
+      skipEmptyLines: true,
+      complete(results) {
+        resolve(results.data)
+      }
+    })
+  })
 }
 
 async function fetchJson(url) {
@@ -45,4 +59,4 @@ async function extractFromAirtable(databaseId, tabName) {
   return records.map(record => record.fields)
 }
 
-module.exports = {loadJson, fetchJson, fetchCsv, extractFromAirtable}
+module.exports = {readCsv, loadJson, fetchJson, fetchCsv, extractFromAirtable}
