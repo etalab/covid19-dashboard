@@ -2,10 +2,12 @@
 /* eslint unicorn/string-content: off, camelcase: off, spaced-comment: off, capitalized-comments: off */
 require('dotenv').config()
 const {join} = require('path')
-const {outputJson, outputFile} = require('fs-extra')
 const Papa = require('papaparse')
-const {pick, sortBy} = require('lodash')
+const {sumBy, pick, chain, sortBy} = require('lodash')
+const {replaceResourceFile} = require('./datagouv')
 const {extractFromAirtable, readCsv} = require('./util')
+
+const DATASET_ID = '5ff866dbfde012415e1085eb'
 
 const valuesMap = {
   totalVaccines: 'Cumul de personnes vaccinées'
@@ -51,15 +53,41 @@ const rootDir = join(__dirname, '..', '..')
 
 async function main() {
   const vaccination = await buildVaccination()
-  await outputJson(
-    join(rootDir, 'vaccination-regional.json'),
-    vaccination.map(r => pick(r, 'date', 'code', 'nom', 'totalVaccines')),
-    {spaces: 2}
+
+  await replaceResourceFile(
+    DATASET_ID,
+    '16cb2df5-e9c7-46ec-9dbf-c902f834dab1',
+    'vaccination-regional.json',
+    Buffer.from(JSON.stringify(vaccination.map(r => pick(r, 'date', 'code', 'nom', 'totalVaccines')), null, 2))
   )
 
-  await outputFile(
-    join(rootDir, 'vaccination-regional.csv'),
-    asCsv(vaccination)
+  await replaceResourceFile(
+    DATASET_ID,
+    'eb672d49-7cc7-4114-a5a1-fa6fd147406b',
+    'vaccination-regional.csv',
+    Buffer.from(asCsv(vaccination))
+  )
+
+  const vaccinationFr = chain(vaccination)
+    .groupBy('date')
+    .map((rows, date) => {
+      const totalVaccines = sumBy(rows, 'totalVaccines')
+      return {date, totalVaccines}
+    })
+    .value()
+
+  await replaceResourceFile(
+    DATASET_ID,
+    'b234a041-b5ea-4954-889b-67e64a25ce0d',
+    'suivi-vaccins-covid19-national.csv',
+    Buffer.from(asCsvFr(vaccinationFr))
+  )
+
+  await replaceResourceFile(
+    DATASET_ID,
+    'b39196f2-97c4-42f4-8dee-5eb07e823377',
+    'suivi-vaccins-covid19-national.json',
+    Buffer.from(asJsonFr(vaccinationFr))
   )
 }
 
@@ -81,6 +109,20 @@ function asCsv(records) {
     total_vaccines: String(record.totalVaccines) //,
     // ratio_vaccines: 'ratioVaccines' in record ? record.ratioVaccines.toFixed(0) : ''
   })))
+}
+
+function asCsvFr(records) {
+  return Papa.unparse(records.map(record => ({
+    date: record.date,
+    total_vaccines: String(record.totalVaccines)
+  })), {delimiter: ';'})
+}
+
+function asJsonFr(records) {
+  return records.map(record => ({
+    date: record.date,
+    total_vaccines: record.totalVaccines
+  }))
 }
 
 main().catch(error => {
