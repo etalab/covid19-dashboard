@@ -87,7 +87,7 @@ async function main() {
     DATASET_ID,
     'b39196f2-97c4-42f4-8dee-5eb07e823377',
     'suivi-vaccins-covid19-national.json',
-    Buffer.from(asJsonFr(vaccinationFr))
+    Buffer.from(JSON.stringify(asJsonFr(vaccinationFr), null, 2))
   )
 }
 
