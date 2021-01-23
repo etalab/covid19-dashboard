@@ -13,6 +13,7 @@ const {buildSitesPrelevements} = require('./sites-prelevements')
 const {buildHospiSpf} = require('./donnees-hospitalieres-spf')
 const {buildHospiCc} = require('./donnees-hospitalieres-cc')
 const {buildGouvFr} = require('./gouv-fr')
+const {buildVaccinationDataset} = require('./vaccination')
 
 const rootPath = join(__dirname, '..', '..')
 
@@ -401,6 +402,7 @@ async function main() {
   await outputJson(join(rootPath, 'dates.json'), dates)
 
   await buildSitesPrelevements(dataDirectory)
+  await buildVaccinationDataset()
 }
 
 main().catch(error => {

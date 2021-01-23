@@ -1,6 +1,4 @@
-#!/usr/bin/env node
 /* eslint unicorn/string-content: off, camelcase: off, spaced-comment: off, capitalized-comments: off */
-require('dotenv').config()
 const {join} = require('path')
 const Papa = require('papaparse')
 const {sumBy, pick, chain, sortBy} = require('lodash')
@@ -51,22 +49,24 @@ async function buildVaccination() {
 
 const rootDir = join(__dirname, '..', '..')
 
-async function main() {
+async function buildVaccinationDataset() {
   const vaccination = await buildVaccination()
 
-  await replaceResourceFile(
-    DATASET_ID,
-    '16cb2df5-e9c7-46ec-9dbf-c902f834dab1',
-    'vaccination-regional.json',
-    Buffer.from(JSON.stringify(vaccination.map(r => pick(r, 'date', 'code', 'nom', 'totalVaccines')), null, 2))
-  )
+  if (process.env.DATAGOUV_PUBLISH === '1' || process.env.CONTEXT === 'production') {
+    await replaceResourceFile(
+      DATASET_ID,
+      '16cb2df5-e9c7-46ec-9dbf-c902f834dab1',
+      'vaccination-regional.json',
+      Buffer.from(JSON.stringify(vaccination.map(r => pick(r, 'date', 'code', 'nom', 'totalVaccines')), null, 2))
+    )
 
-  await replaceResourceFile(
-    DATASET_ID,
-    'eb672d49-7cc7-4114-a5a1-fa6fd147406b',
-    'vaccination-regional.csv',
-    Buffer.from(asCsv(vaccination))
-  )
+    await replaceResourceFile(
+      DATASET_ID,
+      'eb672d49-7cc7-4114-a5a1-fa6fd147406b',
+      'vaccination-regional.csv',
+      Buffer.from(asCsv(vaccination))
+    )
+  }
 
   const vaccinationFr = chain(vaccination)
     .groupBy('date')
@@ -76,19 +76,21 @@ async function main() {
     })
     .value()
 
-  await replaceResourceFile(
-    DATASET_ID,
-    'b234a041-b5ea-4954-889b-67e64a25ce0d',
-    'suivi-vaccins-covid19-national.csv',
-    Buffer.from(asCsvFr(vaccinationFr))
-  )
+  if (process.env.DATAGOUV_PUBLISH === '1' || process.env.CONTEXT === 'production') {
+    await replaceResourceFile(
+      DATASET_ID,
+      'b234a041-b5ea-4954-889b-67e64a25ce0d',
+      'suivi-vaccins-covid19-national.csv',
+      Buffer.from(asCsvFr(vaccinationFr))
+    )
 
-  await replaceResourceFile(
-    DATASET_ID,
-    'b39196f2-97c4-42f4-8dee-5eb07e823377',
-    'suivi-vaccins-covid19-national.json',
-    Buffer.from(JSON.stringify(asJsonFr(vaccinationFr), null, 2))
-  )
+    await replaceResourceFile(
+      DATASET_ID,
+      'b39196f2-97c4-42f4-8dee-5eb07e823377',
+      'suivi-vaccins-covid19-national.json',
+      Buffer.from(JSON.stringify(asJsonFr(vaccinationFr), null, 2))
+    )
+  }
 }
 
 async function preparePopulation() {
@@ -125,7 +127,4 @@ function asJsonFr(records) {
   }))
 }
 
-main().catch(error => {
-  console.error(error)
-  process.exit(1)
-})
+module.exports = {buildVaccinationDataset}
