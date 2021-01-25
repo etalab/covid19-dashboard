@@ -3,7 +3,7 @@
 require('dotenv').config()
 
 const {join} = require('path')
-const {outputJson, outputFile} = require('fs-extra')
+const {outputJson} = require('fs-extra')
 const {groupBy, sortBy, defaults, pick, keyBy, chain, sumBy, uniq, omit, isUndefined} = require('lodash')
 const Papa = require('papaparse')
 
@@ -358,16 +358,7 @@ async function main() {
     await outputJson(join(dataDirectory, `code-${code}.json`), data.filter(r => r.code === code))
   }))
 
-  const buffer = Buffer.from(
-    JSON.stringify(data.find(r => r.date === latest && r.code === 'FRA'))
-  )
-  await outputFile(join(dataDirectory, 'fra-latest.json'), buffer)
-
   await buildGouvFr(data)
-
-  if (process.env.DATAGOUV_PUBLISH === '1' || process.env.CONTEXT === 'production') {
-    await replaceResourceFile('5eb55e49899a159c2e0053c2', 'e13851d0-0228-4252-91b9-cf091a0452a4', 'fra-latest.json', buffer)
-  }
 
   /* Données nationales - onglet Synthèse */
 
