@@ -49,7 +49,7 @@ async function buildVaccination() {
 
 const rootDir = join(__dirname, '..', '..')
 
-async function buildVaccinationDataset() {
+async function buildVaccinationRecords() {
   const vaccination = await buildVaccination()
 
   if (process.env.DATAGOUV_PUBLISH === '1' || process.env.CONTEXT === 'production') {
@@ -72,7 +72,14 @@ async function buildVaccinationDataset() {
     .groupBy('date')
     .map((rows, date) => {
       const totalVaccines = sumBy(rows, 'totalVaccines')
-      return {date, totalVaccines}
+      return {
+        date,
+        code: 'FRA',
+        nom: 'France',
+        totalVaccines,
+        source: {nom: 'Ministère de la Santé'},
+        sourceType: 'ministere-sante'
+      }
     })
     .value()
 
@@ -91,6 +98,8 @@ async function buildVaccinationDataset() {
       Buffer.from(JSON.stringify(asJsonFr(vaccinationFr), null, 2))
     )
   }
+
+  return [...vaccination, ...vaccinationFr]
 }
 
 async function preparePopulation() {
@@ -127,4 +136,4 @@ function asJsonFr(records) {
   }))
 }
 
-module.exports = {buildVaccinationDataset}
+module.exports = {buildVaccinationRecords}
