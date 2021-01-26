@@ -3,6 +3,14 @@ import {CountMap, interactiveLayersIds} from '../../map-types/count-map'
 
 const maps = [
   {
+    name: 'Nombre d’injections réalisées',
+    type: CountMap,
+    interactiveLayersIds,
+    property: 'totalVaccines',
+    color: colors.green,
+    radiusBounds: [0, 10, 800, 70]
+  },
+  {
     name: 'Carte des décès à l’hôpital',
     type: CountMap,
     interactiveLayersIds,

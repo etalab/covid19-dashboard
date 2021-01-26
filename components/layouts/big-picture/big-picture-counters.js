@@ -8,7 +8,7 @@ import Counter from '../../counter'
 import {BigPictureContext} from '.'
 
 const Counters = props => {
-  const {casConfirmes, deces, decesEhpad} = props.report || {}
+  const {casConfirmes, totalVaccines, deces, decesEhpad} = props.report || {}
   const {selectedStat, setSelectedStat} = useContext(BigPictureContext)
 
   const totalDeces = (deces || 0) + (decesEhpad || 0)
@@ -87,7 +87,15 @@ const Counters = props => {
           label='cas confirmés'
           details={details.casConfirmes}
           color='orange'
-          isBig
+        />}
+        {totalVaccines && <Counter
+          isSelected={selectedStat === 'totalVaccines'}
+          onClick={() => handleClick('totalVaccines')}
+          value={totalVaccines}
+          previousValue={previousReport.totalVaccines}
+          label='injections réalisées'
+          details={details.totalVaccines}
+          color='green'
         />}
         {decesEhpad && <Counter
           isSelected={selectedStat === 'deces'}
@@ -96,7 +104,6 @@ const Counters = props => {
           previousValue={previousTotalDeces}
           label='cumul des décès'
           color='red'
-          isBig
         />}
       </div>
 

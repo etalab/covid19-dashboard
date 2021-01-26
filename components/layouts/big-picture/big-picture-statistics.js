@@ -100,6 +100,15 @@ const charts = {
       metricName: 'decesEhpad',
       color: 'darkRed'
     }
+  },
+  totalVaccines: {
+    name: 'Injections réalisées',
+    type: 'indicateur',
+    options: {
+      label: 'Injections réalisées',
+      metricName: 'totalVaccines',
+      color: 'green'
+    }
   }
 }
 
