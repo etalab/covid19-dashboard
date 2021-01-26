@@ -20,6 +20,8 @@ export const CountMap = ({code, map}) => {
     prepareLayerData()
   }, [selectedDate, code])
 
+  const radiusBounds = map.radiusBounds || [0, 10, 100, 70]
+
   const circleLayer = {
     id: 'circle-layer',
     type: 'circle',
@@ -32,10 +34,7 @@ export const CountMap = ({code, map}) => {
         'interpolate',
         ['linear'],
         ['sqrt', ['number', ['get', map.property]]],
-        0,
-        10,
-        100,
-        70
+        ...radiusBounds
       ]
     }
   }
