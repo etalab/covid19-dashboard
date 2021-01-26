@@ -99,7 +99,11 @@ async function buildVaccinationRecords() {
     )
   }
 
-  return [...vaccination, ...vaccinationFr]
+  const dromDepVaccination = vaccination
+    .filter(v => v.code.startsWith('REG-0'))
+    .map(v => ({...v, code: `DEP-97${v.code.slice(5)}`}))
+
+  return [...vaccination, ...dromDepVaccination, ...vaccinationFr]
 }
 
 async function preparePopulation() {
