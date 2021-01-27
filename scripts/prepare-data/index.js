@@ -13,7 +13,7 @@ const {buildSitesPrelevements} = require('./sites-prelevements')
 const {buildHospiSpf} = require('./donnees-hospitalieres-spf')
 const {buildHospiCc} = require('./donnees-hospitalieres-cc')
 const {buildGouvFr} = require('./gouv-fr')
-const {buildVaccinationRecords} = require('./vaccination')
+const {buildVaccination} = require('./vaccination')
 
 const rootPath = join(__dirname, '..', '..')
 
@@ -47,7 +47,7 @@ function consolidate(records) {
       .reduce((acc, row) => {
         defaults(acc, row)
         return acc
-      }, {}), ['casConfirmes', 'deces', 'decesEhpad', 'casConfirmesEhpad', 'casPossiblesEhpad', 'reanimation', 'hospitalises', 'gueris', 'date', 'code', 'nom', 'testsRealises', 'testsPositifs', 'testsRealisesDetails', 'testsPositifsDetails', 'nouvellesHospitalisations', 'nouvellesReanimations', 'tauxIncidence', 'tauxIncidenceColor', 'tauxReproductionEffectif', 'tauxReproductionEffectifColor', 'tauxOccupationRea', 'tauxOccupationReaColor', 'tauxPositiviteTests', 'tauxPositiviteTestsColor', 'totalVaccines'])
+      }, {}), ['casConfirmes', 'deces', 'decesEhpad', 'casConfirmesEhpad', 'casPossiblesEhpad', 'reanimation', 'hospitalises', 'gueris', 'date', 'code', 'nom', 'testsRealises', 'testsPositifs', 'testsRealisesDetails', 'testsPositifsDetails', 'nouvellesHospitalisations', 'nouvellesReanimations', 'tauxIncidence', 'tauxIncidenceColor', 'tauxReproductionEffectif', 'tauxReproductionEffectifColor', 'tauxOccupationRea', 'tauxOccupationReaColor', 'tauxPositiviteTests', 'tauxPositiviteTestsColor', 'nouvellesPremieresInjections', 'cumulPremieresInjections'])
   })
 }
 
@@ -339,7 +339,7 @@ async function main() {
   const troisLabosTests = await loadTroisLabosTests()
   const sidepTests = await loadSidepTest()
   const indicateurs = await loadIndicateurs(INDICATEURS_DEP_SOURCE, INDICATEURS_FR_SOURCE)
-  const vaccination = await buildVaccinationRecords()
+  const vaccination = await buildVaccination()
   const data = consolidate(filterRecords([...contribData, ...hospiSpf, ...hospiCc, ...troisLabosTests, ...sidepTests, ...indicateurs, ...vaccination]))
 
   const dates = uniq(data.filter(r => r.code === 'FRA' && !isUndefined(r.deces)).map(r => r.date)).sort()

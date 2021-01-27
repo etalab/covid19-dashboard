@@ -1,143 +1,48 @@
 /* eslint unicorn/string-content: off, camelcase: off, spaced-comment: off, capitalized-comments: off */
-const {join} = require('path')
-const Papa = require('papaparse')
-const {sumBy, pick, chain, sortBy} = require('lodash')
-const {replaceResourceFile} = require('./datagouv')
-const {extractFromAirtable, readCsv} = require('./util')
+const {keyBy} = require('lodash')
+const {fetchCsv} = require('./util')
+const regions = require('@etalab/decoupage-administratif/data/regions.json')
 
-const DATASET_ID = '5ff866dbfde012415e1085eb'
+const regionsIndex = keyBy(regions, 'code')
 
-const valuesMap = {
-  totalVaccines: 'Cumul de personnes vaccinées'
-}
-
-function round(number, precision) {
-  return Number.parseFloat(number.toFixed(precision))
-}
-
-function convertRow(row, {populationRegions}) {
-  const convertedRow = {
-    date: row.Date,
-    code: row.Code,
-    population: populationRegions[row.Code] || undefined,
-    nom: row.Nom,
-    source: {nom: 'Ministère de la Santé'},
-    sourceType: 'ministere-sante'
-  }
-
-  Object.keys(valuesMap).forEach(key => {
-    if (valuesMap[key] in row && Number.isInteger(row[valuesMap[key]])) {
-      convertedRow[key] = row[valuesMap[key]]
-    }
-  })
-
-  if (convertedRow.population) {
-    convertedRow.ratioVaccines = round(convertedRow.totalVaccines / convertedRow.population * 100000, 0)
-  }
-
-  return convertedRow
-}
-
-async function buildVaccination() {
-  const populationRegions = await preparePopulation()
-  const rows = await extractFromAirtable('appvqjbgBnxfnGtka', 'Vaccination')
-  return sortBy(
-    rows.map(row => convertRow(row, {populationRegions})),
-    ['date', 'code']
-  )
-}
-
-const rootDir = join(__dirname, '..', '..')
-
-async function buildVaccinationRecords() {
-  const vaccination = await buildVaccination()
-
-  if (process.env.DATAGOUV_PUBLISH === '1' || process.env.CONTEXT === 'production') {
-    await replaceResourceFile(
-      DATASET_ID,
-      '16cb2df5-e9c7-46ec-9dbf-c902f834dab1',
-      'vaccination-regional.json',
-      Buffer.from(JSON.stringify(vaccination.map(r => pick(r, 'date', 'code', 'nom', 'totalVaccines')), null, 2))
-    )
-
-    await replaceResourceFile(
-      DATASET_ID,
-      'eb672d49-7cc7-4114-a5a1-fa6fd147406b',
-      'vaccination-regional.csv',
-      Buffer.from(asCsv(vaccination))
-    )
-  }
-
-  const vaccinationFr = chain(vaccination)
-    .groupBy('date')
-    .map((rows, date) => {
-      const totalVaccines = sumBy(rows, 'totalVaccines')
-      return {
-        date,
-        code: 'FRA',
-        nom: 'France',
-        totalVaccines,
-        source: {nom: 'Ministère de la Santé'},
-        sourceType: 'ministere-sante'
-      }
-    })
-    .value()
-
-  if (process.env.DATAGOUV_PUBLISH === '1' || process.env.CONTEXT === 'production') {
-    await replaceResourceFile(
-      DATASET_ID,
-      'b234a041-b5ea-4954-889b-67e64a25ce0d',
-      'suivi-vaccins-covid19-national.csv',
-      Buffer.from(asCsvFr(vaccinationFr))
-    )
-
-    await replaceResourceFile(
-      DATASET_ID,
-      'b39196f2-97c4-42f4-8dee-5eb07e823377',
-      'suivi-vaccins-covid19-national.json',
-      Buffer.from(JSON.stringify(asJsonFr(vaccinationFr), null, 2))
-    )
-  }
-
-  const dromDepVaccination = vaccination
-    .filter(v => v.code.startsWith('REG-0'))
-    .map(v => ({...v, code: `DEP-97${v.code.slice(5)}`}))
-
-  return [...vaccination, ...dromDepVaccination, ...vaccinationFr]
-}
-
-async function preparePopulation() {
-  const rows = await readCsv(join(rootDir, 'data', 'insee-population-regions.csv'))
-  const index = {}
-  rows.forEach(row => {
-    index[`REG-${row.CODREG}`] = Number.parseInt(row.PMUN, 10)
-  })
-  return index
-}
-
-function asCsv(records) {
-  return Papa.unparse(records.map(record => ({
-    date: record.date,
-    code: record.code,
-    nom: record.nom,
-    // population: Number.isInteger(record.population) ? record.population : '',
-    total_vaccines: String(record.totalVaccines) //,
-    // ratio_vaccines: 'ratioVaccines' in record ? record.ratioVaccines.toFixed(0) : ''
-  })))
-}
-
-function asCsvFr(records) {
-  return Papa.unparse(records.map(record => ({
-    date: record.date,
-    total_vaccines: String(record.totalVaccines)
-  })), {delimiter: ';'})
-}
-
-function asJsonFr(records) {
-  return records.map(record => ({
-    date: record.date,
-    total_vaccines: record.totalVaccines
+async function fetchFrance() {
+  const rows = await fetchCsv('https://www.data.gouv.fr/fr/datasets/r/efe23314-67c4-45d3-89a2-3faef82fae90', {separator: ';'})
+  return rows.map(row => ({
+    date: row.jour,
+    code: 'FRA',
+    nom: 'France',
+    source: {nom: 'Santé publique France'},
+    sourceType: 'sante-publique-france',
+    nouvellesPremieresInjections: Number.parseInt(row.n_dose1, 10),
+    cumulPremieresInjections: Number.parseInt(row.n_cum_dose1, 10)
   }))
 }
 
-module.exports = {buildVaccinationRecords}
+async function fetchRegions() {
+  const rows = await fetchCsv('https://www.data.gouv.fr/fr/datasets/r/735b0df8-51b4-4dd2-8a2d-8e46d77d60d8', {separator: ';'})
+  const regions = rows
+    .filter(row => row.reg in regionsIndex)
+    .map(row => ({
+      date: row.jour,
+      code: `REG-${row.reg}`,
+      nom: regionsIndex[row.reg].nom,
+      source: {nom: 'Santé publique France'},
+      sourceType: 'sante-publique-france',
+      nouvellesPremieresInjections: Number.parseInt(row.n_dose1, 10),
+      cumulPremieresInjections: Number.parseInt(row.n_cum_dose1, 10)
+    }))
+
+  const dromDep = regions
+    .filter(r => r.code.startsWith('REG-0'))
+    .map(r => ({...r, code: `DEP-97${r.code.slice(5)}`}))
+
+  return [...regions, ...dromDep]
+}
+
+async function buildVaccination() {
+  const france = await fetchFrance()
+  const regions = await fetchRegions()
+  return [...france, ...regions]
+}
+
+module.exports = {buildVaccination}
