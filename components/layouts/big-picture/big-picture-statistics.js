@@ -101,12 +101,12 @@ const charts = {
       color: 'darkRed'
     }
   },
-  totalVaccines: {
-    name: 'Injections réalisées',
+  cumulPremieresInjections: {
+    name: 'Premières injections réalisées',
     type: 'indicateur',
     options: {
-      label: 'Injections réalisées',
-      metricName: 'totalVaccines',
+      label: 'Premières injections réalisées',
+      metricName: 'cumulPremieresInjections',
       color: 'green'
     }
   }

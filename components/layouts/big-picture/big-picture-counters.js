@@ -8,7 +8,7 @@ import Counter from '../../counter'
 import {BigPictureContext} from '.'
 
 const Counters = props => {
-  const {casConfirmes, totalVaccines, deces, decesEhpad} = props.report || {}
+  const {casConfirmes, cumulPremieresInjections, deces, decesEhpad} = props.report || {}
   const {selectedStat, setSelectedStat} = useContext(BigPictureContext)
 
   const totalDeces = (deces || 0) + (decesEhpad || 0)
@@ -23,7 +23,8 @@ const Counters = props => {
     reanimation: 'Nombre de patients atteints de COVID-19 actuellement en réanimation, en soins intensifs, ou en unité de surveillance continue.',
     nouvellesReanimations: 'Nombre de nouveaux patients atteints de COVID-19 admis en réanimation, en soins intensifs, ou en unité de surveillance continue au cours des dernières 24h.',
     decesEhpad: 'Nombre cumulé de décès en EHPAD et EMS (établissements médico-sociaux)',
-    casConfirmesEhpad: 'Nombre de cas confirmés par test PCR en EHPAD et EMS.<br />Ce chiffre est inclus dans le nombre total de cas confirmés.'
+    casConfirmesEhpad: 'Nombre de cas confirmés par test PCR en EHPAD et EMS.<br />Ce chiffre est inclus dans le nombre total de cas confirmés.',
+    cumulPremieresInjections: 'Nombre de premières doses de vaccin injectées'
   }
 
   const hospitalCountersList = [
@@ -88,13 +89,13 @@ const Counters = props => {
           details={details.casConfirmes}
           color='orange'
         />}
-        {totalVaccines && <Counter
-          isSelected={selectedStat === 'totalVaccines'}
-          onClick={() => handleClick('totalVaccines')}
-          value={totalVaccines}
-          previousValue={previousReport.totalVaccines}
-          label='injections réalisées'
-          details={details.totalVaccines}
+        {cumulPremieresInjections && <Counter
+          isSelected={selectedStat === 'cumulPremieresInjections'}
+          onClick={() => handleClick('cumulPremieresInjections')}
+          value={cumulPremieresInjections}
+          previousValue={previousReport.cumulPremieresInjections}
+          label='premières injections réalisées'
+          details={details.cumulPremieresInjections}
           color='green'
         />}
         {decesEhpad && <Counter
