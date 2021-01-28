@@ -40,10 +40,12 @@ const options = {
 function formatData(label, metricName, reports, color) {
   const datasets = []
 
-  if (reports.some(report => report[metricName])) {
+  const filteredReports = reports.filter(r => metricName in r)
+
+  if (filteredReports.length >= 2) {
     datasets.push({
       label,
-      data: reports.slice(1).map((report, i) => report[metricName] - reports[i][metricName]),
+      data: filteredReports.slice(1).map((report, i) => report[metricName] - filteredReports[i][metricName]),
       borderColor: colors[color],
       fill: false,
       spanGaps: true
@@ -51,7 +53,7 @@ function formatData(label, metricName, reports, color) {
   }
 
   return {
-    labels: reports.slice(1).map(report => new Date(report.date)),
+    labels: filteredReports.slice(1).map(report => new Date(report.date)),
     datasets
   }
 }

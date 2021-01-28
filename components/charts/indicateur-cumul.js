@@ -38,16 +38,18 @@ const options = {
 function formatData(label, metricName, reports, color) {
   const datasets = []
 
-  if (reports.some(report => report[metricName])) {
+  const filteredReports = reports.filter(r => metricName in r)
+
+  if (filteredReports.length > 0) {
     datasets.push({
       label,
-      data: reports.map(report => report[metricName]),
+      data: filteredReports.map(report => report[metricName]),
       backgroundColor: colors[color]
     })
   }
 
   return {
-    labels: reports.map(report => new Date(report.date)),
+    labels: filteredReports.map(report => new Date(report.date)),
     datasets
   }
 }
