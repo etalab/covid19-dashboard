@@ -1,5 +1,6 @@
 /* eslint unicorn/string-content: off, camelcase: off, spaced-comment: off, capitalized-comments: off */
-const {chain, keyBy} = require('lodash')
+const {chain, keyBy, min, groupBy} = require('lodash')
+const {eachDayOfInterval, formatISO} = require('date-fns')
 const {fetchCsv} = require('./util')
 const regions = require('@etalab/decoupage-administratif/data/regions.json')
 const departements = require('@etalab/decoupage-administratif/data/departements.json')
@@ -45,13 +46,13 @@ function computeStockRecord(scopedRows, {code, nom}) {
   const {date} = scopedRows[0]
 
   const values = {
-    nombreTotalDoses: 0
+    stockNombreTotalDoses: 0
   }
 
   scopedRows.forEach(r => {
     const nbDoses = Number.parseInt(r.nb_doses, 10)
-    values[`nombreDoses${r.type_de_vaccin}`] = nbDoses
-    values.nombreTotalDoses += nbDoses
+    values[`stockNombreDoses${r.type_de_vaccin}`] = nbDoses
+    values.stockNombreTotalDoses += nbDoses
   })
 
   return {
@@ -108,7 +109,34 @@ async function fetchStocksDepartements() {
     .value()
 }
 
-async function buildVaccination() {
+function consolidateRecords(records, currentDate) {
+  const firstDate = min(records.map(r => r.date))
+
+  const dates = eachDayOfInterval({
+    start: new Date(firstDate),
+    end: new Date(currentDate)
+  }).map(d => formatISO(d, {representation: 'date'}))
+
+  let previousRecords = []
+
+  const recordsIndex = groupBy(records, 'date')
+
+  return chain(dates)
+    .map(date => {
+      const dateRecords = recordsIndex[date]
+
+      if (dateRecords) {
+        previousRecords = dateRecords
+        return dateRecords
+      }
+
+      return previousRecords.map(r => ({...r, date}))
+    })
+    .flatten()
+    .value()
+}
+
+async function buildVaccination(currentDate) {
   const injectionsFrance = await fetchInjectionsFrance()
   const injectionsRegions = await fetchInjectionsRegions()
 
@@ -117,12 +145,12 @@ async function buildVaccination() {
   const stocksDepartements = await fetchStocksDepartements()
 
   return [
-    ...injectionsFrance,
-    ...injectionsRegions,
+    ...consolidateRecords(injectionsFrance, currentDate),
+    ...consolidateRecords(injectionsRegions, currentDate),
 
-    ...stocksFrance,
-    ...stocksRegions,
-    ...stocksDepartements
+    ...consolidateRecords(stocksFrance, currentDate),
+    ...consolidateRecords(stocksRegions, currentDate),
+    ...consolidateRecords(stocksDepartements, currentDate)
   ]
 }
 

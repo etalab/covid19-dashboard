@@ -4,7 +4,7 @@ require('dotenv').config()
 
 const {join} = require('path')
 const {outputJson} = require('fs-extra')
-const {groupBy, sortBy, defaults, pick, keyBy, chain, sumBy, uniq, omit, isUndefined} = require('lodash')
+const {max, groupBy, sortBy, defaults, pick, keyBy, chain, sumBy, uniq, omit, isUndefined} = require('lodash')
 const Papa = require('papaparse')
 
 const {fetchCsv} = require('./util')
@@ -47,7 +47,7 @@ function consolidate(records) {
       .reduce((acc, row) => {
         defaults(acc, row)
         return acc
-      }, {}), ['casConfirmes', 'deces', 'decesEhpad', 'casConfirmesEhpad', 'casPossiblesEhpad', 'reanimation', 'hospitalises', 'gueris', 'date', 'code', 'nom', 'testsRealises', 'testsPositifs', 'testsRealisesDetails', 'testsPositifsDetails', 'nouvellesHospitalisations', 'nouvellesReanimations', 'tauxIncidence', 'tauxIncidenceColor', 'tauxReproductionEffectif', 'tauxReproductionEffectifColor', 'tauxOccupationRea', 'tauxOccupationReaColor', 'tauxPositiviteTests', 'tauxPositiviteTestsColor', 'nouvellesPremieresInjections', 'cumulPremieresInjections'])
+      }, {}), ['casConfirmes', 'deces', 'decesEhpad', 'casConfirmesEhpad', 'casPossiblesEhpad', 'reanimation', 'hospitalises', 'gueris', 'date', 'code', 'nom', 'testsRealises', 'testsPositifs', 'testsRealisesDetails', 'testsPositifsDetails', 'nouvellesHospitalisations', 'nouvellesReanimations', 'tauxIncidence', 'tauxIncidenceColor', 'tauxReproductionEffectif', 'tauxReproductionEffectifColor', 'tauxOccupationRea', 'tauxOccupationReaColor', 'tauxPositiviteTests', 'tauxPositiviteTestsColor', 'nouvellesPremieresInjections', 'cumulPremieresInjections', 'stockNombreTotalDoses', 'stockNombreDosesPfizer', 'stockNombreDosesModerna'])
   })
 }
 
@@ -333,13 +333,19 @@ async function loadContribData() {
 }
 
 async function main() {
-  const contribData = await loadContribData()
   const hospiSpf = await buildHospiSpf()
   const hospiCc = await buildHospiCc()
+
+  const currentDate = max(
+    hospiCc.filter(r => !isUndefined(r.deces)).map(r => r.date)
+  )
+
+  const contribData = await loadContribData()
   const troisLabosTests = await loadTroisLabosTests()
   const sidepTests = await loadSidepTest()
   const indicateurs = await loadIndicateurs(INDICATEURS_DEP_SOURCE, INDICATEURS_FR_SOURCE)
-  const vaccination = await buildVaccination()
+  const vaccination = await buildVaccination(currentDate)
+
   const data = consolidate(filterRecords([...contribData, ...hospiSpf, ...hospiCc, ...troisLabosTests, ...sidepTests, ...indicateurs, ...vaccination]))
 
   const dates = uniq(data.filter(r => r.code === 'FRA' && !isUndefined(r.deces)).map(r => r.date)).sort()
