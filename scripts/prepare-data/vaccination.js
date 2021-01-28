@@ -23,7 +23,7 @@ async function fetchInjectionsFrance() {
 
 async function fetchInjectionsRegions() {
   const rows = await fetchCsv('https://www.data.gouv.fr/fr/datasets/r/735b0df8-51b4-4dd2-8a2d-8e46d77d60d8', {separator: ';'})
-  const regions = rows
+  const regionsRecords = rows
     .filter(row => row.reg in regionsIndex)
     .map(row => ({
       date: row.jour,
@@ -35,11 +35,7 @@ async function fetchInjectionsRegions() {
       cumulPremieresInjections: Number.parseInt(row.n_cum_dose1, 10)
     }))
 
-  const dromDep = regions
-    .filter(r => r.code.startsWith('REG-0'))
-    .map(r => ({...r, code: `DEP-97${r.code.slice(5)}`}))
-
-  return [...regions, ...dromDep]
+  return [...regionsRecords, ...computeDromDepRecords(regionsRecords)]
 }
 
 function computeStockRecord(scopedRows, {code, nom}) {
@@ -109,6 +105,59 @@ async function fetchStocksDepartements() {
     .value()
 }
 
+function computeLivraisonRecord(scopedRows, {code, nom}) {
+  const {date} = scopedRows[0]
+
+  const values = {
+    livraisonsCumulNombreTotalDoses: 0
+  }
+
+  scopedRows.forEach(r => {
+    const cumulNbDoses = Number.parseInt(r.nb_doses_receptionnees_cumul, 10)
+    values[`livraisonsCumulNombreDoses${r.type_de_vaccin}`] = cumulNbDoses
+    values.livraisonsCumulNombreTotalDoses += cumulNbDoses
+  })
+
+  return {
+    date,
+    code,
+    nom,
+    source: {nom: 'Ministère de la Santé'},
+    sourceType: 'ministere-sante',
+    ...values
+  }
+}
+
+async function fetchLivraisonsFrance() {
+  const rows = await fetchCsv('https://www.data.gouv.fr/fr/datasets/r/6820ff9f-2dbb-4e87-8565-fcd7fa2dfa0f', {separator: ';'})
+
+  return chain(rows)
+    .groupBy('date')
+    .map(dateRows => computeLivraisonRecord(dateRows, {
+      code: 'FRA',
+      nom: 'France'
+    }))
+    .value()
+}
+
+async function fetchLivraisonsRegions() {
+  const rows = await fetchCsv('https://www.data.gouv.fr/fr/datasets/r/c3f04527-2d19-4476-b02c-0d86b5a9d3da', {separator: ';'})
+
+  const regionsRecords = chain(rows)
+    .filter(f => f.code_region in regionsIndex)
+    .groupBy(r => `${r.date}-${r.code_region}`)
+    .map(scopedRows => {
+      const {code_region} = scopedRows[0]
+      return computeLivraisonRecord(scopedRows, {
+        code: `REG-${code_region}`,
+        nom: regionsIndex[code_region].nom
+      })
+    })
+    .value()
+
+  return [...regionsRecords, ...computeDromDepRecords(regionsRecords)]
+}
+
 function consolidateRecords(records, currentDate) {
   const firstDate = min(records.map(r => r.date))
 
@@ -136,6 +185,12 @@ function consolidateRecords(records, currentDate) {
     .value()
 }
 
+function computeDromDepRecords(regionsRecords) {
+  return regionsRecords
+    .filter(r => r.code.startsWith('REG-0'))
+    .map(r => ({...r, code: `DEP-97${r.code.slice(5)}`}))
+}
+
 async function buildVaccination(currentDate) {
   const injectionsFrance = await fetchInjectionsFrance()
   const injectionsRegions = await fetchInjectionsRegions()
@@ -144,13 +199,19 @@ async function buildVaccination(currentDate) {
   const stocksRegions = await fetchStocksRegions()
   const stocksDepartements = await fetchStocksDepartements()
 
+  const livraisonsFrance = await fetchLivraisonsFrance()
+  const livraisonsRegions = await fetchLivraisonsRegions()
+
   return [
     ...consolidateRecords(injectionsFrance, currentDate),
     ...consolidateRecords(injectionsRegions, currentDate),
 
     ...consolidateRecords(stocksFrance, currentDate),
     ...consolidateRecords(stocksRegions, currentDate),
-    ...consolidateRecords(stocksDepartements, currentDate)
+    ...consolidateRecords(stocksDepartements, currentDate),
+
+    ...consolidateRecords(livraisonsFrance, currentDate),
+    ...consolidateRecords(livraisonsRegions, currentDate)
   ]
 }
 
