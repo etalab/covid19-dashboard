@@ -47,7 +47,7 @@ function consolidate(records) {
       .reduce((acc, row) => {
         defaults(acc, row)
         return acc
-      }, {}), ['casConfirmes', 'deces', 'decesEhpad', 'casConfirmesEhpad', 'casPossiblesEhpad', 'reanimation', 'hospitalises', 'gueris', 'date', 'code', 'nom', 'testsRealises', 'testsPositifs', 'testsRealisesDetails', 'testsPositifsDetails', 'nouvellesHospitalisations', 'nouvellesReanimations', 'tauxIncidence', 'tauxIncidenceColor', 'tauxReproductionEffectif', 'tauxReproductionEffectifColor', 'tauxOccupationRea', 'tauxOccupationReaColor', 'tauxPositiviteTests', 'tauxPositiviteTestsColor', 'nouvellesPremieresInjections', 'cumulPremieresInjections', 'stockNombreTotalDoses', 'stockNombreDosesPfizer', 'stockNombreDosesModerna', 'livraisonsCumulNombreTotalDoses', 'livraisonsCumulNombreDosesPfizer', 'livraisonsCumulNombreDosesModerna'])
+      }, {}), ['casConfirmes', 'deces', 'decesEhpad', 'casConfirmesEhpad', 'casPossiblesEhpad', 'reanimation', 'hospitalises', 'gueris', 'date', 'code', 'nom', 'testsRealises', 'testsPositifs', 'testsRealisesDetails', 'testsPositifsDetails', 'nouvellesHospitalisations', 'nouvellesReanimations', 'tauxIncidence', 'tauxIncidenceColor', 'tauxReproductionEffectif', 'tauxReproductionEffectifColor', 'tauxOccupationRea', 'tauxOccupationReaColor', 'tauxPositiviteTests', 'tauxPositiviteTestsColor', 'nouvellesPremieresInjections', 'cumulPremieresInjections', 'stockNombreTotalDoses', 'stockNombreDosesPfizer', 'stockNombreDosesModerna', 'livraisonsCumulNombreTotalDoses', 'livraisonsCumulNombreDosesPfizer', 'livraisonsCumulNombreDosesModerna', 'totalPrisesRendezVousSemaine', 'prisesRendezVousSemaineRang1', 'prisesRendezVousSemaineRang2'])
   })
 }
 

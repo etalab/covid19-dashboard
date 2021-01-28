@@ -158,6 +158,73 @@ async function fetchLivraisonsRegions() {
   return [...regionsRecords, ...computeDromDepRecords(regionsRecords)]
 }
 
+function computeRdvRecord(scopedRows, {code, nom}) {
+  const {date_debut_semaine} = scopedRows[0]
+
+  const values = {
+    totalPrisesRendezVousSemaine: 0
+  }
+
+  scopedRows.forEach(r => {
+    const nbRdv = Number.parseInt(r.nb, 10)
+    values[`prisesRendezVousSemaineRang${r.rang_vaccinal}`] = nbRdv
+    values.totalPrisesRendezVousSemaine += nbRdv
+  })
+
+  return {
+    date: date_debut_semaine,
+    code,
+    nom,
+    source: {nom: 'Ministère de la Santé'},
+    sourceType: 'ministere-sante',
+    ...values
+  }
+}
+
+async function fetchRdvFrance() {
+  const rows = await fetchCsv('https://www.data.gouv.fr/fr/datasets/r/97d973f2-cb7e-417c-b610-802c4f5ce59e')
+
+  return chain(rows)
+    .groupBy('date_debut_semaine')
+    .map(dateRows => computeRdvRecord(dateRows, {
+      code: 'FRA',
+      nom: 'France'
+    }))
+    .value()
+}
+
+async function fetchRdvRegions() {
+  const rows = await fetchCsv('https://www.data.gouv.fr/fr/datasets/r/3c3565e5-8e50-482d-b76a-fe07599ab4a0')
+
+  return chain(rows)
+    .filter(f => f.code_region in regionsIndex)
+    .groupBy(r => `${r.date_debut_semaine}-${r.code_region}`)
+    .map(scopedRows => {
+      const {code_region} = scopedRows[0]
+      return computeRdvRecord(scopedRows, {
+        code: `REG-${code_region}`,
+        nom: regionsIndex[code_region].nom
+      })
+    })
+    .value()
+}
+
+async function fetchRdvDepartements() {
+  const rows = await fetchCsv('https://www.data.gouv.fr/fr/datasets/r/59aeab47-c364-462c-9087-ce233b6acbbc')
+
+  return chain(rows)
+    .filter(f => f.departement in departementsIndex)
+    .groupBy(r => `${r.date_debut_semaine}-${r.departement}`)
+    .map(scopedRows => {
+      const {departement} = scopedRows[0]
+      return computeRdvRecord(scopedRows, {
+        code: `DEP-${departement}`,
+        nom: departementsIndex[departement].nom
+      })
+    })
+    .value()
+}
+
 function consolidateRecords(records, currentDate) {
   const firstDate = min(records.map(r => r.date))
 
@@ -202,6 +269,10 @@ async function buildVaccination(currentDate) {
   const livraisonsFrance = await fetchLivraisonsFrance()
   const livraisonsRegions = await fetchLivraisonsRegions()
 
+  const rdvFrance = await fetchRdvFrance()
+  const rdvRegions = await fetchRdvRegions()
+  const rdvDepartements = await fetchRdvDepartements()
+
   return [
     ...consolidateRecords(injectionsFrance, currentDate),
     ...consolidateRecords(injectionsRegions, currentDate),
@@ -211,7 +282,11 @@ async function buildVaccination(currentDate) {
     ...consolidateRecords(stocksDepartements, currentDate),
 
     ...consolidateRecords(livraisonsFrance, currentDate),
-    ...consolidateRecords(livraisonsRegions, currentDate)
+    ...consolidateRecords(livraisonsRegions, currentDate),
+
+    ...consolidateRecords(rdvFrance, currentDate),
+    ...consolidateRecords(rdvRegions, currentDate),
+    ...consolidateRecords(rdvDepartements, currentDate)
   ]
 }
 
