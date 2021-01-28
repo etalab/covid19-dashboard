@@ -15,21 +15,102 @@ import VaccinationsCounters from './vaccinations-counters'
 import {VaccinationsContext} from '.'
 
 const charts = {
-  cumulPremieresInjections: {
-    name: 'Nombre total des premières injections',
+  nouvellesPremieresInjections: {
+    name: 'Premières injections réalisées (un jour)',
     type: 'indicateur',
     options: {
-      label: 'Nombre total des premières injections',
+      label: 'Premières injections réalisées (un jour)',
+      metricName: 'nouvellesPremieresInjections',
+      color: 'green'
+    }
+  },
+  cumulPremieresInjections: {
+    name: 'Premières injections réalisées (cumul)',
+    type: 'indicateur',
+    options: {
+      label: 'Premières injections réalisées (cumul)',
       metricName: 'cumulPremieresInjections',
       color: 'green'
     }
   },
   stockNombreTotalDoses: {
-    name: 'Nombre total de doses de vaccins',
+    name: 'Doses de vaccins en stock',
     type: 'indicateur',
     options: {
-      label: 'Nombre total de doses de vaccins',
+      label: 'Doses de vaccins en stock',
       metricName: 'stockNombreTotalDoses',
+      color: 'darkGrey'
+    }
+  },
+  stockNombreDosesPfizer: {
+    name: 'Doses de vaccins en stock (Pfizer)',
+    type: 'indicateur',
+    options: {
+      label: 'Doses de vaccins en stock (Pfizer)',
+      metricName: 'stockNombreDosesPfizer',
+      color: 'darkGrey'
+    }
+  },
+  stockNombreDosesModerna: {
+    name: 'Doses de vaccins en stock (Moderna)',
+    type: 'indicateur',
+    options: {
+      label: 'Doses de vaccins en stock (Moderna)',
+      metricName: 'stockNombreDosesModerna',
+      color: 'darkGrey'
+    }
+  },
+  livraisonsCumulNombreTotalDoses: {
+    name: 'Doses de vaccins livrées',
+    type: 'indicateur',
+    options: {
+      label: 'Doses de vaccins livrées',
+      metricName: 'livraisonsCumulNombreTotalDoses',
+      color: 'darkGrey'
+    }
+  },
+  livraisonsCumulNombreDosesPfizer: {
+    name: 'Doses de vaccins livrées (Pfizer)',
+    type: 'indicateur',
+    options: {
+      label: 'Doses de vaccins livrées (Pfizer)',
+      metricName: 'livraisonsCumulNombreDosesPfizer',
+      color: 'darkGrey'
+    }
+  },
+  livraisonsCumulNombreDosesModerna: {
+    name: 'Doses de vaccins livrées (Moderna)',
+    type: 'indicateur',
+    options: {
+      label: 'Doses de vaccins livrées (Moderna)',
+      metricName: 'livraisonsCumulNombreDosesModerna',
+      color: 'darkGrey'
+    }
+  },
+  totalPrisesRendezVousSemaine: {
+    name: 'Rendez-vous pris sur une semaine (toute injection)',
+    type: 'indicateur',
+    options: {
+      label: 'Nombre total de doses de vaccins (toute injection)',
+      metricName: 'totalPrisesRendezVousSemaine',
+      color: 'darkGrey'
+    }
+  },
+  prisesRendezVousSemaineRang1: {
+    name: 'Rendez-vous pris sur une semaine (première injection)',
+    type: 'indicateur',
+    options: {
+      label: 'Rendez-vous pris sur une semaine (première injection)',
+      metricName: 'prisesRendezVousSemaineRang1',
+      color: 'darkGrey'
+    }
+  },
+  prisesRendezVousSemaineRang2: {
+    name: 'Rendez-vous pris sur une semaine (seconde injection)',
+    type: 'indicateur',
+    options: {
+      label: 'Rendez-vous pris sur une semaine (seconde injection)',
+      metricName: 'prisesRendezVousSemaineRang2',
       color: 'darkGrey'
     }
   }
@@ -138,6 +219,13 @@ const VaccinationsStatistics = () => {
         .back:hover {
           cursor: pointer;
           background: ${colors.lightGrey};
+        }
+
+        .toggle {
+          padding: 2px 20px;
+          text-align: right;
+          font-size: 0.8em;
+          cursor: pointer;
         }
         `}</style>
     </>

@@ -129,7 +129,7 @@ const DesktopVaccinations = () => {
 const Vaccinations = props => {
   const {isMobileDevice} = useContext(AppContext)
 
-  const [selectedMapId, setSelectedMapId] = useState('Nombre de premières injections réalisées')
+  const [selectedMapId, setSelectedMapId] = useState('Premières injections réalisées (cumul)')
   const [selectedStat, setSelectedStat] = useState(null)
 
   const Component = isMobileDevice ? MobileVaccinations : DesktopVaccinations

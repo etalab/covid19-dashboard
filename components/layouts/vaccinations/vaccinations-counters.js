@@ -8,19 +8,6 @@ import Counter from '../../counter'
 import {VaccinationsContext} from '.'
 
 const VaccinationsCounters = props => {
-  const {
-    nouvellesPremieresInjections,
-    cumulPremieresInjections,
-    stockNombreTotalDoses,
-    stockNombreDosesPfizer,
-    stockNombreDosesModerna,
-    livraisonsCumulNombreTotalDoses,
-    livraisonsCumulNombreDosesPfizer,
-    livraisonsCumulNombreDosesModerna,
-    totalPrisesRendezVousSemaine,
-    prisesRendezVousSemaineRang1,
-    prisesRendezVousSemaineRang2
-  } = props.report || {}
   const {selectedStat, setSelectedStat} = useContext(VaccinationsContext)
 
   const previousReport = props.previousReport || {}
@@ -35,25 +22,30 @@ const VaccinationsCounters = props => {
   const injectionsCountersList = [
     {
       name: 'cumulPremieresInjections',
-      label: 'Nombre de premières doses de vaccin injectées',
+      label: 'premières doses injectées (cumul)',
       color: 'green'
     },
     {
-      name: 'stockNombreTotalDoses',
-      label: 'Nombre total de doses de vaccins',
+      name: 'nouvellesPremieresInjections',
+      label: 'premières doses injectées (ce jour)',
       color: 'darkGrey'
     }
   ]
 
   const stocksCountersList = [
     {
+      name: 'stockNombreTotalDoses',
+      label: 'doses en stock',
+      color: 'darkGrey'
+    },
+    {
       name: 'stockNombreDosesPfizer',
-      label: 'Nombre de doses Pfizer en stock',
+      label: 'doses en stock Pfizer',
       color: 'darkGrey'
     },
     {
       name: 'stockNombreDosesModerna',
-      label: 'Nombre de doses Moderna en stock',
+      label: 'doses en stock Moderna',
       color: 'darkGrey'
     }
   ]
@@ -61,17 +53,35 @@ const VaccinationsCounters = props => {
   const livraisonsCountersList = [
     {
       name: 'livraisonsCumulNombreTotalDoses',
-      label: 'Nombre total des doses livrais',
+      label: 'doses livrées',
       color: 'darkGrey'
     },
     {
       name: 'livraisonsCumulNombreDosesPfizer',
-      label: 'Nombre total des doses Pfizer livrais',
+      label: 'doses livrées Pfizer',
       color: 'darkGrey'
     },
     {
       name: 'livraisonsCumulNombreDosesModerna',
-      label: 'Nombre total des doses Moderna livrais',
+      label: 'doses livrées Moderna',
+      color: 'darkGrey'
+    }
+  ]
+
+  const rdvCountersList = [
+    {
+      name: 'totalPrisesRendezVousSemaine',
+      label: 'rendez-vous pris (semaine, toute injection)',
+      color: 'darkGrey'
+    },
+    {
+      name: 'prisesRendezVousSemaineRang1',
+      label: 'rendez-vous pris (semaine, première injection)',
+      color: 'darkGrey'
+    },
+    {
+      name: 'prisesRendezVousSemaineRang2',
+      label: 'rendez-vous pris (semaine, seconde injection)',
       color: 'darkGrey'
     }
   ]
@@ -82,6 +92,8 @@ const VaccinationsCounters = props => {
 
   return (
     <div className='stats'>
+
+      <div className='title'>Injections</div>
       <div className='counters'>
         {injectionsCountersList.map(counter => (
           <Counter
@@ -103,6 +115,7 @@ const VaccinationsCounters = props => {
           <Counter
             key={counter.name}
             isSelected={selectedStat === counter.name}
+            onClick={() => handleClick(counter.name)}
             value={props.report[counter.name]}
             previousValue={previousReport[counter.name]}
             label={counter.label}
@@ -118,6 +131,23 @@ const VaccinationsCounters = props => {
           <Counter
             key={counter.name}
             isSelected={selectedStat === counter.name}
+            onClick={() => handleClick(counter.name)}
+            value={props.report[counter.name]}
+            previousValue={previousReport[counter.name]}
+            label={counter.label}
+            details={details[counter.name]}
+            color={counter.color}
+          />
+        ))}
+      </div>
+
+      <div className='title'>Rendez-vous</div>
+      <div className='counters'>
+        {rdvCountersList.map(counter => (
+          <Counter
+            key={counter.name}
+            isSelected={selectedStat === counter.name}
+            onClick={() => handleClick(counter.name)}
             value={props.report[counter.name]}
             previousValue={previousReport[counter.name]}
             label={counter.label}
