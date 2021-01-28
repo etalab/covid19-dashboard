@@ -15,6 +15,7 @@ import CovidTests from '../components/layouts/covid-tests'
 // Temporary : import Synthese from '../components/layouts/synthese'
 import Indicators from '../components/layouts/indicators'
 import Prelevements from '../components/layouts/prelevements'
+import Vaccinations from '../components/layouts/vaccinations'
 import Entreprises from '../components/layouts/entreprises'
 
 export const AppContext = React.createContext()
@@ -47,6 +48,12 @@ const LAYOUTS = [
     name: 'sites-prelevements',
     label: 'Sites de prélèvements',
     component: <Prelevements />
+  },
+  {
+    id: 'vaccinations',
+    name: 'suivi-des-vaccinations',
+    label: 'Suivi des vaccinations',
+    component: <Vaccinations />
   },
   {
     id: 'tests',
