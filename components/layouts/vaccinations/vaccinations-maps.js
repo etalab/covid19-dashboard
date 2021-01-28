@@ -23,7 +23,7 @@ const maps = [
     type: CountMap,
     interactiveLayersIds,
     property: 'stockNombreTotalDoses',
-    color: colors.darkGrey,
+    color: colors.darkBlue,
     radiusBounds: [0, 10, 300, 70]
   },
   {
@@ -31,7 +31,7 @@ const maps = [
     type: CountMap,
     interactiveLayersIds,
     property: 'stockNombreDosesPfizer',
-    color: colors.darkGrey,
+    color: colors.darkBlue,
     radiusBounds: [0, 10, 300, 70]
   },
   {
@@ -39,7 +39,7 @@ const maps = [
     type: CountMap,
     interactiveLayersIds,
     property: 'stockNombreDosesModerna',
-    color: colors.darkGrey,
+    color: colors.darkBlue,
     radiusBounds: [0, 10, 300, 70]
   },
   {
