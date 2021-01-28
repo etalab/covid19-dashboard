@@ -5,7 +5,7 @@ const regions = require('@etalab/decoupage-administratif/data/regions.json')
 
 const regionsIndex = keyBy(regions, 'code')
 
-async function fetchFrance() {
+async function fetchInjectionsFrance() {
   const rows = await fetchCsv('https://www.data.gouv.fr/fr/datasets/r/efe23314-67c4-45d3-89a2-3faef82fae90', {separator: ';'})
   return rows.map(row => ({
     date: row.jour,
@@ -18,7 +18,7 @@ async function fetchFrance() {
   }))
 }
 
-async function fetchRegions() {
+async function fetchInjectionsRegions() {
   const rows = await fetchCsv('https://www.data.gouv.fr/fr/datasets/r/735b0df8-51b4-4dd2-8a2d-8e46d77d60d8', {separator: ';'})
   const regions = rows
     .filter(row => row.reg in regionsIndex)
@@ -40,8 +40,8 @@ async function fetchRegions() {
 }
 
 async function buildVaccination() {
-  const france = await fetchFrance()
-  const regions = await fetchRegions()
+  const france = await fetchInjectionsFrance()
+  const regions = await fetchInjectionsRegions()
   return [...france, ...regions]
 }
 
