@@ -9,6 +9,7 @@ import {getPreviousReport, getReport} from '../../../lib/data'
 
 import IndicateurCumulChart from '../../charts/indicateur-cumul'
 import IndicateurVariationChart from '../../charts/indicateur-variation'
+import PieChartPercent from '../../pie-chart-percent'
 
 import VaccinationsCounters from './vaccinations-counters'
 
@@ -131,6 +132,15 @@ const VaccinationsStatistics = () => {
             <Chart reports={report.history.filter(r => date >= r.date)} {...selectedChartOptions} />
           </div>
         </>
+      )}
+
+      {report && report.prisesRendezVousSemaineRang1 && report.prisesRendezVousSemaineRang2 && (
+        <PieChartPercent
+          data={[report.prisesRendezVousSemaineRang1, report.prisesRendezVousSemaineRang2]}
+          labels={['rendez-vous pris (semaine, première injection)', 'rendez-vous pris (semaine, seconde injection)']}
+          colors={[colors.blue, colors.darkBlue]}
+          height={isMobileDevice ? 150 : 130}
+        />
       )}
 
       <style jsx>{`
