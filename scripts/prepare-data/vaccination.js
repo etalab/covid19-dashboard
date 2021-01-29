@@ -45,7 +45,7 @@ async function fetchInjectionsDepartements() {
     .map(row => ({
       date: row.jour,
       code: `DEP-${row.dep}`,
-      nom: regionsIndex[row.dep].nom,
+      nom: departementsIndex[row.dep].nom,
       source: {nom: 'Santé publique France'},
       sourceType: 'sante-publique-france',
       nouvellesPremieresInjections: Number.parseInt(row.n_dose1, 10),
