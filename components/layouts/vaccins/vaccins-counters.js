@@ -41,6 +41,24 @@ const VaccinsCounters = props => {
     }
   ]
 
+  const stocksEphadCountersList = [
+    {
+      name: 'stockEhpadNombreTotalDoses',
+      label: 'doses en stock pour les EPHAD',
+      color: 'darkGrey'
+    },
+    {
+      name: 'stockEhpadNombreDosesPfizer',
+      label: 'doses en stock Pfizer pour les EPHAD',
+      color: 'darkBlue'
+    },
+    {
+      name: 'stockEhpadNombreDosesModerna',
+      label: 'doses en stock Moderna pour les EPHAD',
+      color: 'darkRed'
+    }
+  ]
+
   const livraisonsCountersList = [
     {
       name: 'livraisonsCumulNombreTotalDoses',
@@ -65,7 +83,7 @@ const VaccinsCounters = props => {
 
   return (
     <div className='stats'>
-      <div className='title'>Stocks</div>
+      <div className='title'>Stocks pour les établissements de santé</div>
       <div className='counters'>
         {stocksCountersList.map(counter => (
           <Counter
@@ -84,6 +102,30 @@ const VaccinsCounters = props => {
       {report && report.stockNombreDosesPfizer && report.stockNombreDosesModerna && (
         <PieChartPercent
           data={[report.stockNombreDosesPfizer, report.stockNombreDosesModerna]}
+          labels={['Stock doses Pfizer', 'Stock doses Moderna']}
+          colors={[colors.darkBlue, colors.darkRed]}
+          height={isMobileDevice ? 150 : 130}
+        />
+      )}
+
+      <div className='title'>Stocks pour les EPHAD</div>
+      <div className='counters'>
+        {stocksEphadCountersList.map(counter => (
+          <Counter
+            key={counter.name}
+            isSelected={selectedStat === counter.name}
+            value={report[counter.name]}
+            previousValue={previousReport[counter.name]}
+            label={counter.label}
+            details={details[counter.name]}
+            color={counter.color}
+          />
+        ))}
+      </div>
+
+      {report && report.stockEPHADNombreDosesPfizer && report.stockEPHADNombreDosesModerna && (
+        <PieChartPercent
+          data={[report.stockEPHADNombreDosesPfizer, report.stockEPHADNombreDosesModerna]}
           labels={['Stock doses Pfizer', 'Stock doses Moderna']}
           colors={[colors.darkBlue, colors.darkRed]}
           height={isMobileDevice ? 150 : 130}
