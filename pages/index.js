@@ -51,8 +51,8 @@ const LAYOUTS = [
   },
   {
     id: 'vaccinations',
-    name: 'suivi-des-vaccinations',
-    label: 'Suivi des vaccinations',
+    name: 'suivi-vaccination',
+    label: 'Suivi de la vaccination',
     component: <Vaccinations />
   },
   {
