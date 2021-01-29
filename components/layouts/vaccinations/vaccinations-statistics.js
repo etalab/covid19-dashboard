@@ -39,7 +39,7 @@ const charts = {
     options: {
       label: 'Doses de vaccins en stock',
       metricName: 'stockNombreTotalDoses',
-      color: 'darkGrey'
+      color: 'darkBlue'
     }
   },
   stockNombreDosesPfizer: {
@@ -48,7 +48,7 @@ const charts = {
     options: {
       label: 'Doses de vaccins en stock (Pfizer)',
       metricName: 'stockNombreDosesPfizer',
-      color: 'darkGrey'
+      color: 'darkBlue'
     }
   },
   stockNombreDosesModerna: {
@@ -57,7 +57,7 @@ const charts = {
     options: {
       label: 'Doses de vaccins en stock (Moderna)',
       metricName: 'stockNombreDosesModerna',
-      color: 'darkGrey'
+      color: 'darkBlue'
     }
   },
   livraisonsCumulNombreTotalDoses: {
@@ -93,7 +93,7 @@ const charts = {
     options: {
       label: 'Nombre total de doses de vaccins (toute injection)',
       metricName: 'totalPrisesRendezVousSemaine',
-      color: 'darkGrey'
+      color: 'blue'
     }
   },
   prisesRendezVousSemaineRang1: {
@@ -102,7 +102,7 @@ const charts = {
     options: {
       label: 'Rendez-vous pris sur une semaine (première injection)',
       metricName: 'prisesRendezVousSemaineRang1',
-      color: 'darkGrey'
+      color: 'blue'
     }
   },
   prisesRendezVousSemaineRang2: {
@@ -111,7 +111,7 @@ const charts = {
     options: {
       label: 'Rendez-vous pris sur une semaine (seconde injection)',
       metricName: 'prisesRendezVousSemaineRang2',
-      color: 'darkGrey'
+      color: 'blue'
     }
   }
 }

@@ -71,7 +71,7 @@ const maps = [
     type: CountMap,
     interactiveLayersIds,
     property: 'totalPrisesRendezVousSemaine',
-    color: colors.darkGrey,
+    color: colors.blue,
     radiusBounds: [0, 10, 300, 70]
   },
   {
@@ -79,7 +79,7 @@ const maps = [
     type: CountMap,
     interactiveLayersIds,
     property: 'prisesRendezVousSemaineRang1',
-    color: colors.darkGrey,
+    color: colors.blue,
     radiusBounds: [0, 10, 300, 70]
   },
   {
@@ -87,7 +87,7 @@ const maps = [
     type: CountMap,
     interactiveLayersIds,
     property: 'prisesRendezVousSemaineRang2',
-    color: colors.darkGrey,
+    color: colors.blue,
     radiusBounds: [0, 10, 300, 70]
   }
 ]

@@ -28,7 +28,7 @@ const VaccinationsCounters = props => {
     {
       name: 'nouvellesPremieresInjections',
       label: 'premières doses injectées (ce jour)',
-      color: 'darkGrey'
+      color: 'green'
     }
   ]
 
@@ -36,17 +36,17 @@ const VaccinationsCounters = props => {
     {
       name: 'stockNombreTotalDoses',
       label: 'doses en stock',
-      color: 'darkGrey'
+      color: 'darkBlue'
     },
     {
       name: 'stockNombreDosesPfizer',
       label: 'doses en stock Pfizer',
-      color: 'darkGrey'
+      color: 'darkBlue'
     },
     {
       name: 'stockNombreDosesModerna',
       label: 'doses en stock Moderna',
-      color: 'darkGrey'
+      color: 'darkBlue'
     }
   ]
 
@@ -72,17 +72,17 @@ const VaccinationsCounters = props => {
     {
       name: 'totalPrisesRendezVousSemaine',
       label: 'rendez-vous pris (semaine, toute injection)',
-      color: 'darkGrey'
+      color: 'blue'
     },
     {
       name: 'prisesRendezVousSemaineRang1',
       label: 'rendez-vous pris (semaine, première injection)',
-      color: 'darkGrey'
+      color: 'blue'
     },
     {
       name: 'prisesRendezVousSemaineRang2',
       label: 'rendez-vous pris (semaine, seconde injection)',
-      color: 'darkGrey'
+      color: 'blue'
     }
   ]
 
