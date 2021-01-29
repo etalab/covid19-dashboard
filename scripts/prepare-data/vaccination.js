@@ -122,6 +122,41 @@ async function fetchStocksDepartements() {
     .value()
 }
 
+function computeStockEhpadRecord(scopedRows, {code, nom}) {
+  const {date} = scopedRows[0]
+
+  const values = {
+    stockEhpadNombreTotalDoses: 0
+  }
+
+  scopedRows.forEach(r => {
+    const nbDoses = Number.parseInt(r.nb_doses, 10)
+    values[`stockEhpadNombreDoses${r.type_de_vaccin}`] = nbDoses
+    values.stockEhpadNombreTotalDoses += nbDoses
+  })
+
+  return {
+    date,
+    code,
+    nom,
+    source: {nom: 'Ministère de la Santé'},
+    sourceType: 'ministere-sante',
+    ...values
+  }
+}
+
+async function fetchStocksEhpad() {
+  const rows = await fetchCsv('https://www.data.gouv.fr/fr/datasets/r/fde550e2-eed5-41b9-8700-631c92c11fd3', {separator: ';'})
+
+  return chain(rows)
+    .groupBy('date')
+    .map(dateRows => computeStockEhpadRecord(dateRows, {
+      code: 'FRA',
+      nom: 'France'
+    }))
+    .value()
+}
+
 function computeLivraisonRecord(scopedRows, {code, nom}) {
   const {date} = scopedRows[0]
 
@@ -283,6 +318,7 @@ async function buildVaccination(currentDate) {
   const stocksFrance = await fetchStocksFrance()
   const stocksRegions = await fetchStocksRegions()
   const stocksDepartements = await fetchStocksDepartements()
+  const stocksEhpad = await fetchStocksEhpad()
 
   const livraisonsFrance = await fetchLivraisonsFrance()
   const livraisonsRegions = await fetchLivraisonsRegions()
@@ -299,6 +335,7 @@ async function buildVaccination(currentDate) {
     ...consolidateRecords(stocksFrance, currentDate),
     ...consolidateRecords(stocksRegions, currentDate),
     ...consolidateRecords(stocksDepartements, currentDate),
+    ...consolidateRecords(stocksEhpad, currentDate),
 
     ...consolidateRecords(livraisonsFrance, currentDate),
     ...consolidateRecords(livraisonsRegions, currentDate),
