@@ -16,6 +16,7 @@ import CovidTests from '../components/layouts/covid-tests'
 import Indicators from '../components/layouts/indicators'
 import Prelevements from '../components/layouts/prelevements'
 import Vaccinations from '../components/layouts/vaccinations'
+import Vaccins from '../components/layouts/vaccins'
 import Entreprises from '../components/layouts/entreprises'
 
 export const AppContext = React.createContext()
@@ -54,6 +55,12 @@ const LAYOUTS = [
     name: 'suivi-vaccination',
     label: 'Suivi de la vaccination',
     component: <Vaccinations />
+  },
+  {
+    id: 'vaccins',
+    name: 'logistique-vaccins',
+    label: 'Logistique vaccins',
+    component: <Vaccins />
   },
   {
     id: 'tests',

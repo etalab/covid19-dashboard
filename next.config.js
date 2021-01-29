@@ -18,6 +18,7 @@ module.exports = withBundleAnalyzer({
       '/vue-d-ensemble': {page: '/', query: {layout: 'big-picture'}},
       '/suivi-des-tests': {page: '/', query: {layout: 'tests'}},
       '/suivi-vaccination': {page: '/', query: {layout: 'vaccination'}},
+      '/logistique-vaccins': {page: '/', query: {layout: 'vaccins'}},
       '/activite-epidemique': {page: '/', query: {layout: 'synthese'}},
       '/suivi-indicateurs': {page: '/', query: {layout: 'indicators'}},
       '/sites-prelevements': {page: '/', query: {layout: 'prelevements'}},

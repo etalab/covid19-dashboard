@@ -112,6 +112,7 @@ const DesktopLayoutSelector = ({selected, layouts, handleSelect}) => {
 
         .layout {
           padding: 0.8em 0.5em;
+          font-size: smaller;
           list-style: none;
           text-align: center;
           background-color: ${themeContext.secondary};
@@ -155,6 +156,12 @@ const DesktopLayoutSelector = ({selected, layouts, handleSelect}) => {
         @media (max-width: 1370px) {
           .layout {
             font-size: small;
+          }
+        }
+
+        @media (max-width: 1260px) {
+          .layout {
+            padding: .2em .8em;
           }
         }
         `}</style>

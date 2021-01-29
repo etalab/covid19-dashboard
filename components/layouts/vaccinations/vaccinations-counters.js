@@ -13,10 +13,7 @@ const VaccinationsCounters = props => {
   const previousReport = props.previousReport || {}
 
   const details = {
-    cumulPremieresInjections: '',
-    stockNombreTotalDoses: '',
-    stockNombreDosesPfizer: '',
-    stockNombreDosesModerna: ''
+    cumulPremieresInjections: ''
   }
 
   const injectionsCountersList = [
