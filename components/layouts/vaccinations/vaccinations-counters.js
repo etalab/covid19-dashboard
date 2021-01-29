@@ -32,42 +32,6 @@ const VaccinationsCounters = props => {
     }
   ]
 
-  const stocksCountersList = [
-    {
-      name: 'stockNombreTotalDoses',
-      label: 'doses en stock',
-      color: 'darkBlue'
-    },
-    {
-      name: 'stockNombreDosesPfizer',
-      label: 'doses en stock Pfizer',
-      color: 'darkBlue'
-    },
-    {
-      name: 'stockNombreDosesModerna',
-      label: 'doses en stock Moderna',
-      color: 'darkBlue'
-    }
-  ]
-
-  const livraisonsCountersList = [
-    {
-      name: 'livraisonsCumulNombreTotalDoses',
-      label: 'doses livrées',
-      color: 'darkGrey'
-    },
-    {
-      name: 'livraisonsCumulNombreDosesPfizer',
-      label: 'doses livrées Pfizer',
-      color: 'darkGrey'
-    },
-    {
-      name: 'livraisonsCumulNombreDosesModerna',
-      label: 'doses livrées Moderna',
-      color: 'darkGrey'
-    }
-  ]
-
   const rdvCountersList = [
     {
       name: 'totalPrisesRendezVousSemaine',
@@ -96,38 +60,6 @@ const VaccinationsCounters = props => {
       <div className='title'>Injections</div>
       <div className='counters'>
         {injectionsCountersList.map(counter => (
-          <Counter
-            key={counter.name}
-            isSelected={selectedStat === counter.name}
-            onClick={() => handleClick(counter.name)}
-            value={props.report[counter.name]}
-            previousValue={previousReport[counter.name]}
-            label={counter.label}
-            details={details[counter.name]}
-            color={counter.color}
-          />
-        ))}
-      </div>
-
-      <div className='title'>Stocks</div>
-      <div className='counters'>
-        {stocksCountersList.map(counter => (
-          <Counter
-            key={counter.name}
-            isSelected={selectedStat === counter.name}
-            onClick={() => handleClick(counter.name)}
-            value={props.report[counter.name]}
-            previousValue={previousReport[counter.name]}
-            label={counter.label}
-            details={details[counter.name]}
-            color={counter.color}
-          />
-        ))}
-      </div>
-
-      <div className='title'>Livraisons</div>
-      <div className='counters'>
-        {livraisonsCountersList.map(counter => (
           <Counter
             key={counter.name}
             isSelected={selectedStat === counter.name}

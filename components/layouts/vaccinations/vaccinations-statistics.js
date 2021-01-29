@@ -33,60 +33,6 @@ const charts = {
       color: 'green'
     }
   },
-  stockNombreTotalDoses: {
-    name: 'Doses de vaccins en stock',
-    type: 'indicateur',
-    options: {
-      label: 'Doses de vaccins en stock',
-      metricName: 'stockNombreTotalDoses',
-      color: 'darkBlue'
-    }
-  },
-  stockNombreDosesPfizer: {
-    name: 'Doses de vaccins en stock (Pfizer)',
-    type: 'indicateur',
-    options: {
-      label: 'Doses de vaccins en stock (Pfizer)',
-      metricName: 'stockNombreDosesPfizer',
-      color: 'darkBlue'
-    }
-  },
-  stockNombreDosesModerna: {
-    name: 'Doses de vaccins en stock (Moderna)',
-    type: 'indicateur',
-    options: {
-      label: 'Doses de vaccins en stock (Moderna)',
-      metricName: 'stockNombreDosesModerna',
-      color: 'darkBlue'
-    }
-  },
-  livraisonsCumulNombreTotalDoses: {
-    name: 'Doses de vaccins livrées',
-    type: 'indicateur',
-    options: {
-      label: 'Doses de vaccins livrées',
-      metricName: 'livraisonsCumulNombreTotalDoses',
-      color: 'darkGrey'
-    }
-  },
-  livraisonsCumulNombreDosesPfizer: {
-    name: 'Doses de vaccins livrées (Pfizer)',
-    type: 'indicateur',
-    options: {
-      label: 'Doses de vaccins livrées (Pfizer)',
-      metricName: 'livraisonsCumulNombreDosesPfizer',
-      color: 'darkGrey'
-    }
-  },
-  livraisonsCumulNombreDosesModerna: {
-    name: 'Doses de vaccins livrées (Moderna)',
-    type: 'indicateur',
-    options: {
-      label: 'Doses de vaccins livrées (Moderna)',
-      metricName: 'livraisonsCumulNombreDosesModerna',
-      color: 'darkGrey'
-    }
-  },
   totalPrisesRendezVousSemaine: {
     name: 'Rendez-vous pris sur une semaine (toute injection)',
     type: 'indicateur',
