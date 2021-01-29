@@ -16,34 +16,34 @@ import {VaccinsContext} from '.'
 
 const charts = {
   stockNombreTotalDoses: {
-    name: 'Doses de vaccins en stock',
+    name: 'doses en stock pour les établissements de santé',
     type: 'indicateur',
     options: {
-      label: 'Doses de vaccins en stock',
+      label: 'Nombre total de doses en stock réservées aux établissements de santé',
       metricName: 'stockNombreTotalDoses',
       color: 'darkGrey'
     }
   },
   stockNombreDosesPfizer: {
-    name: 'Doses de vaccins en stock (Pfizer)',
+    name: 'doses en stock Pfizer pour les établissements de santé',
     type: 'indicateur',
     options: {
-      label: 'Doses de vaccins en stock (Pfizer)',
+      label: 'Nombre total de doses Pfizer en stock réservées aux établissements de santé',
       metricName: 'stockNombreDosesPfizer',
       color: 'darkBlue'
     }
   },
   stockNombreDosesModerna: {
-    name: 'Doses de vaccins en stock (Moderna)',
+    name: 'doses en stock Moderna pour les établissements de santé',
     type: 'indicateur',
     options: {
-      label: 'Doses de vaccins en stock (Moderna)',
+      label: 'Nombre total de doses Moderna en stock réservées aux établissements de santé',
       metricName: 'stockNombreDosesModerna',
       color: 'darkRed'
     }
   },
   livraisonsCumulNombreTotalDoses: {
-    name: 'Doses de vaccins livrées',
+    name: 'doses de vaccins livrées',
     type: 'indicateur',
     options: {
       label: 'Doses de vaccins livrées',
@@ -52,7 +52,7 @@ const charts = {
     }
   },
   livraisonsCumulNombreDosesPfizer: {
-    name: 'Doses de vaccins livrées (Pfizer)',
+    name: 'doses de vaccins livrées (Pfizer)',
     type: 'indicateur',
     options: {
       label: 'Doses de vaccins livrées (Pfizer)',
@@ -61,7 +61,7 @@ const charts = {
     }
   },
   livraisonsCumulNombreDosesModerna: {
-    name: 'Doses de vaccins livrées (Moderna)',
+    name: 'doses de vaccins livrées (Moderna)',
     type: 'indicateur',
     options: {
       label: 'Doses de vaccins livrées (Moderna)',

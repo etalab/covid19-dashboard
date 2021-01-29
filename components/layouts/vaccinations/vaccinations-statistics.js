@@ -20,7 +20,7 @@ const charts = {
     name: 'Premières injections réalisées (un jour)',
     type: 'indicateur',
     options: {
-      label: 'Premières injections réalisées (un jour)',
+      label: 'Nombre total de premières doses de vaccin injectées à J-1',
       metricName: 'nouvellesPremieresInjections',
       color: 'green'
     }
@@ -38,7 +38,7 @@ const charts = {
     name: 'Rendez-vous pris sur une semaine (toute injection)',
     type: 'indicateur',
     options: {
-      label: 'Nombre total de doses de vaccins (toute injection)',
+      label: 'Nombre de rendez-vous pris par semaine dans les centres de vaccination',
       metricName: 'totalPrisesRendezVousSemaine',
       color: 'darkGrey'
     }
@@ -47,7 +47,7 @@ const charts = {
     name: 'Rendez-vous pris sur une semaine (première injection)',
     type: 'indicateur',
     options: {
-      label: 'Rendez-vous pris sur une semaine (première injection)',
+      label: 'Nombre de rendez-vous pris par semaine dans les centres de vaccination pour l’injection d’une première dose',
       metricName: 'prisesRendezVousSemaineRang1',
       color: 'blueSoft'
     }
@@ -56,7 +56,7 @@ const charts = {
     name: 'Rendez-vous pris sur une semaine (seconde injection)',
     type: 'indicateur',
     options: {
-      label: 'Rendez-vous pris sur une semaine (seconde injection)',
+      label: 'Nombre de rendez-vous pris par semaine dans les centres de vaccination pour l’injection d’une seconde dose',
       metricName: 'prisesRendezVousSemaineRang2',
       color: 'purple'
     }

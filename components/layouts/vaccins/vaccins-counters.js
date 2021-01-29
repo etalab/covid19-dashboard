@@ -18,25 +18,25 @@ const VaccinsCounters = props => {
   const previousReport = props.previousReport || {}
 
   const details = {
-    stockNombreTotalDoses: '',
-    stockNombreDosesPfizer: '',
-    stockNombreDosesModerna: ''
+    stockNombreTotalDoses: 'nombre total de doses en stock réservées aux établissements de santé',
+    stockNombreDosesPfizer: 'nombre total de doses Pfizer en stock réservées aux établissements de santé',
+    stockNombreDosesModerna: 'nombre total de doses Moderna en stock réservées aux établissements de santé'
   }
 
   const stocksCountersList = [
     {
       name: 'stockNombreTotalDoses',
-      label: 'doses en stock',
+      label: 'doses en stock pour les établissements de santé',
       color: 'darkGrey'
     },
     {
       name: 'stockNombreDosesPfizer',
-      label: 'doses en stock Pfizer',
+      label: 'doses en stock Pfizer pour les établissements de santé',
       color: 'darkBlue'
     },
     {
       name: 'stockNombreDosesModerna',
-      label: 'doses en stock Moderna',
+      label: 'doses en stock Moderna pour les établissements de santé',
       color: 'darkRed'
     }
   ]

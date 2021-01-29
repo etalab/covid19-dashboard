@@ -13,7 +13,10 @@ const VaccinationsCounters = props => {
   const previousReport = props.previousReport || {}
 
   const details = {
-    cumulPremieresInjections: ''
+    cumulPremieresInjections: 'Nombre total de premières doses de vaccin injectées à J-1',
+    totalPrisesRendezVousSemaine: 'Nombre de rendez-vous pris par semaine dans les centres de vaccination',
+    prisesRendezVousSemaineRang1: 'Nombre de rendez-vous pris par semaine dans les centres de vaccination pour l’injection d’une première dose',
+    prisesRendezVousSemaineRang2: 'Nombre de rendez-vous pris par semaine dans les centres de vaccination pour l’injection d’une seconde dose'
   }
 
   const injectionsCountersList = [
@@ -32,17 +35,17 @@ const VaccinationsCounters = props => {
   const rdvCountersList = [
     {
       name: 'totalPrisesRendezVousSemaine',
-      label: 'rendez-vous pris (semaine, toute injection)',
+      label: 'rendez-vous pris par semaine (cumul)',
       color: 'darkGrey'
     },
     {
       name: 'prisesRendezVousSemaineRang1',
-      label: 'rendez-vous pris (semaine, première injection)',
+      label: 'rendez-vous pris par semaine pour une première injection',
       color: 'blueSoft'
     },
     {
       name: 'prisesRendezVousSemaineRang2',
-      label: 'rendez-vous pris (semaine, seconde injection)',
+      label: 'rendez-vous pris par semaine pour une seconde injection',
       color: 'purple'
     }
   ]
