@@ -31,7 +31,7 @@ const charts = {
     options: {
       label: 'Premières injections réalisées (cumul)',
       metricName: 'cumulPremieresInjections',
-      color: 'green'
+      color: 'greenSoft'
     }
   },
   totalPrisesRendezVousSemaine: {
@@ -40,7 +40,7 @@ const charts = {
     options: {
       label: 'Nombre total de doses de vaccins (toute injection)',
       metricName: 'totalPrisesRendezVousSemaine',
-      color: 'blue'
+      color: 'darkGrey'
     }
   },
   prisesRendezVousSemaineRang1: {
@@ -49,7 +49,7 @@ const charts = {
     options: {
       label: 'Rendez-vous pris sur une semaine (première injection)',
       metricName: 'prisesRendezVousSemaineRang1',
-      color: 'blue'
+      color: 'blueSoft'
     }
   },
   prisesRendezVousSemaineRang2: {
@@ -58,7 +58,7 @@ const charts = {
     options: {
       label: 'Rendez-vous pris sur une semaine (seconde injection)',
       metricName: 'prisesRendezVousSemaineRang2',
-      color: 'blue'
+      color: 'purple'
     }
   }
 }
@@ -125,6 +125,15 @@ const VaccinationsStatistics = () => {
         <VaccinationsCounters report={report} previousReport={previousReport} />
       )}
 
+      {report && report.prisesRendezVousSemaineRang1 && report.prisesRendezVousSemaineRang2 && (
+        <PieChartPercent
+          data={[report.prisesRendezVousSemaineRang1, report.prisesRendezVousSemaineRang2]}
+          labels={['rendez-vous pris (semaine, première injection)', 'rendez-vous pris (semaine, seconde injection)']}
+          colors={[colors.blueSoft, colors.purple]}
+          height={isMobileDevice ? 150 : 130}
+        />
+      )}
+
       {report && report.history && selectedStat && Chart && (
         <>
           {isToggleable && <a className='toggle' onClick={() => setShowVariations(!showVariations)}>{showVariations ? 'Afficher les valeurs cumulées' : 'Afficher les variations quotidiennes'}</a>}
@@ -132,15 +141,6 @@ const VaccinationsStatistics = () => {
             <Chart reports={report.history.filter(r => date >= r.date)} {...selectedChartOptions} />
           </div>
         </>
-      )}
-
-      {report && report.prisesRendezVousSemaineRang1 && report.prisesRendezVousSemaineRang2 && (
-        <PieChartPercent
-          data={[report.prisesRendezVousSemaineRang1, report.prisesRendezVousSemaineRang2]}
-          labels={['rendez-vous pris (semaine, première injection)', 'rendez-vous pris (semaine, seconde injection)']}
-          colors={[colors.blue, colors.darkBlue]}
-          height={isMobileDevice ? 150 : 130}
-        />
       )}
 
       <style jsx>{`

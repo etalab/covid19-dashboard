@@ -20,7 +20,7 @@ const VaccinationsCounters = props => {
     {
       name: 'cumulPremieresInjections',
       label: 'premières doses injectées (cumul)',
-      color: 'green'
+      color: 'greenSoft'
     },
     {
       name: 'nouvellesPremieresInjections',
@@ -33,17 +33,17 @@ const VaccinationsCounters = props => {
     {
       name: 'totalPrisesRendezVousSemaine',
       label: 'rendez-vous pris (semaine, toute injection)',
-      color: 'blue'
+      color: 'darkGrey'
     },
     {
       name: 'prisesRendezVousSemaineRang1',
       label: 'rendez-vous pris (semaine, première injection)',
-      color: 'blue'
+      color: 'blueSoft'
     },
     {
       name: 'prisesRendezVousSemaineRang2',
       label: 'rendez-vous pris (semaine, seconde injection)',
-      color: 'blue'
+      color: 'purple'
     }
   ]
 

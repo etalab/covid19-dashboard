@@ -15,7 +15,7 @@ const maps = [
     type: CountMap,
     interactiveLayersIds,
     property: 'cumulPremieresInjections',
-    color: colors.green,
+    color: colors.greenSoft,
     radiusBounds: [0, 10, 800, 70]
   },
   {
@@ -23,7 +23,7 @@ const maps = [
     type: CountMap,
     interactiveLayersIds,
     property: 'totalPrisesRendezVousSemaine',
-    color: colors.blue,
+    color: colors.darkGrey,
     radiusBounds: [0, 10, 300, 70]
   },
   {
@@ -31,7 +31,7 @@ const maps = [
     type: CountMap,
     interactiveLayersIds,
     property: 'prisesRendezVousSemaineRang1',
-    color: colors.blue,
+    color: colors.blueSoft,
     radiusBounds: [0, 10, 300, 70]
   },
   {
@@ -39,7 +39,7 @@ const maps = [
     type: CountMap,
     interactiveLayersIds,
     property: 'prisesRendezVousSemaineRang2',
-    color: colors.blue,
+    color: colors.purple,
     radiusBounds: [0, 10, 300, 70]
   }
 ]

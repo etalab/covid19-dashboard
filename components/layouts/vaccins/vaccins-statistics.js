@@ -21,7 +21,7 @@ const charts = {
     options: {
       label: 'Doses de vaccins en stock',
       metricName: 'stockNombreTotalDoses',
-      color: 'darkBlue'
+      color: 'darkGrey'
     }
   },
   stockNombreDosesPfizer: {
@@ -39,7 +39,7 @@ const charts = {
     options: {
       label: 'Doses de vaccins en stock (Moderna)',
       metricName: 'stockNombreDosesModerna',
-      color: 'darkBlue'
+      color: 'darkRed'
     }
   },
   livraisonsCumulNombreTotalDoses: {
@@ -57,7 +57,7 @@ const charts = {
     options: {
       label: 'Doses de vaccins livrées (Pfizer)',
       metricName: 'livraisonsCumulNombreDosesPfizer',
-      color: 'darkGrey'
+      color: 'darkBlue'
     }
   },
   livraisonsCumulNombreDosesModerna: {
@@ -66,7 +66,7 @@ const charts = {
     options: {
       label: 'Doses de vaccins livrées (Moderna)',
       metricName: 'livraisonsCumulNombreDosesModerna',
-      color: 'darkGrey'
+      color: 'darkRed'
     }
   }
 }

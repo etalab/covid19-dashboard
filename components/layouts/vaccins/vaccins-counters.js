@@ -27,7 +27,7 @@ const VaccinsCounters = props => {
     {
       name: 'stockNombreTotalDoses',
       label: 'doses en stock',
-      color: 'darkBlue'
+      color: 'darkGrey'
     },
     {
       name: 'stockNombreDosesPfizer',
@@ -37,7 +37,7 @@ const VaccinsCounters = props => {
     {
       name: 'stockNombreDosesModerna',
       label: 'doses en stock Moderna',
-      color: 'darkBlue'
+      color: 'darkRed'
     }
   ]
 
@@ -50,12 +50,12 @@ const VaccinsCounters = props => {
     {
       name: 'livraisonsCumulNombreDosesPfizer',
       label: 'doses livrées Pfizer',
-      color: 'darkGrey'
+      color: 'darkBlue'
     },
     {
       name: 'livraisonsCumulNombreDosesModerna',
       label: 'doses livrées Moderna',
-      color: 'darkGrey'
+      color: 'darkRed'
     }
   ]
 
@@ -85,7 +85,7 @@ const VaccinsCounters = props => {
         <PieChartPercent
           data={[report.stockNombreDosesPfizer, report.stockNombreDosesModerna]}
           labels={['Stock doses Pfizer', 'Stock doses Moderna']}
-          colors={[colors.blue, colors.darkBlue]}
+          colors={[colors.darkBlue, colors.darkRed]}
           height={isMobileDevice ? 150 : 130}
         />
       )}
@@ -110,7 +110,7 @@ const VaccinsCounters = props => {
         <PieChartPercent
           data={[report.livraisonsCumulNombreDosesPfizer, report.livraisonsCumulNombreDosesModerna]}
           labels={['Livraisons doses Pfizer', 'Livraisons doses Moderna']}
-          colors={[colors.blue, colors.darkBlue]}
+          colors={[colors.darkBlue, colors.darkRed]}
           height={isMobileDevice ? 150 : 130}
         />
       )}
