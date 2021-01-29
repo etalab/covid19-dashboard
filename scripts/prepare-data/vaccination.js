@@ -35,7 +35,24 @@ async function fetchInjectionsRegions() {
       cumulPremieresInjections: Number.parseInt(row.n_cum_dose1, 10)
     }))
 
-  return [...regionsRecords, ...computeDromDepRecords(regionsRecords)]
+  return regionsRecords
+}
+
+async function fetchInjectionsDepartements() {
+  const rows = await fetchCsv('https://www.data.gouv.fr/fr/datasets/r/4f39ec91-80d7-4602-befb-4b522804c0af', {separator: ';'})
+  const departementsRecords = rows
+    .filter(row => row.dep in departementsIndex)
+    .map(row => ({
+      date: row.jour,
+      code: `DEP-${row.dep}`,
+      nom: regionsIndex[row.dep].nom,
+      source: {nom: 'Santé publique France'},
+      sourceType: 'sante-publique-france',
+      nouvellesPremieresInjections: Number.parseInt(row.n_dose1, 10),
+      cumulPremieresInjections: Number.parseInt(row.n_cum_dose1, 10)
+    }))
+
+  return departementsRecords
 }
 
 function computeStockRecord(scopedRows, {code, nom}) {
@@ -261,6 +278,7 @@ function computeDromDepRecords(regionsRecords) {
 async function buildVaccination(currentDate) {
   const injectionsFrance = await fetchInjectionsFrance()
   const injectionsRegions = await fetchInjectionsRegions()
+  const injectionsDepartements = await fetchInjectionsDepartements()
 
   const stocksFrance = await fetchStocksFrance()
   const stocksRegions = await fetchStocksRegions()
@@ -276,6 +294,7 @@ async function buildVaccination(currentDate) {
   return [
     ...consolidateRecords(injectionsFrance, currentDate),
     ...consolidateRecords(injectionsRegions, currentDate),
+    ...consolidateRecords(injectionsDepartements, currentDate),
 
     ...consolidateRecords(stocksFrance, currentDate),
     ...consolidateRecords(stocksRegions, currentDate),
