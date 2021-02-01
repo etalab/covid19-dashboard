@@ -24,11 +24,6 @@ const VaccinationsCounters = props => {
       name: 'cumulPremieresInjections',
       label: 'premières doses injectées (cumul)',
       color: 'greenSoft'
-    },
-    {
-      name: 'nouvellesPremieresInjections',
-      label: 'premières doses injectées (ce jour)',
-      color: 'green'
     }
   ]
 

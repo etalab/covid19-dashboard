@@ -16,15 +16,6 @@ import VaccinationsCounters from './vaccinations-counters'
 import {VaccinationsContext} from '.'
 
 const charts = {
-  nouvellesPremieresInjections: {
-    name: 'Premières injections réalisées (un jour)',
-    type: 'indicateur',
-    options: {
-      label: 'Nombre total de premières doses de vaccin injectées à J-1',
-      metricName: 'nouvellesPremieresInjections',
-      color: 'green'
-    }
-  },
   cumulPremieresInjections: {
     name: 'Premières injections réalisées (cumul)',
     type: 'indicateur',
