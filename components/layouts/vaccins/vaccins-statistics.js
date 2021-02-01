@@ -1,5 +1,6 @@
 import React, {useState, useMemo, useEffect, useContext} from 'react'
 import {BarChart2} from 'react-feather'
+import {keyBy} from 'lodash'
 
 import colors from '../../../styles/colors'
 
@@ -13,63 +14,16 @@ import IndicateurVariationChart from '../../charts/indicateur-variation'
 import VaccinsCounters from './vaccins-counters'
 
 import {VaccinsContext} from '.'
+import indicateurs from './indicateurs'
 
-const charts = {
-  stockNombreTotalDoses: {
-    name: 'doses en stock pour les établissements de santé',
-    type: 'indicateur',
-    options: {
-      label: 'Nombre total de doses en stock réservées aux établissements de santé',
-      metricName: 'stockNombreTotalDoses',
-      color: 'darkGrey'
-    }
-  },
-  stockNombreDosesPfizer: {
-    name: 'doses en stock Pfizer pour les établissements de santé',
-    type: 'indicateur',
-    options: {
-      label: 'Nombre total de doses Pfizer en stock réservées aux établissements de santé',
-      metricName: 'stockNombreDosesPfizer',
-      color: 'darkBlue'
-    }
-  },
-  stockNombreDosesModerna: {
-    name: 'doses en stock Moderna pour les établissements de santé',
-    type: 'indicateur',
-    options: {
-      label: 'Nombre total de doses Moderna en stock réservées aux établissements de santé',
-      metricName: 'stockNombreDosesModerna',
-      color: 'darkRed'
-    }
-  },
-  livraisonsCumulNombreTotalDoses: {
-    name: 'doses de vaccins livrées',
-    type: 'indicateur',
-    options: {
-      label: 'Doses de vaccins livrées',
-      metricName: 'livraisonsCumulNombreTotalDoses',
-      color: 'darkGrey'
-    }
-  },
-  livraisonsCumulNombreDosesPfizer: {
-    name: 'doses de vaccins livrées (Pfizer)',
-    type: 'indicateur',
-    options: {
-      label: 'Doses de vaccins livrées (Pfizer)',
-      metricName: 'livraisonsCumulNombreDosesPfizer',
-      color: 'darkBlue'
-    }
-  },
-  livraisonsCumulNombreDosesModerna: {
-    name: 'doses de vaccins livrées (Moderna)',
-    type: 'indicateur',
-    options: {
-      label: 'Doses de vaccins livrées (Moderna)',
-      metricName: 'livraisonsCumulNombreDosesModerna',
-      color: 'darkRed'
-    }
+const charts = keyBy(indicateurs.map(indicateur => ({
+  type: 'indicateur',
+  options: {
+    label: indicateur.label,
+    metricName: indicateur.name,
+    color: indicateur.color
   }
-}
+})), i => i.options.metricName)
 
 const VaccinsStatistics = () => {
   const {date, selectedLocation, setSelectedLocation, isMobileDevice} = useContext(AppContext)

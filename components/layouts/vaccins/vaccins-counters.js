@@ -9,6 +9,7 @@ import Counter from '../../counter'
 import PieChartPercent from '../../pie-chart-percent'
 
 import {VaccinsContext} from '.'
+import indicateurs from './indicateurs'
 
 const VaccinsCounters = props => {
   const {isMobileDevice} = useContext(AppContext)
@@ -17,65 +18,23 @@ const VaccinsCounters = props => {
   const {report} = props
   const previousReport = props.previousReport || {}
 
-  const details = {
-    stockNombreTotalDoses: 'nombre total de doses en stock réservées aux établissements de santé',
-    stockNombreDosesPfizer: 'nombre total de doses Pfizer en stock réservées aux établissements de santé',
-    stockNombreDosesModerna: 'nombre total de doses Moderna en stock réservées aux établissements de santé'
-  }
-
   const stocksCountersList = [
-    {
-      name: 'stockNombreTotalDoses',
-      label: 'doses en stock pour les établissements de santé',
-      color: 'darkGrey'
-    },
-    {
-      name: 'stockNombreDosesPfizer',
-      label: 'doses en stock Pfizer pour les établissements de santé',
-      color: 'darkBlue'
-    },
-    {
-      name: 'stockNombreDosesModerna',
-      label: 'doses en stock Moderna pour les établissements de santé',
-      color: 'darkRed'
-    }
-  ]
+    'stockNombreTotalDoses',
+    'stockNombreDosesPfizer',
+    'stockNombreDosesModerna'
+  ].map(i => indicateurs.find(indicateur => indicateur.name === i))
 
   const stocksEphadCountersList = [
-    {
-      name: 'stockEhpadNombreTotalDoses',
-      label: 'doses en stock pour les EPHAD',
-      color: 'darkGrey'
-    },
-    {
-      name: 'stockEhpadNombreDosesPfizer',
-      label: 'doses en stock Pfizer pour les EPHAD',
-      color: 'darkBlue'
-    },
-    {
-      name: 'stockEhpadNombreDosesModerna',
-      label: 'doses en stock Moderna pour les EPHAD',
-      color: 'darkRed'
-    }
-  ]
+    'stockEhpadNombreTotalDoses',
+    'stockEhpadNombreDosesPfizer',
+    'stockEhpadNombreDosesModerna'
+  ].map(i => indicateurs.find(indicateur => indicateur.name === i))
 
   const livraisonsCountersList = [
-    {
-      name: 'livraisonsCumulNombreTotalDoses',
-      label: 'doses livrées',
-      color: 'darkGrey'
-    },
-    {
-      name: 'livraisonsCumulNombreDosesPfizer',
-      label: 'doses livrées Pfizer',
-      color: 'darkBlue'
-    },
-    {
-      name: 'livraisonsCumulNombreDosesModerna',
-      label: 'doses livrées Moderna',
-      color: 'darkRed'
-    }
-  ]
+    'livraisonsCumulNombreTotalDoses',
+    'livraisonsCumulNombreDosesPfizer',
+    'livraisonsCumulNombreDosesModerna'
+  ].map(i => indicateurs.find(indicateur => indicateur.name === i))
 
   const handleClick = chartName => {
     setSelectedStat(chartName)
@@ -93,7 +52,7 @@ const VaccinsCounters = props => {
             value={report[counter.name]}
             previousValue={previousReport[counter.name]}
             label={counter.label}
-            details={details[counter.name]}
+            details={counter.details}
             color={counter.color}
           />
         ))}
@@ -117,7 +76,7 @@ const VaccinsCounters = props => {
             value={report[counter.name]}
             previousValue={previousReport[counter.name]}
             label={counter.label}
-            details={details[counter.name]}
+            details={counter.details}
             color={counter.color}
           />
         ))}
@@ -142,7 +101,7 @@ const VaccinsCounters = props => {
             value={report[counter.name]}
             previousValue={previousReport[counter.name]}
             label={counter.label}
-            details={details[counter.name]}
+            details={counter.details}
             color={counter.color}
           />
         ))}
