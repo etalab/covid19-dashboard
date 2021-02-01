@@ -7,7 +7,7 @@ import MapContext from './map-context'
 import Drom from './map-context/drom'
 import MapSelector from './map-selector'
 
-const TerritoriesDesktopMap = ({maps, context, disableClick}) => {
+const TerritoriesDesktopMap = ({maps, disableMapSelector, context, disableClick}) => {
   const {selectedLocation} = useContext(AppContext)
   const {selectedMapId, setSelectedMapId, setSelectedStat} = useContext(context)
 
@@ -16,7 +16,7 @@ const TerritoriesDesktopMap = ({maps, context, disableClick}) => {
   return (
     <>
       <div className='metropole'>
-        {maps.length > 1 && (
+        {maps.length > 1 && !disableMapSelector && (
           <div className='map-selector'>
             <MapSelector selectedMapId={selectedMapId} maps={maps} selectMap={setSelectedMapId} selectStat={setSelectedStat} />
           </div>
@@ -65,13 +65,15 @@ const TerritoriesDesktopMap = ({maps, context, disableClick}) => {
 }
 
 TerritoriesDesktopMap.defaultProps = {
-  disableClick: false
+  disableClick: false,
+  disableMapSelector: false
 }
 
 TerritoriesDesktopMap.propTypes = {
   maps: PropTypes.array.isRequired,
   context: PropTypes.object.isRequired,
-  disableClick: PropTypes.bool
+  disableClick: PropTypes.bool,
+  disableMapSelector: PropTypes.bool
 }
 
 export default TerritoriesDesktopMap
