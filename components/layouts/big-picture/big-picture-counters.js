@@ -24,7 +24,7 @@ const Counters = props => {
     nouvellesReanimations: 'Nombre de nouveaux patients atteints de COVID-19 admis en réanimation, en soins intensifs, ou en unité de surveillance continue au cours des dernières 24h.',
     decesEhpad: 'Nombre cumulé de décès en EHPAD et EMS (établissements médico-sociaux)',
     casConfirmesEhpad: 'Nombre de cas confirmés par test PCR en EHPAD et EMS.<br />Ce chiffre est inclus dans le nombre total de cas confirmés.',
-    cumulPremieresInjections: 'Nombre de premières doses de vaccin injectées'
+    cumulPremieresInjections: 'Nombre de première injections réalisées en J-1'
   }
 
   const hospitalCountersList = [
