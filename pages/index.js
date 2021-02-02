@@ -37,13 +37,6 @@ const LAYOUTS = [
     component: <Indicators />
   },
   {
-<<<<<<< HEAD
-    id: 'prelevements',
-    name: 'sites-prelevements',
-    label: 'Sites de prélèvements',
-    component: <Prelevements />
-  },
-  {
     id: 'vaccinations',
     name: 'suivi-vaccination',
     label: 'Suivi de la vaccination',
@@ -56,8 +49,6 @@ const LAYOUTS = [
     component: <Vaccins />
   },
   {
-=======
->>>>>>> master
     id: 'tests',
     name: 'suivi-des-tests',
     label: 'Suivi des tests',
