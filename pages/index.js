@@ -12,9 +12,7 @@ import MobilePage from '../layouts/mobile'
 
 import BigPicture from '../components/layouts/big-picture'
 import CovidTests from '../components/layouts/covid-tests'
-// Temporary : import Synthese from '../components/layouts/synthese'
 import Indicators from '../components/layouts/indicators'
-import Prelevements from '../components/layouts/prelevements'
 import Vaccinations from '../components/layouts/vaccinations'
 import Vaccins from '../components/layouts/vaccins'
 import Entreprises from '../components/layouts/entreprises'
@@ -32,12 +30,6 @@ const LAYOUTS = [
     label: 'Vue d’ensemble',
     component: <BigPicture />
   },
-  // {
-  //   id: 'synthese',
-  //   name: 'activite-epidemique',
-  //   label: 'Carte de vigilance',
-  //   component: <Synthese />
-  // },
   {
     id: 'indicators',
     name: 'suivi-indicateurs',
@@ -45,6 +37,7 @@ const LAYOUTS = [
     component: <Indicators />
   },
   {
+<<<<<<< HEAD
     id: 'prelevements',
     name: 'sites-prelevements',
     label: 'Sites de prélèvements',
@@ -63,6 +56,8 @@ const LAYOUTS = [
     component: <Vaccins />
   },
   {
+=======
+>>>>>>> master
     id: 'tests',
     name: 'suivi-des-tests',
     label: 'Suivi des tests',

@@ -16,12 +16,10 @@ module.exports = withBundleAnalyzer({
     return {
       '/': {page: '/'},
       '/vue-d-ensemble': {page: '/', query: {layout: 'big-picture'}},
+      '/suivi-indicateurs': {page: '/', query: {layout: 'indicators'}},
       '/suivi-des-tests': {page: '/', query: {layout: 'tests'}},
       '/suivi-vaccination': {page: '/', query: {layout: 'vaccination'}},
       '/logistique-vaccins': {page: '/', query: {layout: 'vaccins'}},
-      '/activite-epidemique': {page: '/', query: {layout: 'synthese'}},
-      '/suivi-indicateurs': {page: '/', query: {layout: 'indicators'}},
-      '/sites-prelevements': {page: '/', query: {layout: 'prelevements'}},
       '/aides-entreprises': {page: '/', query: {layout: 'entreprises'}}
     }
   }
