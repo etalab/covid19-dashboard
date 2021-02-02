@@ -24,7 +24,7 @@ const VaccinsCounters = props => {
     'stockNombreDosesModerna'
   ].map(i => indicateurs.find(indicateur => indicateur.name === i))
 
-  const stocksEphadCountersList = [
+  const stocksEhpadCountersList = [
     'stockEhpadNombreDosesPfizer'
   ].map(i => indicateurs.find(indicateur => indicateur.name === i))
 
@@ -65,9 +65,9 @@ const VaccinsCounters = props => {
         />
       )}
 
-      <div className='title'>Stocks pour les EPHAD</div>
+      <div className='title'>Stocks pour les EHPAD</div>
       <div className='counters'>
-        {stocksEphadCountersList.map(counter => (
+        {stocksEhpadCountersList.map(counter => (
           <Counter
             key={counter.name}
             isSelected={selectedStat === counter.name}
@@ -79,15 +79,6 @@ const VaccinsCounters = props => {
           />
         ))}
       </div>
-
-      {report && report.stockEPHADNombreDosesPfizer && report.stockEPHADNombreDosesModerna && (
-        <PieChartPercent
-          data={[report.stockEPHADNombreDosesPfizer, report.stockEPHADNombreDosesModerna]}
-          labels={['Stock doses Pfizer', 'Stock doses Moderna']}
-          colors={[colors.darkBlue, colors.darkRed]}
-          height={isMobileDevice ? 150 : 130}
-        />
-      )}
 
       <div className='title'>Livraisons</div>
       <div className='counters'>
