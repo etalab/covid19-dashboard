@@ -103,7 +103,7 @@ const DesktopVaccinations = () => {
       </div>
 
       <div className='map'>
-        <TerritoriesDesktopMap maps={VaccinationsMaps} context={VaccinationsContext} />
+        <TerritoriesDesktopMap maps={VaccinationsMaps} context={VaccinationsContext} disableMapSelector />
       </div>
 
       <style jsx>{`
@@ -129,7 +129,7 @@ const DesktopVaccinations = () => {
 const Vaccinations = props => {
   const {isMobileDevice} = useContext(AppContext)
 
-  const [selectedMapId, setSelectedMapId] = useState('Premières injections réalisées (cumul)')
+  const [selectedMapId, setSelectedMapId] = useState('Nombre de premières doses injectées (cumul)')
   const [selectedStat, setSelectedStat] = useState(null)
 
   const Component = isMobileDevice ? MobileVaccinations : DesktopVaccinations

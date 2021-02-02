@@ -1,4 +1,5 @@
 import React, {useState, useMemo, useEffect, useContext} from 'react'
+import {keyBy} from 'lodash'
 import {BarChart2} from 'react-feather'
 
 import colors from '../../../styles/colors'
@@ -14,45 +15,16 @@ import PieChartPercent from '../../pie-chart-percent'
 import VaccinationsCounters from './vaccinations-counters'
 
 import {VaccinationsContext} from '.'
+import indicateurs from './indicateurs'
 
-const charts = {
-  cumulPremieresInjections: {
-    name: 'Premières injections réalisées (cumul)',
-    type: 'indicateur',
-    options: {
-      label: 'Premières injections réalisées (cumul)',
-      metricName: 'cumulPremieresInjections',
-      color: 'greenSoft'
-    }
-  },
-  totalPrisesRendezVousSemaine: {
-    name: 'Rendez-vous pris sur une semaine (toute injection)',
-    type: 'indicateur',
-    options: {
-      label: 'Nombre de rendez-vous pris par semaine dans les centres de vaccination',
-      metricName: 'totalPrisesRendezVousSemaine',
-      color: 'darkGrey'
-    }
-  },
-  prisesRendezVousSemaineRang1: {
-    name: 'Rendez-vous pris sur une semaine (première injection)',
-    type: 'indicateur',
-    options: {
-      label: 'Nombre de rendez-vous pris par semaine dans les centres de vaccination pour l’injection d’une première dose',
-      metricName: 'prisesRendezVousSemaineRang1',
-      color: 'blueSoft'
-    }
-  },
-  prisesRendezVousSemaineRang2: {
-    name: 'Rendez-vous pris sur une semaine (seconde injection)',
-    type: 'indicateur',
-    options: {
-      label: 'Nombre de rendez-vous pris par semaine dans les centres de vaccination pour l’injection d’une seconde dose',
-      metricName: 'prisesRendezVousSemaineRang2',
-      color: 'purple'
-    }
+const charts = keyBy(indicateurs.map(indicateur => ({
+  type: 'indicateur',
+  options: {
+    label: indicateur.label,
+    metricName: indicateur.name,
+    color: indicateur.color
   }
-}
+})), i => i.options.metricName)
 
 const VaccinationsStatistics = () => {
   const {date, selectedLocation, setSelectedLocation, isMobileDevice} = useContext(AppContext)

@@ -6,44 +6,22 @@ import colors from '../../../styles/colors'
 import Counter from '../../counter'
 
 import {VaccinationsContext} from '.'
+import indicateurs from './indicateurs'
 
 const VaccinationsCounters = props => {
   const {selectedStat, setSelectedStat} = useContext(VaccinationsContext)
 
   const previousReport = props.previousReport || {}
 
-  const details = {
-    cumulPremieresInjections: 'Nombre total de premières doses de vaccin injectées à J-1',
-    totalPrisesRendezVousSemaine: 'Nombre de rendez-vous pris par semaine dans les centres de vaccination',
-    prisesRendezVousSemaineRang1: 'Nombre de rendez-vous pris par semaine dans les centres de vaccination pour l’injection d’une première dose',
-    prisesRendezVousSemaineRang2: 'Nombre de rendez-vous pris par semaine dans les centres de vaccination pour l’injection d’une seconde dose'
-  }
-
   const injectionsCountersList = [
-    {
-      name: 'cumulPremieresInjections',
-      label: 'premières doses injectées (cumul)',
-      color: 'greenSoft'
-    }
-  ]
+    'cumulPremieresInjections'
+  ].map(i => indicateurs.find(indicateur => indicateur.name === i))
 
   const rdvCountersList = [
-    {
-      name: 'totalPrisesRendezVousSemaine',
-      label: 'rendez-vous pris par semaine (cumul)',
-      color: 'darkGrey'
-    },
-    {
-      name: 'prisesRendezVousSemaineRang1',
-      label: 'rendez-vous pris par semaine pour une première injection',
-      color: 'blueSoft'
-    },
-    {
-      name: 'prisesRendezVousSemaineRang2',
-      label: 'rendez-vous pris par semaine pour une seconde injection',
-      color: 'purple'
-    }
-  ]
+    'totalPrisesRendezVousSemaine',
+    'prisesRendezVousSemaineRang1',
+    'prisesRendezVousSemaineRang2'
+  ].map(i => indicateurs.find(indicateur => indicateur.name === i))
 
   const handleClick = chartName => {
     setSelectedStat(chartName)
@@ -62,7 +40,7 @@ const VaccinationsCounters = props => {
             value={props.report[counter.name]}
             previousValue={previousReport[counter.name]}
             label={counter.label}
-            details={details[counter.name]}
+            details={counter.details}
             color={counter.color}
           />
         ))}
@@ -78,7 +56,7 @@ const VaccinationsCounters = props => {
             value={props.report[counter.name]}
             previousValue={previousReport[counter.name]}
             label={counter.label}
-            details={details[counter.name]}
+            details={counter.details}
             color={counter.color}
           />
         ))}
