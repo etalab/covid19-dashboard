@@ -17,9 +17,7 @@ module.exports = withBundleAnalyzer({
       '/': {page: '/'},
       '/vue-d-ensemble': {page: '/', query: {layout: 'big-picture'}},
       '/suivi-des-tests': {page: '/', query: {layout: 'tests'}},
-      '/activite-epidemique': {page: '/', query: {layout: 'synthese'}},
       '/suivi-indicateurs': {page: '/', query: {layout: 'indicators'}},
-      '/sites-prelevements': {page: '/', query: {layout: 'prelevements'}},
       '/aides-entreprises': {page: '/', query: {layout: 'entreprises'}}
     }
   }

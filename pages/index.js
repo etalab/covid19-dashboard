@@ -12,9 +12,7 @@ import MobilePage from '../layouts/mobile'
 
 import BigPicture from '../components/layouts/big-picture'
 import CovidTests from '../components/layouts/covid-tests'
-// Temporary : import Synthese from '../components/layouts/synthese'
 import Indicators from '../components/layouts/indicators'
-import Prelevements from '../components/layouts/prelevements'
 import Entreprises from '../components/layouts/entreprises'
 
 export const AppContext = React.createContext()
@@ -30,23 +28,11 @@ const LAYOUTS = [
     label: 'Vue d’ensemble',
     component: <BigPicture />
   },
-  // {
-  //   id: 'synthese',
-  //   name: 'activite-epidemique',
-  //   label: 'Carte de vigilance',
-  //   component: <Synthese />
-  // },
   {
     id: 'indicators',
     name: 'suivi-indicateurs',
     label: 'Carte des indicateurs',
     component: <Indicators />
-  },
-  {
-    id: 'prelevements',
-    name: 'sites-prelevements',
-    label: 'Sites de prélèvements',
-    component: <Prelevements />
   },
   {
     id: 'tests',
