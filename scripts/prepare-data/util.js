@@ -6,6 +6,8 @@ const {readJson, readFile} = require('fs-extra')
 const got = require('got')
 const Papa = require('papaparse')
 const Airtable = require('airtable')
+const {chain, min, groupBy} = require('lodash')
+const {eachDayOfInterval, formatISO} = require('date-fns')
 
 async function fetchCsv(url, options = {}) {
   const rows = await getStream.array(
@@ -59,4 +61,31 @@ async function extractFromAirtable(databaseId, tabName) {
   return records.map(record => record.fields)
 }
 
-module.exports = {readCsv, loadJson, fetchJson, fetchCsv, extractFromAirtable}
+function consolidateRecords(records, currentDate) {
+  const firstDate = min(records.map(r => r.date))
+
+  const dates = eachDayOfInterval({
+    start: new Date(firstDate),
+    end: new Date(currentDate)
+  }).map(d => formatISO(d, {representation: 'date'}))
+
+  let previousRecords = []
+
+  const recordsIndex = groupBy(records, 'date')
+
+  return chain(dates)
+    .map(date => {
+      const dateRecords = recordsIndex[date]
+
+      if (dateRecords) {
+        previousRecords = dateRecords
+        return dateRecords
+      }
+
+      return previousRecords.map(r => ({...r, date}))
+    })
+    .flatten()
+    .value()
+}
+
+module.exports = {readCsv, loadJson, fetchJson, fetchCsv, extractFromAirtable, consolidateRecords}

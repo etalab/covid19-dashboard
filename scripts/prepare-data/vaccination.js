@@ -1,7 +1,6 @@
 /* eslint unicorn/string-content: off, camelcase: off, spaced-comment: off, capitalized-comments: off */
-const {chain, keyBy, min, groupBy} = require('lodash')
-const {eachDayOfInterval, formatISO} = require('date-fns')
-const {fetchCsv} = require('./util')
+const {chain, keyBy} = require('lodash')
+const {fetchCsv, consolidateRecords} = require('./util')
 const regions = require('@etalab/decoupage-administratif/data/regions.json')
 const departements = require('@etalab/decoupage-administratif/data/departements.json')
 
@@ -274,33 +273,6 @@ async function fetchRdvDepartements() {
         nom: departementsIndex[departement].nom
       })
     })
-    .value()
-}
-
-function consolidateRecords(records, currentDate) {
-  const firstDate = min(records.map(r => r.date))
-
-  const dates = eachDayOfInterval({
-    start: new Date(firstDate),
-    end: new Date(currentDate)
-  }).map(d => formatISO(d, {representation: 'date'}))
-
-  let previousRecords = []
-
-  const recordsIndex = groupBy(records, 'date')
-
-  return chain(dates)
-    .map(date => {
-      const dateRecords = recordsIndex[date]
-
-      if (dateRecords) {
-        previousRecords = dateRecords
-        return dateRecords
-      }
-
-      return previousRecords.map(r => ({...r, date}))
-    })
-    .flatten()
     .value()
 }
 
