@@ -25,9 +25,7 @@ const VaccinsCounters = props => {
   ].map(i => indicateurs.find(indicateur => indicateur.name === i))
 
   const stocksEphadCountersList = [
-    'stockEhpadNombreTotalDoses',
-    'stockEhpadNombreDosesPfizer',
-    'stockEhpadNombreDosesModerna'
+    'stockEhpadNombreDosesPfizer'
   ].map(i => indicateurs.find(indicateur => indicateur.name === i))
 
   const livraisonsCountersList = [

@@ -9,7 +9,7 @@ const indicateurs = [
   {
     name: 'stockNombreDosesPfizer',
     label: 'doses Pfizer en stock dans les établissements de santé pivots',
-    details: 'Nombre de doses Pfizer en stock destinées notamment aux centres de vaccination',
+    details: 'nombre de doses Pfizer en stock destinées aux centres de vaccination, à une partie des EHPAD, aux foyers d’accueil médicalisé et aux maison d’accueil spécialisés',
     color: 'darkBlue',
     radiusBounds: [0, 10, 300, 70]
   },
@@ -22,24 +22,10 @@ const indicateurs = [
   },
 
   {
-    name: 'stockEhpadNombreTotalDoses',
-    label: 'doses en stock pour les EHPAD du flux A',
-    details: 'Nombre de doses de vaccins réservées aux personnes âgées résidant en établissement',
-    color: 'darkGrey',
-    radiusBounds: [0, 10, 300, 70]
-  },
-  {
     name: 'stockEhpadNombreDosesPfizer',
     label: 'doses Pfizer en stock pour les EHPAD du flux A',
     details: 'Nombre de doses Pfizer réservées aux personnes âgées résidant en établissement',
     color: 'darkBlue',
-    radiusBounds: [0, 10, 300, 70]
-  },
-  {
-    name: 'stockEhpadNombreDosesModerna',
-    label: 'doses Moderna en stock pour les EHPAD du flux A',
-    details: 'Nombre de doses Moderna réservées aux personnes âgées résidant en établissement',
-    color: 'darkRed',
     radiusBounds: [0, 10, 300, 70]
   },
 
