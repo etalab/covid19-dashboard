@@ -3,7 +3,7 @@ import {CountMap, interactiveLayersIds} from '../../map-types/count-map'
 
 const maps = [
   {
-    name: 'Nombre de premières injections réalisées',
+    name: 'Nombre de premières doses injectées',
     type: CountMap,
     interactiveLayersIds,
     property: 'cumulPremieresInjections',

@@ -102,10 +102,10 @@ const charts = {
     }
   },
   cumulPremieresInjections: {
-    name: 'Premières injections réalisées',
+    name: 'Nombre de premières doses injectées',
     type: 'indicateur',
     options: {
-      label: 'Premières injections réalisées',
+      label: 'Nombre de premières doses injectées',
       metricName: 'cumulPremieresInjections',
       color: 'green'
     }
