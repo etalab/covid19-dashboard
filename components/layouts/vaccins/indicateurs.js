@@ -1,22 +1,22 @@
 const indicateurs = [
   {
     name: 'stockNombreTotalDoses',
-    label: 'doses en stock dans les établissements de santé pivots',
-    details: 'Nombre total de doses en stock destinées notamment aux centres de vaccination',
+    label: 'doses en stock dans les établissements de santé pivots du flux B',
+    details: 'Nombre de doses en stock destinées aux centres de vaccination, à quelques EPHAD, aux foyers d’accueil médicalisé et aux maison d’accueil spécialisés',
     color: 'darkGrey',
     radiusBounds: [0, 10, 300, 70]
   },
   {
     name: 'stockNombreDosesPfizer',
-    label: 'doses Pfizer en stock dans les établissements de santé pivots',
-    details: 'nombre de doses Pfizer en stock destinées aux centres de vaccination, à une partie des EHPAD, aux foyers d’accueil médicalisé et aux maison d’accueil spécialisés',
+    label: 'doses en stock Pfizer dans les établissements de santé pivots du flux B',
+    details: 'Nombre de doses en stock Pfizer destinées aux centres de vaccination, à quelques EPHAD, aux foyers d’accueil médicalisé et aux maison d’accueil spécialisés',
     color: 'darkBlue',
     radiusBounds: [0, 10, 300, 70]
   },
   {
     name: 'stockNombreDosesModerna',
-    label: 'doses Moderna en stock dans les établissements de santé pivots',
-    details: 'nombre de doses Moderna en stock destinées notamment aux centres de vaccination',
+    label: 'doses en stock Moderna dans les établissements de santé pivots du flux B',
+    details: 'Nombre de doses en stock Moderna destinées aux centres de vaccination, à quelques EPHAD, aux foyers d’accueil médicalisé et aux maison d’accueil spécialisés',
     color: 'darkRed',
     radiusBounds: [0, 10, 300, 70]
   },
@@ -24,7 +24,7 @@ const indicateurs = [
   {
     name: 'stockEhpadNombreDosesPfizer',
     label: 'doses Pfizer en stock pour les EHPAD du flux A',
-    details: 'Nombre de doses Pfizer réservées aux personnes âgées résidant en établissement',
+    details: 'Nombre de doses Pfizer destinées à la grande majorité des résidents en EHPAD ou en USLD',
     color: 'darkBlue',
     radiusBounds: [0, 10, 300, 70]
   },

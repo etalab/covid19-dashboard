@@ -129,7 +129,7 @@ const DesktopVaccins = () => {
 const Vaccins = props => {
   const {isMobileDevice} = useContext(AppContext)
 
-  const [selectedMapId, setSelectedMapId] = useState('Nombre de doses en stock dans les établissements de santé pivots')
+  const [selectedMapId, setSelectedMapId] = useState('Nombre de doses en stock dans les établissements de santé pivots du flux B')
   const [selectedStat, setSelectedStat] = useState(null)
 
   const Component = isMobileDevice ? MobileVaccins : DesktopVaccins
