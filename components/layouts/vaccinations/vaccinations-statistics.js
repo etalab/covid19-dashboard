@@ -91,7 +91,7 @@ const VaccinationsStatistics = () => {
       {report && report.prisesRendezVousSemaineRang1 && report.prisesRendezVousSemaineRang2 && (
         <PieChartPercent
           data={[report.prisesRendezVousSemaineRang1, report.prisesRendezVousSemaineRang2]}
-          labels={['rendez-vous pris (semaine, première injection)', 'rendez-vous pris (semaine, seconde injection)']}
+          labels={['rendez-vous prévus cette semaine (première injection)', 'rendez-vous prévus cette semaine (seconde injection)']}
           colors={[colors.blueSoft, colors.purple]}
           height={isMobileDevice ? 150 : 130}
         />
