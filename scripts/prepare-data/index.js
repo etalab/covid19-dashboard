@@ -66,8 +66,8 @@ async function loadSidepTest() {
       }
 
       rows.forEach(r => {
-        report.testsRealisesDetails.push({age: r.cl_age90, sexe: '0', value: Number.parseInt(r.T, 10)})
-        report.testsPositifsDetails.push({age: r.cl_age90, sexe: '0', value: Number.parseInt(r.P, 10)})
+        report.testsRealisesDetails.push({age: r.cl_age90, value: Number.parseInt(r.T, 10)})
+        report.testsPositifsDetails.push({age: r.cl_age90, value: Number.parseInt(r.P, 10)})
       })
 
       return report
@@ -92,12 +92,8 @@ async function loadSidepTest() {
       }
 
       rows.forEach(r => {
-        report.testsRealisesDetails.push({age: r.cl_age90, sexe: '0', value: Number.parseInt(r.T, 10)})
-        report.testsRealisesDetails.push({age: r.cl_age90, sexe: 'h', value: Number.parseInt(r.T_h, 10)})
-        report.testsRealisesDetails.push({age: r.cl_age90, sexe: 'f', value: Number.parseInt(r.T_f, 10)})
-        report.testsPositifsDetails.push({age: r.cl_age90, sexe: '0', value: Number.parseInt(r.P, 10)})
-        report.testsPositifsDetails.push({age: r.cl_age90, sexe: 'h', value: Number.parseInt(r.P_h, 10)})
-        report.testsPositifsDetails.push({age: r.cl_age90, sexe: 'f', value: Number.parseInt(r.P_f, 10)})
+        report.testsRealisesDetails.push({age: r.cl_age90, value: Number.parseInt(r.T, 10)})
+        report.testsPositifsDetails.push({age: r.cl_age90, value: Number.parseInt(r.P, 10)})
       })
 
       return report
@@ -120,12 +116,8 @@ async function loadSidepTest() {
       }
 
       rows.forEach(r => {
-        report.testsRealisesDetails.push({age: r.cl_age90, sexe: '0', value: Number.parseInt(r.T, 10)})
-        report.testsRealisesDetails.push({age: r.cl_age90, sexe: 'h', value: Number.parseInt(r.T_h, 10)})
-        report.testsRealisesDetails.push({age: r.cl_age90, sexe: 'f', value: Number.parseInt(r.T_f, 10)})
-        report.testsPositifsDetails.push({age: r.cl_age90, sexe: '0', value: Number.parseInt(r.P, 10)})
-        report.testsPositifsDetails.push({age: r.cl_age90, sexe: 'h', value: Number.parseInt(r.P_h, 10)})
-        report.testsPositifsDetails.push({age: r.cl_age90, sexe: 'f', value: Number.parseInt(r.P_f, 10)})
+        report.testsRealisesDetails.push({age: r.cl_age90, value: Number.parseInt(r.T, 10)})
+        report.testsPositifsDetails.push({age: r.cl_age90, value: Number.parseInt(r.P, 10)})
       })
 
       return report
@@ -159,12 +151,8 @@ async function loadTroisLabosTests() {
       }
 
       rows.forEach(r => {
-        report.testsRealisesDetails.push({age: r.clage_covid, sexe: '0', value: Number.parseInt(r.nb_test, 10)})
-        report.testsRealisesDetails.push({age: r.clage_covid, sexe: 'h', value: Number.parseInt(r.nb_test_h, 10)})
-        report.testsRealisesDetails.push({age: r.clage_covid, sexe: 'f', value: Number.parseInt(r.nb_test_f, 10)})
-        report.testsPositifsDetails.push({age: r.clage_covid, sexe: '0', value: Number.parseInt(r.nb_pos, 10)})
-        report.testsPositifsDetails.push({age: r.clage_covid, sexe: 'h', value: Number.parseInt(r.nb_pos_h, 10)})
-        report.testsPositifsDetails.push({age: r.clage_covid, sexe: 'f', value: Number.parseInt(r.nb_pos_f, 10)})
+        report.testsRealisesDetails.push({age: r.clage_covid, value: Number.parseInt(r.nb_test, 10)})
+        report.testsPositifsDetails.push({age: r.clage_covid, value: Number.parseInt(r.nb_pos, 10)})
       })
 
       return report
@@ -183,19 +171,17 @@ async function loadTroisLabosTests() {
         code: `REG-${region.code}`,
         nom: region.nom,
         testsRealises: sumBy(regionRows, 'testsRealises'),
-        testsRealisesDetails: firstRow.testsRealisesDetails.map(({age, sexe}) => {
+        testsRealisesDetails: firstRow.testsRealisesDetails.map(({age}) => {
           return {
             age,
-            sexe,
-            value: sumBy(regionRows, r => r.testsRealisesDetails.find(entry => entry.age === age && entry.sexe === sexe).value)
+            value: sumBy(regionRows, r => r.testsRealisesDetails.find(entry => entry.age === age).value)
           }
         }),
         testsPositifs: sumBy(regionRows, 'testsPositifs'),
-        testsPositifsDetails: firstRow.testsPositifsDetails.map(({age, sexe}) => {
+        testsPositifsDetails: firstRow.testsPositifsDetails.map(({age}) => {
           return {
             age,
-            sexe,
-            value: sumBy(regionRows, r => r.testsPositifsDetails.find(entry => entry.age === age && entry.sexe === sexe).value)
+            value: sumBy(regionRows, r => r.testsPositifsDetails.find(entry => entry.age === age).value)
           }
         }),
         sourceType: 'sante-publique-france'
@@ -211,19 +197,17 @@ async function loadTroisLabosTests() {
         code: 'FRA',
         nom: 'France',
         testsRealises: sumBy(rows, 'testsRealises'),
-        testsRealisesDetails: firstRow.testsRealisesDetails.map(({age, sexe}) => {
+        testsRealisesDetails: firstRow.testsRealisesDetails.map(({age}) => {
           return {
             age,
-            sexe,
-            value: sumBy(rows, r => r.testsRealisesDetails.find(entry => entry.age === age && entry.sexe === sexe).value)
+            value: sumBy(rows, r => r.testsRealisesDetails.find(entry => entry.age === age).value)
           }
         }),
         testsPositifs: sumBy(rows, 'testsPositifs'),
-        testsPositifsDetails: firstRow.testsPositifsDetails.map(({age, sexe}) => {
+        testsPositifsDetails: firstRow.testsPositifsDetails.map(({age}) => {
           return {
             age,
-            sexe,
-            value: sumBy(rows, r => r.testsPositifsDetails.find(entry => entry.age === age && entry.sexe === sexe).value)
+            value: sumBy(rows, r => r.testsPositifsDetails.find(entry => entry.age === age).value)
           }
         }),
         sourceType: 'sante-publique-france'
