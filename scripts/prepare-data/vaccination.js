@@ -164,7 +164,7 @@ function computeLivraisonRecord(scopedRows, {code, nom}) {
   }
 
   scopedRows.forEach(r => {
-    const cumulNbDoses = Number.parseInt(r.nb_doses_receptionnees_cumul, 10)
+    const cumulNbDoses = Number.parseInt(r.nb_doses, 10)
     values[`livraisonsCumulNombreDoses${r.type_de_vaccin}`] = cumulNbDoses
     values.livraisonsCumulNombreTotalDoses += cumulNbDoses
   })
@@ -180,7 +180,7 @@ function computeLivraisonRecord(scopedRows, {code, nom}) {
 }
 
 async function fetchLivraisonsFrance() {
-  const rows = await fetchCsv('https://www.data.gouv.fr/fr/datasets/r/6820ff9f-2dbb-4e87-8565-fcd7fa2dfa0f', {separator: ';'})
+  const rows = await fetchCsv('https://www.data.gouv.fr/fr/datasets/r/c04da7da-be58-450e-bf3e-5993ce7796d9')
 
   return chain(rows)
     .groupBy('date')
@@ -192,7 +192,7 @@ async function fetchLivraisonsFrance() {
 }
 
 async function fetchLivraisonsRegions() {
-  const rows = await fetchCsv('https://www.data.gouv.fr/fr/datasets/r/c3f04527-2d19-4476-b02c-0d86b5a9d3da', {separator: ';'})
+  const rows = await fetchCsv('https://www.data.gouv.fr/fr/datasets/r/1e8890a0-89c0-474f-88a1-d79414911059')
 
   const regionsRecords = chain(rows)
     .filter(f => f.code_region in regionsIndex)
