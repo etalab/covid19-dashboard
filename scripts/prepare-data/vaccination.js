@@ -7,6 +7,7 @@ const departements = require('@etalab/decoupage-administratif/data/departements.
 const regionsIndex = keyBy(regions, 'code')
 const departementsIndex = keyBy(departements, 'code')
 
+/* eslint unicorn/better-regex: off */
 function normalizeDate(date) {
   if (date.match(/^\d{4}-\d{2}-\d{2}$/)) {
     return date
