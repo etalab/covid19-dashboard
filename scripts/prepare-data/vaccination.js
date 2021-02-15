@@ -7,10 +7,22 @@ const departements = require('@etalab/decoupage-administratif/data/departements.
 const regionsIndex = keyBy(regions, 'code')
 const departementsIndex = keyBy(departements, 'code')
 
+function normalizeDate(date) {
+  if (date.match(/^\d{4}-\d{2}-\d{2}$/)) {
+    return date
+  }
+
+  if (date.match(/^\d{2}\/\d{2}\/\d{4}$/)) {
+    return `${date.slice(6, 10)}-${date.slice(3, 5)}-${date.slice(0, 2)}`
+  }
+
+  throw new Error('Invalid date: ' + date)
+}
+
 async function fetchInjectionsFrance() {
   const rows = await fetchCsv('https://www.data.gouv.fr/fr/datasets/r/efe23314-67c4-45d3-89a2-3faef82fae90')
   return rows.map(row => ({
-    date: row.jour,
+    date: normalizeDate(row.jour),
     code: 'FRA',
     nom: 'France',
     source: {nom: 'Santé publique France'},
@@ -25,7 +37,7 @@ async function fetchInjectionsRegions() {
   const regionsRecords = rows
     .filter(row => row.reg in regionsIndex)
     .map(row => ({
-      date: row.jour,
+      date: normalizeDate(row.jour),
       code: `REG-${row.reg}`,
       nom: regionsIndex[row.reg].nom,
       source: {nom: 'Santé publique France'},
@@ -42,7 +54,7 @@ async function fetchInjectionsDepartements() {
   const departementsRecords = rows
     .filter(row => row.dep in departementsIndex)
     .map(row => ({
-      date: row.jour,
+      date: normalizeDate(row.jour),
       code: `DEP-${row.dep}`,
       nom: departementsIndex[row.dep].nom,
       source: {nom: 'Santé publique France'},
@@ -68,7 +80,7 @@ function computeStockRecord(scopedRows, {code, nom}) {
   })
 
   return {
-    date,
+    date: normalizeDate(date),
     code,
     nom,
     source: {nom: 'Ministère de la Santé'},
@@ -135,7 +147,7 @@ function computeStockEhpadRecord(scopedRows, {code, nom}) {
   })
 
   return {
-    date,
+    date: normalizeDate(date),
     code,
     nom,
     source: {nom: 'Ministère de la Santé'},
@@ -170,7 +182,7 @@ function computeLivraisonRecord(scopedRows, {code, nom}) {
   })
 
   return {
-    date,
+    date: normalizeDate(date),
     code,
     nom,
     source: {nom: 'Ministère de la Santé'},
@@ -223,7 +235,7 @@ function computeRdvRecord(scopedRows, {code, nom}) {
   })
 
   return {
-    date: date_debut_semaine,
+    date: normalizeDate(date_debut_semaine),
     code,
     nom,
     source: {nom: 'Ministère de la Santé'},
