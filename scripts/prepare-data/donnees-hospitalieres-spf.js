@@ -3,6 +3,7 @@ const {keyBy, chain} = require('lodash')
 const got = require('got')
 const departements = require('@etalab/decoupage-administratif/data/departements.json')
 const regions = require('@etalab/decoupage-administratif/data/regions.json')
+const {fetchCsv} = require('./util')
 
 const departementsIndex = keyBy(departements, 'code')
 const regionsIndex = keyBy(regions, 'code')
@@ -38,6 +39,31 @@ function normalizeDate(date) {
   if (date.endsWith('/2021')) {
     return `2021-${date.slice(3, 5)}-${date.slice(0, 2)}`
   }
+}
+
+function parseInteger(number) {
+  return Number.parseInt(number, 10)
+}
+
+async function buildHospiSpfFrance() {
+  const rows = await fetchCsv('https://www.data.gouv.fr/fr/datasets/r/f335f9ea-86e3-4ffa-9684-93c009d5e617')
+  return rows
+    .map(row => ({
+      code: 'FRA',
+      nom: 'France',
+      date: row.date,
+      hospitalises: parseInteger(row.hosp),
+      reanimation: parseInteger(row.rea),
+      nouvellesHospitalisations: parseInteger(row.incid_hosp),
+      nouvellesReanimations: parseInteger(row.incid_rea),
+      deces: parseInteger(row.dchosp),
+      decesEhpad: parseInteger(row.esms_dc),
+      casConfirmes: parseInteger(row.conf),
+      // casConfirmesEhpad: parseInteger(row.esms_cas),
+      gueris: parseInteger(row.rad),
+      source: {nom: 'Santé publique France'},
+      sourceType: 'sante-publique-france'
+    }))
 }
 
 async function buildHospiSpf() {
@@ -132,7 +158,9 @@ async function buildHospiSpf() {
     })
     .value()
 
-  const concatRows = [...departementsData, ...regionsData, ...franceData]
+  const newFranceData = await buildHospiSpfFrance()
+
+  const concatRows = [...departementsData, ...regionsData, ...franceData, ...newFranceData]
 
   concatRows.forEach(r => {
     if (r.date === '2020-03-18') {
@@ -143,5 +171,7 @@ async function buildHospiSpf() {
 
   return concatRows
 }
+
+buildHospiSpfFrance()
 
 module.exports = {buildHospiSpf}
