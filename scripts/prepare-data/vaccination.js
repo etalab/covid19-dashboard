@@ -158,7 +158,7 @@ function computeStockEhpadRecord(scopedRows, {code, nom}) {
 }
 
 async function fetchStocksEhpad() {
-  const rows = await fetchCsv('https://www.data.gouv.fr/fr/datasets/r/fde550e2-eed5-41b9-8700-631c92c11fd3', {separator: ';'})
+  const rows = await fetchCsv('https://www.data.gouv.fr/fr/datasets/r/fde550e2-eed5-41b9-8700-631c92c11fd3')
 
   return chain(rows)
     .groupBy('date')
