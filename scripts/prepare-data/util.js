@@ -1,8 +1,5 @@
-const {Transform} = require('stream')
-const stripBomStream = require('strip-bom-stream')
-const getStream = require('get-stream')
-const csvParse = require('csv-parser')
-const {readJson, readFile} = require('fs-extra')
+const stripBom = require('strip-bom-buf')
+const {readJson} = require('fs-extra')
 const got = require('got')
 const Papa = require('papaparse')
 const Airtable = require('airtable')
@@ -10,31 +7,18 @@ const {chain, min, groupBy} = require('lodash')
 const {eachDayOfInterval, formatISO} = require('date-fns')
 
 async function fetchCsv(url, options = {}) {
-  const rows = await getStream.array(
-    got.stream(url)
-      .pipe(stripBomStream())
-      .pipe(csvParse(options))
-      .pipe(new Transform({
-        transform(row, enc, cb) {
-          if (!options.filter || options.filter(row)) {
-            return cb(null, row)
-          }
+  const response = await got(url, {responseType: 'buffer'})
+  const text = stripBom(response.body).toString('utf8')
 
-          cb()
-        },
-        objectMode: true
-      }))
-  )
-  return rows
-}
-
-async function readCsv(filePath) {
-  const file = await readFile(filePath, {encoding: 'utf8'})
   return new Promise(resolve => {
-    Papa.parse(file, {
+    Papa.parse(text, {
       header: true,
       skipEmptyLines: true,
       complete(results) {
+        if (options.filter) {
+          return resolve(results.data.filter(r => options.filter(r)))
+        }
+
         resolve(results.data)
       }
     })
@@ -88,4 +72,4 @@ function consolidateRecords(records, currentDate) {
     .value()
 }
 
-module.exports = {readCsv, loadJson, fetchJson, fetchCsv, extractFromAirtable, consolidateRecords}
+module.exports = {loadJson, fetchJson, fetchCsv, extractFromAirtable, consolidateRecords}

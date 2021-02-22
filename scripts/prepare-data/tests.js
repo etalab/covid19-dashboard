@@ -12,11 +12,7 @@ async function loadSidepTest() {
   const SIDEP_REG_DATA = 'https://www.data.gouv.fr/fr/datasets/r/001aca18-df6a-45c8-89e6-f82d689e6c01'
   const SIDEP_FRA_DATA = 'https://www.data.gouv.fr/fr/datasets/r/dd0de5d9-b5a5-4503-930a-7b08dc0adc7c'
 
-  const csvOptions = {
-    separator: ';'
-  }
-
-  const departementsReports = chain(await fetchCsv(SIDEP_DEP_DATA, csvOptions))
+  const departementsReports = chain(await fetchCsv(SIDEP_DEP_DATA))
     .filter(r => r.dep in departementsIndex)
     .groupBy(r => `${r.jour}-${r.dep}`)
     .map(rows => {
@@ -41,7 +37,7 @@ async function loadSidepTest() {
     .filter(r => r.testsRealises > 0 || r.testsPositifs > 0)
     .value()
 
-  const regionsReports = chain(await fetchCsv(SIDEP_REG_DATA, csvOptions))
+  const regionsReports = chain(await fetchCsv(SIDEP_REG_DATA))
     .filter(r => r.reg.padStart(2, '0') in regionsIndex)
     .groupBy(r => `${r.jour}-${r.reg}`)
     .map(rows => {
@@ -67,7 +63,7 @@ async function loadSidepTest() {
     .filter(r => r.testsRealises > 0 || r.testsPositifs > 0)
     .value()
 
-  const franceReports = chain(await fetchCsv(SIDEP_FRA_DATA, csvOptions))
+  const franceReports = chain(await fetchCsv(SIDEP_FRA_DATA))
     .groupBy(r => r.jour)
     .map(rows => {
       const report = {
@@ -98,7 +94,6 @@ async function loadTroisLabosTests() {
   const TROISLABOS_TESTS_DATA = 'https://www.data.gouv.fr/fr/datasets/r/b4ea7b4b-b7d1-4885-a099-71852291ff20'
 
   const csvOptions = {
-    separator: ';',
     filter: row => row.jour < '2020-05-13'
   }
 

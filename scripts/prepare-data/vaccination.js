@@ -91,7 +91,7 @@ function computeStockRecord(scopedRows, {code, nom}) {
 }
 
 async function fetchStocksFrance() {
-  const rows = await fetchCsv('https://www.data.gouv.fr/fr/datasets/r/519e2699-27d2-47c0-840b-81dbb30d4318', {separator: ','})
+  const rows = await fetchCsv('https://www.data.gouv.fr/fr/datasets/r/519e2699-27d2-47c0-840b-81dbb30d4318')
 
   return chain(rows)
     .groupBy('date')
