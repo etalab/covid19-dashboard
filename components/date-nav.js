@@ -29,11 +29,11 @@ const DateNav = ({ disabled }) => {
 
   const handleKeyDown = (event) => {
     if (!disabled) {
-      if (event.key == 'ArrowLeft' && previousDate) {
+      if (event.key === 'ArrowLeft' && previousDate) {
         setDate(previousDate)
         console.log(previousDate)
 
-      } else if (event.key == 'ArrowRight' && nextDate) {
+      } else if (event.key === 'ArrowRight' && nextDate) {
         setDate(nextDate)
         console.log(nextDate)
       }
