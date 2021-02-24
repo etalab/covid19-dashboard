@@ -1,53 +1,60 @@
-import React, { useContext, useEffect } from 'react'
+import React, {useContext, useEffect} from 'react'
 import PropTypes from 'prop-types'
-import { ChevronLeft, ChevronRight } from 'react-feather'
+import {ChevronLeft, ChevronRight} from 'react-feather'
 
-import { AppContext, ThemeContext } from '../pages'
-import { getNextDate, getPreviousDate } from '../lib/data'
+import {AppContext, ThemeContext} from '../pages'
+import {getNextDate, getPreviousDate} from '../lib/data'
 
 import theme from '../styles/theme'
 
-import { formatDate } from '../lib/date'
+import {formatDate} from '../lib/date'
 
-const DateNav = ({ disabled }) => {
-
+const DateNav = ({disabled}) => {
   // Creating a event listener on each stroke to avoid the issue of data not being refreshed inside the function
   // This is due to functionnal component relying on closure and the function passed to the event being "pulled" on top
   useEffect(() => {
-    window.addEventListener('keydown', handleKeyDown);
+    window.addEventListener('keydown', handleKeyDown)
     // Remove event listeners on cleanup
     return () => {
-      window.removeEventListener('keydown', handleKeyDown);
-    };
-  }); // Empty array ensures that effect is only run on mount and unmount
+      window.removeEventListener('keydown', handleKeyDown)
+    }
+  })
 
   const themeContext = useContext(ThemeContext)
-  const { date, setDate } = useContext(AppContext)
+  const {date, setDate} = useContext(AppContext)
   const formatedDate = formatDate(date)
   const previousDate = getPreviousDate(date)
   const nextDate = getNextDate(date)
 
-  const handleKeyDown = (event) => {
+  const handleKeyDown = event => {
     if (!disabled) {
       if (event.key === 'ArrowLeft' && previousDate) {
         setDate(previousDate)
         console.log(previousDate)
-
       } else if (event.key === 'ArrowRight' && nextDate) {
         setDate(nextDate)
         console.log(nextDate)
       }
     }
-
   }
 
   return (
     <div className='menu-header'>
       {!disabled && (
         <>
-          <div className={`report-nav ${previousDate ? '' : 'disabled'}`} onClick={previousDate ? () => setDate(previousDate) : null}><ChevronLeft /></div>
+          <div
+            className={`report-nav ${previousDate ? '' : 'disabled'}`}
+            onClick={previousDate ? () => setDate(previousDate) : null}
+          >
+            <ChevronLeft />
+          </div>
           <h3>Données au {formatedDate}</h3>
-          <div className={`report-nav ${nextDate ? '' : 'disabled'}`} onClick={nextDate ? () => setDate(nextDate) : null}><ChevronRight /></div>
+          <div
+            className={`report-nav ${nextDate ? '' : 'disabled'}`}
+            onClick={nextDate ? () => setDate(nextDate) : null}
+          >
+            <ChevronRight />
+          </div>
         </>
       )}
 
@@ -68,7 +75,7 @@ const DateNav = ({ disabled }) => {
           margin: 0.5em;
         }
 
-        .report-nav{
+        .report-nav {
           display: flex;
           justify-content: center;
           align-items: center;
