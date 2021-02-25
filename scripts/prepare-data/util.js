@@ -2,7 +2,6 @@ const stripBom = require('strip-bom-buf')
 const {readJson} = require('fs-extra')
 const got = require('got')
 const Papa = require('papaparse')
-const Airtable = require('airtable')
 const {chain, min, groupBy} = require('lodash')
 const {eachDayOfInterval, formatISO} = require('date-fns')
 
@@ -38,13 +37,6 @@ async function loadJson(dataSource) {
   return readJson(dataSource)
 }
 
-async function extractFromAirtable(databaseId, tabName) {
-  const airtable = new Airtable({apiKey: process.env.AIRTABLE_API_KEY}).base(databaseId)
-  const records = await airtable(tabName).select().all()
-
-  return records.map(record => record.fields)
-}
-
 function consolidateRecords(records, currentDate) {
   const firstDate = min(records.map(r => r.date))
 
@@ -72,4 +64,4 @@ function consolidateRecords(records, currentDate) {
     .value()
 }
 
-module.exports = {loadJson, fetchJson, fetchCsv, extractFromAirtable, consolidateRecords}
+module.exports = {loadJson, fetchJson, fetchCsv, consolidateRecords}
