@@ -13,7 +13,7 @@ jobs:
 
     strategy:
       matrix:
-        node-version: [12.x]
+        node-version: [14.x]
 
     steps:
     - uses: actions/checkout@v2
@@ -24,7 +24,5 @@ jobs:
     - run: yarn
     - run: yarn lint
     - run: yarn prepare-data
-      env:
-        AIRTABLE_API_KEY: ${{ secrets.AIRTABLE_API_KEY }}
     - run: yarn build
     - run: yarn export
