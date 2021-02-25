@@ -9,7 +9,6 @@ const Papa = require('papaparse')
 
 const {replaceResourceFile} = require('./datagouv')
 const {buildHospiSpf} = require('./donnees-hospitalieres-spf')
-const {buildHospiCc} = require('./donnees-hospitalieres-cc')
 const {buildGouvFr} = require('./gouv-fr')
 const {buildVaccination} = require('./vaccination')
 const {buildTests} = require('./tests')
@@ -56,7 +55,7 @@ async function loadContribData() {
 
 async function main() {
   const hospiSpf = await buildHospiSpf()
-  const hospiCc = await buildHospiCc()
+  const hospiCc = require('../../data/hospi-cc.json')
 
   const currentDate = max(
     hospiSpf.filter(r => !isUndefined(r.deces)).map(r => r.date)
