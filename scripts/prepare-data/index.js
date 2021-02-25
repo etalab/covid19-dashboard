@@ -59,7 +59,7 @@ async function main() {
   const hospiCc = await buildHospiCc()
 
   const currentDate = max(
-    hospiCc.filter(r => !isUndefined(r.deces)).map(r => r.date)
+    hospiSpf.filter(r => !isUndefined(r.deces)).map(r => r.date)
   )
 
   const contribData = await loadContribData()
