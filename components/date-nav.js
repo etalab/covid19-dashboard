@@ -13,10 +13,13 @@ const DateNav = ({disabled}) => {
   // Creating a event listener on each stroke to avoid the issue of data not being refreshed inside the function
   // This is due to functionnal component relying on closure and the function passed to the event being "pulled" on top
   useEffect(() => {
-    window.addEventListener('keydown', handleKeyDown)
-    // Remove event listeners on cleanup
-    return () => {
-      window.removeEventListener('keydown', handleKeyDown)
+    // Checking if we are on the client or server side
+    if (process.browser) {
+      window.addEventListener('keydown', handleKeyDown)
+      // Remove event listeners on cleanup
+      return () => {
+        window.removeEventListener('keydown', handleKeyDown)
+      }
     }
   })
 
@@ -30,10 +33,8 @@ const DateNav = ({disabled}) => {
     if (!disabled) {
       if (event.key === 'ArrowLeft' && previousDate) {
         setDate(previousDate)
-        console.log(previousDate)
       } else if (event.key === 'ArrowRight' && nextDate) {
         setDate(nextDate)
-        console.log(nextDate)
       }
     }
   }
