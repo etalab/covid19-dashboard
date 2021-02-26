@@ -14,7 +14,7 @@ const DateNav = ({disabled}) => {
   // This is due to functionnal component relying on closure and the function passed to the event being "pulled" on top
   useEffect(() => {
     // Checking if we are on the client or server side
-    if (process.browser) {
+    if (typeof window !== 'undefined') {
       window.addEventListener('keydown', handleKeyDown)
       // Remove event listeners on cleanup
       return () => {
