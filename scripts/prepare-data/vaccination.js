@@ -170,7 +170,7 @@ async function fetchStocksEhpad() {
 }
 
 function computeLivraisonRecord(scopedRows, {code, nom}) {
-  const {date} = scopedRows[0]
+  const date = scopedRows[0].date_fin_semaine
 
   const values = {
     livraisonsCumulNombreTotalDoses: 0
@@ -196,7 +196,7 @@ async function fetchLivraisonsFrance() {
   const rows = await fetchCsv('https://www.data.gouv.fr/fr/datasets/r/c04da7da-be58-450e-bf3e-5993ce7796d9')
 
   return chain(rows)
-    .groupBy('date')
+    .groupBy('date_fin_semaine')
     .map(dateRows => computeLivraisonRecord(dateRows, {
       code: 'FRA',
       nom: 'France'
