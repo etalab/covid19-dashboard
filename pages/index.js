@@ -16,6 +16,7 @@ import Indicators from '../components/layouts/indicators'
 import Vaccinations from '../components/layouts/vaccinations'
 import Vaccins from '../components/layouts/vaccins'
 import Entreprises from '../components/layouts/entreprises'
+import Modal from '../components/modal'
 
 export const AppContext = React.createContext()
 export const ThemeContext = React.createContext('theme.default')
