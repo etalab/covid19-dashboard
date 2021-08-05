@@ -42,10 +42,10 @@ class Layout extends React.Component {
               Son objectif est d’informer les citoyens sur l’évolution de l’épidémie de la Covid-19 en France.
             </p>
             <p>
-              Afin de toucher le maximum de citoyen, le tableau de bord a été propulsé en avril 2021
+              Afin de toucher le maximum de citoyens, le tableau de bord a été propulsé en avril 2021
               sur <a href='https://gouvernement.fr'>gouvernement.fr</a> et a connu des évolutions successives avec l’introduction de nouveaux indicateurs.
               Afin de s’adapter aux évolutions des indicateurs et de faciliter la navigation des utilisateurs,
-              une refonte graphique et technique du tableau de bord officiel du gouvernement a été réalisé en mai 2021.
+              une refonte graphique et technique du tableau de bord officiel du gouvernement a été réalisée en mai 2021.
             </p>
             <p>
               <strong>
