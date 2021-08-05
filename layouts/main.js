@@ -54,7 +54,7 @@ class Layout extends React.Component {
 
               <p>
                 <strong>⚠️ Par conséquent, l'outil que vous consultez n'est désormais plus maintenu.
-                Les valeurs des indicateurs exposées sur cet outil peuvent être erronézs,
+                Les valeurs des indicateurs exposées sur cet outil peuvent être erronées,
                 puisque certaines méthodes de calcul ont évoluée.</strong>
               </p>
               <p>
