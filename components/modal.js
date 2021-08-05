@@ -50,6 +50,7 @@ const StyledModalHeader = styled.div`
 
 const StyledModal = styled.div`
   background: white;
+  overflow: scroll;
   width: 500px;
   height: 600px;
   border-radius: 15px;
