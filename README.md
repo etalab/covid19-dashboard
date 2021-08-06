@@ -1,10 +1,12 @@
-# Tableau de bord de suivi de l'épidémie de nouveau coronavirus
+# Ancien tableau de bord de suivi de l'épidémie de COVID-19
 
-Cet outil contributif tente de proposer une vision [consolidée](https://github.com/opencovid19-fr/data) des données officielles disponibles.
+Ce tableau de bord est le fruit d’une collaboration entre les membres du collectif [OpenCovid](https://github.com/opencovid19-fr) et le département Etalab de la Direction Interministérielle du Numérique. Il a été mis en ligne le 28 mars 2020, afin de répondre aux besoins d’information des citoyens et des citoyennes en matière de transparence sur l’évolution de l’épidémie de coronavirus en France.
 
-Pour contribuer, créez une Issue, ou déposez une Pull-request :)
+Afin de toucher le maximum de citoyens, le tableau de bord a été propulsé en avril 2020 sur gouvernement.fr et a connu des évolutions successives avec l’introduction de nouveaux indicateurs. Afin de s’adapter aux évolutions des indicateurs et de faciliter la navigation des utilisateurs, [une refonte graphique et technique du tableau de bord officiel du gouvernement a été réalisée en mai 2021](https://www.data.gouv.fr/fr/reuses/tableau-de-bord-de-suivi-de-lepidemie-de-coronavirus-en-france/). Le répo GitHub du nouveau tableau de bord [est disponible ici](https://github.com/etalab/covid19-dashboard-widgets).
 
-Vous pouvez aussi consulter [le guide de contribution pour l'ensemble des projets de collecte de données](https://github.com/opencovid19-fr/comment-contribuer).
+**⚠️ Par conséquent, ce tableau de bord n’est désormais plus maintenu. Les valeurs des indicateurs exposées sur cet outil peuvent être erronées, puisque certaines méthodes de calcul ont évolué.**
+
+Si vous vous souhaitez consulter les indicateurs à jour, nous vous invitons à consulter [le tableau de bord officiel du gouvernement](https://www.gouvernement.fr/info-coronavirus/carte-et-donnees).
 
 ## Outils utilisés
 
