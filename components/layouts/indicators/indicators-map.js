@@ -109,7 +109,7 @@ export const IndicatorsMap = ({hovered, isDROM}) => {
           id='decoupage-administratif'
           type='vector'
           attribution='Données Ministère des Solidarités et de la santé'
-          url='https://etalab-tiles.fr/data/decoupage-administratif.json'
+          url='https://openmaptiles.data.gouv.fr/data/decoupage-administratif.json'
         >
           <Layer beforeId='place-town' {...indicateurSynthese} />
           <Layer beforeId='place-town' {...regionsLayer} />

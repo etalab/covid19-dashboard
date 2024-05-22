@@ -44,7 +44,7 @@ const Map = ({code, interactiveLayerIds, hideAttribution, onHover, onClick, chil
           {...viewport}
           width='100%'
           height='100%'
-          mapStyle='https://etalab-tiles.fr/styles/osm-bright/style.json'
+          mapStyle='https://openmaptiles.data.gouv.fr/styles/osm-bright/style.json'
           interactiveLayerIds={interactiveLayerIds}
           onHover={onHover}
           onClick={onClick}
