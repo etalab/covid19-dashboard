@@ -36,7 +36,9 @@ node_modules
 
 .now
 
-/dates.json
+# No data available from remote old URLs so need to archive now
+# /dates.json
 deploy.sh
 
-/public/data
+# No data available from remote old URLs so need to archive now
+# /public/data
